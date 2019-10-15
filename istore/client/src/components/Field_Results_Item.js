@@ -11,20 +11,18 @@ export default class Fields_Result_Item extends Component {
                 </div>
                 <div className="field-results-item-desc">
                     <div className="field-results-item-desc-title">
-                        Cho thuê phòng trọ cao cấp, HIỆN ĐẠI, ĐẦY ĐỦ TIỆN NGHI.
-                        MẶT TIỀN ĐƯỜNG D2 NGUYỄN GIA TRÍ NỐI DÀI
+                        Mì Gấu đỏ
                     </div>
                     <div>
                         <span className="field-results-item-desc-price">
-                            Giá: 1,4 tr/tháng
+                            Giá: 5.500đ
                         </span>
                         <span className="field-results-item-desc-time-up">
                             16/09/2019
                         </span>
                     </div>
                     <div className="field-results-item-desc-sub-desc">
-                        Cho thuê Phòng trọ CAO CẤP HIỆN ĐẠI ĐẦY ĐỦ TIỆN NGHI có
-                        dịch vụ vệ sinh. Phòng rộng ở được 6 - 7 người chỉ t
+                        Mì chua cay Gấu đỏ
                     </div>
                     <div>
                         <span className="field-results-item-desc-rate">

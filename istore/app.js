@@ -12,7 +12,7 @@ var citiesApi = require("./server/api/cities.api");
 var districtsApi = require("./server/api/districts.api");
 var authorizationsApi = require("./server/api/authorizations.api");
 var usersApi = require("./server/api/users.api");
-var avatarsApi = require("./server/api/avatar.api");
+//var avatarsApi = require("./server/api/avatar.api");
 var hostelsApi = require("./server/api/hostels.api");
 
 var app = express();
@@ -52,7 +52,7 @@ app.use("/api/cities", citiesApi);
 app.use("/api/districts", districtsApi);
 app.use("/api/authorizations", authorizationsApi);
 app.use("/api/users", usersApi);
-app.use("/api/avatars", avatarsApi);
+//app.use("/api/avatars", avatarsApi);
 app.use("/api/hostels", hostelsApi);
 
 // catch 404 and forward to error handler

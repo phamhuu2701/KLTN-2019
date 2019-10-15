@@ -9,15 +9,14 @@ export default class Footer extends Component {
             <div className="footer">
                 <div className="footer-header">
                     <div className="footer-header-title">
-                        <img alt="247 hostel" src="icons/logo.svg"></img>
-                        <span>247 hostel</span>
+                        <img alt="IStore" src="icons/logo.svg"></img>
+                        <span>IStore</span>
                     </div>
                     <div className="footer-header-title-sub">
-                        Website thuê và cho thuê phòng trọ uy tín nhất Việt Nam.
+                        Website tìm kiếm cửa hàng theo sản phẩm mong muốn - Chất lượng.
                     </div>
                     <div className="footer-header-content">
-                        Giúp bạn tìm kiếm, thuê và cho thuê nhà trọ với chất
-                        lượng tốt nhất!
+                        Giúp bạn tìm kiếm cửa hàng một cách dễ dàng và nhanh chóng!
                     </div>
                 </div>
                 <div className="footer-body">
@@ -31,8 +30,8 @@ export default class Footer extends Component {
                                     <img
                                         className="social-network-icon"
                                         alt=""
-                                        src="icons/facebook.svg"
-                                    ></img>
+                                        src="icons/facebook.svg">
+                                    </img>
                                     <span className="social-network-title">
                                         Facebook
                                     </span>

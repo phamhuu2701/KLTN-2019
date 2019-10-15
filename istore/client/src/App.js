@@ -13,7 +13,7 @@ export default class App extends Component {
     componentDidMount() {
         // Refesh page on page resize
         window.onresize = function() {
-            this.location.reload();
+            //this.location.reload();
         };
     }
 
