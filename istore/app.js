@@ -10,10 +10,6 @@ var bodyParser = require("body-parser");
 var indexRouter = require("./server/routes/index");
 const loginRouter = require('./server/routes/login');
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 49f6930e6ee1a8b98a900d2f1921edaa68ddcd66
 var databaseRouter = require("./server/routes/database");
 var citiesApi = require("./server/api/cities.api");
 var districtsApi = require("./server/api/districts.api");
@@ -23,11 +19,7 @@ var usersApi = require("./server/api/users.api");
 var hostelsApi = require("./server/api/hostels.api");
 
 var app = express();
-<<<<<<< HEAD
 const port = process.env.PORT || 5000;
-=======
-const port = process.env.PORT || 8080;
->>>>>>> 49f6930e6ee1a8b98a900d2f1921edaa68ddcd66
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
