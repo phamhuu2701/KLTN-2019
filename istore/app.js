@@ -1,12 +1,16 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
+const session = require('express-session');
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 
 var indexRouter = require("./server/routes/index");
+const loginRouter = require('./server/routes/login');
+
+
 var databaseRouter = require("./server/routes/database");
 var citiesApi = require("./server/api/cities.api");
 var districtsApi = require("./server/api/districts.api");
@@ -16,6 +20,7 @@ var usersApi = require("./server/api/users.api");
 var hostelsApi = require("./server/api/hostels.api");
 
 var app = express();
+const port = process.env.PORT || 8080;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,11 +39,22 @@ db.once("open", function() {
     console.log("Database connected");
 });
 
-app.use(logger("dev"));
+// Write logger by morgan module
+const fs = require('fs');
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
+    flags: 'a'
+})
+
+app.use(logger("combined", {stream: accessLogStream}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: true
+}))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -47,6 +63,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.use("/", indexRouter);
+app.use('/login', loginRouter);
+
+
 app.use("/database", databaseRouter);
 app.use("/api/cities", citiesApi);
 app.use("/api/districts", districtsApi);
@@ -71,6 +90,6 @@ app.use(function(err, req, res, next) {
     res.render("error");
 });
 
-app.listen(5000, () => {
+app.listen(port, () => {
     console.log("Server starting..");
 });

@@ -214,10 +214,7 @@ export default class Fields extends Component {
                         </Col>
                         <Col sm={8}>
                             <Form.Group>
-                                <Form.Control 
-                                    as="select"
-                                    onChange={this.onDistanceSelectChange}
-                                >
+                                <Form.Control as="select" onChange={this.onDistanceSelectChange}>
                                     <option value={-1}>Tất cả</option>
                                     <option value={0}>2 km</option>
                                     <option value={1}>5 km</option>
@@ -237,24 +234,15 @@ export default class Fields extends Component {
                             <span>Kết quả</span>
                         </Col>
                         <Col className="field-results-filter">
-                            <DropdownButton
-                                alignRight
-                                title="Mới nhất"
-                                variant="success"
-                            >
-                                <Dropdown.Item eventKey="2">
-                                    Giá tăng dần
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="3">
-                                    Giá giảm dần
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="2">
-                                    Bán kính tăng dần
-                                </Dropdown.Item>
-                                <Dropdown.Item eventKey="3">
-                                    Bán kính giảm dần
-                                </Dropdown.Item>
-                            </DropdownButton>
+                            <Form.Group>
+                                <Form.Control as="select" onChange={this.onDistanceSelectChange}>
+                                    <option value={-1}>Mới nhất</option>
+                                    <option value={0}>Giá tăng dần</option>
+                                    <option value={1}>Giá giảm dần</option>
+                                    <option value={2}>Bán kính tăng dần</option>
+                                    <option value={3}>Bán kính giảm dần</option>
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <hr className="field-hr" />

@@ -11,7 +11,7 @@ export default class Fields_Result_Item extends Component {
                 </div>
                 <div className="field-results-item-desc">
                     <div className="field-results-item-desc-title">
-                        Mì Gấu đỏ
+                        Cửa hàng tạp hóa Ăn Tạp
                     </div>
                     <div>
                         <span className="field-results-item-desc-price">
