@@ -135,6 +135,7 @@ export default class DropdownUser extends Component {
         }
     }
 
+<<<<<<< HEAD
     signIn() {
         this.childSignForm.current.changeSign('in');
     }
@@ -150,6 +151,7 @@ export default class DropdownUser extends Component {
         })
         .then(result => {
             if (result.status === 200) {
+            if (result.status == 200) {
                 return result.json();
             }
         })
@@ -209,7 +211,11 @@ export default class DropdownUser extends Component {
                                     src="icons/list.svg"
                                 ></img>
                                 <span className="dropdown-user-body-content-title">
+<<<<<<< HEAD
                                     Quản lý cửa hàng
+=======
+                                    Quản lý nhà trọ
+>>>>>>> 49f6930e6ee1a8b98a900d2f1921edaa68ddcd66
                                 </span>
                             </div>
                             <hr className="dropdown-user-body-content-divide" />
@@ -229,10 +235,17 @@ export default class DropdownUser extends Component {
             )
         } else {
             return (
+<<<<<<< HEAD
                 <div className="dropdown-user" ref={this.wrapperRef}>
                     <Image
                         className="dropdown-user-image"
                         src="icons/user.svg"
+=======
+                <div className="dropdown-user">
+                    <Image
+                        className="dropdown-user-image"
+                        src="icons/no_user.svg"
+>>>>>>> 49f6930e6ee1a8b98a900d2f1921edaa68ddcd66
                         width={50}
                         height={50}
                         roundedCircle
@@ -242,6 +255,7 @@ export default class DropdownUser extends Component {
                         <div className="dropdown-user-body-sub"></div>
                         <div className="dropdown-user-body-main">
                             <div className="dropdown-user-body-content">
+<<<<<<< HEAD
                                 <div className="ui buttons">
                                     <button className="ui button btn-success" onClick={this.signIn}>Đăng nhập</button>
                                     <div className="or"></div>
@@ -249,6 +263,17 @@ export default class DropdownUser extends Component {
                                 </div>
                             </div>
                             <SignForm ref={this.childSignForm} sign=''/>
+=======
+                                <img
+                                    className="dropdown-user-body-content-imgage"
+                                    alt=""
+                                    src="icons/user.svg"
+                                ></img>
+                                <span className="dropdown-user-body-content-title">
+                                    NANCY - KOREA
+                                </span>
+                            </div>
+>>>>>>> 49f6930e6ee1a8b98a900d2f1921edaa68ddcd66
                         </div>
                     </div>
                 </div>
