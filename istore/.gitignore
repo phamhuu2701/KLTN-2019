@@ -1,2 +1,3 @@
 # Not push node_modules folder to github
 /node_modules
+access.log

@@ -173,3 +173,5 @@
 ::ffff:127.0.0.1 - - [22/Oct/2019:06:59:57 +0000] "GET /api/cities HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
 ::ffff:127.0.0.1 - - [22/Oct/2019:07:01:37 +0000] "GET /login HTTP/1.1" 203 18 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
 ::ffff:127.0.0.1 - - [22/Oct/2019:07:01:43 +0000] "GET /api/cities HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::ffff:127.0.0.1 - - [22/Oct/2019:07:02:07 +0000] "GET /login HTTP/1.1" 203 18 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
+::ffff:127.0.0.1 - - [22/Oct/2019:07:02:13 +0000] "GET /api/cities HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
