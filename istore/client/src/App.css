@@ -25,7 +25,7 @@
     position: absolute;
     z-index: 1005;
     top: 10px;
-    right: 10px;
+    right: 60px;
 }
 
 .dropdown-user:hover {

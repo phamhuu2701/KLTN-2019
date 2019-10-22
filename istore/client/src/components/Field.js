@@ -120,7 +120,6 @@ export default class Fields extends Component {
             spaceFilter: this.state.spaceFilter,
             distanceFilter: this.state.distanceFilter
         }
-        console.log(filterValue);
     }
 
     onSearchKeyUp(e) {
