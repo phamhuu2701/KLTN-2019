@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 
 import "./Field.css";
-import Field_Results_Item from "./Field_Results_Item";
+import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
 import { onSearchProduct } from './Maps'
 
@@ -234,8 +234,8 @@ export default class Fields extends Component {
                     </Row>
                     <hr className="field-hr" />
                     <div className="field-results-list">
-                        <Field_Results_Item code='0' storeName='Cửa hàng ăn vặt' price='5.500' phone='0909897969' productName='Trà sữa trân châu' date='12/12/2019' />
-                        <Field_Results_Item code='1' storeName='Cửa hàng tạp hóa' price='3.000' phone='0739495969' productName='Mì gấu đỏ chua cay' date='21/12/2019' />
+                        <FieldResultsItem code='0' storeName='Cửa hàng ăn vặt' price='5.500' phone='0909897969' productName='Trà sữa trân châu' date='12/12/2019' />
+                        <FieldResultsItem code='1' storeName='Cửa hàng tạp hóa' price='3.000' phone='0739495969' productName='Mì gấu đỏ chua cay' date='21/12/2019' />
                     </div>
                 </div>
                 <hr className="field-hr" />

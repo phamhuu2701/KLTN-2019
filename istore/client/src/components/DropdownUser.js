@@ -17,7 +17,6 @@ class SignForm extends Component {
     signInSubmit(e) {
         e.preventDefault();
         const signInForm = document.querySelector('#signInForm');
-        const csrf = signInForm.childNodes[0].childNodes[0].value;
         const email = signInForm.childNodes[1].childNodes[0].value;
         const password = signInForm.childNodes[2].childNodes[0].value;
 
@@ -207,21 +206,22 @@ export default class DropdownUser extends Component {
         this.childSignForm.current.changeSign('up');
     }
 
-    componentWillMount() {
-       
-    }
-
-    componentDidMount() {
+    UNSAFE_componentWillMount() {
          // Check user logged in
         fetch('/api/login')
         .then(res => {
             return res.json();
         })
         .then(result => {
-            this.state.isLogged = result.isLogged;
-            this.setState(this.state);
+            this.setState({
+                isLogged: result.isLogged,
+                sign: ''
+            });
         })
         .catch(err => console.log(err))
+    }
+
+    componentDidMount() {
         document.addEventListener('click', this.handleClick)
     }
       
@@ -231,8 +231,10 @@ export default class DropdownUser extends Component {
     }
 
     loginHandler() {
-        this.state.isLogged = true;
-        this.setState(this.state);
+        this.setState({
+            isLogged: true,
+            sign: ''
+        });
     }
 
     logoutHandler() {
@@ -241,8 +243,11 @@ export default class DropdownUser extends Component {
         })
         .then(result => {
             if (result.status === 200) {
-                this.state.isLogged = false;
-                this.setState(this.state);
+                this.setState({
+                    isLogged: false,
+                    sign: ''
+                });
+                document.getElementById("dropdown-user-body").style.display = "none";
             } else {
                 alert('Đã có lỗi!!!')
             }
