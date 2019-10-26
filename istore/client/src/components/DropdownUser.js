@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button, Image } from "react-bootstrap";
+import Cookies from 'js-cookie';
 
 import "./DropdownUser.css";
 
@@ -10,17 +11,64 @@ class SignForm extends Component {
         this.state = {
             sign: props.sign
         }
+        this.signInSubmit = this.signInSubmit.bind(this);
+    }
+
+    signInSubmit(e) {
+        e.preventDefault();
+        const signInForm = document.querySelector('#signInForm');
+        const csrf = signInForm.childNodes[0].childNodes[0].value;
+        const email = signInForm.childNodes[1].childNodes[0].value;
+        const password = signInForm.childNodes[2].childNodes[0].value;
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        })
+        .then(result => {
+            if (result.status === 200) {
+                // Sign in successed
+                this.props.loginHandler();
+                return result.json();
+            } else {
+                alert('Lỗi đăng nhập!')
+            }
+        })
+        .then(user => {
+            document.getElementById("dropdown-user-body").style.display = "none";
+        })
+        .catch(err => console.log(err))
+    }
+
+    signUpSubmit(e) {
+        //const signInForm = document.querySelector('#signupForm');
     }
 
     changeSign(sign) {
-        this.state.sign = sign;
-        this.setState(this.state);
+        this.setState({
+            sign: sign,
+            csrfToken: Cookies.get('csrfToken')
+        });
     }
 
     render() {
         if (this.state.sign === 'in') {
             return (
-                <Form>
+                <Form id='signInForm' onSubmit={this.signInSubmit}>
+                    <div className="dropdown-user-body-content sign-in">
+                        <Form.Control
+                            type="hidden"
+                            name="_csrf"
+                            defaultValue={Cookies.get('csrfToken')}
+                        />
+                    </div>
                     <div className="dropdown-user-body-content sign-in">
                         <Form.Control
                             type="text"
@@ -48,11 +96,11 @@ class SignForm extends Component {
                     <div className="dropdown-user-body-content sign-in text-center">
                         <div className="ui buttons">
                             <button className="btn btn-fb">
-                                <img src="icons/facebook.svg" height="28px"/> Facebook
+                                <img src="icons/facebook.svg" height="28px" alt=""/> Facebook
                             </button>
                             <div className="or"></div>
                             <button className="btn btn-gplus">
-                                <img src="icons/google.svg" height="28px"/> Google
+                                <img src="icons/google.svg" height="28px"  alt=""/> Google
                             </button>
                         </div>
                     </div>
@@ -60,8 +108,13 @@ class SignForm extends Component {
             )
         } else if (this.state.sign === 'up'){
             return (
-                <Form mehthod="post">
+                <Form id='signUpForm' onSubmit={this.signUpSubmit}>
                     <div className="dropdown-user-body-content sign-up">
+                        <Form.Control
+                            type="hidden"
+                            name="_csrf"
+                            defaultValue={Cookies.get('csrfToken')}
+                        />
                         <Form.Control
                             type="text"
                             name="fullname"
@@ -97,6 +150,15 @@ class SignForm extends Component {
                             required
                         />
                     </div>
+                    <div className="dropdown-user-body-content sign-up">
+                        <Form.Control
+                            type="password"
+                            name="password_confirm"
+                            placeholder="Nhập lại mật khẩu"
+                            className="field-filter-form-input-search"
+                            required
+                        />
+                    </div>
                     <div className="dropdown-user-body-content text-center">
                         <Button variant="primary" type="submit">
                             Đăng ký
@@ -122,6 +184,8 @@ export default class DropdownUser extends Component {
         this.onClicked = this.onClicked.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
+        this.loginHandler = this.loginHandler.bind(this);
+        this.logoutHandler = this.logoutHandler.bind(this);
         this.childSignForm = React.createRef();
         this.wrapperRef = React.createRef()
     }
@@ -144,29 +208,46 @@ export default class DropdownUser extends Component {
     }
 
     componentWillMount() {
-        // Check user logged in
-        fetch('/login', {
-            mehthod: 'get'
-        })
-        .then(result => {
-            if (result.status === 200) {
-                return result.json();
-            }
-        })
-        .then(isLogged => {
-            this.state.isLogged = isLogged;
-        })
-        .catch(err => console.log(err))
-        //this.state.isLogged = true;
+       
     }
 
     componentDidMount() {
+         // Check user logged in
+        fetch('/login')
+        .then(res => {
+            return res.json();
+        })
+        .then(result => {
+            this.state.isLogged = result.isLogged;
+            this.setState(this.state);
+        })
+        .catch(err => console.log(err))
         document.addEventListener('click', this.handleClick)
     }
       
     componentWillUnmount() {
         // important
         document.removeEventListener('click', this.handleClick)
+    }
+
+    loginHandler() {
+        this.state.isLogged = true;
+        this.setState(this.state);
+    }
+
+    logoutHandler() {
+        fetch('/logout', {
+            method: 'GET'
+        })
+        .then(result => {
+            if (result.status === 200) {
+                this.state.isLogged = false;
+                this.setState(this.state);
+            } else {
+                alert('Đã có lỗi!!!')
+            }
+        })
+        .catch(err => console.log(err))
     }
       
     handleClick = (event) => {
@@ -177,9 +258,9 @@ export default class DropdownUser extends Component {
     }
 
     render() {
-        if (this.state.isLogged) {
+        if (this.state.isLogged === true) {
             return (
-                <div className="dropdown-user">
+                <div className="dropdown-user" ref={this.wrapperRef}>
                     <Image
                         className="dropdown-user-image"
                         src="images/nancy.jpg"
@@ -213,7 +294,7 @@ export default class DropdownUser extends Component {
                                 </span>
                             </div>
                             <hr className="dropdown-user-body-content-divide" />
-                            <div className="dropdown-user-body-content">
+                            <div className="dropdown-user-body-content" onClick={this.logoutHandler}>
                                 <img
                                     className="dropdown-user-body-content-imgage"
                                     alt=""
@@ -248,7 +329,7 @@ export default class DropdownUser extends Component {
                                     <button className="ui button btn-primary" onClick={this.signUp}>Đăng ký</button>
                                 </div>
                             </div>
-                            <SignForm ref={this.childSignForm} sign=''/>
+                            <SignForm ref={this.childSignForm} sign='' loginHandler={(loginSign) => this.loginHandler(loginSign)}/>
                         </div>
                     </div>
                 </div>

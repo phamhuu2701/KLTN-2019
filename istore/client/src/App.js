@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+//import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import "./App.css";
 import Logo from "./components/Logo";
 import Field from "./components/Field";
 import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
+import StoreInfomation from "./components/StoreInfomation";
 
 export default class App extends Component {
 
@@ -28,6 +29,7 @@ export default class App extends Component {
                     <Maps />
                 </div>
                 <DropdownUser />
+                <StoreInfomation />
             </div>
         );
     }

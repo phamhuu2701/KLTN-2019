@@ -2,27 +2,29 @@ import React, { Component } from "react";
 
 import "./Field_Results_Item.css";
 
+import { showHideStoreInfo } from '../services/store.service'
+
 export default class Fields_Result_Item extends Component {
     render() {
         return (
-            <div className="field-results-item">
+            <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code)}}>
                 <div className="field-results-item-img">
                     <img src="images/nancy.jpg" alt="" />
                 </div>
                 <div className="field-results-item-desc">
                     <div className="field-results-item-desc-title">
-                        Cửa hàng tạp hóa Ăn Tạp
+                        {this.props.storeName}
                     </div>
                     <div>
                         <span className="field-results-item-desc-price">
-                            Giá: 5.500đ
+                            Giá: {this.props.price}đ
                         </span>
                         <span className="field-results-item-desc-time-up">
-                            16/09/2019
+                            {this.props.date}
                         </span>
                     </div>
                     <div className="field-results-item-desc-sub-desc">
-                        Mì chua cay Gấu đỏ
+                        {this.props.productName}
                     </div>
                     <div>
                         <span className="field-results-item-desc-rate">
@@ -34,7 +36,7 @@ export default class Fields_Result_Item extends Component {
                         </span>
                         <span className="field-results-item-desc-contact">
                             <img alt="" src="icons/phone.svg"></img>
-                            <span>01696696969</span>
+                            <span>{this.props.phone}</span>
                         </span>
                     </div>
                 </div>

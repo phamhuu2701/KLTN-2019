@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Col } from "react-bootstrap";
 
 import { onSearchAddress, onGetCurrentPosition } from './Maps'
 
