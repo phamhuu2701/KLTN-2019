@@ -21,7 +21,7 @@ class SignForm extends Component {
         const email = signInForm.childNodes[1].childNodes[0].value;
         const password = signInForm.childNodes[2].childNodes[0].value;
 
-        fetch('/login', {
+        fetch('/api/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application',
@@ -213,7 +213,7 @@ export default class DropdownUser extends Component {
 
     componentDidMount() {
          // Check user logged in
-        fetch('/login')
+        fetch('/api/login')
         .then(res => {
             return res.json();
         })
@@ -236,7 +236,7 @@ export default class DropdownUser extends Component {
     }
 
     logoutHandler() {
-        fetch('/logout', {
+        fetch('/api/logout', {
             method: 'GET'
         })
         .then(result => {
