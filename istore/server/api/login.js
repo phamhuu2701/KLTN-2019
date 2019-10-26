@@ -15,7 +15,6 @@ app.route('/')
     // Check user account
     if (email ==='nancy' && password === '123') {
     	req.session.isLogged = true;
-    	console.log(req.session.isLogged);
 		return res.status(200).json({"firstname": "Nancy"})
     }
 });

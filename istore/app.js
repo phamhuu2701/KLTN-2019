@@ -61,13 +61,12 @@ app.use(session({
 app.use("/", indexRouter);  
 app.use("/database", databaseRouter);
 
-app.use('api/login', loginRouter);
-app.use('api/logout', logoutRouter);
+app.use('/api/login', loginRouter);
+app.use('/api/logout', logoutRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    res.send('cc')
-    //next(createError(404));
+    next(createError(404));
 });
 
 // error handler
@@ -78,11 +77,11 @@ app.use(function(err, req, res, next) {
 
     // render the error page
     res.status(err.status || 500);
-    res.send("Hữu óc chó");
+    res.send("Server Error!");
 });
 
 // Connect to MongoDB
-mongoose.connect("mongodb://localhost:27017/db247hostel", {
+mongoose.connect("mongodb://localhost:27017/istore", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
