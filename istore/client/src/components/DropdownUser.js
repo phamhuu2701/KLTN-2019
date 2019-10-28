@@ -278,25 +278,29 @@ export default class DropdownUser extends Component {
                         <div className="dropdown-user-body-sub"></div>
                         <div className="dropdown-user-body-main">
                             <div className="dropdown-user-body-content">
-                                <img
-                                    className="dropdown-user-body-content-imgage"
-                                    alt=""
-                                    src="icons/user.svg"
-                                ></img>
-                                <span className="dropdown-user-body-content-title">
-                                    NANCY - KOREA
-                                </span>
+                                <a href="/information" className="dropdown-user-body-content-link">
+                                    <img
+                                        className="dropdown-user-body-content-imgage"
+                                        alt=""
+                                        src="icons/user.svg"
+                                    ></img>
+                                    <span className="dropdown-user-body-content-title">
+                                        NANCY - KOREA
+                                    </span>
+                                </a>
                             </div>
                             <hr className="dropdown-user-body-content-divide" />
                             <div className="dropdown-user-body-content">
-                                <img
-                                    className="dropdown-user-body-content-imgage"
-                                    alt=""
-                                    src="icons/list.svg"
-                                ></img>
-                                <span className="dropdown-user-body-content-title">
-                                    Quản lý cửa hàng
-                                </span>
+                                <a href="/mystore" className="dropdown-user-body-content-link">
+                                    <img
+                                        className="dropdown-user-body-content-imgage"
+                                        alt=""
+                                        src="icons/list.svg"
+                                    ></img>
+                                    <span className="dropdown-user-body-content-title">
+                                        Quản lý cửa hàng
+                                    </span>
+                                </a>
                             </div>
                             <hr className="dropdown-user-body-content-divide" />
                             <div className="dropdown-user-body-content" onClick={this.logoutHandler}>

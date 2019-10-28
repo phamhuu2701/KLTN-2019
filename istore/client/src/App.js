@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -20,17 +21,33 @@ export default class App extends Component {
 
     render() {
         return (
-            <div className="app">
-                <div className="app-body-left">
-                    <Logo />
-                    <Field />
-                </div>
-                <div className="app-body-right">
-                    <Maps />
-                </div>
+            <Router>
+                <Switch>
+                    <Route exact path="/">
+                        <div className="app">
+                            <div className="app-body-left">
+                                <Logo />
+                                <Field />
+                            </div>
+                            <div className="app-body-right">
+                                <Maps />
+                            </div>
+                            <StoreInfomation />
+                        </div>
+                    </Route>
+                    <Route path="/information">
+                        <div className='app'>
+                            My information
+                        </div>
+                    </Route>
+                    <Route path="/mystore">
+                        <div className='app'>
+                            My store
+                        </div>
+                    </Route>
+                </Switch>
                 <DropdownUser />
-                <StoreInfomation />
-            </div>
+            </Router>
         );
     }
 }
