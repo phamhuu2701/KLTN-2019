@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
-import './StoreInfomation.css'
+import './StoreInformation.css'
 
-export default class StoreInfomation extends Component {
+export default class StoreInformation extends Component {
 	constructor() {
 		super();
 		this.closeStoreInfo = this.closeStoreInfo.bind(this);

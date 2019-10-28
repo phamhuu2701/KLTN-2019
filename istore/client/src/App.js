@@ -8,15 +8,28 @@ import Logo from "./components/Logo";
 import Field from "./components/Field";
 import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
-import StoreInfomation from "./components/StoreInfomation";
+import StoreInformation from "./components/StoreInformation";
+import Information from "./components/Information";
 
 export default class App extends Component {
+
+    constructor() {
+        super();
+        this.state = {
+            isLoggedIn: false
+        }
+        this.logInToggle = this.logInToggle.bind(this)
+    }
 
     componentDidMount() {
         // Refesh page on page resize
         window.onresize = function() {
             //this.location.reload();
         };
+    }
+
+    logInToggle(state) {
+        this.setState({isLoggedIn: state});
     }
 
     render() {
@@ -32,13 +45,11 @@ export default class App extends Component {
                             <div className="app-body-right">
                                 <Maps />
                             </div>
-                            <StoreInfomation />
+                            <StoreInformation />
                         </div>
                     </Route>
                     <Route path="/information">
-                        <div className='app'>
-                            My information
-                        </div>
+                        <Information isLoggedIn={this.state.isLoggedIn}/>
                     </Route>
                     <Route path="/mystore">
                         <div className='app'>
@@ -46,7 +57,7 @@ export default class App extends Component {
                         </div>
                     </Route>
                 </Switch>
-                <DropdownUser />
+                <DropdownUser logInToggle={this.logInToggle}/>
             </Router>
         );
     }

@@ -217,6 +217,7 @@ export default class DropdownUser extends Component {
                 isLogged: result.isLogged,
                 sign: ''
             });
+            this.props.logInToggle(result.isLogged);
         })
         .catch(err => console.log(err))
     }
@@ -230,11 +231,13 @@ export default class DropdownUser extends Component {
         document.removeEventListener('click', this.handleClick)
     }
 
+    // Logged in successfully
     loginHandler() {
         this.setState({
             isLogged: true,
             sign: ''
         });
+        this.props.logInToggle(true);
     }
 
     logoutHandler() {
@@ -247,6 +250,7 @@ export default class DropdownUser extends Component {
                     isLogged: false,
                     sign: ''
                 });
+                this.props.logInToggle(false);
                 document.getElementById("dropdown-user-body").style.display = "none";
             } else {
                 alert('Đã có lỗi!!!')
