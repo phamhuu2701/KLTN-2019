@@ -1,36 +1,36 @@
 const express = require("express");
 const router = express.Router();
 
-const CityDao = require("../dao/city.dao");
+const StoreCategoryDao = require("../dao/storeCategory.dao");
 
 router.route("/").get(async (req, res, next) => {
     const name = req.query.name;
     // console.log(name);
 
     if (!name) {
-        const cities = await CityDao.find();
-        if (!cities) {
+        const storeCategorys = await StoreCategoryDao.find();
+        if (!storeCategorys) {
             res.json({});
         } else {
-            res.json(cities);
+            res.json(storeCategorys);
         }
     } else {
-        const city = await CityDao.findOneByName(name);
-        if (!city) {
+        const storeCategory = await StoreCategoryDao.findOneByName(name);
+        if (!storeCategory) {
             res.json({});
         } else {
-            res.json(city);
+            res.json(storeCategory);
         }
     }
 });
 
 router.route("/:id").get(async (req, res, next) => {
     const id = req.params.id;
-    const city = await CityDao.findById(id);
-    if (!city) {
+    const storeCategory = await StoreCategoryDao.findById(id);
+    if (!storeCategory) {
         res.json({});
     } else {
-        res.json(city);
+        res.json(storeCategory);
     }
 });
 

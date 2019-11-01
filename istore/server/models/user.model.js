@@ -29,7 +29,7 @@ const userSchema = new Schema(
         gender: { type: Boolean, default: false },
         birthday: { type: Date },
         timeRegister: { type: Date, required: true, default: Date.now },
-        avatars: [{ type: String, maxlength: 250, trim: true }]
+        avatars: [{ type: String, required: true, maxlength: 250, trim: true }]
     },
     options
 );
