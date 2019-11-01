@@ -1459,3 +1459,4 @@
 ::ffff:127.0.0.1 - - [28/Oct/2019:07:28:26 +0000] "GET /api/login HTTP/1.1" 201 18 "http://localhost:3000/information" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
 ::ffff:127.0.0.1 - - [28/Oct/2019:07:28:42 +0000] "GET /api/login HTTP/1.1" 201 18 "http://localhost:3000/information" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36"
 >>>>>>> 4bca75bf8e8107102adf47ab0805bfddeb91fa5c
+::ffff:127.0.0.1 - - [01/Nov/2019:12:35:20 +0000] "GET /babel/parser/lib/index.js HTTP/1.1" 404 13 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36"

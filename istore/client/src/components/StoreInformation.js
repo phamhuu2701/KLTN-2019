@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 
-<<<<<<< HEAD:istore/client/src/components/StoreInfomation.js
-import './StoreInfomation.css';
+import "./StoreInformarion.css";
 import StoreDetail from "./StoreDetail";
-=======
-import './StoreInformation.css'
->>>>>>> 4bca75bf8e8107102adf47ab0805bfddeb91fa5c:istore/client/src/components/StoreInformation.js
 
 export default class StoreInformation extends Component {
 	constructor() {
