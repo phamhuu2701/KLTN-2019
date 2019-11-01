@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-import "./StoreInformarion.css";
 import StoreDetail from "./StoreDetail";
 
 export default class StoreInformation extends Component {
