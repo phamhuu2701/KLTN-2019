@@ -9,9 +9,8 @@ var logger      = require("morgan");
 const mongoose  = require("mongoose");
 var bodyParser  = require("body-parser");
 
-var indexRouter = require("./server/routes/index");
-var databaseRouter = require("./server/routes/database");
-
+const indexRouter = require("./server/routes/index");
+const databaseRouter = require("./server/routes/database");
 const loginRouter = require('./server/api/login');
 const logoutRouter = require('./server/api/logout');
 
@@ -27,6 +26,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
 app.use(logger("combined", {stream: accessLogStream}));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -60,7 +60,6 @@ app.use(session({
 
 app.use("/", indexRouter);  
 app.use("/database", databaseRouter);
-
 app.use('/api/login', loginRouter);
 app.use('/api/logout', logoutRouter);
 
