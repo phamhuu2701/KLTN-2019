@@ -27,6 +27,16 @@
     padding: 0.5em 0.5em;
 }
 
+.dropdown-user-body-content a.dropdown-user-body-content-link {
+  text-decoration: none;
+  color: black;
+}
+
+.dropdown-user-body-content a.dropdown-user-body-content-link:hover {
+  text-decoration: none;
+  color: blue;
+}
+
 .dropdown-user-body-content-imgage {
     width: 1.2em;
 }
