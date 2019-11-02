@@ -7,8 +7,37 @@ const UserDao = require("../dao/user.dao");
 router
     .route("/")
     .get(async (req, res, next) => {
-        let users = await UserDao.find();
-        res.json(users);
+
+        const email = req.query.email;
+        const phone = req.query.phone;
+        // console.log(email);
+        // console.log(phone);
+
+        if(!email && !phone){
+            const users = await UserDao.find();
+            if (!users) {
+                res.json({});
+            } else {
+                res.json(users);
+            }
+        }
+        else if(email != null){
+            const user = await UserDao.findOneByEmail(email);
+            if (!user) {
+                res.json({});
+            } else {
+                res.json(user);
+            }
+        }
+        else if(phone != null){
+            const user = await UserDao.findOneByPhone(phone);
+            if (!user) {
+                res.json({});
+            } else {
+                res.json(user);
+            }
+        }
+
     });
     // .post(async (req, res, next) => {
     //     let user = new User();

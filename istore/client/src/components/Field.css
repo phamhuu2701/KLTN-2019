@@ -5,7 +5,9 @@
 
 .field-filter {
     margin: 0;
-    padding: 1em 1em;
+    padding-top: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .field-filter-form-group-search {

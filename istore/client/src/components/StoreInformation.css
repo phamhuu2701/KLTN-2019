@@ -1,41 +1,41 @@
 .store-info {
-	height: 90%;
-	width: 65%;
-	z-index: 500;
-	position: fixed;
-	top: 10%;
-	right: -100%;
-	background-color: #adacb5;
-	overflow-x: hidden;
-	transition: 0.5s;
-	opacity: 0.85;
-}
-
-@media only screen and (max-width: 768px) {
-	.store-info {
-		height: 100%;
-		width: 85%;
-		top: 6%;
-	}
-}
-
-@media only screen and (min-width: 769px) {
-	.store-info {
-		height: 90%;
-		width: 65%;
-		top: 10%;
-	}
-}
-
-.store-info .closebtn {
-	position: absolute;
-	text-decoration: none;
-	top: 0;
-	left: 20px;
-	font-size: 36px;
-	color: green;
-
-}
-.store-info .closebtn:hover {
-	color: green;
-}
+    height: 90%;
+    width: 65%;
+    z-index: 500;
+    position: fixed;
+    top: 10%;
+    right: -100%;
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.5s;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .store-info {
+      height: 100%;
+      width: 85%;
+      top: 6%;
+    }
+  }
+  
+  @media only screen and (min-width: 769px) {
+    .store-info {
+      height: 90%;
+      width: 65%;
+      top: 10%;
+    }
+  }
+  
+  .store-info .closebtn {
+    font-weight: bold;
+    text-decoration: none;
+    color: green;
+    width: 100%;
+    display: block;
+    padding-left: 0.5em;
+    font-size: 2em;
+  }
+  
+  .closebtn img {
+    height: 1em;
+  }

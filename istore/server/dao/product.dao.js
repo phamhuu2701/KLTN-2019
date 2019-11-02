@@ -1,12 +1,9 @@
-const Model = require("../models/hostel.model");
+const Model = require("../models/product.model");
 
 module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
             Model.find({})
-                .populate("user")
-                .populate("city")
-                .populate("district")
                 .exec((err, results) => {
                     if (err) return reject(null);
                     return resolve(results);
@@ -16,9 +13,15 @@ module.exports = {
     findById: id => {
         return new Promise((resolve, reject) => {
             Model.findById(id)
-                .populate("user")
-                .populate("city")
-                .populate("district")
+                .exec((err, result) => {
+                    if (err) return reject(null);
+                    return resolve(result);
+                });
+        }).catch(() => null);
+    },
+    findByName: name => {
+        return new Promise((resolve, reject) => {
+            Model.find({ name: name })
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -37,7 +40,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             Model.findByIdAndUpdate(
                 model._id,
-                {},
+                {
+
+                },
                 { new: true },
                 (err, result) => {
                     if (err) return reject(null);

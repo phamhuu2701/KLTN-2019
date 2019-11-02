@@ -74,6 +74,14 @@ module.exports = {
             );
         }).catch(() => null);
     },
+    delete: model => {
+        return new Promise((resolve, reject) => {
+            Model.findByIdAndDelete(model.id, err => {
+                if (err) return reject(false);
+                return resolve(true);
+            });
+        }).catch(() => false);
+    },
     addAvatar: (user, avatarUrl) => {
         let avatarUrls = user.avatars;
         avatarUrls.push(avatarUrl);
@@ -91,13 +99,5 @@ module.exports = {
                 }
             );
         }).catch(() => null);
-    },
-    delete: model => {
-        return new Promise((resolve, reject) => {
-            Model.findByIdAndDelete(model.id, err => {
-                if (err) return reject(false);
-                return resolve(true);
-            });
-        }).catch(() => false);
     }
 };

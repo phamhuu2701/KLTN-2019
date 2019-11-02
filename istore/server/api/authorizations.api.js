@@ -4,11 +4,23 @@ const router = express.Router();
 const AuthorizationDao = require("../dao/authorization.dao");
 
 router.route("/").get(async (req, res, next) => {
-    const authorizations = await AuthorizationDao.find();
-    if (!authorizations) {
-        res.json({});
+    const name = req.query.name;
+    // console.log(name);
+
+    if (!name) {
+        const authorizations = await AuthorizationDao.find();
+        if (!authorizations) {
+            res.json({});
+        } else {
+            res.json(authorizations);
+        }
     } else {
-        res.json(authorizations);
+        const authorization = await AuthorizationDao.findOneByName(name);
+        if (!authorization) {
+            res.json({});
+        } else {
+            res.json(authorization);
+        }
     }
 });
 

@@ -1,28 +1,38 @@
 var createError = require("http-errors");
-var express     = require("express");
-var path        = require("path");
+var express = require("express");
+var path = require("path");
 //const csrf      = require('csurf');
 //const cors      = require('cors');
-const session   = require('express-session');
+const session = require("express-session");
 var cookieParser = require("cookie-parser");
-var logger      = require("morgan");
-const mongoose  = require("mongoose");
-var bodyParser  = require("body-parser");
+var logger = require("morgan");
+const mongoose = require("mongoose");
+var bodyParser = require("body-parser");
 
-var indexRouter = require("./server/routes/index");
-var databaseRouter = require("./server/routes/database");
-
-const loginRouter = require('./server/api/login');
-const logoutRouter = require('./server/api/logout');
+const indexRouter = require("./server/routes/index");
+const databaseRouter = require("./server/routes/database");
+const loginRouter = require("./server/api/login");
+const logoutRouter = require("./server/api/logout");
+const citiesRouter = require("./server/api/cities.api");
+const districtsRouter = require("./server/api/districts.api");
+const streetsRouter = require("./server/api/streets.api");
+const authorizationsRouter = require("./server/api/authorizations.api");
+const storeCategoriesRouter = require("./server/api/storeCategories.api");
+const usersRouter = require("./server/api/users.api");
+const productCategoriesRouter = require("./server/api/productCategories.api");
+const productsRouter = require("./server/api/products.api");
 
 var app = express();
 const port = process.env.PORT || 5000;
 
 // Write logger by morgan module
-const fs = require('fs');
-const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {
-    flags: 'a'
-})
+const fs = require("fs");
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname, "access.log"),
+    {
+        flags: "a"
+    }
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -34,11 +44,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session({
-    secret: 'my secret',
-    resave: false,
-    saveUninitialized: true
-}))
+app.use(
+    session({
+        secret: "my secret",
+        resave: false,
+        saveUninitialized: true
+    })
+);
 
 //app.use(cors());
 //app.use(csrf({cookie: false}));
@@ -58,11 +70,18 @@ app.use(session({
     next();
 })*/
 
-app.use("/", indexRouter);  
+app.use("/", indexRouter);
 app.use("/database", databaseRouter);
-
-app.use('/api/login', loginRouter);
-app.use('/api/logout', logoutRouter);
+app.use("/api/login", loginRouter);
+app.use("/api/logout", logoutRouter);
+app.use("/api/cities", citiesRouter);
+app.use("/api/districts", districtsRouter);
+app.use("/api/streets", streetsRouter);
+app.use("/api/authorizations", authorizationsRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/store-categories", storeCategoriesRouter);
+app.use("/api/product-categories", productCategoriesRouter);
+app.use("/api/products", productsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

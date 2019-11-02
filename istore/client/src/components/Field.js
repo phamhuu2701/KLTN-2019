@@ -6,24 +6,7 @@ import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
 import { onSearchProduct } from './Maps'
 
-const prices = [
-    { min: 0, max: 2000000 },
-    { min: 2000000, max: 3000000 },
-    { min: 3000000, max: 4000000 },
-    { min: 4000000, max: 6000000 },
-    { min: 6000000, max: 1000000 },
-    { min: 10000000, max: 999000000 }
-];
-const spaces = [
-    { min: 0, max: 20 },
-    { min: 20, max: 30 },
-    { min: 30, max: 40 },
-    { min: 40, max: 60 },
-    { min: 60, max: 100 },
-    { min: 100, max: 999 }
-];
-const distances = [2, 5, 10, 15, 20, 30];
-
+const distances = [1, 2, 5, 10, 15, 20, 40];
 
 class SearchBar extends Component {
     constructor(props) {
@@ -95,10 +78,6 @@ export default class Fields extends Component {
         };
 
         this.onSearchKeyUp = this.onSearchKeyUp.bind(this);
-        this.onCitySelectChange = this.onCitySelectChange.bind(this);
-        this.onDistrictSelectChange = this.onDistrictSelectChange.bind(this);
-        this.onPriceSelectChange = this.onPriceSelectChange.bind(this);
-        this.onSpaceSelectChange = this.onSpaceSelectChange.bind(this);
         this.onDistanceSelectChange = this.onDistanceSelectChange.bind(this);
     }
 
@@ -116,61 +95,6 @@ export default class Fields extends Component {
                 searchFilter: e.target.value.trim(),
             });
         }
-    }
-
-    onCitySelectChange(e) {
-        if (e.target.value) {
-
-            // Get city by id
-            fetch("/api/cities/" + e.target.value)
-                .then(res => res.json())
-                .then(city => {
-                    this.setState({
-                        cityFilter: city,
-                        districtFilter: {}
-                    });
-
-                    // Get districts by city
-                    fetch("/api/districts/cities/" + city._id)
-                        .then(res => res.json())
-                        .then(districts => {
-                            this.setState({
-                                districts: districts
-                            });
-
-                            // Refresh district select
-                            document.getElementById(
-                                "districts-select"
-                            ).selectedIndex = 0;
-                        });
-                });
-        }
-    }
-
-    onDistrictSelectChange(e) {
-        if (e.target.value) {
-
-            // Get district by id
-            fetch("/api/districts/" + e.target.value)
-                .then(res => res.json())
-                .then(district => {
-                    this.setState({
-                        districtFilter: district
-                    });
-                });
-        }
-    }
-
-    onPriceSelectChange(e) {
-        this.setState({
-            priceFilter: prices[e.target.value]
-        })
-    }
-
-    onSpaceSelectChange(e) {
-        this.setState({
-            spaceFilter: spaces[e.target.value]
-        })
     }
 
     onDistanceSelectChange(e) {
@@ -203,12 +127,13 @@ export default class Fields extends Component {
                             <Form.Group>
                                 <Form.Control as="select" onChange={this.onDistanceSelectChange}>
                                     <option value={-1}>Tất cả</option>
-                                    <option value={0}>2 km</option>
-                                    <option value={1}>5 km</option>
-                                    <option value={2}>10 km</option>
-                                    <option value={3}>15 km</option>
-                                    <option value={4}>20 km</option>
-                                    <option value={5}>30 km</option>
+                                    <option value={0}>1 km</option>
+                                    <option value={1}>2 km</option>
+                                    <option value={2}>5 km</option>
+                                    <option value={3}>10 km</option>
+                                    <option value={4}>15 km</option>
+                                    <option value={5}>20 km</option>
+                                    <option value={6}>40 km</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -224,10 +149,11 @@ export default class Fields extends Component {
                             <Form.Group>
                                 <Form.Control as="select" onChange={this.onDistanceSelectChange}>
                                     <option value={-1}>Mới nhất</option>
-                                    <option value={0}>Giá tăng dần</option>
-                                    <option value={1}>Giá giảm dần</option>
-                                    <option value={2}>Bán kính tăng dần</option>
-                                    <option value={3}>Bán kính giảm dần</option>
+                                    <option value={0}>Phổ biến nhất</option>
+                                    <option value={1}>Giá tăng dần</option>
+                                    <option value={2}>Giá giảm dần</option>
+                                    <option value={3}>Bán kính tăng dần</option>
+                                    <option value={4}>Bán kính giảm dần</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
