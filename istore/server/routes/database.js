@@ -7,6 +7,8 @@ const streetCollection = require("../test/defaultDatabase/streetCollection");
 const authorizationCollection = require("../test/defaultDatabase/authorizationCollection");
 const userCollection = require("../test/defaultDatabase/userCollection");
 const storeCategoryCollection = require("../test/defaultDatabase/storeCategoryCollection");
+const productCategoryCollection = require("../test/defaultDatabase/productCategoryCollection");
+const productCollection = require("../test/defaultDatabase/productCollection");
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -17,6 +19,8 @@ router.get("/", function(req, res, next) {
     authorizationCollection.createDefaultCollection();
     userCollection.createDefaultCollection();
     storeCategoryCollection.createDefaultCollection();
+    productCategoryCollection.createDefaultCollection();
+    productCollection.createDefaultCollection();
 
     res.send("Check server console.log");
 });

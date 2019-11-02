@@ -2,7 +2,7 @@ const StoreCategory = require("../../models/storeCategory.model");
 const StoreCategoryDao = require("../../dao/storeCategory.dao");
 
 const storeCategogys = [
-    "Cửa hàng dụng cụ dân dụng",
+    "Cửa hàng thiết bị dân dụng",
     "Cửa hàng tạp hoá",
     "Cửa hàng văn phòng phẩm",
     "Hiệu bánh",
