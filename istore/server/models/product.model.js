@@ -9,6 +9,7 @@ const productSchema = new Schema(
   {
     productCategory: { type: Schema.Types.ObjectId, ref: "ProductCategory" },
     name: { type: String, required: true, maxlength: 100, trim: true },
+    nameRemoveAccents: { type: String, required: true, maxlength: 100, trim: true },
     description: { type: String, required: true, maxlength: 2500, trim: true },
     price: { type: Number, required: true },
     saleoff: {type: Number},
