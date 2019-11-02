@@ -27,7 +27,7 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use(logger("combined", {stream: accessLogStream}));
+//app.use(logger("combine"/*, {stream: accessLogStream}*/));
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json

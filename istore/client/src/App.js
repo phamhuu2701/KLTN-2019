@@ -10,6 +10,7 @@ import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
 import StoreInformation from "./components/StoreInformation";
 import Information from "./components/Information";
+import MyStore from "./components/MyStore";
 
 export default class App extends Component {
 
@@ -49,11 +50,13 @@ export default class App extends Component {
                         </div>
                     </Route>
                     <Route path="/information">
-                        <Information isLoggedIn={this.state.isLoggedIn}/>
+                        <div className='app'>
+                            <Information isLoggedIn={this.state.isLoggedIn}/>
+                        </div>
                     </Route>
                     <Route path="/mystore">
                         <div className='app'>
-                            My store
+                            <MyStore isLoggedIn={this.state.isLoggedIn}/>
                         </div>
                     </Route>
                 </Switch>
