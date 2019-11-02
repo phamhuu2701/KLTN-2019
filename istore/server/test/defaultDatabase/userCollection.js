@@ -97,7 +97,7 @@ module.exports.createDefaultCollection = async () => {
                             avatars: user.avatars
                         });    
 
-                        console.log(userNew);
+                        // console.log(userNew);
                         UserDao.save(userNew);
                     }
                 });
