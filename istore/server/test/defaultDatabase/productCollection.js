@@ -478,13 +478,42 @@ const products = [
     }
 ];
 
+function removeAccents(str) {
+    var AccentsMap = [
+        "aàảãáạăằẳẵắặâầẩẫấậ",
+        "AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬ",
+        "dđ",
+        "DĐ",
+        "eèẻẽéẹêềểễếệ",
+        "EÈẺẼÉẸÊỀỂỄẾỆ",
+        "iìỉĩíị",
+        "IÌỈĨÍỊ",
+        "oòỏõóọôồổỗốộơờởỡớợ",
+        "OÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢ",
+        "uùủũúụưừửữứự",
+        "UÙỦŨÚỤƯỪỬỮỨỰ",
+        "yỳỷỹýỵ",
+        "YỲỶỸÝỴ"
+    ];
+    for (var i = 0; i < AccentsMap.length; i++) {
+        var re = new RegExp("[" + AccentsMap[i].substr(1) + "]", "g");
+        var char = AccentsMap[i][0];
+        str = str.replace(re, char);
+    }
+    return str.toLowerCase();
+}
+
 module.exports.createDefaultCollection = async () => {
     const productsArray = await ProductDao.find();
     if (productsArray.length <= 0) {
         console.log("Product collection is empty.");
         products.map((product, i) => {
+
+            const nameRemoveAccents = removeAccents(product.name);
+
             let productNew = new Product();
             productNew.name = product.name;
+            productNew.nameRemoveAccents = nameRemoveAccents;
             productNew.description = product.description;
             productNew.price = product.price;
             productNew.saleoff = product.saleoff;
