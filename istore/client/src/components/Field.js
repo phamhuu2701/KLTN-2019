@@ -22,10 +22,26 @@ class SearchBar extends Component {
     onEnterProduct(e) {
         //onChangeSearchAddress(e.target.value);
         if (e.which === 13 || e.which === 10) {
-            onSearchProduct(e.target.value, formattedAddress => {
+            /*onSearchProduct(e.target.value, formattedAddress => {
                 // Set full address in search input
                 this.autocompleteInput.current.value = formattedAddress;
-            });
+            });*/
+            // Find product
+            const search = e.target.value;
+            fetch('/api/products/searchByName?search=' + search, {
+                method: 'GET'
+            })
+            .then(result => {
+                if (result.status === 200) {
+                    return result.json();
+                } else {
+                    console.log('Không tìm thấy');
+                }
+            })
+            .then(products => {
+                console.log(products[0].name);
+            })
+            .catch(err => console.log(err))
         } else {
             //this.handleScriptLoad();
             //onPlaceAutocomplete(this.autocompleteInput.current)

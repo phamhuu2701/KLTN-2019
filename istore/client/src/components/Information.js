@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 export default class Information extends Component {
-	constructor(props) {
+	/*constructor(props) {
 		super(props);
-	}
+	}*/
 
 	componentDidUpdate() {
 		if (this.props.isLoggedIn === false) {

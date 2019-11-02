@@ -28,6 +28,9 @@ module.exports = {
                 });
         }).catch(() => null);
     },
+    searchByName: search => {
+        return Model.find({name: {$regex: search, $options: 'g'}});
+    },
     save: model => {
         return new Promise((resolve, reject) => {
             model.save((err, result) => {
