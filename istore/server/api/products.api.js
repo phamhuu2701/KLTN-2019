@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const Product = require("../models/product.model");
 const ProductDao = require("../dao/product.dao");
+const StoreDao = require("../dao/store.dao");
 
 const slug = require('../util/slug');
 
@@ -47,18 +47,49 @@ router
 */
 router.route('/searchByName')
 .get((req, res) => {
-    const input = req.query.search;
-    const search = '/' + slug(input, '|') + '/';
-    console.log(search)
+    const {lat, lng, distance} = req.query;
+    
+    const search = slug(req.query.search, '.*');
+
+    // Find product by product name
     ProductDao.searchByName(search)
     .then(products => {
         if (products.length > 0) {
-            res.status(200).json(products);
+            // Get product ids
+            
+            let results;
+            // Find store by products list
+            addStoreIntoProduct(products, [parseFloat(lng), parseFloat(lat)], distance, (results) => {
+                if (results.length > 0) {
+                    return res.status(200).json(results);
+                } else {
+                    return res.status(201).json({"mesage": "Không tìm thấy sản phẩm mong muốn!"});
+                }
+            })
         } else {
-            res.status(201).json({"mesage": "Không tìm thấy sản phẩm mong muốn!"});
+            return res.status(201).json({"mesage": "Không tìm thấy sản phẩm mong muốn!"});
         }
     })
     .catch(err => console.log(err));
 })
+
+const addStoreIntoProduct = async (products, latlng, distance, cb) => {
+     let stores = [], results = [];
+    for (var i = 0; i < products.length; i++) {
+        await StoreDao.findByProduct(products[i]._id, latlng, distance)
+        .then(store => {
+            if (store) {
+                stores.push(store);
+                results = products.map((product, index) => {
+                    return {...product, store: stores[index]}
+                })
+            } else {
+                products.splice(i, 1);
+            }
+        })
+        .catch(err => console.log(err))
+    }
+    cb(results);
+}
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import "./StoreInformation.css";
+import "./ProductInformation.css";
 import StoreDetail from "./StoreDetail";
 
 export default class StoreInformation extends Component {
@@ -26,11 +26,9 @@ export default class StoreInformation extends Component {
     return (
       <div className="store-info" ref={this.wrapperStoreRef}>
         <div>
-          <a
-            href="javascipt:void(0)"
+          <a href="javascipt:void(0)"
             className="closebtn"
-            onClick={this.closeStoreInfo}
-          >
+            onClick={this.closeStoreInfo}>
             <img src="./icons/next_color.svg"></img>
           </a>
         </div>

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import {Map, /*InfoWindow,*/ Marker, GoogleApiWrapper} from 'google-maps-react';
 
-import {onGetCurrentPositionService, geocodingService, showNearHostelService, getRedirectMapService, recenterMapService, loadMapService} from '../services/maps.service.js'
+import {onGetCurrentPositionService, geocodingService, geocodingByLocationService, onSearchProductService, showNearStoreService, getRedirectMapService, recenterMapService, loadMapService} from '../services/maps.service.js'
 
 import './Maps.css'
 
@@ -16,11 +16,12 @@ export function onSearchAddress (address, cb) {
     geocodingService(address, this, cb)
 }
 
-export function onSearchProduct (product, cb) {
-    // Find product and location of that products
-    // 
-    // Show nearby store existing product
-    // 
+export function onSearchAddressByLocation (latlng, cb) {
+    geocodingByLocationService(latlng, this, cb)
+}
+
+export function onSearchProduct (search, distance, cb) {
+    onSearchProductService(search, distance, this, cb);
 }
 
 export class MapContainer extends Component {
@@ -38,6 +39,8 @@ export class MapContainer extends Component {
 
     UNSAFE_componentWillMount() {
         onSearchAddress = onSearchAddress.bind(this);
+        onSearchProduct = onSearchProduct.bind(this);
+        onSearchAddressByLocation = onSearchAddressByLocation.bind(this);
         onGetCurrentPosition = onGetCurrentPosition.bind(this);
     }
 
@@ -70,10 +73,6 @@ export class MapContainer extends Component {
             currentDirection.setMap(null)
             currentDirection = null;
         }
-        // Clear old marker of client's location
-        if (this.marker) {
-            this.marker.setMap(null)
-        }
 
         // Clear current circle if existing
         if (currentCircle) {
@@ -81,15 +80,23 @@ export class MapContainer extends Component {
             currentCircle = null;
         }
 
-        this.clearNearHostel();
+        this.clearNearstore();
     }
 
-    showNearHostel(nearByStore) {
-        this.clearNearHostel();
-        showNearHostelService(this, markers, nearByStore);
+    cleanMapAndClientPosition() {
+        this.cleanMaps();
+        // Clear old marker of client's location
+        if (this.marker) {
+            this.marker.setMap(null)
+        }
     }
 
-    clearNearHostel() {
+    showNearStore(nearbyStore) {
+        this.clearNearstore();
+        showNearStoreService(this, markers, nearbyStore);
+    }
+
+    clearNearstore() {
         markers.forEach(marker => {
             marker.setMap(null)
         })

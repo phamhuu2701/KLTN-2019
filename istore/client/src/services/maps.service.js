@@ -16,7 +16,32 @@ export function onGetCurrentPositionService(thisMap) {
     }
 }
 
+// Get Address or geometry (latitude and longitude)
+export function onSearchProductService(search, distance, thisMap, cb) {
+    // Find product and location of that products
+    fetch(`/api/products/searchByName?search=${search}&lat=${thisMap.state.currentLocation.lat}&lng=${thisMap.state.currentLocation.lng}&distance=${distance}`, {
+        method: 'GET'
+    })
+    .then(result => {
+        if (result.status === 200) {
+            return result.json();
+        } else {
+            return [];
+        }
+    })
+    .then(result => {
+        // Display result on result area
+        cb(result);
 
+        // Show nearby store existing product
+        thisMap.cleanMaps();
+        const nearbyStore = result.map(product => {
+            return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
+        })
+        thisMap.showNearStore(nearbyStore);
+    })
+    .catch(err => console.log(err))
+}
 
 // Get Address or geometry (latitude and longitude)
 export function geocodingService(address, thisMap, cb) {
@@ -28,10 +53,10 @@ export function geocodingService(address, thisMap, cb) {
             // Get Lat and Lng from entered location
             const { lat, lng } = results[0].geometry.location;
 
-            thisMap.cleanMaps();
+            thisMap.cleanMapAndClientPosition();
 
             // Test Direction
-            thisMap.getRedirectMap(new maps.LatLng(thisMap.state.currentLocation.lat, thisMap.state.currentLocation.lng), results[0].geometry.location);
+            //thisMap.getRedirectMap(new maps.LatLng(thisMap.state.currentLocation.lat, thisMap.state.currentLocation.lng), results[0].geometry.location);
 
             thisMap.setState({
                 currentLocation: {
@@ -41,16 +66,7 @@ export function geocodingService(address, thisMap, cb) {
             })
 
             // Test draw a circle on map from center position 
-            thisMap.drawCircleFromCenter(thisMap.state.currentLocation, 1000)
-
-            // Show near hostels
-            const nearbyHostel = [
-                [10.8613154, 106.75557779999997],
-                [10.8513154, 106.76557779999997],
-                [10.8413154, 106.74557779999997],
-                [10.8433154, 106.75457779999997]
-            ]
-            thisMap.showNearHostel(nearbyHostel);
+            //thisMap.drawCircleFromCenter(thisMap.state.currentLocation, 1000)
 
             cb(results[0].formatted_address)
         } else {
@@ -59,7 +75,27 @@ export function geocodingService(address, thisMap, cb) {
     })
 }
 
-export function showNearHostelService(thisMap, markers, nearByStore) {
+// Get Address or geometry (latitude and longitude)
+export function geocodingByLocationService(latlng, thisMap, cb) {
+    const google = thisMap.props.google;
+    const maps = google.maps;
+    const geocoder = new maps.Geocoder();
+    geocoder.geocode({'location': latlng}, (results, status) => {
+        if (status === maps.GeocoderStatus.OK) {
+            /*console.log(latlng);
+            for (var i = 0; i < results.length; i++) {
+                const {lat, lng} = results[i].geometry.location
+                console.log(lat(), lng());
+            }*/
+            // Get Lat and Lng from entered location
+            cb(results[0].formatted_address)
+        } else {
+            return alert( 'Không tìm vị trí: ' + status );
+        }
+    })
+}
+
+export function showNearStoreService(thisMap, markers, nearByStore) {
     const {google} = thisMap.props;
     const maps = google.maps;
 

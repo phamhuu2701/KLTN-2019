@@ -8,7 +8,7 @@ import Logo from "./components/Logo";
 import Field from "./components/Field";
 import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
-import StoreInformation from "./components/StoreInformation";
+import ProductInformation from "./components/ProductInformation";
 import Information from "./components/Information";
 import MyStore from "./components/MyStore";
 
@@ -24,9 +24,9 @@ export default class App extends Component {
 
     componentDidMount() {
         // Refesh page on page resize
-        window.onresize = function() {
-            this.location.reload();
-        };
+        // window.onresize = function() {
+        //     this.location.reload();
+        // };
     }
 
     logInToggle(state) {
@@ -46,8 +46,9 @@ export default class App extends Component {
                             <div className="app-body-right">
                                 <Maps />
                             </div>
-                            <StoreInformation />
+                            <ProductInformation />
                         </div>
+                        <DropdownUser logInToggle={this.logInToggle}/>
                     </Route>
                     <Route path="/information">
                         <div className='app'>
@@ -60,7 +61,6 @@ export default class App extends Component {
                         </div>
                     </Route>
                 </Switch>
-                <DropdownUser logInToggle={this.logInToggle}/>
             </Router>
         );
     }

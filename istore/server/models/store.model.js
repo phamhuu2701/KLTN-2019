@@ -8,6 +8,7 @@ const options = {
 const storeSchema = new Schema(
   {
     user: { type: Schema.Types.ObjectId, ref: "User" },
+    phone: {type: String, maxlength: 10, trim: true, required: true},
     storeCategory: { type: Schema.Types.ObjectId, ref: "StoreCategory" },
     city: { type: Schema.Types.ObjectId, ref: "City" },
     district: { type: Schema.Types.ObjectId, ref: "District" },

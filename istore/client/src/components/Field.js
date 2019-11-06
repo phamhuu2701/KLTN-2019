@@ -22,26 +22,12 @@ class SearchBar extends Component {
     onEnterProduct(e) {
         //onChangeSearchAddress(e.target.value);
         if (e.which === 13 || e.which === 10) {
-            /*onSearchProduct(e.target.value, formattedAddress => {
-                // Set full address in search input
-                this.autocompleteInput.current.value = formattedAddress;
-            });*/
             // Find product
             const search = e.target.value;
-            fetch('/api/products/searchByName?search=' + search, {
-                method: 'GET'
+            const distance = document.querySelector('select[class="form-control"]').value;
+            onSearchProduct(search, distance, result => {
+                this.props.findProductHandler(result);
             })
-            .then(result => {
-                if (result.status === 200) {
-                    return result.json();
-                } else {
-                    console.log('Không tìm thấy');
-                }
-            })
-            .then(products => {
-                console.log(products[0].name);
-            })
-            .catch(err => console.log(err))
         } else {
             //this.handleScriptLoad();
             //onPlaceAutocomplete(this.autocompleteInput.current)
@@ -79,22 +65,62 @@ class SearchBar extends Component {
     }
 }
 
+export class ResultArea extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            result: [],
+            message: ''
+        }
+    }
+
+    findStore() {
+        this.setState({
+            result: this.props.result,
+            message: 'Không tìm thấy sản phẩm!'
+        })
+        // Set marker for all store
+        /*if (this.state.result.length > 0) {
+            const storeList = this.state.result.map(val => {
+                return val.store;
+            })
+        }*/
+    }
+
+    render() {
+        if (this.state.result.length > 0) {
+            return (
+                <div className="field-results-list">
+                    {
+                        this.state.result.map((result, index) => {
+                            return <FieldResultsItem key={index} code={index} info={result} storeName={result.store.title} imageAvatar={result.store.images[0]} price={result._doc.price} phone={result.store.phone} productName={result._doc.name} date='12/12/2019'/>
+                        })  
+                    }  
+                </div>
+            )
+        } else {
+           return (
+                <div className="field-results-list">
+                    {this.state.message}
+                </div>
+            )
+        }
+    }
+                        /*<FieldResultsItem code='1' storeName='Cửa hàng tạp hóa' price='3.000' phone='0739495969' productName='Mì gấu đỏ chua cay' date='21/12/2019' />*/
+}
+
+
 export default class Fields extends Component {
     constructor() {
         super();
         this.state = {
-            cities: [],
-            districts: [],
-            searchFilter: "",
-            cityFilter: {},
-            districtFilter: {},
-            priceFilter: {},
-            spaceFilter: {},
-            distanceFilter: 0
+            result: []
         };
+        this.findProductRef = React.createRef();
 
         this.onSearchKeyUp = this.onSearchKeyUp.bind(this);
         this.onDistanceSelectChange = this.onDistanceSelectChange.bind(this);
+        this.findProductHandler = this.findProductHandler.bind(this);
     }
 
     componentDidMount() {
@@ -108,7 +134,7 @@ export default class Fields extends Component {
     onSearchKeyUp(e) {
         if (e.keyCode === 13) {
             this.setState({
-                searchFilter: e.target.value.trim(),
+                searchFilter: e.target.value.trim()
             });
         }
     }
@@ -117,6 +143,13 @@ export default class Fields extends Component {
         this.setState({
             distanceFilter: distances[e.target.value]
         })
+    }
+
+    findProductHandler(result) {
+        this.setState({
+            result: result
+        })
+        this.findProductRef.current.findStore();
     }
 
     render() {
@@ -128,7 +161,7 @@ export default class Fields extends Component {
                             <Form.Group className="field-filter-form-group-search">
                                 <img alt="" src="icons/search.svg"></img>
                                 <div>
-                                    <SearchBar/>
+                                    <SearchBar findProductHandler={this.findProductHandler}/>
                                 </div>
                             </Form.Group>
                         </Col>
@@ -141,15 +174,14 @@ export default class Fields extends Component {
                         </Col>
                         <Col sm={8}>
                             <Form.Group>
-                                <Form.Control as="select" onChange={this.onDistanceSelectChange}>
-                                    <option value={-1}>Tất cả</option>
-                                    <option value={0}>1 km</option>
-                                    <option value={1}>2 km</option>
-                                    <option value={2}>5 km</option>
-                                    <option value={3}>10 km</option>
-                                    <option value={4}>15 km</option>
-                                    <option value={5}>20 km</option>
-                                    <option value={6}>40 km</option>
+                                <Form.Control as="select" onChange={this.onDistanceSelectChange} defaultValue={10000}>
+                                    <option value={1000}>1 km</option>
+                                    <option value={2000}>2 km</option>
+                                    <option value={5000}>5 km</option>
+                                    <option value={10000}>10 km</option>
+                                    <option value={15000}>15 km</option>
+                                    <option value={20000}>20 km</option>
+                                    <option value={40000}>40 km</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -175,10 +207,7 @@ export default class Fields extends Component {
                         </Col>
                     </Row>
                     <hr className="field-hr" />
-                    <div className="field-results-list">
-                        <FieldResultsItem code='0' storeName='Cửa hàng ăn vặt' price='5.500' phone='0909897969' productName='Trà sữa trân châu' date='12/12/2019' />
-                        <FieldResultsItem code='1' storeName='Cửa hàng tạp hóa' price='3.000' phone='0739495969' productName='Mì gấu đỏ chua cay' date='21/12/2019' />
-                    </div>
+                    <ResultArea ref={this.findProductRef} result={this.state.result}/>
                 </div>
                 <hr className="field-hr" />
                 <Footer />
