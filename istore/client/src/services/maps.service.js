@@ -19,42 +19,43 @@ export function onGetCurrentPositionService(thisMap) {
 // Get Address or geometry (latitude and longitude)
 export function onSearchProductService(search, distance, thisMap, cb) {
     // Find product and location of that products
-    fetch(`/api/products/searchByName?search=${search}&lat=${thisMap.state.currentLocation.lat}&lng=${thisMap.state.currentLocation.lng}&distance=${distance}`, {
-        method: 'GET'
-    })
-    .then(result => {
-        if (result.status === 200) {
-            return result.json();
-        } else {
-            return [];
-        }
-    })
-    .then(result => {
-        // Display result on result area
-        cb(result);
+    if (search !== '') {
+        fetch(`/api/products/searchByName?search=${search}&lat=${thisMap.state.currentLocation.lat}&lng=${thisMap.state.currentLocation.lng}&distance=${distance}`, {
+            method: 'GET'
+        })
+        .then(result => {
+            if (result.status === 200) {
+                return result.json();
+            } else {
+                return [];
+            }
+        })
+        .then(result => {
+            // Display result on result area
+            cb(result);
 
-        // Show nearby store existing product
-        thisMap.cleanMaps();
-        if (result.length > 0) {
-            console.log(distance);
-            thisMap.drawCircleFromCenter(thisMap.state.currentLocation, +distance)
-            const allStore = result.map(product => {
-                return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
-            })
-            /*const nearbyStore = allStore.filter((store, index, array) => {
-                console.log(store, array.indexOf(store), index, array.lastIndexOf(store) === index);
-                return array.indexOf(store) == index;
-            })*/
-            const nearbyStore = [];
-            allStore.forEach(loc => {
-                if (nearbyStore.indexOf(loc) === -1) {
-                    nearbyStore.push(loc);
-                }
-            })
-            thisMap.showNearStore(nearbyStore);
-        }
-    })
-    .catch(err => console.log(err))
+            // Show nearby store existing product
+            thisMap.cleanMaps();
+            if (result.length > 0) {
+                thisMap.drawCircleFromCenter(thisMap.state.currentLocation, +distance)
+                const allStore = result.map(product => {
+                    return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
+                })
+                /*const nearbyStore = allStore.filter((store, index, array) => {
+                    console.log(store, array.indexOf(store), index, array.lastIndexOf(store) === index);
+                    return array.indexOf(store) == index;
+                })*/
+                const nearbyStore = [];
+                allStore.forEach(loc => {
+                    if (nearbyStore.indexOf(loc) === -1) {
+                        nearbyStore.push(loc);
+                    }
+                })
+                thisMap.showNearStore(nearbyStore);
+            }
+        })
+        .catch(err => console.log(err))
+    }
 }
 
 // Get Address or geometry (latitude and longitude)

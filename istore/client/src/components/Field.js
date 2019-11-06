@@ -106,7 +106,6 @@ export class ResultArea extends Component {
             )
         }
     }
-                        /*<FieldResultsItem code='1' storeName='Cửa hàng tạp hóa' price='3.000' phone='0739495969' productName='Mì gấu đỏ chua cay' date='21/12/2019' />*/
 }
 
 
@@ -124,7 +123,7 @@ export default class Fields extends Component {
 
     onDistanceSelectChange(e) {
         const search = document.querySelector('#autocomplete').value;
-        const distance = document.querySelector('select[class="form-control"]').value;
+        const distance = e.target.value;
         onSearchProduct(search, distance, result => {
             this.findProductHandler(result);
         })
