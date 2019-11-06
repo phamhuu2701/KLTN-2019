@@ -85,7 +85,7 @@ class ProductDetail extends Component {
                   <span className="product-detail-product-body-price-main">
                     299.000 đ
                   </span>
-                  <span className="store-detail-product-body-origin-price">
+                  <span className="product-detail-product-body-origin-price">
                     (299.000 đ)
                   </span>
                 </div>

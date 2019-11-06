@@ -140,8 +140,10 @@ export default class Fields extends Component {
     }
 
     onDistanceSelectChange(e) {
-        this.setState({
-            distanceFilter: distances[e.target.value]
+        const search = document.querySelector('#autocomplete').value;
+        const distance = document.querySelector('select[class="form-control"]').value;
+        onSearchProduct(search, distance, result => {
+            this.findProductHandler(result);
         })
     }
 

@@ -35,22 +35,22 @@ export function onSearchProductService(search, distance, thisMap, cb) {
 
         // Show nearby store existing product
         thisMap.cleanMaps();
-        const allStore = result.map(product => {
-            return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
-        })
-        /*const nearbyStore = allStore.filter((store, index, array) => {
-            console.log(store, array.indexOf(store), index, array.lastIndexOf(store) === index);
-            return array.indexOf(store) == index;
-        })*/
-        const nearbyStore = [];
-        allStore.forEach(loc => {
-            console.log(nearbyStore.indexOf(loc));
-            console.log(nearbyStore);
-            if (nearbyStore.indexOf(loc) === -1) {
-                nearbyStore.push(loc);
-            }
-        })
-        thisMap.showNearStore(nearbyStore);
+        if (result.length > 0) {
+            const allStore = result.map(product => {
+                return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
+            })
+            /*const nearbyStore = allStore.filter((store, index, array) => {
+                console.log(store, array.indexOf(store), index, array.lastIndexOf(store) === index);
+                return array.indexOf(store) == index;
+            })*/
+            const nearbyStore = [];
+            allStore.forEach(loc => {
+                if (nearbyStore.indexOf(loc) === -1) {
+                    nearbyStore.push(loc);
+                }
+            })
+            thisMap.showNearStore(nearbyStore);
+        }
     })
     .catch(err => console.log(err))
 }

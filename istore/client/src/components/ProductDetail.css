@@ -112,13 +112,13 @@
   font-weight: bold;
 }
 
-.store-detail-product-body-origin-price {
+.product-detail-product-body-origin-price {
   font-size: 1em;
   text-decoration: line-through;
   margin-left: 20px;
 }
 
-.store-detail-product-body-price-sale {
+.product-detail-product-body-price-sale {
   float: right;
   background-color: #fff;
   color: orangered;
