@@ -11,6 +11,7 @@ import DropdownUser from "./components/DropdownUser";
 import StoreInformation from "./components/StoreInformation";
 import Information from "./components/Information";
 import MyStore from "./components/MyStore";
+import Store from "./components/electro-template/Store";
 
 export default class App extends Component {
 
@@ -48,6 +49,7 @@ export default class App extends Component {
                             </div>
                             <StoreInformation />
                         </div>
+                        <DropdownUser logInToggle={this.logInToggle}/>
                     </Route>
                     <Route path="/information">
                         <div className='app'>
@@ -59,8 +61,12 @@ export default class App extends Component {
                             <MyStore isLoggedIn={this.state.isLoggedIn}/>
                         </div>
                     </Route>
+                    <Route path="/store">
+                        <div className='app'>
+                            <Store />
+                        </div>
+                    </Route>
                 </Switch>
-                <DropdownUser logInToggle={this.logInToggle}/>
             </Router>
         );
     }

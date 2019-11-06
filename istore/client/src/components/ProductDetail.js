@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import { Row, Col, Image, Button } from "react-bootstrap";
-import "./StoreDetail.css";
+import "./ProductDetail.css";
 
-class StoreDetail extends Component {
+class ProductDetail extends Component {
   render() {
     return (
-      <div className="StoreDetail">
-        <div className="store-detail-header">
+      <div className="ProductDetail">
+        <div className="product-detail-header">
           <Row>
             <Col sm={5}>
-              <div className="store-detail-product-images">
-                <div className="store-detail-product-images-avatar">
+              <div className="product-detail-product-images">
+                <div className="product-detail-product-images-avatar">
                   <Image src="./images/image1.jpg" />
                 </div>
-                <div className="store-detail-product-images-more">
+                <div className="product-detail-product-images-more">
                   <div>
                     <Image src="./images/image1.jpg" />
                   </div>
@@ -30,30 +30,30 @@ class StoreDetail extends Component {
                     <Image src="./images/image1.jpg" />
                   </div>
                 </div>
-                <div className="store-detail-product-images-more-icons">
-                  <div className="store-detail-product-images-more-icons-previous">
+                <div className="product-detail-product-images-more-icons">
+                  <div className="product-detail-product-images-more-icons-previous">
                     <Image src="./icons/previous.svg" />
                   </div>
-                  <div className="store-detail-product-images-more-icons-next">
+                  <div className="product-detail-product-images-more-icons-next">
                     <Image src="./icons/next.svg" />
                   </div>
                 </div>
               </div>
             </Col>
             <Col sm={7}>
-              <div className="store-detail-product-body">
-                <div className="store-detail-product-body-title">
+              <div className="product-detail-product-body">
+                <div className="product-detail-product-body-title">
                   <h5>
                     Vỏ chống nước cho GoPro hero 5, GoPro hero 6, GoPro hero 7,
                     GoPro new hero 2018
                   </h5>
                 </div>
-                <div className="store-detail-product-body-title-sub">
-                  <div className="store-detail-product-body-rate">
-                    <span className="store-detail-product-body-rate-count">
+                <div className="product-detail-product-body-title-sub">
+                  <div className="product-detail-product-body-rate">
+                    <span className="product-detail-product-body-rate-count">
                       3.5
                     </span>
-                    <span className="store-detail-product-body-rate-title">
+                    <span className="product-detail-product-body-rate-title">
                       <Image src="./icons/star_liked.svg" />
                       <Image src="./icons/star_liked.svg" />
                       <Image src="./icons/star_liked.svg" />
@@ -61,58 +61,58 @@ class StoreDetail extends Component {
                       <Image src="./icons/star_not_liked.svg" />
                     </span>
                   </div>
-                  <div className="store-detail-product-body-comment">
-                    <span className="store-detail-product-body-comment-count">
+                  <div className="product-detail-product-body-comment">
+                    <span className="product-detail-product-body-comment-count">
                       2.2k
                     </span>
-                    <span className="store-detail-product-body-comment-title">
+                    <span className="product-detail-product-body-comment-title">
                       Đánh giá
                     </span>
                   </div>
-                  <div className="store-detail-product-body-sell">
-                    <span className="store-detail-product-body-count">
+                  <div className="product-detail-product-body-sell">
+                    <span className="product-detail-product-body-count">
                       5.7k
                     </span>
-                    <span className="store-detail-product-body-sell-title">
+                    <span className="product-detail-product-body-sell-title">
                       Đã bán
                     </span>
                   </div>
                 </div>
-                <div className="store-detail-product-body-price">
-                  <span className="store-detail-product-body-price-sale">
+                <div className="product-detail-product-body-price">
+                  <span className="product-detail-product-body-price-sale">
                     GIẢM 20%
                   </span>
-                  <span className="store-detail-product-body-price-main">
+                  <span className="product-detail-product-body-price-main">
                     299.000 đ
                   </span>
                 </div>
-                <div className="store-detail-product-body-buy-count">
-                  <div className="store-detail-product-body-buy-count-header">
+                <div className="product-detail-product-body-buy-count">
+                  <div className="product-detail-product-body-buy-count-header">
                     Số lượng
                   </div>
-                  <div className="store-detail-product-body-buy-count-body">
-                    <div className="store-detail-product-body-buy-count-reduction">
+                  <div className="product-detail-product-body-buy-count-body">
+                    <div className="product-detail-product-body-buy-count-reduction">
                       {" "}
                       -{" "}
                     </div>
-                    <div className="store-detail-product-body-buy-count-number">
+                    <div className="product-detail-product-body-buy-count-number">
                       {" "}
                       1{" "}
                     </div>
-                    <div className="store-detail-product-body-buy-count-increase">
+                    <div className="product-detail-product-body-buy-count-increase">
                       {" "}
                       +{" "}
                     </div>
                   </div>
-                  <div className="store-detail-product-body-buy-count-footer">
+                  <div className="product-detail-product-body-buy-count-footer">
                     trong 10 sản phẩm có sẵn
                   </div>
                 </div>
-                <div className="store-detail-product-body-button-buy">
+                <div className="product-detail-product-body-button-buy">
                   <Button variant="success">GỌI NGAY</Button>
                 </div>
                 <hr />
-                <div className="store-detail-product-body-footer">
+                <div className="product-detail-product-body-footer">
                   <div>
                     <Image src="./icons/checked.svg" />
                     <span>Sản phẩm có sẵn tại cửa hàng</span>
@@ -131,86 +131,88 @@ class StoreDetail extends Component {
           </Row>
         </div>
         <hr />
-        <div className="store-detail-info">
+        <div className="product-detail-info">
           <Row>
             <Col>
-              <div className="store-detail-info-header">
-                <div className="store-detail-info-avatar">
+              <div className="product-detail-info-header">
+                <div className="product-detail-info-avatar">
                   <Image src="./images/image1.jpg" />
                 </div>
-                <div className="store-detail-info-content">
-                  <div className="store-detail-info-content-store-name">
+                <div className="product-detail-info-content">
+                  <div className="product-detail-info-content-store-name">
                     <h5>CanhToanShop's</h5>
                   </div>
-                  <div className="store-detail-info-content-store-address">
+                  <div className="product-detail-info-content-store-address">
                     05 Võ Văn Ngân, Thủ Đức, Hồ Chí Minh
                   </div>
                 </div>
               </div>
             </Col>
             <Col>
-              <div className="store-detail-info-contact">
-                <div className="store-detail-info-contact-phone">
+              <div className="product-detail-info-contact">
+                <div className="product-detail-info-contact-phone">
                   <Image src="./icons/phone.svg" />
                   <span>Gọi ngay</span>
                 </div>
-                <div className="store-detail-info-contact-view-shop">
-                  <Image src="./icons/search.svg" />
-                  <span>Xem shop</span>
-                </div>
+                <a href="/store">
+                    <div className="product-detail-info-contact-view-shop">
+                    <Image src="./icons/search.svg" />
+                    <span>Xem shop</span>
+                    </div>
+                </a>
               </div>
             </Col>
           </Row>
         </div>
         <hr />
-        <div className="store-detail-product-description">
-          <div className="store-detail-product-description-title">
+        <div className="product-detail-product-description">
+          <div className="product-detail-product-description-title">
             <h5>CHI TIẾT SẢN PHẨM</h5>
           </div>
           <Row>
             <Col sm={2}>
-              <span className="store-detail-product-description-table-header">
+              <span className="product-detail-product-description-table-header">
                 Danh mục
               </span>
             </Col>
             <Col sm={10}>
-              <span className="store-detail-product-description-table-content">
+              <span className="product-detail-product-description-table-content">
                 Điện Thoại & Phụ Kiện &gt; Pin sạc dự phòng
               </span>
             </Col>
           </Row>
           <Row>
             <Col sm={2}>
-              <span className="store-detail-product-description-table-header">
+              <span className="product-detail-product-description-table-header">
                 Mã sản phẩm
               </span>
             </Col>
             <Col sm={10}>
-              <span className="store-detail-product-description-table-content">
+              <span className="product-detail-product-description-table-content">
                 HAS2131
               </span>
             </Col>
           </Row>
           <Row>
             <Col sm={2}>
-              <span className="store-detail-product-description-table-header">
+              <span className="product-detail-product-description-table-header">
                 Thương hiệu
               </span>
             </Col>
             <Col sm={10}>
-              <span className="store-detail-product-description-table-content">
+              <span className="product-detail-product-description-table-content">
                 Samsung
               </span>
             </Col>
           </Row>
           <Row>
             <Col sm={2}>
-              <span className="store-detail-product-description-table-header">
+              <span className="product-detail-product-description-table-header">
                 Mô tả
               </span>
             </Col>
             <Col sm={10}>
-              <span className="store-detail-product-description-table-content">
+              <span className="product-detail-product-description-table-content">
                 Pin sạc dự phòng không dây Samsung Wireless Charger EB-U1200
                 10.000 mAh giúp cung cấp năng lượng cho các thiết bị công nghệ
                 của bạn bất cứ lúc nào Tích hợp sạc không dây tiện dụng Sản phẩm
@@ -233,67 +235,67 @@ class StoreDetail extends Component {
           </Row>
         </div>
         <hr />
-        <div className="store-detail-products-similar">
-          <div className="store-detail-products-similar-title">
+        <div className="product-detail-products-similar">
+          <div className="product-detail-products-similar-title">
             <h5>SẢN PHẨM TƯƠNG TỰ</h5>
           </div>
           <Row>
             <Col>
               <div>
-                <div className="store-detail-products-similar-item-image">
+                <div className="product-detail-products-similar-item-image">
                   <Image src="./images/image1.jpg" />
                 </div>
-                <div className="store-detail-products-similar-item-title">
+                <div className="product-detail-products-similar-item-title">
                   <span>
                     Pin Sạc dự phòng MINISO PB100 10000mAh hàng chính hãng
                   </span>
                 </div>
-                <div className="store-detail-products-similar-item-price">
+                <div className="product-detail-products-similar-item-price">
                   <span>199.000 đ</span>
                 </div>
               </div>
             </Col>
             <Col>
               <div>
-                <div className="store-detail-products-similar-item-image">
+                <div className="product-detail-products-similar-item-image">
                   <Image src="./images/image1.jpg" />
                 </div>
-                <div className="store-detail-products-similar-item-title">
+                <div className="product-detail-products-similar-item-title">
                   <span>
                     Pin Sạc dự phòng MINISO PB100 10000mAh hàng chính hãng
                   </span>
                 </div>
-                <div className="store-detail-products-similar-item-price">
+                <div className="product-detail-products-similar-item-price">
                   <span>199.000 đ</span>
                 </div>
               </div>
             </Col>
             <Col>
               <div>
-                <div className="store-detail-products-similar-item-image">
+                <div className="product-detail-products-similar-item-image">
                   <Image src="./images/image1.jpg" />
                 </div>
-                <div className="store-detail-products-similar-item-title">
+                <div className="product-detail-products-similar-item-title">
                   <span>
                     Pin Sạc dự phòng MINISO PB100 10000mAh hàng chính hãng
                   </span>
                 </div>
-                <div className="store-detail-products-similar-item-price">
+                <div className="product-detail-products-similar-item-price">
                   <span>199.000 đ</span>
                 </div>
               </div>
             </Col>
             <Col>
               <div>
-                <div className="store-detail-products-similar-item-image">
+                <div className="product-detail-products-similar-item-image">
                   <Image src="./images/image1.jpg" />
                 </div>
-                <div className="store-detail-products-similar-item-title">
+                <div className="product-detail-products-similar-item-title">
                   <span>
                     Pin Sạc dự phòng MINISO PB100 10000mAh hàng chính hãng
                   </span>
                 </div>
-                <div className="store-detail-products-similar-item-price">
+                <div className="product-detail-products-similar-item-price">
                   <span>199.000 đ</span>
                 </div>
               </div>
@@ -305,4 +307,4 @@ class StoreDetail extends Component {
   }
 }
 
-export default StoreDetail;
+export default ProductDetail;

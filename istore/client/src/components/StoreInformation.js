@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import "./StoreInformation.css";
-import StoreDetail from "./StoreDetail";
+import ProductDetail from "./ProductDetail";
 
 export default class StoreInformation extends Component {
   constructor() {
@@ -34,7 +34,7 @@ export default class StoreInformation extends Component {
             <img src="./icons/next_color.svg"></img>
           </a>
         </div>
-        <StoreDetail />
+        <ProductDetail />
       </div>
     );
   }

@@ -1,0 +1,20 @@
+.Store {
+    width: 100%;
+}
+
+.store-header-logo-format {
+    height: 100%;
+}
+
+.store-header-logo-format a {
+    height: 100%;
+}
+
+.store-header-search-format {
+    text-align: center;
+}
+
+.store-input-select-format {
+    max-width: 30%;
+    overflow: hidden;
+}
