@@ -93,8 +93,13 @@ export class ResultArea extends Component {
                 <div className="field-results-list">
                     {
                         this.state.result.map((result, index) => {
-                            return <FieldResultsItem key={index} code={index} info={result} storeName={result.store.title} imageAvatar={result.store.images[0]} price={result._doc.price} phone={result.store.phone} productName={result._doc.name} date='12/12/2019'/>
-                        })  
+                            try {
+                                return <FieldResultsItem key={index} code={index} info={result} storeName={result.store.title} imageAvatar={result.store.images[0]} price={result._doc.price} phone={result.store.phone} productName={result._doc.name} date='12/12/2019'/>
+                            } catch (error) {
+                                
+                            }
+                        })
+                        
                     }  
                 </div>
             )
