@@ -118,25 +118,8 @@ export default class Fields extends Component {
         };
         this.findProductRef = React.createRef();
 
-        this.onSearchKeyUp = this.onSearchKeyUp.bind(this);
         this.onDistanceSelectChange = this.onDistanceSelectChange.bind(this);
         this.findProductHandler = this.findProductHandler.bind(this);
-    }
-
-    componentDidMount() {
-        
-    }
-
-    componentDidUpdate() {
-        
-    }
-
-    onSearchKeyUp(e) {
-        if (e.keyCode === 13) {
-            this.setState({
-                searchFilter: e.target.value.trim()
-            });
-        }
     }
 
     onDistanceSelectChange(e) {

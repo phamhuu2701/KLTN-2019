@@ -36,6 +36,8 @@ export function onSearchProductService(search, distance, thisMap, cb) {
         // Show nearby store existing product
         thisMap.cleanMaps();
         if (result.length > 0) {
+            console.log(distance);
+            thisMap.drawCircleFromCenter(thisMap.state.currentLocation, +distance)
             const allStore = result.map(product => {
                 return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
             })
@@ -78,7 +80,7 @@ export function geocodingService(address, thisMap, cb) {
             })
 
             // Test draw a circle on map from center position 
-            //thisMap.drawCircleFromCenter(thisMap.state.currentLocation, 1000)
+            thisMap.drawCircleFromCenter(thisMap.state.currentLocation, 1000)
 
             cb(results[0].formatted_address)
         } else {
