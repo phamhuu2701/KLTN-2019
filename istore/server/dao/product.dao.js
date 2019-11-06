@@ -28,6 +28,11 @@ module.exports = {
                 });
         }).catch(() => null);
     },
+    searchByName: search => {
+        //return Model.find({nameRemoveAccents: {$search: "\" }})
+        //return Model.find({nameRemoveAccents: {$regex: /.bong.den./, $options: 'i'}});
+        return Model.find({nameRemoveAccents: {$regex: new RegExp(search, 'i')}});
+    },
     save: model => {
         return new Promise((resolve, reject) => {
             model.save((err, result) => {

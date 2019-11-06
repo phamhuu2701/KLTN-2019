@@ -7,9 +7,9 @@ import { showHideStoreInfo } from '../services/store.service'
 export default class Fields_Result_Item extends Component {
     render() {
         return (
-            <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code)}}>
+            <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code, this.props.info, this.props.map)}}>
                 <div className="field-results-item-img">
-                    <img src="images/nancy.jpg" alt="" />
+                    <img src={this.props.imageAvatar} alt="" />
                 </div>
                 <div className="field-results-item-desc">
                     <div className="field-results-item-desc-title">

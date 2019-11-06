@@ -96,8 +96,6 @@ module.exports.createDefaultCollection = async () => {
                             timeRegister: user.timeRegister,
                             avatars: user.avatars
                         });    
-
-                        // console.log(userNew);
                         UserDao.save(userNew);
                     }
                 });
