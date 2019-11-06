@@ -35,8 +35,20 @@ export function onSearchProductService(search, distance, thisMap, cb) {
 
         // Show nearby store existing product
         thisMap.cleanMaps();
-        const nearbyStore = result.map(product => {
+        const allStore = result.map(product => {
             return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
+        })
+        /*const nearbyStore = allStore.filter((store, index, array) => {
+            console.log(store, array.indexOf(store), index, array.lastIndexOf(store) === index);
+            return array.indexOf(store) == index;
+        })*/
+        const nearbyStore = [];
+        allStore.forEach(loc => {
+            console.log(nearbyStore.indexOf(loc));
+            console.log(nearbyStore);
+            if (nearbyStore.indexOf(loc) === -1) {
+                nearbyStore.push(loc);
+            }
         })
         thisMap.showNearStore(nearbyStore);
     })
@@ -95,19 +107,19 @@ export function geocodingByLocationService(latlng, thisMap, cb) {
     })
 }
 
-export function showNearStoreService(thisMap, markers, nearByStore) {
+export function showNearStoreService(thisMap, markers, nearbyStore) {
     const {google} = thisMap.props;
     const maps = google.maps;
 
     // Add some new markers
-    for (let i = 0; i < nearByStore.length; i++) {
+    for (let i = 0; i < nearbyStore.length; i++) {
         setTimeout(() => {
             console.log();
             markers.push(new maps.Marker({
                 name: 'Your location!',
                 map: thisMap.map,
                 animation: maps.Animation.DROP,
-                position: new thisMap.props.google.maps.LatLng(nearByStore[i][0], nearByStore[i][1]),
+                position: new thisMap.props.google.maps.LatLng(nearbyStore[i][0], nearbyStore[i][1]),
                 icon: {
                     url: '../icons/logo.svg',
                     anchor: new maps.Point(32,32),

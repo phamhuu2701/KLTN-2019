@@ -112,9 +112,6 @@
   font-weight: bold;
 }
 
-<<<<<<< HEAD:istore/client/src/components/ProductDetail.css
-.product-detail-product-body-price-sale {
-=======
 .store-detail-product-body-origin-price {
   font-size: 1em;
   text-decoration: line-through;
@@ -122,7 +119,6 @@
 }
 
 .store-detail-product-body-price-sale {
->>>>>>> b7f7a7e8a48496a870df6f8d4e8c79931b1a806f:istore/client/src/components/StoreDetail.css
   float: right;
   background-color: #fff;
   color: orangered;
