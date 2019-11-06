@@ -80,7 +80,7 @@ class StoreProductDetail extends Component {
                             <div className="qty-label">
                             Số lượng
                             <div className="input-number">
-                                <input type="number" value={1} />
+                                <input type="number" defaultValue={1} />
                                 <span className="qty-up">+</span>
                                 <span className="qty-down">-</span>
                             </div>
