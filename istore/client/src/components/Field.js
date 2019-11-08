@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { Form, Row, Col } from "react-bootstrap";
+import { Form, Row, Col, Spinner } from "react-bootstrap";
 
 import "./Field.css";
 import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
 import { onSearchProduct } from './Maps'
-
-const distances = [1, 2, 5, 10, 15, 20, 40];
 
 class SearchBar extends Component {
     constructor(props) {
@@ -79,12 +77,6 @@ export class ResultArea extends Component {
             result: this.props.result,
             message: 'Không tìm thấy sản phẩm!'
         })
-        // Set marker for all store
-        /*if (this.state.result.length > 0) {
-            const storeList = this.state.result.map(val => {
-                return val.store;
-            })
-        }*/
     }
 
     render() {
@@ -92,12 +84,8 @@ export class ResultArea extends Component {
             return (
                 <div className="field-results-list">
                     {
-                        this.state.result.map((result, index) => {
-                            try {
-                                return <FieldResultsItem key={index} code={index} info={result} storeName={result.store.title} imageAvatar={result.store.images[0]} price={result._doc.price} phone={result.store.phone} productName={result._doc.name} date='12/12/2019'/>
-                            } catch (error) {
-                                
-                            }
+                        this.state.result.map((res, index) => {
+                            return <FieldResultsItem key={index} code={index} info={res} storeName={res.store.title} imageAvatar={res.store.images[0]} price={res._doc.price} saleoff={res._doc.saleoff} phone={res.store.phone} productName={res._doc.name} distance={res.distance}/>
                         })
                         
                     }  
@@ -123,6 +111,7 @@ export default class Fields extends Component {
         this.findProductRef = React.createRef();
 
         this.onDistanceSelectChange = this.onDistanceSelectChange.bind(this);
+        this.onPrioritySelectChange = this.onPrioritySelectChange.bind(this);
         this.findProductHandler = this.findProductHandler.bind(this);
     }
 
@@ -132,6 +121,10 @@ export default class Fields extends Component {
         onSearchProduct(search, distance, result => {
             this.findProductHandler(result);
         })
+    }
+
+    onPrioritySelectChange(e) {
+        // Do somthing
     }
 
     findProductHandler(result) {
@@ -180,22 +173,25 @@ export default class Fields extends Component {
                 <div className="field-results">
                     <Row>
                         <Col className="field-results-title">
-                            <span>Kết quả</span>
+                            <span className="field-results-number">Kết quả</span>
                         </Col>
                         <Col className="field-results-filter">
                             <Form.Group>
-                                <Form.Control as="select" onChange={this.onDistanceSelectChange}>
-                                    <option value={-1}>Mới nhất</option>
+                                <Form.Control as="select" onChange={this.onPrioritySelectChange}>
                                     <option value={0}>Phổ biến nhất</option>
-                                    <option value={1}>Giá tăng dần</option>
-                                    <option value={2}>Giá giảm dần</option>
-                                    <option value={3}>Bán kính tăng dần</option>
-                                    <option value={4}>Bán kính giảm dần</option>
+                                    <option value={1}>Gần nhất</option>
+                                    <option value={2}>Giá tăng dần</option>
+                                    <option value={3}>Giá giảm dần</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
                     </Row>
                     <hr className="field-hr" />
+                    <div className="loading">
+                        <Spinner animation="grow" variant="success" size="sm"/>
+                        <Spinner animation="grow" variant="success" size="sm"/>
+                        <Spinner animation="grow" variant="success" size="sm"/>
+                    </div>
                     <ResultArea ref={this.findProductRef} result={this.state.result}/>
                 </div>
                 <hr className="field-hr" />

@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import {Map, /*InfoWindow,*/ Marker, GoogleApiWrapper} from 'google-maps-react';
 
-import {onGetCurrentPositionService, geocodingService, geocodingByLocationService, onSearchProductService, showNearStoreService, getRedirectMapService, recenterMapService, loadMapService} from '../services/maps.service.js'
+import { Spinner } from "react-bootstrap";
+
+import {onGetCurrentPositionService, geocodingService, geocodingByLocationService, onSearchProductService, showNearStoreService, getRedirectMapService, distanceMatrixService, recenterMapService, loadMapService} from '../services/maps.service.js'
+import { showHideStoreInfoService } from '../services/store.service';
 
 import './Maps.css'
 
@@ -16,12 +19,12 @@ export function onSearchAddress (address, cb) {
     geocodingService(address, this, cb)
 }
 
-export function onSearchAddressByLocation (latlng, cb) {
-    geocodingByLocationService(latlng, this, cb)
-}
-
 export function onSearchProduct (search, distance, cb) {
     onSearchProductService(search, distance, this, cb);
+}
+
+export function showHideStoreInfo(id, info) {
+    showHideStoreInfoService(id, info, this);
 }
 
 export class MapContainer extends Component {
@@ -40,7 +43,7 @@ export class MapContainer extends Component {
     UNSAFE_componentWillMount() {
         onSearchAddress = onSearchAddress.bind(this);
         onSearchProduct = onSearchProduct.bind(this);
-        onSearchAddressByLocation = onSearchAddressByLocation.bind(this);
+        showHideStoreInfo = showHideStoreInfo.bind(this);
         onGetCurrentPosition = onGetCurrentPosition.bind(this);
     }
 
@@ -67,7 +70,7 @@ export class MapContainer extends Component {
         loadMapService(this);
     }
 
-    cleanMaps() {
+    cleanMaps(clearStore = true) {
         // Clear current direction if existing
         if (currentDirection) {
             currentDirection.setMap(null)
@@ -79,8 +82,10 @@ export class MapContainer extends Component {
             currentCircle.setMap(null);
             currentCircle = null;
         }
-
-        this.clearNearstore();
+    
+        if (clearStore) {
+            this.clearNearstore();
+        }
     }
 
     cleanMapAndClientPosition() {
@@ -89,6 +94,10 @@ export class MapContainer extends Component {
         if (this.marker) {
             this.marker.setMap(null)
         }
+    }
+
+    distanceMatrix(origin, destinations, cb) {
+        distanceMatrixService(origin, destinations, this, cb);
     }
 
     showNearStore(nearbyStore) {
@@ -155,7 +164,12 @@ MapContainer.defaultProps = {
 }
 
 const LoadingContainer = (props) => (
-  <div className="loadingMaps">Đang tải bản đồ...</div>
+    <div className="loadingMaps">
+        Đang tải bản đồ 
+        <Spinner animation="grow" variant="success" size="sm"/>
+        <Spinner animation="grow" variant="success" size="sm"/>
+        <Spinner animation="grow" variant="success" size="sm"/>
+    </div>
 )
 
 export default GoogleApiWrapper({

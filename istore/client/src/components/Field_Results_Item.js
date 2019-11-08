@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 
-import "./Field_Results_Item.css";
+import { showHideStoreInfo } from './Maps';
 
-import { showHideStoreInfo } from '../services/store.service'
+import "./Field_Results_Item.css";
 
 export default class Fields_Result_Item extends Component {
     render() {
         return (
-            <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code, this.props.info, this.props.map)}}>
+            <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code, this.props.info)}}>
                 <div className="field-results-item-img">
                     <img src={this.props.imageAvatar} alt="" />
                 </div>
@@ -17,10 +17,10 @@ export default class Fields_Result_Item extends Component {
                     </div>
                     <div>
                         <span className="field-results-item-desc-price">
-                            Giá: {this.props.price}đ
+                            Giá: {(((this.props.price)*((100-this.props.saleoff)/100))/1000).toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&.')}
                         </span>
                         <span className="field-results-item-desc-time-up">
-                            {this.props.date}
+                            {this.props.distance} đường đi.
                         </span>
                     </div>
                     <div className="field-results-item-desc-sub-desc">

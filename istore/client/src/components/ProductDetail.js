@@ -143,10 +143,10 @@ class ProductDetail extends Component {
                 </div>
                 <div className="product-detail-info-content">
                   <div className="product-detail-info-content-store-name">
-                    <h5>CanhToanShop's</h5>
+                    <h5>My Store</h5>
                   </div>
                   <div className="product-detail-info-content-store-address">
-                    05 Võ Văn Ngân, Thủ Đức, Hồ Chí Minh
+                    Chợ Bến Thành
                   </div>
                 </div>
               </div>
