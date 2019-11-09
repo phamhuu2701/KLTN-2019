@@ -13,12 +13,10 @@ app.route('/')
 	return res.status(201).json({"isLogged": false, user: null});
 })
 .post((req,res) => {
-	console.log(123);
     const {email, password} = req.body;
     // Check user account
     userDAO.findOneByEmailAndPassword(email, md5(password))
     .then(user => {
-    	console.log(user);
     	if (user) {
     		user.password = null;
     		req.session.isLogged = true;

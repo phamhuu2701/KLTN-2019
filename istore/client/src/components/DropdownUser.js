@@ -17,8 +17,12 @@ class SignForm extends Component {
     signInSubmit(e) {
         e.preventDefault();
         const signInForm = document.querySelector('#signInForm');
-        const email = signInForm.childNodes[1].childNodes[0].value;
-        const password = signInForm.childNodes[2].childNodes[0].value;
+        const emailInput = signInForm.childNodes[1].childNodes[0];
+        const passwordInput = signInForm.childNodes[2].childNodes[0];
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        emailInput.style.borderColor = '#ced4da';
+        passwordInput.style.borderColor = '#ced4da';
 
         fetch('/api/login', {
             method: 'POST',
@@ -35,13 +39,16 @@ class SignForm extends Component {
             if (result.status === 200) {
                 return result.json();
             } else {
-                alert('Lỗi đăng nhập!')
+                
             }
         })
         .then(res => {
             if (res && res.isLogged === true) {
                 this.props.loginHandler(res.user);
                 document.getElementById("dropdown-user-body").style.display = "none";
+            } else {
+                emailInput.style.borderColor = 'red';
+                passwordInput.style.borderColor = 'red';
             }
         })
         .catch(err => console.log(err))
