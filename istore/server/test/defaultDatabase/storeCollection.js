@@ -10,10 +10,34 @@ const StoreCategoryDao = require("../../dao/storeCategory.dao");
 const stores = [
     {
         houseNumber: "12",
-        location: { type: "Point", coordinates: [10.851186, 106.756232] },
+        location: { type: "Point", coordinates: [106.75620759999993, 10.8510813] },
         phone: "01696697799",
         email: "eshop@gmail.com",
         name: "E-Shop",
+        description:
+            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+        website: {
+            hasWebsite: false
+        }
+    },    
+    {
+        houseNumber: "41",
+        location: { typ: "Point", coordinates: [106.75640709999993, 10.8512595] },
+        phone: "01696697711",
+        email: "yanshop123@gmail.com",
+        name: "Yan-Shop",
+        description:
+            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+        website: {
+            hasWebsite: false
+        }
+    },    
+    {
+        houseNumber: "141",
+        location: { type: "Point", coordinates: [106.75650100000007, 10.8523599] },
+        phone: "016966123121",
+        email: "hangquan123@gmail.com",
+        name: "Hoang QUan",
         description:
             "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
         website: {
@@ -69,6 +93,6 @@ module.exports.createDefaultCollection = async () => {
         }
 
     } else {
-        console.log("Store collection existed: ", storeArrays.length, "/1");
+        console.log("Store collection existed: ", storeArrays.length, "/3");
     }
 };

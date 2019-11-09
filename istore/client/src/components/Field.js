@@ -91,7 +91,7 @@ export class ResultArea extends Component {
                                 key={index}
                                 code={index}
                                 info={res}
-                                storeName={res.store.title}
+                                storeName={res.store.name}
                                 imageAvatar={res._doc.images[0]}
                                 price={res._doc.price}
                                 saleoff={res._doc.saleoff}
