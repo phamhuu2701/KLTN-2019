@@ -57,14 +57,9 @@ export default class App extends Component {
                     </Route>
                     <Route path="/mystore">
                         <div className='app'>
-                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
+                            <Information isLoggedIn={this.state.isLoggedIn}/>
                         </div>
                     </Route>
-                    {/* <Route path="/store">
-                        <div className='app'>
-                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
-                        </div>
-                    </Route> */}
                     <Route exact path="/store/:id" component={ StoreProducts }/>
                     <Route exact path="/store/:id/products" component={ StoreProducts }/>
                     <Route exact path="/store/:idStore/products/:idProduct" component={ StoreProductDetail }/>

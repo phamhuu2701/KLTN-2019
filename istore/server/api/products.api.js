@@ -76,16 +76,13 @@ router.route('/searchByName')
 const addStoreIntoProduct = async (products, latlng, distance, cb) => {
     let stores = [], results = [];
     for (var i = 0; i < products.length; i++) {
-        await StoreDao.findByProduct(products[i]._id, latlng, distance)
-        .then(store => {
-            if (store) {
-                stores.push(store);
-            } else {
-                products.splice(i, 1);
-                i--;
-            }
-        })
-        .catch(err => console.log(err))
+        const store = await StoreDao.findByProduct(products[i]._id, latlng, distance);
+        if (store) {
+            stores.push(store);
+        } else {
+            products.splice(i, 1);
+            i--;
+        }
     }
 
     results = products.map((product, index) => {

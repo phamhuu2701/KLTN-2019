@@ -64,7 +64,7 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                 const lastResult = [];
                 await thisMap.distanceMatrix([new latLng(lat, lng)], latlngAllStores, async response => {
                     const elements = await response.rows[0].elements;
-                    elements.map((e, index) => {
+                    elements.filter((e, index) => {
                         lastResult.push({...result[index], distance: e.distance.text})
                     })
                     document.querySelector('.loading').style.display = 'none';

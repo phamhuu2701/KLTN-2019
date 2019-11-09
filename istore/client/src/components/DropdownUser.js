@@ -33,15 +33,16 @@ class SignForm extends Component {
         })
         .then(result => {
             if (result.status === 200) {
-                // Sign in successed
-                this.props.loginHandler();
                 return result.json();
             } else {
                 alert('Lỗi đăng nhập!')
             }
         })
-        .then(user => {
-            document.getElementById("dropdown-user-body").style.display = "none";
+        .then(res => {
+            if (res && res.isLogged === true) {
+                this.props.loginHandler(res.user);
+                document.getElementById("dropdown-user-body").style.display = "none";
+            }
         })
         .catch(err => console.log(err))
     }
@@ -215,6 +216,7 @@ export default class DropdownUser extends Component {
         .then(result => {
             this.setState({
                 isLogged: result.isLogged,
+                user: result.user,
                 sign: ''
             });
             this.props.logInToggle(result.isLogged);
@@ -232,9 +234,10 @@ export default class DropdownUser extends Component {
     }
 
     // Logged in successfully
-    loginHandler() {
+    loginHandler(user) {
         this.setState({
             isLogged: true,
+            user: user,
             sign: ''
         });
         this.props.logInToggle(true);
@@ -272,7 +275,7 @@ export default class DropdownUser extends Component {
                 <div className="dropdown-user" ref={this.wrapperRef}>
                     <Image
                         className="dropdown-user-image"
-                        src="./resources/images/nancy.jpg"
+                        src={this.state.user.avatars[0]}
                         width={50}
                         height={50}
                         roundedCircle
@@ -289,7 +292,7 @@ export default class DropdownUser extends Component {
                                         src="./resources/icons/user.svg"
                                     ></img>
                                     <span className="dropdown-user-body-content-title">
-                                        NANCY - KOREA
+                                        {this.state.user.fullname.firstname}
                                     </span>
                                 </a>
                             </div>

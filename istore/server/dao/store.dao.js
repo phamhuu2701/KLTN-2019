@@ -88,19 +88,26 @@ module.exports = {
 		return Model.find({products: {$in: productIds}});
 		//return Model.find();
 	},
-	findByProduct: async (productId, latlng, distance) => {
-		return await Model.findOne({
-			products: productId, 
-			location: {
-				$near: {
-					$maxDistance: distance,
-					$geometry: 
-					{
-						type: 'Point',
-						coordinates: latlng
-					}
-				}
-			}
-		});
+	findByProduct: (productId, latlng, distance) => {
+        return new Promise((resolve, reject) => {
+    		Model.findOne({
+    			products: productId, 
+    			location: {
+    				$near: {
+    					$maxDistance: distance,
+    					$geometry: 
+    					{
+    						type: 'Point',
+    						coordinates: latlng
+    					}
+    				}
+    			}
+    		})
+            .populate('storeCategory')
+            .exec((err, store) => {
+                if (err) { return reject(err) }
+                return resolve(store);
+            })
+        })
 	}
 }

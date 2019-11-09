@@ -1,4 +1,5 @@
-import { sortProductByDistance, sortIncreseProductByPrice, sortDescreseProductByPrice } from '../utils/sortModel'
+import { sortProductByDistance, sortIncreseProductByPrice, sortDescreseProductByPrice, sortProductByRating } from '../utils/sortModel'
+import { showProductDetail } from '../components/ProductDetail';
 
 export function showHideStoreInfoService(id, info, thisMap) {
 	const storeInfo = document.querySelector('.store-info');
@@ -11,19 +12,19 @@ export function showHideStoreInfoService(id, info, thisMap) {
                 items[i].style.backgroundColor = '';
             }
             // Product info
-            document.querySelector('.product-detail-product-body-title').innerHTML = `<h5>${info._doc.name}</h5>`;
+            /*document.querySelector('.product-detail-product-body-title').innerHTML = `<h5>${info._doc.name}</h5>`;
             document.querySelector('.product-detail-product-body-comment-count').innerHTML = `${info._doc.rates.length}`;
             document.querySelector('.product-detail-product-body-price-sale').innerHTML = `Giảm ${info._doc.saleoff}%`;
             document.querySelector('.product-detail-product-body-price-main').innerHTML = `(${((info._doc.price*((100-info._doc.saleoff)/100))/1000).toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&.')}đ)`;
             document.querySelector('.product-detail-product-body-origin-price').innerHTML = `(${(info._doc.price/1000).toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&.')}đ)`;
-            document.querySelector('.product-detail-info-avatar').innerHTML = `<Image src="${info.store.images[0]}" />`;
+            document.querySelector('.product-detail-info-avatar').innerHTML = `<Image src="${info.store.logo}" />`;
 
 
             // Store info
             document.querySelector('.product-detail-info-content-store-name').innerHTML = `<h5>${info.store.name}</h5>`;
-            // document.querySelector('#view-store-detail').href = `/store/${info.store._id}`;
+            document.querySelector('#view-store-detail').setAttribute('href', `/store/${info.store._id}`)*/
             
-            
+            showProductDetail(info);
 
             // Marker
             
@@ -49,6 +50,7 @@ export function onSortStoreListService(stores, priority, cb) {
     if (stores.length > 1) {
         switch (+priority) {
             case 0:
+                sortProductByRating(stores)
                 break;
             case 1:
                 sortProductByDistance(stores);

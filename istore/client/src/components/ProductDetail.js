@@ -4,7 +4,52 @@ import { Link } from "react-router-dom";
 
 import "./ProductDetail.css";
 
+import priceFormatUtil from '../utils/priceFormat'
+
+export function showProductDetail(product) {
+    this.setState({
+        product: product
+    })
+}
+
+export class ImageList extends Component {
+    render() {
+        if (this.props.images.length > 1) {
+            this.props.images.unshift();
+            return (
+                this.props.images.map((image, index) => {
+                    return <div key={index}><Image src={image} /></div>
+                })
+            )
+        } else {
+            return (
+                <div></div>
+            );  
+        }
+    }
+}
+
+
 class ProductDetail extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            product: {
+                _doc: {
+                    rates: [],
+                    images: []
+                },
+                store: {
+                    storeCategory: {}
+                }
+            }
+        }
+    }
+
+    componentWillMount() {
+        showProductDetail = showProductDetail.bind(this);
+    }
+
     render() {
         return (
             <div className="ProductDetail">
@@ -13,24 +58,10 @@ class ProductDetail extends Component {
                         <Col sm={5}>
                             <div className="product-detail-product-images">
                                 <div className="product-detail-product-images-avatar">
-                                    <Image src="./resources/images/image1.jpg" />
+                                    <Image src={this.state.product._doc.images[0]} />
                                 </div>
                                 <div className="product-detail-product-images-more">
-                                    <div>
-                                        <Image src="./resources/images/image1.jpg" />
-                                    </div>
-                                    <div>
-                                        <Image src="./resources/images/image1.jpg" />
-                                    </div>
-                                    <div>
-                                        <Image src="./resources/images/image1.jpg" />
-                                    </div>
-                                    <div>
-                                        <Image src="./resources/images/image1.jpg" />
-                                    </div>
-                                    <div>
-                                        <Image src="./resources/images/image1.jpg" />
-                                    </div>
+                                    <ImageList images={this.state.product._doc.images}/>
                                 </div>
                                 <div className="product-detail-product-images-more-icons">
                                     <div className="product-detail-product-images-more-icons-previous">
@@ -46,15 +77,13 @@ class ProductDetail extends Component {
                             <div className="product-detail-product-body">
                                 <div className="product-detail-product-body-title">
                                     <h5>
-                                        Vỏ chống nước cho GoPro hero 5, GoPro
-                                        hero 6, GoPro hero 7, GoPro new hero
-                                        2018
+                                        {this.state.product._doc.name}
                                     </h5>
                                 </div>
                                 <div className="product-detail-product-body-title-sub">
                                     <div className="product-detail-product-body-rate">
                                         <span className="product-detail-product-body-rate-count">
-                                            3.5
+                                            {this.state.product._doc.rateAvg}
                                         </span>
                                         <span className="product-detail-product-body-rate-title">
                                             <Image src="./resources/icons/star_liked.svg" />
@@ -66,7 +95,7 @@ class ProductDetail extends Component {
                                     </div>
                                     <div className="product-detail-product-body-comment">
                                         <span className="product-detail-product-body-comment-count">
-                                            2.2k
+                                            {this.state.product._doc.rates.length}
                                         </span>
                                         <span className="product-detail-product-body-comment-title">
                                             Đánh giá
@@ -83,13 +112,13 @@ class ProductDetail extends Component {
                                 </div>
                                 <div className="product-detail-product-body-price">
                                     <span className="product-detail-product-body-price-sale">
-                                        GIẢM 20%
+                                        GIẢM  {this.state.product._doc.saleoff}%
                                     </span>
                                     <span className="product-detail-product-body-price-main">
-                                        299.000 đ
+                                         {priceFormatUtil(this.state.product._doc.price*(100-this.state.product._doc.saleoff)/100)}đ
                                     </span>
                                     <span className="product-detail-product-body-origin-price">
-                                        (299.000 đ)
+                                        ( {priceFormatUtil(this.state.product._doc.price)}đ)
                                     </span>
                                 </div>
                                 <div className="product-detail-product-body-buy-count">
@@ -144,14 +173,14 @@ class ProductDetail extends Component {
                         <Col>
                             <div className="product-detail-info-header">
                                 <div className="product-detail-info-avatar">
-                                    <Image src="./resources/images/image1.jpg" />
+                                    <Image src={this.state.product.store.logo} />
                                 </div>
                                 <div className="product-detail-info-content">
                                     <div className="product-detail-info-content-store-name">
-                                        <h5>CanhToanShop's</h5>
+                                        <h5>{this.state.product.store.name}</h5>
                                     </div>
                                     <div className="product-detail-info-content-store-address">
-                                        05 Võ Văn Ngân, Thủ Đức, Hồ Chí Minh
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +191,7 @@ class ProductDetail extends Component {
                                     <Image src="./resources/icons/phone.svg" />
                                     <span>Gọi ngay</span>
                                 </div>
-                                <Link id="view-store-detail" to="/store/5dc6630c066b0f3b6cfd6294">
+                                <Link id="view-store-detail" to={'/store/' + this.state.product.store._id}>
                                     <div className="product-detail-info-contact-view-shop">
                                         <Image src="./resources/icons/search.svg" />
                                         <span>Xem shop</span>
@@ -185,7 +214,7 @@ class ProductDetail extends Component {
                         </Col>
                         <Col sm={10}>
                             <span className="product-detail-product-description-table-content">
-                                Điện Thoại & Phụ Kiện &gt; Pin sạc dự phòng
+                                {this.state.product.store.storeCategory.name}
                             </span>
                         </Col>
                     </Row>
@@ -221,127 +250,8 @@ class ProductDetail extends Component {
                         </Col>
                         <Col sm={10}>
                             <span className="product-detail-product-description-table-content">
-                                Pin sạc dự phòng không dây
+                                {this.state.product.store.description}
                             </span>
-                        </Col>
-                    </Row>
-                </div>
-                <hr />
-                <div className="product-detail-product-body-footer">
-                    <div>
-                        <Image src="./resources/icons/checked.svg" />
-                        <span>Sản phẩm có sẵn tại cửa hàng</span>
-                    </div>
-                    <div>
-                        <Image src="./resources/icons/checked.svg" />
-                        <span>Hàng chính hãng 100%</span>
-                    </div>
-                    <div>
-                        <Image src="./resources/icons/checked.svg" />
-                        <span>7 ngày miễn phí đổi hàng</span>
-                    </div>
-                </div>
-                <hr />
-                <div className="product-detail-info">
-                    <Row>
-                        <Col>
-                            <div className="product-detail-info-header">
-                                <div className="product-detail-info-avatar">
-                                    <Image src="./resources/images/image1.jpg" />
-                                </div>
-                                <div className="product-detail-info-content">
-                                    <div className="product-detail-info-content-store-name">
-                                        <h5>My Store</h5>
-                                    </div>
-                                    <div className="product-detail-info-content-store-address">
-                                        Chợ Bến Thành
-                                    </div>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col>
-                            <div className="product-detail-info-contact">
-                                <div className="product-detail-info-contact-phone">
-                                    <Image src="./resources/icons/phone.svg" />
-                                    <span>Gọi ngay</span>
-                                </div>
-                                <a href="/store">
-                                    <div className="product-detail-info-contact-view-shop">
-                                        <Image src="./resources/icons/search.svg" />
-                                        <span>Xem shop</span>
-                                    </div>
-                                    <Row>
-                                        <Col>
-                                            <div>
-                                                <div className="product-detail-products-similar-item-image">
-                                                    <Image src="./resources/images/image1.jpg" />
-                                                </div>
-                                                <div className="product-detail-products-similar-item-title">
-                                                    <span>
-                                                        Pin Sạc dự phòng MINISO
-                                                        PB100 10000mAh hàng
-                                                        chính hãng
-                                                    </span>
-                                                </div>
-                                                <div className="product-detail-products-similar-item-price">
-                                                    <span>199.000 đ</span>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div>
-                                                <div className="product-detail-products-similar-item-image">
-                                                    <Image src="./resources/images/image1.jpg" />
-                                                </div>
-                                                <div className="product-detail-products-similar-item-title">
-                                                    <span>
-                                                        Pin Sạc dự phòng MINISO
-                                                        PB100 10000mAh hàng
-                                                        chính hãng
-                                                    </span>
-                                                </div>
-                                                <div className="product-detail-products-similar-item-price">
-                                                    <span>199.000 đ</span>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div>
-                                                <div className="product-detail-products-similar-item-image">
-                                                    <Image src="./resources/images/image1.jpg" />
-                                                </div>
-                                                <div className="product-detail-products-similar-item-title">
-                                                    <span>
-                                                        Pin Sạc dự phòng MINISO
-                                                        PB100 10000mAh hàng
-                                                        chính hãng
-                                                    </span>
-                                                </div>
-                                                <div className="product-detail-products-similar-item-price">
-                                                    <span>199.000 đ</span>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                        <Col>
-                                            <div>
-                                                <div className="product-detail-products-similar-item-image">
-                                                    <Image src="./resources/images/image1.jpg" />
-                                                </div>
-                                                <div className="product-detail-products-similar-item-title">
-                                                    <span>
-                                                        Pin Sạc dự phòng MINISO
-                                                        PB100 10000mAh hàng
-                                                        chính hãng
-                                                    </span>
-                                                </div>
-                                                <div className="product-detail-products-similar-item-price">
-                                                    <span>199.000 đ</span>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                    </Row>
-                                </a>
-                            </div>
                         </Col>
                     </Row>
                 </div>
