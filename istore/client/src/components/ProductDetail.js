@@ -229,15 +229,15 @@ class ProductDetail extends Component {
                 <hr />
                 <div className="product-detail-product-body-footer">
                     <div>
-                        <Image src="./icons/checked.svg" />
+                        <Image src="./resources/icons/checked.svg" />
                         <span>Sản phẩm có sẵn tại cửa hàng</span>
                     </div>
                     <div>
-                        <Image src="./icons/checked.svg" />
+                        <Image src="./resources/icons/checked.svg" />
                         <span>Hàng chính hãng 100%</span>
                     </div>
                     <div>
-                        <Image src="./icons/checked.svg" />
+                        <Image src="./resources/icons/checked.svg" />
                         <span>7 ngày miễn phí đổi hàng</span>
                     </div>
                 </div>
@@ -247,7 +247,7 @@ class ProductDetail extends Component {
                         <Col>
                             <div className="product-detail-info-header">
                                 <div className="product-detail-info-avatar">
-                                    <Image src="./images/image1.jpg" />
+                                    <Image src="./resources/images/image1.jpg" />
                                 </div>
                                 <div className="product-detail-info-content">
                                     <div className="product-detail-info-content-store-name">
@@ -262,12 +262,12 @@ class ProductDetail extends Component {
                         <Col>
                             <div className="product-detail-info-contact">
                                 <div className="product-detail-info-contact-phone">
-                                    <Image src="./icons/phone.svg" />
+                                    <Image src="./resources/icons/phone.svg" />
                                     <span>Gọi ngay</span>
                                 </div>
                                 <a href="/store">
                                     <div className="product-detail-info-contact-view-shop">
-                                        <Image src="./icons/search.svg" />
+                                        <Image src="./resources/icons/search.svg" />
                                         <span>Xem shop</span>
                                     </div>
                                     <Row>
