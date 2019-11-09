@@ -815,17 +815,13 @@ module.exports.createDefaultCollection = async () => {
         );
         // console.log(productCategory);
 
-        const store = await StoreDao.findByName("E-Shop");
-        // console.log(store);
-
-        if (productCategory != null && store != null) {
+        if (productCategory != null) {
             products.map(async (product, i) => {
 
                 const nameRemoveAccents = removeAccents(product.name);
 
                 let productNew = new Product({
                     productCategory: productCategory,
-                    store: store,
                     name: product.name,
                     nameRemoveAccents: nameRemoveAccents,
                     description: product.description,
@@ -842,7 +838,7 @@ module.exports.createDefaultCollection = async () => {
 
                 // console.log(productNew);
                 const productSave = await ProductDao.save(productNew);
-                console.log("product index: ", i, ": ", (productSave != null) ? "OK" : "Fail" );
+                // console.log("product index: ", i, ": ", (productSave != null) ? "OK" : "Fail" );
             });
             console.log("Default Product collection created.");
         }

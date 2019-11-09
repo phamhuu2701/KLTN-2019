@@ -11,7 +11,6 @@ const productSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: "ProductCategory"
         },
-        store: { type: Schema.Types.ObjectId, ref: "Store" },
         name: { type: String, required: true, maxlength: 100, trim: true },
         nameRemoveAccents: {
             type: String,

@@ -15,7 +15,7 @@ module.exports.updateCollection = async () => {
                     store.products.push(product);
                 });
                 const storeUpdate = await StoreDao.update(store);
-                console.log("All Store documents updated: ", store.products.length, "/20 products");
+                console.log("Store.products document updated: ", store.products.length, "/20 products");
             }
             else{
                 console.log("Update Stores documents fail");
