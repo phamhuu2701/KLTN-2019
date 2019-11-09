@@ -12,8 +12,8 @@ import Footer from "./Footer";
 import Products from "./Products";
 
 class StoreProducts extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             store: null
@@ -21,7 +21,7 @@ class StoreProducts extends Component {
     }
 
     componentWillMount() {
-        // console.log(this.props.match.params.id);
+        // console.log(this.props.match);
         fetch("/api/stores/" + this.props.match.params.id)
             .then(res => res.json())
             .then(store => {
@@ -32,7 +32,7 @@ class StoreProducts extends Component {
     }
 
     render() {
-        console.log(this.state.store);
+        // console.log(this.state.store);
         if (!this.state.store) {
             return <div></div>;
         } else {

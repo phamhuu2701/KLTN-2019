@@ -162,7 +162,7 @@ class ProductDetail extends Component {
                                     <Image src="./resources/icons/phone.svg" />
                                     <span>Gọi ngay</span>
                                 </div>
-                                <Link to="/store/:id">
+                                <Link id="view-store-detail" to="/store/5dc6630c066b0f3b6cfd6294">
                                     <div className="product-detail-info-contact-view-shop">
                                         <Image src="./resources/icons/search.svg" />
                                         <span>Xem shop</span>

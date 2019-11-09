@@ -21,6 +21,7 @@ export function showHideStoreInfoService(id, info, thisMap) {
 
             // Store info
             document.querySelector('.product-detail-info-content-store-name').innerHTML = `<h5>${info.store.name}</h5>`;
+            // document.querySelector('#view-store-detail').href = `/store/${info.store._id}`;
             
             
 
