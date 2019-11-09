@@ -3,26 +3,34 @@ const StoreDao = require("../../dao/store.dao");
 const ProductDao = require("../../dao/product.dao");
 
 module.exports.updateCollection = async () => {
-    const store = await StoreDao.findByName("E-Shop");
-    if(store != null){
-        if(store.products.length > 0){
-            console.log("Store.products document existed: ", store.products.length, "/20 products");
+
+    const stores = await StoreDao.find(); //3
+    if(stores.length > 0){
+
+        if(stores[0].products.length > 0){
+            console.log("Store.products document existed");
         }
         else {
-            const products = await ProductDao.find();
+            const products = await ProductDao.find(); //20
             if(products.length > 0){
-                products.map(async (product, i) => {
-                    store.products.push(product);
+                
+                stores.map(async (store, i) => {
+
+                    products.map(async (product, j) => {
+                        if(j%(stores.length) == i){
+                            store.products.push(products[j]);
+                            StoreDao.update(store);
+                        }
+                    })
+                    
                 });
-                const storeUpdate = await StoreDao.update(store);
-                console.log("All Store documents updated: ", store.products.length, "/20 products");
             }
-            else{
-                console.log("Update Stores documents fail");
+            else {
+                console.log("Product collection empty");
             }
         }
     }
-    else{
+    else {
         console.log("Store collection empty");
     }
 };
