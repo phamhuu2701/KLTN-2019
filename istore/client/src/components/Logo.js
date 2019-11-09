@@ -58,7 +58,7 @@ class SearchPlace extends Component {
                     <img 
                         title="Vị trí của bạn" 
                         alt="Vị trí của bạn" 
-                        src="icons/current-location-white.svg"
+                        src="./resources/icons/current-location-white.svg"
                         onClick={this.getCurrentPosition}
                     />
                     <div>
@@ -85,7 +85,7 @@ export default class Logo extends Component {
                     <img
                         className="logo-image"
                         alt="Istore"
-                        src="icons/logo.svg"
+                        src="./resources/icons/logo.svg"
                     />
                     <span className="logo-title">IStore</span>
                 </div>

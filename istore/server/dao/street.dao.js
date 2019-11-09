@@ -3,7 +3,9 @@ const Model = require("../models/street.model");
 module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
-            Model.find({}).exec((err, results) => {
+            Model.find({})
+            .populate("district")
+            .exec((err, results) => {
                 if (err) return reject(null);
                 return resolve(results);
             });
@@ -11,7 +13,9 @@ module.exports = {
     },
     findById: id => {
         return new Promise((resolve, reject) => {
-            Model.findById(id).exec((err, result) => {
+            Model.findById(id)
+            .populate("district")
+            .exec((err, result) => {
                 if (err) return reject(null);
                 return resolve(result);
             });
@@ -19,7 +23,9 @@ module.exports = {
     },
     findOneByName: name => {
         return new Promise((resolve, reject) => {
-            Model.findOne({ name: name }).exec((err, result) => {
+            Model.findOne({ name: name })
+            .populate("district")
+            .exec((err, result) => {
                 if (err) return reject(null);
                 return resolve(result);
             });
@@ -27,7 +33,9 @@ module.exports = {
     },
     findByDistrict: district => {
         return new Promise((resolve, reject) => {
-            Model.find({ district: district }).exec((err, results) => {
+            Model.find({ district: district })
+            .populate("district")
+            .exec((err, results) => {
                 if (err) return reject(null);
                 return resolve(results);
             });

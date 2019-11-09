@@ -95,11 +95,11 @@ class SignForm extends Component {
                     <div className="dropdown-user-body-content sign-in text-center">
                         <div className="ui buttons">
                             <button className="btn btn-fb">
-                                <img src="icons/facebook.svg" height="28px" alt=""/> Facebook
+                                <img src="./resources/icons/facebook.svg" height="28px" alt=""/> Facebook
                             </button>
                             <div className="or"></div>
                             <button className="btn btn-gplus">
-                                <img src="icons/google.svg" height="28px"  alt=""/> Google
+                                <img src="./resources/icons/google.svg" height="28px"  alt=""/> Google
                             </button>
                         </div>
                     </div>
@@ -272,7 +272,7 @@ export default class DropdownUser extends Component {
                 <div className="dropdown-user" ref={this.wrapperRef}>
                     <Image
                         className="dropdown-user-image"
-                        src="images/nancy.jpg"
+                        src="./resources/images/nancy.jpg"
                         width={50}
                         height={50}
                         roundedCircle
@@ -286,7 +286,7 @@ export default class DropdownUser extends Component {
                                     <img
                                         className="dropdown-user-body-content-imgage"
                                         alt=""
-                                        src="icons/user.svg"
+                                        src="./resources/icons/user.svg"
                                     ></img>
                                     <span className="dropdown-user-body-content-title">
                                         NANCY - KOREA
@@ -299,7 +299,7 @@ export default class DropdownUser extends Component {
                                     <img
                                         className="dropdown-user-body-content-imgage"
                                         alt=""
-                                        src="icons/list.svg"
+                                        src="./resources/icons/list.svg"
                                     ></img>
                                     <span className="dropdown-user-body-content-title">
                                         Quản lý cửa hàng
@@ -311,7 +311,7 @@ export default class DropdownUser extends Component {
                                 <img
                                     className="dropdown-user-body-content-imgage"
                                     alt=""
-                                    src="icons/logout.svg"
+                                    src="./resources/icons/logout.svg"
                                 ></img>
                                 <span className="dropdown-user-body-content-title">
                                     Thoát
@@ -326,7 +326,7 @@ export default class DropdownUser extends Component {
                 <div className="dropdown-user" ref={this.wrapperRef}>
                     <Image
                         className="dropdown-user-image"
-                        src="icons/user.svg"
+                        src="./resources/icons/user.svg"
                         width={50}
                         height={50}
                         roundedCircle

@@ -9,7 +9,7 @@ export default class Footer extends Component {
             <div className="footer">
                 <div className="footer-header">
                     <div className="footer-header-title">
-                        <img alt="IStore" src="icons/logo.svg"></img>
+                        <img alt="IStore" src="./resources/icons/logo.svg"></img>
                         <span>IStore</span>
                     </div>
                     <div className="footer-header-title-sub">
@@ -30,7 +30,7 @@ export default class Footer extends Component {
                                     <img
                                         className="social-network-icon"
                                         alt=""
-                                        src="icons/facebook.svg">
+                                        src="./resources/icons/facebook.svg">
                                     </img>
                                     <span className="social-network-title">
                                         Facebook
@@ -40,7 +40,7 @@ export default class Footer extends Component {
                                     <img
                                         className="social-network-icon"
                                         alt=""
-                                        src="icons/google-plus.svg"
+                                        src="./resources/icons/google-plus.svg"
                                     ></img>
                                     <span className="social-network-title">
                                         Google+
@@ -50,7 +50,7 @@ export default class Footer extends Component {
                                     <img
                                         className="social-network-icon"
                                         alt=""
-                                        src="icons/youtube.svg"
+                                        src="./resources/icons/youtube.svg"
                                     ></img>
                                     <span className="social-network-title">
                                         Youtube
@@ -60,7 +60,7 @@ export default class Footer extends Component {
                                     <img
                                         className="social-network-icon"
                                         alt=""
-                                        src="icons/zalo.svg"
+                                        src="./resources/icons/zalo.svg"
                                     ></img>
                                     <span className="social-network-title">
                                         Zalo

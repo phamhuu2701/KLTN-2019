@@ -727,9 +727,7 @@ module.exports.createDefaultCollection = async () => {
     if (districtsArray.length <= 0) {
         console.log("District collection is empty.");
         const cities = await CityDao.find();
-        if (cities.length <= 0) {
-            console.log("City collection is empty.");
-        } else {
+        if (cities.length > 0) {
             cities.map(city => {
                 districts.map(district => {
                     if (city.name.localeCompare(district.cityName) == 0) {
@@ -744,6 +742,6 @@ module.exports.createDefaultCollection = async () => {
             console.log("Default District collection created.");
         }
     } else {
-        console.log("District collection existed.");
+        console.log("District collection existed: ", districtsArray.length, "/717");
     }
 };

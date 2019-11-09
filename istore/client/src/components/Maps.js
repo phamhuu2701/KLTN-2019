@@ -15,7 +15,7 @@ export function onGetCurrentPosition() {
     onGetCurrentPositionService(this);
 }
 
-export function onSearchAddress (address, cb) {
+export function onSearchAddress(address, cb) {
     geocodingService(address, this, cb)
 }
 

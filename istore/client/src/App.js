@@ -10,16 +10,16 @@ import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
 import ProductInformation from "./components/ProductInformation";
 import Information from "./components/Information";
-import Store from "./components/electro-template/Store";
+import StoreProducts from "./components/e-shop-template/StoreProducts";
+import StoreProductDetail from "./components/e-shop-template/StoreProductDetail";
 
 export default class App extends Component {
-
     constructor() {
         super();
         this.state = {
             isLoggedIn: false
-        }
-        this.logInToggle = this.logInToggle.bind(this)
+        };
+        this.logInToggle = this.logInToggle.bind(this);
     }
 
     componentDidMount() {
@@ -30,7 +30,7 @@ export default class App extends Component {
     }
 
     logInToggle(state) {
-        this.setState({isLoggedIn: state});
+        this.setState({ isLoggedIn: state });
     }
 
     render() {
@@ -48,24 +48,27 @@ export default class App extends Component {
                             </div>
                             <ProductInformation />
                         </div>
+                        <DropdownUser logInToggle={this.logInToggle} />
                     </Route>
                     <Route path="/information">
-                        <div className='app'>
-                            <Information isLoggedIn={this.state.isLoggedIn}/>
+                        <div className="app">
+                            <Information isLoggedIn={this.state.isLoggedIn} />
                         </div>
                     </Route>
                     <Route path="/mystore">
                         <div className='app'>
-                            <Store isLoggedIn={this.state.isLoggedIn}/>
+                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
                         </div>
                     </Route>
                     <Route path="/store">
                         <div className='app'>
-                            <Store isLoggedIn={this.state.isLoggedIn}/>
+                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
                         </div>
                     </Route>
+                    <Route exact path="/store/:id" component={ StoreProducts }/>
+                    <Route exact path="/store/:id/products" component={ StoreProducts }/>
+                    <Route exact path="/store/:idStore/products/:idProduct" component={ StoreProductDetail }/>
                 </Switch>
-                <DropdownUser logInToggle={this.logInToggle}/>
             </Router>
         );
     }

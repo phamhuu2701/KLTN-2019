@@ -4,23 +4,23 @@ import ProductDetail from "./ProductDetail";
 import "./ProductInformation.css";
 
 export default class StoreInformation extends Component {
-  constructor() {
-    super();
-    this.closeStoreInfo = this.closeStoreInfo.bind(this);
-    this.wrapperStoreRef = React.createRef();
-  }
+    constructor() {
+        super();
+        this.closeStoreInfo = this.closeStoreInfo.bind(this);
+        this.wrapperStoreRef = React.createRef();
+    }
 
-  componentDidMount() {
-    //document.addEventListener('click', this.closeStoreInfo)
-  }
+    componentDidMount() {
+        //document.addEventListener('click', this.closeStoreInfo)
+    }
 
-  componentWilUnmount() {
-    //document.addEventListener('click', this.closeStoreInfo)
-  }
+    componentWilUnmount() {
+        //document.addEventListener('click', this.closeStoreInfo)
+    }
 
-  closeStoreInfo(event) {
-    document.querySelector(".store-info").style.right = "-100%";
-  }
+    closeStoreInfo(event) {
+        document.querySelector(".store-info").style.right = "-100%";
+    }
 
   render() {
     return (

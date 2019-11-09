@@ -8,7 +8,7 @@ const options = {
 const districtSchema = new Schema(
     {
         city: { type: Schema.Types.ObjectId, ref: "City" },
-        name: { type: String, required: true, maxlength: 30, trim: true }
+        name: { type: String, required: true, maxlength: 50, trim: true }
     },
     options
 );

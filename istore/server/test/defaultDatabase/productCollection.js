@@ -1,27 +1,29 @@
 const Product = require("../../models/product.model");
 const ProductDao = require("../../dao/product.dao");
+const ProductCategoryDao = require("../../dao/productCategory.dao");
+const StoreDao = require("./../../dao/store.dao");
 
 const imageUrls = [
-    "./images/download1.jpg",
-    "./images/download2.jpg",
-    "./images/download3.jpg",
-    "./images/download4.jpg",
-    "./images/download5.jpg",
-    "./images/download6.jpg",
-    "./images/download7.jpg",
-    "./images/download8.jpg",
-    "./images/download9.jpg",
-    "./images/download10.jpg",
-    "./images/download11.jpg",
-    "./images/download12.jpg",
-    "./images/download13.jpg",
-    "./images/download14.jpg",
-    "./images/download15.jpg",
-    "./images/download16.jpg",
-    "./images/download17.jpg",
-    "./images/download18.jpg",
-    "./images/download19.jpg",
-    "./images/download20.jpg"
+    "https://nvc-lighting.com.vn/wp-content/uploads/2017/09/bong-den-led-bulb-a60g-350x350.png",
+    "http://360.thuvienvatly.com/images/2014/02/light-bulb-02.jpg",
+    "https://banbuonsieure.com/wp-content/uploads/2018/11/Day-den-led-trang-tri-bong-tron-12-bong-1.jpg",
+    "https://imgaz.staticbg.com/thumb/large/2014/chenyongfu/09/SKU128358/SKU122314180(23).jpg",
+    "https://nvc-lighting.com.vn/wp-content/uploads/2017/04/bong-den-led-nvc-a60f-d-min.jpg",
+    "https://ae01.alicdn.com/kf/HTB18uS5tRyWBuNkSmFPq6xguVXaM/3-c-i-E14-nhi-t-cao-b-ng-n-500-25-w-t-Halogen-bong.jpg_640x640.jpg",
+    "https://7aothuat.com/wp-content/uploads/2015/07/bong-den-tu-sang-3-mau-4.jpg",
+    "http://icon.com.vn/Portals/0/userfiles/bongdenkday_1.jpg",
+    "https://photo-2-baomoi.zadn.vn/w1000_r1/2017_07_31_83_22890892/0458d6c9f5881cd64599.jpg",
+    "https://ledoto.vn/wp-content/uploads/2018/08/bong-led-c6.jpg",
+    "https://nvc-lighting.com.vn/wp-content/uploads/2017/09/bong-den-led-bulb-a60g-350x350.png",
+    "http://360.thuvienvatly.com/images/2014/02/light-bulb-02.jpg",
+    "https://banbuonsieure.com/wp-content/uploads/2018/11/Day-den-led-trang-tri-bong-tron-12-bong-1.jpg",
+    "https://imgaz.staticbg.com/thumb/large/2014/chenyongfu/09/SKU128358/SKU122314180(23).jpg",
+    "https://nvc-lighting.com.vn/wp-content/uploads/2017/04/bong-den-led-nvc-a60f-d-min.jpg",
+    "https://ae01.alicdn.com/kf/HTB18uS5tRyWBuNkSmFPq6xguVXaM/3-c-i-E14-nhi-t-cao-b-ng-n-500-25-w-t-Halogen-bong.jpg_640x640.jpg",
+    "https://7aothuat.com/wp-content/uploads/2015/07/bong-den-tu-sang-3-mau-4.jpg",
+    "http://icon.com.vn/Portals/0/userfiles/bongdenkday_1.jpg",
+    "https://photo-2-baomoi.zadn.vn/w1000_r1/2017_07_31_83_22890892/0458d6c9f5881cd64599.jpg",
+    "https://ledoto.vn/wp-content/uploads/2018/08/bong-led-c6.jpg"
 ];
 
 const products = [
@@ -44,7 +46,22 @@ const products = [
             ----------------------------`,
         price: 85000,
         saleoff: 10,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn cảm biến âm thanh E27 5W`,
@@ -58,7 +75,22 @@ const products = [
             Bảo hành: 12 Tháng`,
         price: 79000,
         saleoff: 47,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `BÓNG ĐÈN THÔNG MINH XIAOMI YEELIGHT 2 16 TRIỆU MÀU (2019) -Bóng đèn LED thông minh Xiaomi Yeelight 2`,
@@ -85,7 +117,22 @@ const products = [
             #sale #978store #phukienxiaomi #giamgia #xiaomi #phukien #giare #re #denthongminh #bongdenthongminh #denngu #denled #led #den #denxiaomi #denthongminh xiaomi`,
         price: 329900,
         saleoff: 28,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Đèn Led 3w tiết kiệm điện siêu sáng chống nước cao cấp`,
@@ -115,7 +162,22 @@ const products = [
             *Đuôi đèn: E27: đuôi xoáy 27mm`,
         price: 10000,
         saleoff: 50,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn cảm ứng hồng ngoại chuyển động thông minh 9w`,
@@ -130,7 +192,22 @@ const products = [
                 Lỗi 1 đổi 1 trong 1 tháng`,
         price: 59000,
         saleoff: 54,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn LED SIÊU SÁNG - SIÊU TIẾT KIỆM ĐIỆN 5-65W`,
@@ -141,7 +218,22 @@ const products = [
             🍀 Bảo hành: 12 tháng.`,
         price: 72000,
         saleoff: 0,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn trụ LED 50W siêu sáng tiết kiệm điện bảo hành 1 năm`,
@@ -156,7 +248,22 @@ const products = [
             + Điện áp : 220V/5`,
         price: 49500,
         saleoff: 10,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng led trụ 5W/8W/20W/30W/40W/50W đuôi E27`,
@@ -165,7 +272,22 @@ const products = [
             #bongden #bongled #ledtru #5W #8W #20W #30W #40W #50W #E27`,
         price: 70000,
         saleoff: 15,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn Compact Rạng Đông Ánh Sáng Trắng`,
@@ -202,7 +324,22 @@ const products = [
             #rangdong #compact #bóng #chinhhang #baohanh`,
         price: 45000,
         saleoff: 0,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn năng lượng mặt trời 5 chế độ sáng chất lượng cao`,
@@ -231,7 +368,22 @@ const products = [
             1 Bóng đèn năng lượng mặt trời`,
         price: 140000,
         saleoff: 12,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn Edison Vintage ST64 40W E27`,
@@ -256,7 +408,22 @@ const products = [
             Xuất xứ  Trung Quốc`,
         price: 31000,
         saleoff: 10,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn bắt muỗi Mosquito killer Lamp AC175-260V (Trắng)`,
@@ -293,7 +460,22 @@ const products = [
             Đèn LED bắt muỗi hiệu quả cao VegaVN thích hợp sử dụng cho hộ gia đình. Đèn bắt muỗi UV thế hệ mới cũng được sử dụng được cả ngoài sân vườn để bắt muỗi cả đêm hạn chế muỗi cho khu vực xung quanh nhà bạn. Đèn LED bắt muỗi hiệu quả cao VegaVN có thiết kế nhỏ gọn thuận tiện cho bạn đặt vào những vị trí góc khuất.`,
         price: 42000,
         saleoff: 19,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng Đèn Led Hồ Lô Loại Đẹp Siêu Sáng 5w`,
@@ -308,7 +490,22 @@ const products = [
             Thích hợp dùng ngoài trời`,
         price: 41000,
         saleoff: 49,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn bắp ngô tiết kiệm năng lượng 3000k 12w`,
@@ -316,7 +513,22 @@ const products = [
             12W LED light bulb, high energy conversion. Corn shape bulb with mini size, creative and stylish. Flick-free, durable with long service life. Item Name: LED Light Bulb Power: 12W Lamp Body Material: Plastic/Aluminum Light Color: White Light/Warm Light/Tree Color Changing Light Lamp Head: E14 Features: Corn Shape, Easy to Use, Portable, Energy Saving, Decorative Lamp 12W Size: 3cm x 9.8cm/1.18 x 3.86  Notes: Due to the light and screen setting difference, the item's color may be slightly different from the pictures. Please allow slight dimension difference due to different manual measurement. Package Includes: 1 x LED Light Bulb `,
         price: 24000,
         saleoff: 48,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn: Bóng LED Edison T64 4W đui E27 Mã T64`,
@@ -356,7 +568,22 @@ const products = [
             Nếu mẫu bóng  LED Edison T64 4W của Toàn Lợi không đáp ứng được yêu cầu thiết kế của bạn. Bạn có thể xem thêm các sản phẩm đèn khác trong cùng danh mục Bóng Đèn của chúng tôi. Hoặc liên hệ với nhân viên chúng tôi. Chúng tôi sẽ tìm cho bạn nhé!`,
         price: 25000,
         saleoff: 49,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn E27 220V 150W 5500k chụp ảnh ban ngày cho studio`,
@@ -386,7 +613,22 @@ const products = [
             The rated power of this energy-saving bulb is 50W,  which is equal to the incandescent bulb with 150W power. `,
         price: 132000,
         saleoff: 42,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn UV tiết kiệm năng lượng để sưởi ấm cho các loài rùa rắn bò sát`,
@@ -406,7 +648,22 @@ const products = [
             Package included: 1 * 5.0 UVB Output Lamp OR 1 * 10.0 UVB Output Lamp`,
         price: 136000,
         saleoff: 31,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn Halogen siêu sáng 50W 220V-240V`,
@@ -431,7 +688,22 @@ const products = [
             1 x Halogen Bulb`,
         price: 28500,
         saleoff: 50,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Bóng đèn cảm biến chuyển động E27 5W tiện lợi kích thước 10*6*6cm ánh sáng trắng`,
@@ -458,7 +730,22 @@ const products = [
             1*LED bulb`,
         price: 27000,
         saleoff: 10,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     },
     {
         name: `Dây đèn led tròn pha lê trong suốt dài 6m gồm 50 bóng chạy bằng pin`,
@@ -474,7 +761,22 @@ const products = [
             LƯU Ý: SẢN PHẨM CHẠY PIN VÀ CHƯA BẢO GỒM PIN, SHOP MÌNH CÓ BÁN PIN NHÉ`,
         price: 55000,
         saleoff: 20,
-        images: []
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ]
     }
 ];
 
@@ -507,23 +809,45 @@ module.exports.createDefaultCollection = async () => {
     const productsArray = await ProductDao.find();
     if (productsArray.length <= 0) {
         console.log("Product collection is empty.");
-        products.map((product, i) => {
 
-            const nameRemoveAccents = removeAccents(product.name);
+        const productCategory = await ProductCategoryDao.findOneByName(
+            "Thiết bị chiếu sáng"
+        );
+        // console.log(productCategory);
 
-            let productNew = new Product();
-            productNew.name = product.name;
-            productNew.nameRemoveAccents = nameRemoveAccents;
-            productNew.description = product.description;
-            productNew.price = product.price;
-            productNew.saleoff = product.saleoff;
-            productNew.images.push(imageUrls[i]);
+        const store = await StoreDao.findByName("E-Shop");
+        // console.log(store);
 
-            // console.log(productNew);
-            ProductDao.save(productNew);
-        });
-        console.log("Default Product collection created.");
+        if (productCategory != null && store != null) {
+            products.map(async (product, i) => {
+
+                const nameRemoveAccents = removeAccents(product.name);
+
+                let productNew = new Product({
+                    productCategory: productCategory,
+                    store: store,
+                    name: product.name,
+                    nameRemoveAccents: nameRemoveAccents,
+                    description: product.description,
+                    price: product.price,
+                    saleoff: product.saleoff,
+                    rates: product.rates
+                });
+
+                productNew.images.push(imageUrls[i]);
+                productNew.images.push(imageUrls[(i + 1) % 20]);
+                productNew.images.push(imageUrls[(i + 2) % 20]);
+                productNew.images.push(imageUrls[(i + 3) % 20]);
+                productNew.images.push(imageUrls[(i + 4) % 20]);
+
+                // console.log(productNew);
+                const productSave = await ProductDao.save(productNew);
+                console.log("product index: ", i, ": ", (productSave != null) ? "OK" : "Fail" );
+            });
+            console.log("Default Product collection created.");
+        }
+
     } else {
-        console.log("Product collection existed.");
+        console.log("Product collection existed: ", productsArray.length, "/20");
     }
 };

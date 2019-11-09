@@ -12,7 +12,7 @@ router
 
         const name = req.query.email;
         // console.log(name);
-console.log(123)
+        
         if(!name){
             const products = await ProductDao.find();
             if (!products) {
