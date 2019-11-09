@@ -29,7 +29,7 @@ export default class StoreInformation extends Component {
           <a href="javascipt:void(0)"
             className="closebtn"
             onClick={this.closeStoreInfo}>
-            <img src="./icons/next_color.svg" alt="Close Infomation Windows"></img>
+            <img src="./resources/icons/next_color.svg" alt="Close Infomation Windows"></img>
           </a>
         </div>
         <ProductDetail />
