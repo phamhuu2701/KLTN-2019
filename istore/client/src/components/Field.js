@@ -4,8 +4,8 @@ import { Form, Row, Col, Spinner } from "react-bootstrap";
 import "./Field.css";
 import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
-import { onSearchProduct } from './Maps';
-import { onSortStoreListService } from '../services/store.service';
+import { onSearchProduct } from "./Maps";
+import { onSortStoreListService } from "../services/store.service";
 
 class SearchBar extends Component {
     constructor(props) {
@@ -77,20 +77,30 @@ export class ResultArea extends Component {
     findStore() {
         this.setState({
             result: this.props.result,
-            message: 'Không tìm thấy sản phẩm!'
-        })
+            message: "Không tìm thấy sản phẩm!"
+        });
     }
 
     render() {
         if (this.state.result.length > 0) {
             return (
                 <div className="field-results-list">
-                    {
-                        this.state.result.map((res, index) => {
-                            return <FieldResultsItem key={index} code={index} info={res} storeName={res.store.title} imageAvatar={res.store.images[0]} price={res._doc.price} saleoff={res._doc.saleoff} phone={res.store.phone} productName={res._doc.name} distance={res.distance}/>
-                        })
-                        
-                    }  
+                    {this.state.result.map((res, index) => {
+                        return (
+                            <FieldResultsItem
+                                key={index}
+                                code={index}
+                                info={res}
+                                storeName={res.store.title}
+                                imageAvatar={res._doc.images[0]}
+                                price={res._doc.price}
+                                saleoff={res._doc.saleoff}
+                                phone={res.store.phone}
+                                productName={res._doc.name}
+                                distance={res.distance}
+                            />
+                        );
+                    })}
                 </div>
             );
         } else {
@@ -186,11 +196,16 @@ export default class Fields extends Component {
                 <div className="field-results">
                     <Row>
                         <Col className="field-results-title">
-                            <span className="field-results-number">Kết quả</span>
+                            <span className="field-results-number">
+                                Kết quả
+                            </span>
                         </Col>
                         <Col className="field-results-filter">
                             <Form.Group>
-                                <Form.Control as="select" onChange={this.onPrioritySelectChange}>
+                                <Form.Control
+                                    as="select"
+                                    onChange={this.onPrioritySelectChange}
+                                >
                                     <option value={0}>Phổ biến nhất</option>
                                     <option value={1}>Gần nhất</option>
                                     <option value={2}>Giá tăng dần</option>
@@ -201,11 +216,14 @@ export default class Fields extends Component {
                     </Row>
                     <hr className="field-hr" />
                     <div className="loading">
-                        <Spinner animation="grow" variant="success" size="sm"/>
-                        <Spinner animation="grow" variant="success" size="sm"/>
-                        <Spinner animation="grow" variant="success" size="sm"/>
+                        <Spinner animation="grow" variant="success" size="sm" />
+                        <Spinner animation="grow" variant="success" size="sm" />
+                        <Spinner animation="grow" variant="success" size="sm" />
                     </div>
-                    <ResultArea ref={this.findProductRef} result={this.state.result}/>
+                    <ResultArea
+                        ref={this.findProductRef}
+                        result={this.state.result}
+                    />
                 </div>
                 <hr className="field-hr" />
                 <Footer />
