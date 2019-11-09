@@ -10,8 +10,9 @@ import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
 import ProductInformation from "./components/ProductInformation";
 import Information from "./components/Information";
-import StoreProducts from "./components/e-shop-template/StoreProducts";
-import StoreProductDetail from "./components/e-shop-template/StoreProductDetail";
+import Store from "./components/e-shop-template/Store";
+// import StoreProducts from "./components/e-shop-template/StoreProducts";
+// import StoreProductDetail from "./components/e-shop-template/StoreProductDetail";
 
 export default class App extends Component {
     constructor() {
@@ -55,19 +56,16 @@ export default class App extends Component {
                             <Information isLoggedIn={this.state.isLoggedIn} />
                         </div>
                     </Route>
-                    <Route path="/mystore">
-                        <div className='app'>
-                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
-                        </div>
-                    </Route>
-                    {/* <Route path="/store">
+                    {/* <Route path="/mystore">
                         <div className='app'>
                             <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
                         </div>
                     </Route> */}
-                    <Route exact path="/store/:id" component={ StoreProducts }/>
-                    <Route exact path="/store/:id/products" component={ StoreProducts }/>
-                    <Route exact path="/store/:idStore/products/:idProduct" component={ StoreProductDetail }/>
+                    
+                    <Route exact path="/store/:id" component={ Store }/>
+                    {/* <Route exact path="/store/:id" component={ StoreProducts }/> */}
+                    {/* <Route exact path="/store/:id/products" component={ StoreProducts }/> */}
+                    {/* <Route exact path="/store/:idStore/products/:idProduct" component={ StoreProductDetail }/> */}
                 </Switch>
             </Router>
         );

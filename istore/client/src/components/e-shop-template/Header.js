@@ -11,8 +11,7 @@ class Header extends Component {
             categoryHeaderClicked: false,
             menuHeaderClicked: false,
             navToggleButtonClicked: false,
-            responsiveNavClicked: false,
-            store: this.props.store
+            responsiveNavClicked: false
         };
 
         this.categoryHeaderOnClick = this.categoryHeaderOnClick.bind(this);
@@ -79,7 +78,7 @@ class Header extends Component {
                             <Row>
                                 <Col md="6">
                                     <div className="pull-left">
-                                        <span>Welcome to {this.state.store.name}</span>
+                                        <span>Welcome to {this.props.store.name}</span>
                                     </div>
                                 </Col>
                                 <Col md="6">

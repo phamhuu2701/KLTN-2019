@@ -20,6 +20,7 @@ class Footer extends Component {
     }
 
     render() {
+        console.log(this.state.store);
         return (
             <div className="StoreFooter">
                 {/* FOOTER */}
