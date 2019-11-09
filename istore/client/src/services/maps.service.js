@@ -144,7 +144,7 @@ export function showNearStoreService(thisMap, markers, nearbyStore) {
                 animation: maps.Animation.DROP,
                 position: new thisMap.props.google.maps.LatLng(nearbyStore[i][0], nearbyStore[i][1]),
                 icon: {
-                    url: '../icons/logo.svg',
+                    url: '../resources/icons/logo.svg',
                     anchor: new maps.Point(32,32),
                     scaledSize: new maps.Size(30,32)
                 }

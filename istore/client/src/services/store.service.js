@@ -1,3 +1,5 @@
+import { sortProductByDistance, sortIncreseProductByPrice, sortDescreseProductByPrice } from '../utils/sortModel'
+
 export function showHideStoreInfoService(id, info, thisMap) {
 	const storeInfo = document.querySelector('.store-info');
     const items = document.querySelectorAll('.field-results-item');
@@ -42,28 +44,19 @@ export function showHideStoreInfoService(id, info, thisMap) {
 }
 
 export function onSortStoreListService(stores, priority, cb) {
+    document.querySelector('.loading').style.display = 'block';
     if (stores.length > 1) {
         switch (+priority) {
             case 0:
                 break;
             case 1:
-                stores.sort((first, second) => {
-                    if (first.distance < second.distance)
-                        return -1;
-                    else if (first.distance > second.distance)
-                        return 1;
-                    else return 0;
-                })
+                sortProductByDistance(stores);
                 break;
             case 2:
-                stores.sort((first, second) => {
-                    return first._doc.price*((100 - first._doc.saleoff)/100) - second._doc.price*((100 - second._doc.saleoff)/100);
-                })
+                sortIncreseProductByPrice(stores);
                 break;
             case 3:
-                stores.sort((first, second) => {
-                    return second._doc.price*((100 - second._doc.saleoff)/100) - first._doc.price*((100 - first._doc.saleoff)/100);
-                })
+                sortDescreseProductByPrice(stores);
                 break;
             default:
                 console.log('0');
