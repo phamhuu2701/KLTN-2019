@@ -10,7 +10,6 @@ import Maps from "./components/Maps";
 import DropdownUser from "./components/DropdownUser";
 import ProductInformation from "./components/ProductInformation";
 import Information from "./components/Information";
-import MyStore from "./components/MyStore";
 import StoreProducts from "./components/e-shop-template/StoreProducts";
 import StoreProductDetail from "./components/e-shop-template/StoreProductDetail";
 
@@ -57,7 +56,14 @@ export default class App extends Component {
                         </div>
                     </Route>
                     <Route path="/mystore">
-                        <MyStore isLoggedIn={this.state.isLoggedIn} />
+                        <div className='app'>
+                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
+                        </div>
+                    </Route>
+                    <Route path="/store">
+                        <div className='app'>
+                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
+                        </div>
                     </Route>
                     <Route exact path="/store/:id" component={ StoreProducts }/>
                     <Route exact path="/store/:id/products" component={ StoreProducts }/>

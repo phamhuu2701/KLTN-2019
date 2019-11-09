@@ -21,7 +21,8 @@ export function onSearchProductService(search, distance, thisMap, cb) {
     // Find product and location of that products
     if (search !== '') {
         document.querySelector('.loading').style.display = 'block';
-        document.querySelector('select[class="form-control"]').disabled = true;
+        document.querySelectorAll('select[class="form-control"]')[0].disabled = true;
+        document.querySelectorAll('select[class="form-control"]')[1].disabled = true;
         document.querySelector('.field-results-list').style.display = 'none';
         document.querySelector('.field-results-number').textContent = `Kết quả`;
         document.querySelector('.store-info').style.right = '-100%';
@@ -40,8 +41,6 @@ export function onSearchProductService(search, distance, thisMap, cb) {
         })
         .then(async result => {
             // Display result on result area
-            document.querySelector('.loading').style.display = 'none';
-            document.querySelector('select[class="form-control"]').disabled = false;
             document.querySelector('.field-results-list').style.display = 'block';
             document.querySelector('.field-results-number').textContent = `Kết quả (${result.length})`;
 
@@ -68,6 +67,9 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                     elements.map((e, index) => {
                         lastResult.push({...result[index], distance: e.distance.text})
                     })
+                    document.querySelector('.loading').style.display = 'none';
+                    document.querySelectorAll('select[class="form-control"]')[0].disabled = false;
+                    document.querySelectorAll('select[class="form-control"]')[1].disabled = false;
                     cb(lastResult)
                 })
 
@@ -87,6 +89,9 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                 }
                 thisMap.showNearStore(nearbyStoreLocation);
             } else {
+                document.querySelector('.loading').style.display = 'none';
+                document.querySelectorAll('select[class="form-control"]')[0].disabled = false;
+                document.querySelectorAll('select[class="form-control"]')[1].disabled = false;
                 // Show result in result area
                 cb(result);
             }
@@ -160,17 +165,17 @@ export function getRedirectMapService(thisMap, origin, destination, cb) {
         travelMode: thisMap.props.google.maps.TravelMode.DRIVING
     }
 
-
     directionsDisplay.setMap(thisMap.map);
     directionsService.route(request, (results, status) => {
         if (status === 'OK') {
+            //if (results.geocoded_waypoints[0].place_id === directionsDisplay.directions) {}
             directionsDisplay.setDirections(results);
 
             // Get other values
             const otherValues = results.routes[0].legs[0];
-            const time = otherValues.duration.text;
+            /*const time = otherValues.duration.text;
             const total = otherValues.distance.text;
-            const from = otherValues.start_address;
+            const from = otherValues.start_address;*/
             const to = otherValues.end_address;
             document.querySelector('.product-detail-info-content-store-address').innerHTML = to;
             //console.log(`Đi từ ${from} đến ${to} dài ${total} trong ${time}`);
@@ -240,13 +245,6 @@ export function loadMapService(thisMap) {
         })
         thisMap.map = new maps.Map(document.querySelector('.app-body-right'), mapConfig);
     }
-}
-
-const calculateDistance = (x1, x2, y1, y2) => {
-
-    console.log(Math.pow((x1 - x2), 2));
-            console.log(y1, y2);
-    return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
 }
 
 // No complete yet Autocomplete -- Not display autocomplete

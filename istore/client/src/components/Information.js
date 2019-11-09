@@ -6,7 +6,9 @@ export default class Information extends Component {
 	}*/
 
 	componentDidUpdate() {
+		console.log(this.props.isLoggedIn);
 		if (this.props.isLoggedIn === false) {
+			alert('You had not logged in yet!')
 			window.location = 'http://localhost:3000'
 		}
 	}
