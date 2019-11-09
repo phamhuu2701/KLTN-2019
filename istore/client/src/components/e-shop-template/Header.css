@@ -1,0 +1,33 @@
+.StoreHeader .store-header-logo {
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+}
+
+.StoreHeader .header-top-links {
+    margin-bottom: auto;
+}
+
+.StoreHeader .header-btns-custom {
+    margin-bottom: 0;
+}
+
+.StoreHeader .navigation {
+    clear: both;
+}
+
+.StoreHeader .dropdown-fa-angle-right {
+    float: right;
+}
+
+.StoreHeader #breadcrumb {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.StoreHeader .breadcrumb-header {
+    margin-left: 0.5em;
+}
+
+.StoreHeader .breadcrumb-header a {
+    margin-left: 0.5em;
+}

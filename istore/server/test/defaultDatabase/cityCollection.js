@@ -77,6 +77,6 @@ module.exports.createDefaultCollection = async () => {
         });
         console.log("Default City collection created.");
     } else {
-        console.log("City collection existed.");
+        console.log("City collection existed: ", citiesArray.length, "/63");
     }
 };

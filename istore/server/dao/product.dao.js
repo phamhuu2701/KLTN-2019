@@ -4,34 +4,42 @@ module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
             Model.find({})
-                .exec((err, results) => {
-                    if (err) return reject(null);
-                    return resolve(results);
-                });
+            .populate("productCategory")
+            .populate("store")
+            .exec((err, results) => {
+                if (err) return reject(null);
+                return resolve(results);
+            });
         }).catch(() => null);
     },
     findById: id => {
         return new Promise((resolve, reject) => {
             Model.findById(id)
-                .exec((err, result) => {
-                    if (err) return reject(null);
-                    return resolve(result);
-                });
+            .populate("productCategory")
+            .populate("store")
+            .exec((err, result) => {
+                if (err) return reject(null);
+                return resolve(result);
+            });
         }).catch(() => null);
     },
     findByName: name => {
         return new Promise((resolve, reject) => {
             Model.find({ name: name })
-                .exec((err, result) => {
-                    if (err) return reject(null);
-                    return resolve(result);
-                });
+            .populate("productCategory")
+            .populate("store")
+            .exec((err, result) => {
+                if (err) return reject(null);
+                return resolve(result);
+            });
         }).catch(() => null);
     },
     searchByName: search => {
         //return Model.find({nameRemoveAccents: {$search: "\" }})
         //return Model.find({nameRemoveAccents: {$regex: /.bong.den./, $options: 'i'}});
-        return Model.find({nameRemoveAccents: {$regex: new RegExp(search, 'i')}});
+        return Model.find({
+            nameRemoveAccents: { $regex: new RegExp(search, "i") }
+        });
     },
     save: model => {
         return new Promise((resolve, reject) => {
@@ -46,7 +54,7 @@ module.exports = {
             Model.findByIdAndUpdate(
                 model._id,
                 {
-
+                    
                 },
                 { new: true },
                 (err, result) => {

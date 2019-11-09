@@ -1,0 +1,21 @@
+.StoreFooter .store-footer {
+    clear: both;
+}
+
+.StoreFooter .footer-store-info i {
+    min-width: 1em;
+}
+
+.StoreFooter .footer-store-info span {
+    margin-left: 1em;
+}
+
+.StoreFooter .footer-logo {
+    display: block;
+    min-height: 70px;
+}
+
+.StoreFooter .footer-header {
+    margin-bottom: 0;
+    padding-left: 0;
+}

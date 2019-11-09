@@ -18,6 +18,6 @@ module.exports.createDefaultCollection = async () => {
         });
         console.log("Default Authorization collection created.");
     } else {
-        console.log("Authorization collection existed.");
+        console.log("Authorization collection existed: ", authorizationsArray.length, "/4");
     }
 };

@@ -29,6 +29,6 @@ module.exports.createDefaultCollection = async () => {
         });
         console.log("Default StoreCategory collection created.");
     } else {
-        console.log("StoreCategory collection existed.");
+        console.log("StoreCategory collection existed: ", storeCategogysArray.length, "/13");
     }
 };

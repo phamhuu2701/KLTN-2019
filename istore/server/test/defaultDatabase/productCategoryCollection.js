@@ -1,8 +1,7 @@
 const ProductCategory = require("../../models/productCategory.model");
 const ProductCategoryDao = require("../../dao/productCategory.dao");
 
-const productCategories = [
-    "Điều hòa phòng", 
+const productCategories = [ 
     "Thiết bị Làm mát và làm đông lạnh", 
     "Thiết bị chăm sóc cá nhân", 
     "Thiết bị chiếu sáng", 
@@ -29,6 +28,6 @@ module.exports.createDefaultCollection = async () => {
         });
         console.log("Default ProductCategory collection created.");
     } else {
-        console.log("ProductCategory collection existed.");
+        console.log("ProductCategory collection existed: ", productCategoriesArray.length, "/12");
     }
 };

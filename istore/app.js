@@ -17,10 +17,11 @@ const citiesRouter = require("./server/api/cities.api");
 const districtsRouter = require("./server/api/districts.api");
 const streetsRouter = require("./server/api/streets.api");
 const authorizationsRouter = require("./server/api/authorizations.api");
-const storeCategoriesRouter = require("./server/api/storeCategories.api");
 const usersRouter = require("./server/api/users.api");
 const productCategoriesRouter = require("./server/api/productCategories.api");
 const productsRouter = require("./server/api/products.api");
+const storeCategoriesRouter = require("./server/api/storeCategories.api");
+const storesRouter = require("./server/api/stores.api");
 
 var app = express();
 const port = process.env.PORT || 5000;
@@ -79,9 +80,10 @@ app.use("/api/districts", districtsRouter);
 app.use("/api/streets", streetsRouter);
 app.use("/api/authorizations", authorizationsRouter);
 app.use("/api/users", usersRouter);
-app.use("/api/store-categories", storeCategoriesRouter);
 app.use("/api/product-categories", productCategoriesRouter);
 app.use("/api/products", productsRouter);
+app.use("/api/store-categories", storeCategoriesRouter);
+app.use("/api/stores", storesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

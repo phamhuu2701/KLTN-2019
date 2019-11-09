@@ -25,15 +25,15 @@ module.exports = {
         return new Promise((resolve, reject) => {
             Model.find({ name: name })
                 .populate("authorization")
-                .exec((err, result) => {
+                .exec((err, results) => {
                     if (err) return reject(null);
-                    return resolve(result);
+                    return resolve(results);
                 });
         }).catch(() => null);
     },
     findOneByEmail: email => {
         return new Promise((resolve, reject) => {
-            Model.find({ email: email })
+            Model.findOne({ email: email })
                 .populate("authorization")
                 .exec((err, result) => {
                     if (err) return reject(null);
@@ -43,7 +43,7 @@ module.exports = {
     },
     findOneByPhone: phone => {
         return new Promise((resolve, reject) => {
-            Model.find({ phone: phone })
+            Model.findOne({ phone: phone })
                 .populate("authorization")
                 .exec((err, result) => {
                     if (err) return reject(null);

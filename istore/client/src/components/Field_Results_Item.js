@@ -28,14 +28,14 @@ export default class Fields_Result_Item extends Component {
                     </div>
                     <div>
                         <span className="field-results-item-desc-rate">
-                            <img alt="" src="icons/star_liked.svg"></img>
-                            <img alt="" src="icons/star_liked.svg"></img>
-                            <img alt="" src="icons/star_liked.svg"></img>
-                            <img alt="" src="icons/star_liked.svg"></img>
-                            <img alt="" src="icons/star_not_liked.svg"></img>
+                            <img alt="" src="./resources/icons/star_liked.svg"></img>
+                            <img alt="" src="./resources/icons/star_liked.svg"></img>
+                            <img alt="" src="./resources/icons/star_liked.svg"></img>
+                            <img alt="" src="./resources/icons/star_liked.svg"></img>
+                            <img alt="" src="./resources/icons/star_not_liked.svg"></img>
                         </span>
                         <span className="field-results-item-desc-contact">
-                            <img alt="" src="icons/phone.svg"></img>
+                            <img alt="" src="./resources/icons/phone.svg"></img>
                             <span>{this.props.phone}</span>
                         </span>
                     </div>

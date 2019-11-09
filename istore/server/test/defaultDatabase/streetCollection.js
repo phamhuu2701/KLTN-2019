@@ -56,11 +56,9 @@ module.exports.createDefaultCollection = async () => {
     const streetsArray = await StreetDao.find();
     if (streetsArray.length <= 0) {
         console.log("Street collection is empty.");
+
         const districts = await DistrictDao.find();
-        if (districts.length <= 0) {
-            console.log("District collection is empty.");
-        } else {
-            
+        if (districts.length > 0) {
             const thuDucDistrict = await DistrictDao.findOneByName("Thủ Đức");
 
             streets.map(street => {
@@ -75,6 +73,6 @@ module.exports.createDefaultCollection = async () => {
             console.log("Default Street collection created.");
         }
     } else {
-        console.log("Street collection existed.");
+        console.log("Street collection existed: ", streetsArray.length, "/46");
     }
 };

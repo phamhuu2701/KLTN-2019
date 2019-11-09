@@ -7,7 +7,7 @@ const options = {
 
 const authorizationSchema = new Schema(
   {
-    name: { type: String, required: true, maxlength: 20, trim: true }
+    name: { type: String, required: true, maxlength: 30, trim: true }
   },
   options
 );
