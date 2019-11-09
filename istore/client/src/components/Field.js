@@ -4,7 +4,8 @@ import { Form, Row, Col, Spinner } from "react-bootstrap";
 import "./Field.css";
 import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
-import { onSearchProduct } from './Maps'
+import { onSearchProduct } from './Maps';
+import { onSortStoreListService } from '../services/store.service';
 
 class SearchBar extends Component {
     constructor(props) {
@@ -125,6 +126,9 @@ export default class Fields extends Component {
 
     onPrioritySelectChange(e) {
         // Do somthing
+        onSortStoreListService(this.state.result, e.target.value, result => {
+            this.findProductHandler(result);
+        });
     }
 
     findProductHandler(result) {

@@ -15,6 +15,13 @@ import StoreContent from './StoreContent';
 import StoreProductDetail from "./StoreProductDetail";
 
 class Store extends Component {
+    componentDidUpdate() {
+        if (this.props.isLoggedIn === false) {
+            alert('You had not logged in yet!')
+            window.location = 'http://localhost:3000'
+        }
+    }
+    
     render() {
         return (
             <Router>
@@ -46,7 +53,7 @@ class Store extends Component {
                                 {/* LOGO */}
                                 <Col md={3}>
                                     <div className="header-logo store-header-logo-format">
-                                        <a href="#" className="logo">
+                                        <a href="/" className="logo">
                                             <img src="./img/logo.png" alt="" />
                                         </a>
                                     </div>
