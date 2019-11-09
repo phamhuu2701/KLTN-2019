@@ -76,55 +76,20 @@ export class ResultArea extends Component {
     findStore() {
         this.setState({
             result: this.props.result,
-<<<<<<< HEAD
-            message: "Không tìm thấy sản phẩm!"
-        });
-        // Set marker for all store
-        /*if (this.state.result.length > 0) {
-            const storeList = this.state.result.map(val => {
-                return val.store;
-            })
-        }*/
-=======
             message: 'Không tìm thấy sản phẩm!'
         })
->>>>>>> d9bd854db1086fd279ca823f43ce3715677abbcd
     }
 
     render() {
         if (this.state.result.length > 0) {
             return (
                 <div className="field-results-list">
-<<<<<<< HEAD
-                    {this.state.result.map((result, index) => {
-                        try {
-                            return (
-                                <div>
-                                    <FieldResultsItem
-                                        key={index}
-                                        code={index}
-                                        info={result}
-                                        storeName={result.store.title}
-                                        imageAvatar={result.store.images[0]}
-                                        price={result._doc.price}
-                                        phone={result.store.phone}
-                                        productName={result._doc.name}
-                                        date="12/12/2019"
-                                    />
-                                </div>
-                            );
-                        } catch (error) {
-                            return (<div></div>);
-                        }
-                    })}
-=======
                     {
                         this.state.result.map((res, index) => {
                             return <FieldResultsItem key={index} code={index} info={res} storeName={res.store.title} imageAvatar={res.store.images[0]} price={res._doc.price} saleoff={res._doc.saleoff} phone={res.store.phone} productName={res._doc.name} distance={res.distance}/>
                         })
                         
                     }  
->>>>>>> d9bd854db1086fd279ca823f43ce3715677abbcd
                 </div>
             );
         } else {
@@ -221,15 +186,7 @@ export default class Fields extends Component {
                         </Col>
                         <Col className="field-results-filter">
                             <Form.Group>
-<<<<<<< HEAD
-                                <Form.Control
-                                    as="select"
-                                    onChange={this.onDistanceSelectChange}
-                                >
-                                    <option value={-1}>Mới nhất</option>
-=======
                                 <Form.Control as="select" onChange={this.onPrioritySelectChange}>
->>>>>>> d9bd854db1086fd279ca823f43ce3715677abbcd
                                     <option value={0}>Phổ biến nhất</option>
                                     <option value={1}>Gần nhất</option>
                                     <option value={2}>Giá tăng dần</option>
@@ -239,19 +196,12 @@ export default class Fields extends Component {
                         </Col>
                     </Row>
                     <hr className="field-hr" />
-<<<<<<< HEAD
-                    <ResultArea
-                        ref={this.findProductRef}
-                        result={this.state.result}
-                    />
-=======
                     <div className="loading">
                         <Spinner animation="grow" variant="success" size="sm"/>
                         <Spinner animation="grow" variant="success" size="sm"/>
                         <Spinner animation="grow" variant="success" size="sm"/>
                     </div>
                     <ResultArea ref={this.findProductRef} result={this.state.result}/>
->>>>>>> d9bd854db1086fd279ca823f43ce3715677abbcd
                 </div>
                 <hr className="field-hr" />
                 <Footer />
