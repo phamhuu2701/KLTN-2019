@@ -249,9 +249,52 @@ class ProductDetail extends Component {
                     </Row>
                 </div>
                 <hr />
-                <div className="product-detail-products-similar">
-                    <div className="product-detail-products-similar-title">
-                        <h5>SẢN PHẨM TƯƠNG TỰ</h5>
+                <div className="product-detail-product-body-footer">
+                  <div>
+                    <Image src="./icons/checked.svg" />
+                    <span>Sản phẩm có sẵn tại cửa hàng</span>
+                  </div>
+                  <div>
+                    <Image src="./icons/checked.svg" />
+                    <span>Hàng chính hãng 100%</span>
+                  </div>
+                  <div>
+                    <Image src="./icons/checked.svg" />
+                    <span>7 ngày miễn phí đổi hàng</span>
+                  </div>
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+        <hr />
+        <div className="product-detail-info">
+          <Row>
+            <Col>
+              <div className="product-detail-info-header">
+                <div className="product-detail-info-avatar">
+                  <Image src="./images/image1.jpg" />
+                </div>
+                <div className="product-detail-info-content">
+                  <div className="product-detail-info-content-store-name">
+                    <h5>My Store</h5>
+                  </div>
+                  <div className="product-detail-info-content-store-address">
+                    Chợ Bến Thành
+                  </div>
+                </div>
+              </div>
+            </Col>
+            <Col>
+              <div className="product-detail-info-contact">
+                <div className="product-detail-info-contact-phone">
+                  <Image src="./icons/phone.svg" />
+                  <span>Gọi ngay</span>
+                </div>
+                <a href="/store">
+                    <div className="product-detail-info-contact-view-shop">
+                    <Image src="./icons/search.svg" />
+                    <span>Xem shop</span>
                     </div>
                     <Row>
                         <Col>

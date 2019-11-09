@@ -1,5 +1,5 @@
 export function onGetCurrentPositionService(thisMap) {
-    thisMap.cleanMaps();
+    thisMap.cleanMapAndClientPosition();
 
     if (thisMap.props.centerAroundCurrentLocation) {
         if (navigator && navigator.geolocation) {
@@ -20,7 +20,15 @@ export function onGetCurrentPositionService(thisMap) {
 export function onSearchProductService(search, distance, thisMap, cb) {
     // Find product and location of that products
     if (search !== '') {
-        fetch(`/api/products/searchByName?search=${search}&lat=${thisMap.state.currentLocation.lat}&lng=${thisMap.state.currentLocation.lng}&distance=${distance}`, {
+        document.querySelector('.loading').style.display = 'block';
+        document.querySelector('select[class="form-control"]').disabled = true;
+        document.querySelector('.field-results-list').style.display = 'none';
+        document.querySelector('.field-results-number').textContent = `Kết quả`;
+        document.querySelector('.store-info').style.right = '-100%';
+
+        const {lat, lng} = thisMap.state.currentLocation;
+
+        fetch(`/api/products/searchByName?search=${search}&lat=${lat}&lng=${lng}&distance=${distance}`, {
             method: 'GET'
         })
         .then(result => {
@@ -30,29 +38,59 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                 return [];
             }
         })
-        .then(result => {
+        .then(async result => {
             // Display result on result area
-            cb(result);
+            document.querySelector('.loading').style.display = 'none';
+            document.querySelector('select[class="form-control"]').disabled = false;
+            document.querySelector('.field-results-list').style.display = 'block';
+            document.querySelector('.field-results-number').textContent = `Kết quả (${result.length})`;
+
+            
 
             // Show nearby store existing product
             thisMap.cleanMaps();
             if (result.length > 0) {
-                thisMap.drawCircleFromCenter(thisMap.state.currentLocation, +distance)
-                const allStore = result.map(product => {
+                // Add distance into result
+                // Client's location --- origin
+                const latLng = thisMap.props.google.maps.LatLng;
+                const {lat, lng} = thisMap.state.currentLocation;
+                // Stores's location --- destinations
+                const allStoreLocation = result.map(product => {
                     return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
                 })
-                /*const nearbyStore = allStore.filter((store, index, array) => {
-                    console.log(store, array.indexOf(store), index, array.lastIndexOf(store) === index);
-                    return array.indexOf(store) == index;
-                })*/
-                const nearbyStore = [];
-                allStore.forEach(loc => {
-                    if (nearbyStore.indexOf(loc) === -1) {
-                        nearbyStore.push(loc);
-                    }
+                const latlngAllStores = allStoreLocation.map(loc => {
+                    return new latLng(loc[0], loc[1]);
                 })
-                thisMap.showNearStore(nearbyStore);
+                // Calculate distance off all store form result
+                const lastResult = [];
+                await thisMap.distanceMatrix([new latLng(lat, lng)], latlngAllStores, async response => {
+                    const elements = await response.rows[0].elements;
+                    elements.map((e, index) => {
+                        lastResult.push({...result[index], distance: e.distance.text})
+                    })
+                    cb(lastResult)
+                })
+
+                thisMap.drawCircleFromCenter(thisMap.state.currentLocation, + distance)
+                const nearbyStoreLocation = []
+                for (let store of allStoreLocation) {
+                    let loop = 0;
+                    for (let sto of nearbyStoreLocation) {
+                        if (sto[0] === store[0] && sto[1] === store[1]) {
+                            loop = 1;
+                            break;
+                        }
+                    }
+                    if (loop === 0) {
+                        nearbyStoreLocation.push(store);
+                    }
+                }
+                thisMap.showNearStore(nearbyStoreLocation);
+            } else {
+                // Show result in result area
+                cb(result);
             }
+
         })
         .catch(err => console.log(err))
     }
@@ -67,6 +105,7 @@ export function geocodingService(address, thisMap, cb) {
         if (status === maps.GeocoderStatus.OK) {
             // Get Lat and Lng from entered location
             const { lat, lng } = results[0].geometry.location;
+            console.log(lat(), lng());
 
             thisMap.cleanMapAndClientPosition();
 
@@ -80,32 +119,9 @@ export function geocodingService(address, thisMap, cb) {
                 }
             })
 
-            // Test draw a circle on map from center position 
-            thisMap.drawCircleFromCenter(thisMap.state.currentLocation, 1000)
-
             cb(results[0].formatted_address)
         } else {
-            return alert( 'Không tìm vị trí: ' + status );
-        }
-    })
-}
-
-// Get Address or geometry (latitude and longitude)
-export function geocodingByLocationService(latlng, thisMap, cb) {
-    const google = thisMap.props.google;
-    const maps = google.maps;
-    const geocoder = new maps.Geocoder();
-    geocoder.geocode({'location': latlng}, (results, status) => {
-        if (status === maps.GeocoderStatus.OK) {
-            /*console.log(latlng);
-            for (var i = 0; i < results.length; i++) {
-                const {lat, lng} = results[i].geometry.location
-                console.log(lat(), lng());
-            }*/
-            // Get Lat and Lng from entered location
-            cb(results[0].formatted_address)
-        } else {
-            return alert( 'Không tìm vị trí: ' + status );
+            return alert( 'Không tìm thấy vị trí: ' + status );
         }
     })
 }
@@ -117,7 +133,6 @@ export function showNearStoreService(thisMap, markers, nearbyStore) {
     // Add some new markers
     for (let i = 0; i < nearbyStore.length; i++) {
         setTimeout(() => {
-            console.log();
             markers.push(new maps.Marker({
                 name: 'Your location!',
                 map: thisMap.map,
@@ -157,9 +172,24 @@ export function getRedirectMapService(thisMap, origin, destination, cb) {
             const total = otherValues.distance.text;
             const from = otherValues.start_address;
             const to = otherValues.end_address;
-            console.log(`Đi từ ${from} đến ${to} dài ${total} trong ${time}`);
+            document.querySelector('.product-detail-info-content-store-address').innerHTML = to;
+            //console.log(`Đi từ ${from} đến ${to} dài ${total} trong ${time}`);
             cb(directionsDisplay);
         }
+    })
+}
+
+export function distanceMatrixService(origin, destinations, thisMap, cb) {
+    const google = thisMap.props.google;
+    const maps = google.maps;
+    const service = new maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: origin, 
+        destinations: destinations,
+        travelMode: 'DRIVING'
+    }, (response, status) => {
+        cb(response);
     })
 }
 
@@ -210,6 +240,13 @@ export function loadMapService(thisMap) {
         })
         thisMap.map = new maps.Map(document.querySelector('.app-body-right'), mapConfig);
     }
+}
+
+const calculateDistance = (x1, x2, y1, y2) => {
+
+    console.log(Math.pow((x1 - x2), 2));
+            console.log(y1, y2);
+    return Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
 }
 
 // No complete yet Autocomplete -- Not display autocomplete

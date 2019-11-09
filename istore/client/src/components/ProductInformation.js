@@ -22,20 +22,18 @@ export default class StoreInformation extends Component {
         document.querySelector(".store-info").style.right = "-100%";
     }
 
-    render() {
-        return (
-            <div className="store-info" ref={this.wrapperStoreRef}>
-                <div>
-                    <a
-                        href="javascipt:void(0)"
-                        className="closebtn"
-                        onClick={this.closeStoreInfo}
-                    >
-                        <img src="./resources/icons/next_color.svg" alt=""></img>
-                    </a>
-                </div>
-                <ProductDetail />
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="store-info" ref={this.wrapperStoreRef}>
+        <div>
+          <a href="javascipt:void(0)"
+            className="closebtn"
+            onClick={this.closeStoreInfo}>
+            <img src="./icons/next_color.svg" alt="Close Infomation Windows"></img>
+          </a>
+        </div>
+        <ProductDetail />
+      </div>
+    );
+  }
 }
