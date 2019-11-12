@@ -25,7 +25,7 @@ const storeSchema = new Schema(
                 trim: true,
                 default: "Point"
             },
-            coordinates: [{ type: Number, required: true }] //[lng, lat]
+            coordinates: [{ type: Number, required: true, index: '2dsphere' }] //[lng, lat]
         },
         phone: { type: String, maxlength: 30, trim: true, required: true },
         email: { type: String, maxlength: 50, trim: true, required: true },

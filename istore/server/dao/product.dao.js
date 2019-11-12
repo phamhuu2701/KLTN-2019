@@ -5,7 +5,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             Model.find({})
             .populate("productCategory")
-            .populate("store")
             .exec((err, results) => {
                 if (err) return reject(null);
                 return resolve(results);
@@ -16,7 +15,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             Model.findById(id)
             .populate("productCategory")
-            .populate("store")
             .exec((err, result) => {
                 if (err) return reject(null);
                 return resolve(result);
@@ -27,7 +25,6 @@ module.exports = {
         return new Promise((resolve, reject) => {
             Model.find({ name: name })
             .populate("productCategory")
-            .populate("store")
             .exec((err, result) => {
                 if (err) return reject(null);
                 return resolve(result);

@@ -1,3 +1,6 @@
+import { sortProductByDistance, sortIncreseProductByPrice, sortDescreseProductByPrice, sortProductByRating } from '../utils/sortModel'
+import { showProductDetail } from '../components/ProductDetail';
+
 export function showHideStoreInfoService(id, info, thisMap) {
 	const storeInfo = document.querySelector('.store-info');
     const items = document.querySelectorAll('.field-results-item');
@@ -8,20 +11,8 @@ export function showHideStoreInfoService(id, info, thisMap) {
             for (let i = 0; i < items.length; i++) {
                 items[i].style.backgroundColor = '';
             }
-            // Product info
-            document.querySelector('.product-detail-product-body-title').innerHTML = `<h5>${info._doc.name}</h5>`;
-            document.querySelector('.product-detail-product-body-comment-count').innerHTML = `${info._doc.rates.length}`;
-            document.querySelector('.product-detail-product-body-price-sale').innerHTML = `Giảm ${info._doc.saleoff}%`;
-            document.querySelector('.product-detail-product-body-price-main').innerHTML = `(${((info._doc.price*((100-info._doc.saleoff)/100))/1000).toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&.')}đ)`;
-            document.querySelector('.product-detail-product-body-origin-price').innerHTML = `(${(info._doc.price/1000).toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&.')}đ)`;
-            document.querySelector('.product-detail-info-avatar').innerHTML = `<Image src="${info.store.images[0]}" />`;
-
-
-            // Store info
-            document.querySelector('.product-detail-info-content-store-name').innerHTML = `<h5>${info.store.name}</h5>`;
-            // document.querySelector('#view-store-detail').href = `/store/${info.store._id}`;
             
-            
+            showProductDetail(info);
 
             // Marker
             
@@ -43,28 +34,20 @@ export function showHideStoreInfoService(id, info, thisMap) {
 }
 
 export function onSortStoreListService(stores, priority, cb) {
+    document.querySelector('.loading').style.display = 'block';
     if (stores.length > 1) {
         switch (+priority) {
             case 0:
+                sortProductByRating(stores)
                 break;
             case 1:
-                stores.sort((first, second) => {
-                    if (first.distance < second.distance)
-                        return -1;
-                    else if (first.distance > second.distance)
-                        return 1;
-                    else return 0;
-                })
+                sortProductByDistance(stores);
                 break;
             case 2:
-                stores.sort((first, second) => {
-                    return first._doc.price*((100 - first._doc.saleoff)/100) - second._doc.price*((100 - second._doc.saleoff)/100);
-                })
+                sortIncreseProductByPrice(stores);
                 break;
             case 3:
-                stores.sort((first, second) => {
-                    return second._doc.price*((100 - second._doc.saleoff)/100) - first._doc.price*((100 - first._doc.saleoff)/100);
-                })
+                sortDescreseProductByPrice(stores);
                 break;
             default:
                 console.log('0');

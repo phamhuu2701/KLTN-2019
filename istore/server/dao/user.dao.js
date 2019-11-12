@@ -41,6 +41,9 @@ module.exports = {
                 });
         }).catch(() => null);
     },
+    findOneByEmailAndPassword: (email, password) => {
+        return Model.findOne({email: email, password: password})
+    },
     findOneByPhone: phone => {
         return new Promise((resolve, reject) => {
             Model.findOne({ phone: phone })

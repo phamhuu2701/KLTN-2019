@@ -10,6 +10,16 @@
     margin-left: 1em;
 }
 
+.StoreFooter .footer-store-info span:hover {
+    color: #F8694A;
+}
+
+.StoreFooter .footer-store-info .footer-store-info-email {
+    text-decoration: underline;
+    color: blue;
+    cursor: pointer;
+}
+
 .StoreFooter .footer-logo {
     display: block;
     min-height: 70px;

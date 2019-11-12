@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
@@ -62,10 +63,7 @@ export default class App extends Component {
                         </div>
                     </Route> */}
                     
-                    <Route exact path="/store/:id" component={ Store }/>
-                    {/* <Route exact path="/store/:id" component={ StoreProducts }/> */}
-                    {/* <Route exact path="/store/:id/products" component={ StoreProducts }/> */}
-                    {/* <Route exact path="/store/:idStore/products/:idProduct" component={ StoreProductDetail }/> */}
+                    <Route path="/store/:id" component={ Store }/>
                 </Switch>
             </Router>
         );

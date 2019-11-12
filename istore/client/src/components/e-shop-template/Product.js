@@ -1,50 +1,81 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { formatPrice, getRatesAvg } from "./../../utils/productUtils";
+
+import "./Product.css";
 
 class Product extends Component {
-    constructor(props){
-        super(props);
+    constructor() {
+        super();
 
         this.state = {
-            product: {}
-        }
+            starsClassNames: []
+        };
     }
 
-    componentWillMount(){
+    componentDidMount() {
+        let starsClassNames = [];
+        for (let i = 0; i < getRatesAvg(this.props.product); i++) {
+            starsClassNames.push("fa fa-star");
+        }
+        for (let i = 0; i < 5 - getRatesAvg(this.props.product); i++) {
+            starsClassNames.push("fa fa-star-o empty");
+        }
         this.setState({
-            product: this.props.product
+            starsClassNames: starsClassNames
         });
     }
 
     render() {
-        console.log(this.state.product);
-        return (
-            <div>
-                {/* Product Single */}
-                <div className="col-md-4 col-sm-6 col-xs-6">
+        if (this.props.product && this.props.store) {
+            return (
+                <div className="col-md-4 col-xs-6">
                     <div className="product product-single">
                         <div className="product-thumb">
-                            <button className="main-btn quick-view">
-                                <i className="fa fa-search-plus" /> Xem chi tiết
-                            </button>
-                            <img
-                                src={this.state.product.images[0]}
-                                alt=""
-                            />
+                            <Link
+                                to={
+                                    "/store/" +
+                                    this.props.store._id +
+                                    "/products/" +
+                                    this.props.product._id
+                                }
+                            >
+                                <button className="main-btn quick-view">
+                                    <i className="fa fa-search-plus" /> Xem chi
+                                    tiết
+                                </button>
+                            </Link>
+                            <img src={this.props.product.images[0]} alt="" />
                         </div>
                         <div className="product-body">
                             <h3 className="product-price">
-                                {this.state.product.price / 100 * (100 - this.state.product.saleoff)} đ
-                                <del className="product-old-price">{this.state.product.price} đ</del>
+                                {formatPrice(
+                                    (this.props.product.price / 100) *
+                                        (100 - this.props.product.saleoff)
+                                )}
+                                đ
+                                <del className="product-old-price">
+                                    {formatPrice(this.props.product.price)}đ
+                                </del>
                             </h3>
                             <div className="product-rating">
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star" />
-                                <i className="fa fa-star-o empty" />
+                                {this.state.starsClassNames.map(
+                                    (starsClassName, i) => (
+                                        <i key={i} className={starsClassName} />
+                                    )
+                                )}
                             </div>
                             <h2 className="product-name">
-                                <a href="/#">{this.state.product.name}</a>
+                                <Link
+                                    to={
+                                        "/store/" +
+                                        this.props.store._id +
+                                        "/products/" +
+                                        this.props.product._id
+                                    }
+                                >
+                                    {this.props.product.name}
+                                </Link>
                             </h2>
                             <div className="product-btns">
                                 <button className="main-btn icon-btn">
@@ -61,10 +92,10 @@ class Product extends Component {
                         </div>
                     </div>
                 </div>
-                {/* /Product Single */}
-                <div className="clearfix visible-sm visible-xs" />
-            </div>
-        );
+            );
+        } else {
+            return <div></div>;
+        }
     }
 }
 

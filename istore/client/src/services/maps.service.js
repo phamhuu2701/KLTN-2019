@@ -64,7 +64,7 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                 const lastResult = [];
                 await thisMap.distanceMatrix([new latLng(lat, lng)], latlngAllStores, async response => {
                     const elements = await response.rows[0].elements;
-                    elements.map((e, index) => {
+                    elements.forEach((e, index) => {
                         lastResult.push({...result[index], distance: e.distance.text})
                     })
                     document.querySelector('.loading').style.display = 'none';
@@ -144,7 +144,7 @@ export function showNearStoreService(thisMap, markers, nearbyStore) {
                 animation: maps.Animation.DROP,
                 position: new thisMap.props.google.maps.LatLng(nearbyStore[i][0], nearbyStore[i][1]),
                 icon: {
-                    url: '../icons/logo.svg',
+                    url: '../resources/icons/logo.svg',
                     anchor: new maps.Point(32,32),
                     scaledSize: new maps.Size(30,32)
                 }

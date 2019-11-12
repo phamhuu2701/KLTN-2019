@@ -135,6 +135,7 @@ export default class Fields extends Component {
     onPrioritySelectChange(e) {
         // Do somthing
         onSortStoreListService(this.state.result, e.target.value, result => {
+            document.querySelector('.loading').style.display = 'none';
             this.findProductHandler(result);
         });
     }
