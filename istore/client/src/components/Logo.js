@@ -87,7 +87,7 @@ export default class Logo extends Component {
                         alt="Istore"
                         src="./resources/icons/logo.svg"
                     />
-                    <span className="logo-title">IStore</span>
+                    <span className="logo-title">iStore</span>
                 </div>
                 <div className="place">
                     <SearchPlace/>
