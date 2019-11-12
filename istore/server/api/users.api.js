@@ -38,16 +38,16 @@ router
             }
         }
 
-    });
-    // .post(async (req, res, next) => {
-    //     let user = new User();
-    //     user.fullname = req.body.fullname;
-    //     user.gender = req.body.gender;
-    //     user.age = req.body.age;
+    })
+    .post(async (req, res, next) => {
+        let user = new User();
+        user.fullname = req.body.fullname;
+        user.gender = req.body.gender;
+        user.age = req.body.age;
 
-    //     let userSave = await UserDao.save(user);
-    //     res.json(userSave);
-    // });
+        let userSave = await UserDao.save(user);
+        res.json(userSave);
+    });
 
 router
     .route("/:id")

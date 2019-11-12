@@ -16,9 +16,8 @@ class SignForm extends Component {
 
     signInSubmit(e) {
         e.preventDefault();
-        const signInForm = document.querySelector('#signInForm');
-        const emailInput = signInForm.childNodes[1].childNodes[0];
-        const passwordInput = signInForm.childNodes[2].childNodes[0];
+        const emailInput = e.target.childNodes[1].childNodes[0];
+        const passwordInput = e.target.childNodes[2].childNodes[0];
         const email = emailInput.value;
         const password = passwordInput.value;
         emailInput.style.borderColor = '#ced4da';
@@ -55,7 +54,15 @@ class SignForm extends Component {
     }
 
     signUpSubmit(e) {
-        //const signInForm = document.querySelector('#signupForm');
+        e.preventDefault();
+        const userInfo = {
+            fullname:           e.target.childNodes[0].childNodes[0].value,
+            email:              e.target.childNodes[1].childNodes[0].value,
+            phone:              e.target.childNodes[2].childNodes[0].value,
+            password:           e.target.childNodes[3].childNodes[0].value,
+            password_confirm:   e.target.childNodes[4].childNodes[0].value
+        }
+        console.log(userInfo);
     }
 
     changeSign(sign) {
@@ -116,23 +123,28 @@ class SignForm extends Component {
         } else if (this.state.sign === 'up'){
             return (
                 <Form id='signUpForm' onSubmit={this.signUpSubmit}>
-                    <div className="dropdown-user-body-content sign-up">
+                    {/*<div className="dropdown-user-body-content sign-up">
                         <Form.Control
                             type="hidden"
                             name="_csrf"
                             defaultValue={Cookies.get('csrfToken')}
                         />
-                        <Form.Control
+                        
+                    </div>*/}
+                    <div className="dropdown-user-body-content sign-up">
+                        <span><Form.Control
                             type="text"
                             name="fullname"
                             placeholder="Họ và Tên"
                             className="field-filter-form-input-search"
                             required
-                        />
+                        /></span>
+                        <div className="valid-feedback">Good</div>
+                        <div className="invalid-feedback"></div>
                     </div>
                     <div className="dropdown-user-body-content sign-up">
                         <Form.Control
-                            type="text"
+                            type="email"
                             name="email"
                             placeholder="Email"
                             className="field-filter-form-input-search"
@@ -141,10 +153,12 @@ class SignForm extends Component {
                     </div>
                     <div className="dropdown-user-body-content sign-up">
                         <Form.Control
-                            type="text"
+                            type="phone"
                             name="phone"
                             placeholder="Số điện thoại"
                             className="field-filter-form-input-search"
+                            minLength="10"
+                            maxLength="10"
                             required
                         />
                     </div>

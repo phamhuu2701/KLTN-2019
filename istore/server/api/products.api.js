@@ -10,12 +10,10 @@ router.route("/").get(async (req, res, next) => {
     const { lat, lng, distance } = req.query;
 
     const search = slug(req.query.search, ".*");
-    console.log(123);
 
     // Find product by product name
     ProductDao.searchByName(search)
         .then(products => {
-            console.log(products);
             if (products.length > 0) {
                 // Get product ids
 
