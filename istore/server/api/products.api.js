@@ -7,44 +7,15 @@ const StoreDao = require("../dao/store.dao");
 const slug = require("../util/slug");
 
 router.route("/").get(async (req, res, next) => {
-    const name = req.query.email;
-    // console.log(name);
-
-    if (!name) {
-        const products = await ProductDao.find();
-        if (!products) {
-            res.json({});
-        } else {
-            res.json(products);
-        }
-    } else {
-        const product = await ProductDao.findByName(name);
-        if (!product) {
-            res.json({});
-        } else {
-            res.json(product);
-        }
-    }
-});
-
-router.route("/:id").get(async (req, res, next) => {
-    let id = req.params.id;
-    let product = await ProductDao.findById(id);
-    if (!product) {
-        res.json({});
-    } else {
-        res.json(product);
-    }
-});
-
-router.route("/searchByName").get((req, res) => {
     const { lat, lng, distance } = req.query;
 
     const search = slug(req.query.search, ".*");
+    console.log(123);
 
     // Find product by product name
     ProductDao.searchByName(search)
         .then(products => {
+            console.log(products);
             if (products.length > 0) {
                 // Get product ids
 
@@ -73,6 +44,16 @@ router.route("/searchByName").get((req, res) => {
             }
         })
         .catch(err => console.log(err));
+});
+
+router.route("/:id").get(async (req, res, next) => {
+    let id = req.params.id;
+    let product = await ProductDao.findById(id);
+    if (!product) {
+        res.json({});
+    } else {
+        res.json(product);
+    }
 });
 
 const addStoreIntoProduct = async (products, latlng, distance, cb) => {

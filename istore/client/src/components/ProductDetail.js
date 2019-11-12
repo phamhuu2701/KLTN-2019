@@ -6,8 +6,10 @@ import "./ProductDetail.css";
 
 import priceFormatUtil from '../utils/priceFormat'
 
+let that;
+
 export function showProductDetail(product) {
-    this.setState({
+    that.setState({
         product: product
     })
 }
@@ -47,7 +49,8 @@ class ProductDetail extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        showProductDetail = showProductDetail.bind(this);
+        that = this;
+        //showProductDetail = showProductDetail.bind(this);
     }
 
     render() {

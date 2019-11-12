@@ -29,7 +29,7 @@ export function onSearchProductService(search, distance, thisMap, cb) {
 
         const {lat, lng} = thisMap.state.currentLocation;
 
-        fetch(`/api/products/searchByName?search=${search}&lat=${lat}&lng=${lng}&distance=${distance}`, {
+        fetch(`/api/products?search=${search}&lat=${lat}&lng=${lng}&distance=${distance}`, {
             method: 'GET'
         })
         .then(result => {
@@ -40,6 +40,7 @@ export function onSearchProductService(search, distance, thisMap, cb) {
             }
         })
         .then(async result => {
+            console.log(result);
             // Display result on result area
             document.querySelector('.field-results-list').style.display = 'block';
             document.querySelector('.field-results-number').textContent = `Kết quả (${result.length})`;
