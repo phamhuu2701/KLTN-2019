@@ -41,7 +41,7 @@ export function sortDescreaseProductsBySaleoff(products) {
     return products;
 }
 
-// sắp xếp products thời gian đăng tăng dần
+// sắp xếp products thời gian cũ nhất lên trước
 export function sortIncreaseProductsByTimestamp(products) {
     products.sort((first, second) => {
         return first.timestampe - second.timestampe;
@@ -49,7 +49,7 @@ export function sortIncreaseProductsByTimestamp(products) {
     return products;
 }
 
-// sắp xếp products thời gian đăng giảm dần
+// sắp xếp products thời gian mới nhất lên trước
 export function sortDescreaseProductsByTimestamp(products) {
     products.sort((first, second) => {
         return second.timestampe - first.timestampe;

@@ -40,7 +40,6 @@ export function onSearchProductService(search, distance, thisMap, cb) {
             }
         })
         .then(async result => {
-            console.log(result);
             // Display result on result area
             document.querySelector('.field-results-list').style.display = 'block';
             document.querySelector('.field-results-number').textContent = `Kết quả (${result.length})`;

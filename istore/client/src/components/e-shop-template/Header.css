@@ -81,3 +81,7 @@
 .StoreHeader .dropdown-toggle strong:hover {
     color: #F8694A;
 }
+
+.StoreHeader .shopping-cart-btns{
+    font-size: 0.8em;
+}
