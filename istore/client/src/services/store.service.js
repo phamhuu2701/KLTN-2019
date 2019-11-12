@@ -17,7 +17,7 @@ export function showHideStoreInfoService(id, info, thisMap) {
             // Marker
             
             storeInfo.style.right = '0px';
-            items[id].style.backgroundColor = '#baed95';
+            items[id].style.backgroundColor = '#C7F0AA';
         }
     } else {
         storeInfo.style.right = '-100%';

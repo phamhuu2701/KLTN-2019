@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import "./ProductDetail.css";
 
 import priceFormatUtil from "../utils/priceFormat";
+import { getStarsArray, getRatesAvg } from "../utils/productUtils";
 
 let that;
 
@@ -70,19 +71,31 @@ class ProductDetail extends Component {
     }
   }
 
-  changeImageAvatar(image){
-      try{
-        this.setState({
-            imageAvatar: image
-          })
-      }
-      catch(e){
+  changeImageAvatar(image) {
+    this.setState({
+        imageAvatar: image
+      });
+  }
 
-      }
+  getRateStarsUrl(product){
+      let rateStarsUrl = [];
+      let starsArray = getStarsArray(product);
+      for(let star of starsArray){
+        if(star === 1){
+            rateStarsUrl.push("./resources/icons/star_liked.svg");
+        }
+        else if(star === 0.5){
+            rateStarsUrl.push("./resources/icons/half_star.svg");
+        } else {
+            rateStarsUrl.push("./resources/icons/star_not_liked.svg");
+        }
+    }
+    return rateStarsUrl;
   }
 
   render() {
     // console.log(this.state.product);
+    // console.log(this.state.product.store.phone);
     return (
       <div className="ProductDetail">
         <div className="product-detail-header">
@@ -91,34 +104,53 @@ class ProductDetail extends Component {
               <div className="product-detail-product-images">
                 <div className="product-detail-product-images-avatar">
                   {/* <Image src={this.state.product._doc.images[0]} /> */}
-                  <Image src={this.state.imageAvatar || this.state.product._doc.images[0]} />
+                  <Image
+                    src={
+                      this.state.imageAvatar ||
+                      this.state.product._doc.images[0]
+                    }
+                  />
                 </div>
                 <div className="product-detail-product-images-more">
-                    {
-                        this.state.product._doc.images.length > 0 &&
-                        this.state.product._doc.images.map((image, i) => (
-                            <div key={i}><Image src={image} onMouseEnter={() => this.changeImageAvatar(image)} onClick={() => this.changeImageAvatar(image)}/></div>
-                        ))
-                    }
+                  {this.state.product._doc.images.length > 0 &&
+                    this.state.product._doc.images.map((image, i) => (
+                      <div key={i}>
+                        <Image
+                          src={image}
+                          onMouseEnter={() => this.changeImageAvatar(image)}
+                          onClick={() => this.changeImageAvatar(image)}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
             </Col>
             <Col sm={7}>
               <div className="product-detail-product-body">
                 <div className="product-detail-product-body-title">
-                  <Link to={"/store/"+this.state.product.store._id +"/products/"+ this.state.product._doc._id} target="_blank"><h5>{this.state.product._doc.name}</h5></Link>
+                  <Link
+                    to={
+                      "/store/" +
+                      this.state.product.store._id +
+                      "/products/" +
+                      this.state.product._doc._id
+                    }
+                    target="_blank"
+                  >
+                    <h5>{this.state.product._doc.name}</h5>
+                  </Link>
                 </div>
                 <div className="product-detail-product-body-title-sub">
                   <div className="product-detail-product-body-rate">
                     <span className="product-detail-product-body-rate-count">
-                      <b>{this.state.product._doc.rateAvg}</b>
+                      <b>{getRatesAvg(this.state.product._doc)}</b>
                     </span>
                     <span className="product-detail-product-body-rate-title">
-                      <Image src="./resources/icons/star_liked.svg" />
-                      <Image src="./resources/icons/star_liked.svg" />
-                      <Image src="./resources/icons/star_liked.svg" />
-                      <Image src="./resources/icons/half_star.svg" />
-                      <Image src="./resources/icons/star_not_liked.svg" />
+                        {
+                            this.getRateStarsUrl(this.state.product._doc).map((starUrl, i)=>(
+                                <Image key={i} src={starUrl} />
+                            ))
+                        }
                     </span>
                   </div>
                   <div className="product-detail-product-body-comment">
@@ -139,41 +171,46 @@ class ProductDetail extends Component {
                   </div>
                 </div>
                 <div className="product-detail-product-body-price">
-                    <Row>
-                        <Col sm="8">
-                        <span className="product-detail-product-body-price-main">
-                            {priceFormatUtil(
-                            (this.state.product._doc.price *
-                                (100 - this.state.product._doc.saleoff)) /
-                                100
-                            )}
-                            đ
-                        </span>
-                        <span className="product-detail-product-body-origin-price">
-                            ( {priceFormatUtil(this.state.product._doc.price)}đ)
-                        </span>
-                        </Col>
-                        <Col sm="4">
-                        <span className="product-detail-product-body-price-sale">
-                            GIẢM {this.state.product._doc.saleoff}%
-                        </span>
-                        </Col>
-                    </Row>
+                  <Row>
+                    <Col sm="8">
+                      <span className="product-detail-product-body-price-main">
+                        {priceFormatUtil(
+                          (this.state.product._doc.price *
+                            (100 - this.state.product._doc.saleoff)) /
+                            100
+                        )}
+                        đ
+                      </span>
+                      <span className="product-detail-product-body-origin-price">
+                        ( {priceFormatUtil(this.state.product._doc.price)}đ)
+                      </span>
+                    </Col>
+                    <Col sm="4">
+                      <span className="product-detail-product-body-price-sale">
+                        GIẢM {this.state.product._doc.saleoff}%
+                      </span>
+                    </Col>
+                  </Row>
                 </div>
                 <div className="product-detail-product-body-buy-count">
-                    Số lượng
-                    <span>
-                    <span className="product-detail-product-body-buy-count-reduction">-
+                  Số lượng
+                  <span>
+                    <span className="product-detail-product-body-buy-count-reduction">
+                      -
                     </span>
-                    <span className="product-detail-product-body-buy-count-number">1
+                    <span className="product-detail-product-body-buy-count-number">
+                      1
                     </span>
-                    <span className="product-detail-product-body-buy-count-increase">+
+                    <span className="product-detail-product-body-buy-count-increase">
+                      +
                     </span>
-                    </span>
-                    trong 999 sản phẩm có sẵn
+                  </span>
+                  trong 999 sản phẩm có sẵn
                 </div>
                 <div className="product-detail-product-body-button-buy">
-                  <Button variant="success">GỌI NGAY</Button>
+                  <a href={"tel:" + this.state.product.store.phone}>
+                    <Button variant="success">GỌI NGAY</Button>
+                  </a>
                 </div>
                 <hr />
                 <div className="product-detail-product-body-footer">
@@ -198,24 +235,31 @@ class ProductDetail extends Component {
         <div className="product-detail-info">
           <Row>
             <Col>
+            <Link
+                to={"/store/" + this.state.product.store._id}
+                target="_blank"
+            >
               <div className="product-detail-info-header">
-                <div className="product-detail-info-avatar">                  
-                  <Link to={"/store/"+this.state.product.store._id} target="_blank"><Image src={this.state.product.store.logo} /></Link>
+                <div className="product-detail-info-avatar">
+                    <Image src={this.state.product.store.logo} />
                 </div>
                 <div className="product-detail-info-content">
-                  <div className="product-detail-info-content-store-name">                    
-                    <Link to={"/store/"+this.state.product.store._id} target="_blank"><h5>{this.state.product.store.name}</h5></Link>
+                  <div className="product-detail-info-content-store-name">
+                      <h5>{this.state.product.store.name}</h5>
                   </div>
                   <div className="product-detail-info-content-store-address"></div>
                 </div>
               </div>
+              </Link>
             </Col>
             <Col>
               <div className="product-detail-info-contact">
-                <div className="product-detail-info-contact-phone">
-                  <Image src="./resources/icons/phone.svg" />
-                  <span>Gọi ngay</span>
-                </div>
+                <a href={"tel:" + this.state.product.store.phone}>
+                    <div className="product-detail-info-contact-phone">
+                        <Image src="./resources/icons/phone.svg" />
+                        <span>Gọi ngay</span>
+                    </div>
+                </a>                
                 <Link
                   target="_blank"
                   id="view-store-detail"

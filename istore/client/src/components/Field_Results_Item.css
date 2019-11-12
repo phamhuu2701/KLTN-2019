@@ -1,10 +1,10 @@
 .field-results-item {
     margin: 1em 0;
-    padding-top: 10px;
+    height: 120px;
 }
 
 .field-results-item-content {
-    height: 100px;
+    height: 120px;
 }
 
 .field-results-item-hr {
@@ -16,8 +16,8 @@
 }
 
 .field-results-item-img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     position: absolute;
     overflow: hidden;
 }
@@ -29,18 +29,14 @@
 }
 
 .field-results-item-desc {
-    padding-left: 110px;
+    padding-left: 130px;
     padding-right: 0;
 }
 
 .field-results-item-desc-title {
-    color: #c42323;
+    color: #b40e0e;
     font-weight: bold;
     text-transform: uppercase;
-    height: 1.5em;
-    overflow: hidden;
-    text-overflow: clip;
-    font-size: 0.8em;
     text-decoration: underline;
 }
 
@@ -51,45 +47,48 @@
     background-color: #4caf50;
     color: #fff;
     font-weight: bold;
-    font-size: 0.8em;
+    font-size: 0.9em;
 }
 
 .field-results-item-desc-time-up {
     color: #999;
     float: right;
-    font-size: 0.7em;    
-    padding-top: 0.5em;
+    font-size: 0.8em;    
 }
 
 .field-results-item-desc-sub-desc {
     color: #333;
-    height: 2.8em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.7em;
+    font-size: 0.8em;
+}
+
+.field-results-item-desc-rate-contact{
+    padding-top: 0.2em;
 }
 
 .field-results-item-desc-rate > img {
-    width: 0.8em;
-    height: 100%;
+    height: 0.9em;
 }
 
 .field-results-item-desc-contact {
     float: right;
-    border: 1px solid #4caf50;
-    border-radius: 10px;
-    padding: 0 0.5em;
 }
 
-.field-results-item-desc-contact > img {
-    width: 0.8em;
-    height: 100%;
-    padding-bottom: 0.2em;
-}
-
-.field-results-item-desc-contact > span {
-    padding-left: 0.3em;
+.field-results-item-desc-contact a {
     font-weight: bold;
     color: #4caf50;
-    text-decoration: underline;
+    border: 1px solid #4caf50;
+    border-radius: 10px;
+    padding: 0.2em 0.5em;
+}
+
+.field-results-item-desc-contact img {
+    height: 0.9em;
+    padding-bottom: 0.2em;
+    margin-right: 0.3em;
+}
+
+.field-results-item-desc-contact a:hover {
+    color: #fff;
+    background-color: orangered;
+    border: 1px solid orangered;
 }

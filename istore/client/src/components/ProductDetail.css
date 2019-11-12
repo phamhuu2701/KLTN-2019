@@ -11,7 +11,7 @@
   width: 390px;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 0 20px 20px;
   margin: auto;
 }
 
@@ -33,6 +33,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  overflow-x: scroll;
 }
 
 .product-detail-product-images-more div {
@@ -40,6 +41,7 @@
   height: 60px;
   overflow: hidden;
   margin: 5px;
+  min-width: 60px;
 }
 
 .product-detail-product-images-more img {
@@ -67,7 +69,7 @@
 } */
 
 .product-detail-product-body {
-  padding: 20px;
+  padding: 0 20px 20px;
 }
 
 .product-detail-product-body-title {

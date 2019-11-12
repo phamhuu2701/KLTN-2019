@@ -7,8 +7,8 @@ export function formatPrice(price) {
 export function sortIncreaseProductsByPrice(products) {
     products.sort((first, second) => {
         return (
-            first.price * ((100 - second._doc.saleoff) / 100) -
-            second.price * ((100 - first._doc.saleoff) / 100)
+            first.price * ((100 - first.saleoff) / 100) -
+            second.price * ((100 - second.saleoff) / 100)
         );
     });
     return products;
@@ -18,8 +18,8 @@ export function sortIncreaseProductsByPrice(products) {
 export function sortDescreaseProductsByPrice(products) {
     products.sort((first, second) => {
         return (
-            second.price * ((100 - second._doc.saleoff) / 100) -
-            first.price * ((100 - first._doc.saleoff) / 100)
+            second.price * ((100 - second.saleoff) / 100) -
+            first.price * ((100 - first.saleoff) / 100)
         );
     });
     return products;
@@ -59,9 +59,31 @@ export function sortDescreaseProductsByTimestamp(products) {
 
 // get rates avg
 export function getRatesAvg(product) {
+
+    if(!product.rates || product.rates.length === 0){
+        return 0;
+    }
+
     let sumRates = 0;
     for (let rate of product.rates) {
         sumRates += rate.stars;
     }
     return sumRates / product.rates.length;
+}
+
+// lấy giá trị mảng sao: 3.5 => [1, 1, 1, 0.5, 0]
+export function getStarsArray(product) {
+    let rateAvg = getRatesAvg(product);
+    let starsArray = [];
+    for(let i=1; i<=5; i++){
+        if(i<rateAvg){
+            starsArray.push(1);
+        }
+        else if((i - rateAvg >0) && (i - rateAvg < 1)){
+            starsArray.push(0.5);
+        } else {
+            starsArray.push(0);
+        }
+    }
+    return starsArray;
 }

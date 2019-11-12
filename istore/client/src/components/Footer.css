@@ -1,9 +1,6 @@
-.footer {
-    /* display: none; */
-}
-
 .footer-header {
     padding: 1em;
+    margin: 0 !important;
 }
 
 .footer-header-title {
@@ -69,4 +66,14 @@
 .social-network-title {
     padding-left: 0.5em;
     padding-top: 0.2em;
+}
+
+.footer-header-icons {
+    text-align: center;
+    margin: 0.5em 0;
+}
+
+.footer-header-icons img {
+    height: 1.2em;
+    margin: 0 5px;
 }

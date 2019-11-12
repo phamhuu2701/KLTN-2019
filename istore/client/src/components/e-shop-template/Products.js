@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
   sortDescreaseProductsBySaleoff,
-  sortIncreaseProductsByTimestamp,
   sortDescreaseProductsByTimestamp,
   sortIncreaseProductsByPrice,
   sortDescreaseProductsByPrice
@@ -27,57 +26,47 @@ class Products extends Component {
   }
 
   onSortProductsChange(event) {
-    // console.log(event.target.value);
+    // console.log(typeof event.target.value);
     let array = [];
     switch (event.target.value) {
       // mới nhất
-      case 0:
-        array = sortDescreaseProductsByTimestamp(this.props.store.product);
-        this.setState({
-          top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
-        });
-        // code block
+      case "0":
+        //   console.log("Sắp xếp tất cả (mới nhất)");
+        array = sortDescreaseProductsByTimestamp(this.props.store.products);
         break;
+
       // mới nhất
-      case 1:
-        array = sortDescreaseProductsByTimestamp(this.props.store.product);
-        this.setState({
-          top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
-        });
-        // code block
+      case "1":
+        // console.log("Sắp xếp mới nhất");
+        array = sortDescreaseProductsByTimestamp(this.props.store.products);        
         break;
+
       // giảm giá nhiều nhất
-      case 2:
-        array = sortDescreaseProductsBySaleoff(this.props.store.product);
-        this.setState({
-          top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
-        });
-        // code block
+      case "2":
+        // console.log("Sắp xếp giảm giá nhiều");
+        array = sortDescreaseProductsBySaleoff(this.props.store.products);
         break;
+
       // giá tăng dần
-      case 3:
-        array = sortIncreaseProductsByPrice(this.props.store.product);
-        this.setState({
-          top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
-        });
-        // code block
+      case "3":
+        // console.log("Sắp xếp giá tăng dần");
+        array = sortIncreaseProductsByPrice(this.props.store.products);
         break;
+
       // giá giảm dần
-      case 4:
-        array = sortDescreaseProductsByPrice(this.props.store.product);
-        this.setState({
-          top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
-        });
-        // code block
+      case "4":
+        // console.log("Sắp xếp giá giảm dần");
+        array = sortDescreaseProductsByPrice(this.props.store.products);
         break;
+
       default:
         // mới nhất
-        array = sortDescreaseProductsByTimestamp(this.props.store.product);
-        this.setState({
-          top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
-        });
-      // code block
+        array = sortDescreaseProductsByTimestamp(this.props.store.products);
     }
+    this.setState({
+      top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
+    });
+    // console.log(this.state.top12ProductsNew);
   }
 
   componentDidMount() {
@@ -87,12 +76,12 @@ class Products extends Component {
       top3ProductsSaleoff: getProductsBySize(products, 0, 3)
     });
 
-    // let productsInscreaseByTimestame = sortIncreaseProductsByTimestamp(
-    //   this.props.store.products
-    // );
-    // this.setState({
-    //     top12ProductsNew: getProductsBySize(productsInscreaseByTimestame, 0, this.state.productsSize)
-    //   });
+    let productsSortDescreaseProductsByTimestamp = sortDescreaseProductsByTimestamp(
+      this.props.store.products
+    );
+    this.setState({
+        top12ProductsNew: getProductsBySize(productsSortDescreaseProductsByTimestamp, 0, this.state.productsSize)
+      });
   }
 
   render() {
@@ -196,8 +185,7 @@ class Products extends Component {
                   <div className="aside">
                     <h3 className="aside-title">Top khuyến mãi</h3>
                     {/* widget product */}
-                    {this.state.top3ProductsSaleoff.length > 0 &&
-                      this.state.top3ProductsSaleoff.map((product, i) => (
+                    {this.state.top3ProductsSaleoff.map((product, i) => (
                         <ProductSaleOff
                           key={i}
                           store={this.props.store}
@@ -267,8 +255,7 @@ class Products extends Component {
                   <div id="store">
                     {/* row */}
                     <div className="row">
-                      {this.state.top12ProductsNew.length > 0 &&
-                        this.state.top12ProductsNew.map((product, i) => (
+                      {this.state.top12ProductsNew.map((product, i) => (
                           <Product
                             key={i}
                             store={this.props.store}
