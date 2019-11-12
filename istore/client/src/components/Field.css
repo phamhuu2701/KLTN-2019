@@ -5,7 +5,6 @@
 
 .field-filter {
     margin: 0;
-    padding-top: 1em;
     padding-left: 1em;
     padding-right: 1em;
 }
@@ -13,11 +12,19 @@
 .field-filter-form-group-search {
     display: flex;
     align-items: center;
-    flex-direction: row;
+    height: 100%;
+}
+
+.field-filter-form-group-search-custom {
+    padding: 0.5em 0;
+}
+
+.field-filter-form-group-search-custom img {
+    padding: 0.2em 0;
 }
 
 .field-filter-form-group-search > img {
-    height: 2em;
+    height: 2.2em;
 }
 
 .field-filter-form-group-search > div {
@@ -27,10 +34,6 @@
 
 .field-filter-form-input-search {
     border-radius: 20px;
-}
-
-.field-filter-form-label {
-    margin-bottom: 0.2em;
 }
 
 .field-hr {
@@ -46,7 +49,7 @@
     color: #4caf50;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 1.3em;
+    font-size: 1.2em;
 }
 
 .field-results-filter {

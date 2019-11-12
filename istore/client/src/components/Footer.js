@@ -10,7 +10,7 @@ export default class Footer extends Component {
                 <div className="footer-header">
                     <div className="footer-header-title">
                         <img alt="IStore" src="./resources/icons/logo.svg"></img>
-                        <span>IStore</span>
+                        <span>iStore</span>
                     </div>
                     <div className="footer-header-title-sub">
                         Website tìm kiếm cửa hàng theo sản phẩm mong muốn - Chất lượng.

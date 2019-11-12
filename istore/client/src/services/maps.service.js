@@ -19,86 +19,90 @@ export function onGetCurrentPositionService(thisMap) {
 // Get Address or geometry (latitude and longitude)
 export function onSearchProductService(search, distance, thisMap, cb) {
     // Find product and location of that products
-    if (search !== '') {
-        document.querySelector('.loading').style.display = 'block';
-        document.querySelectorAll('select[class="form-control"]')[0].disabled = true;
-        document.querySelectorAll('select[class="form-control"]')[1].disabled = true;
-        document.querySelector('.field-results-list').style.display = 'none';
-        document.querySelector('.field-results-number').textContent = `Kết quả`;
-        document.querySelector('.store-info').style.right = '-100%';
-
-        const {lat, lng} = thisMap.state.currentLocation;
-
-        fetch(`/api/products?search=${search}&lat=${lat}&lng=${lng}&distance=${distance}`, {
-            method: 'GET'
-        })
-        .then(result => {
-            if (result.status === 200) {
-                return result.json();
-            } else {
-                return [];
-            }
-        })
-        .then(async result => {
-            console.log(result);
-            // Display result on result area
-            document.querySelector('.field-results-list').style.display = 'block';
-            document.querySelector('.field-results-number').textContent = `Kết quả (${result.length})`;
-
-            
-
-            // Show nearby store existing product
-            thisMap.cleanMaps();
-            if (result.length > 0) {
-                // Add distance into result
-                // Client's location --- origin
-                const latLng = thisMap.props.google.maps.LatLng;
-                const {lat, lng} = thisMap.state.currentLocation;
-                // Stores's location --- destinations
-                const allStoreLocation = result.map(product => {
-                    return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
-                })
-                const latlngAllStores = allStoreLocation.map(loc => {
-                    return new latLng(loc[0], loc[1]);
-                })
-                // Calculate distance off all store form result
-                const lastResult = [];
-                await thisMap.distanceMatrix([new latLng(lat, lng)], latlngAllStores, async response => {
-                    const elements = await response.rows[0].elements;
-                    elements.forEach((e, index) => {
-                        lastResult.push({...result[index], distance: e.distance.text})
+    try {
+        if (search !== '') {
+            document.querySelector('.loading').style.display = 'block';
+            document.querySelectorAll('select[class="form-control"]')[0].disabled = true;
+            document.querySelectorAll('select[class="form-control"]')[1].disabled = true;
+            document.querySelector('.field-results-list').style.display = 'none';
+            document.querySelector('.field-results-number').textContent = `Kết quả`;
+            document.querySelector('.store-info').style.right = '-100%';
+    
+            const {lat, lng} = thisMap.state.currentLocation;
+    
+            fetch(`/api/products?search=${search}&lat=${lat}&lng=${lng}&distance=${distance}`, {
+                method: 'GET'
+            })
+            .then(result => {
+                if (result.status === 200) {
+                    return result.json();
+                } else {
+                    return [];
+                }
+            })
+            .then(async result => {
+                console.log(result);
+                // Display result on result area
+                document.querySelector('.field-results-list').style.display = 'block';
+                document.querySelector('.field-results-number').textContent = `Kết quả (${result.length})`;
+    
+                
+    
+                // Show nearby store existing product
+                thisMap.cleanMaps();
+                if (result.length > 0) {
+                    // Add distance into result
+                    // Client's location --- origin
+                    const latLng = thisMap.props.google.maps.LatLng;
+                    const {lat, lng} = thisMap.state.currentLocation;
+                    // Stores's location --- destinations
+                    const allStoreLocation = result.map(product => {
+                        return [product.store.location.coordinates[1], product.store.location.coordinates[0]];
                     })
+                    const latlngAllStores = allStoreLocation.map(loc => {
+                        return new latLng(loc[0], loc[1]);
+                    })
+                    // Calculate distance off all store form result
+                    const lastResult = [];
+                    await thisMap.distanceMatrix([new latLng(lat, lng)], latlngAllStores, async response => {
+                        const elements = await response.rows[0].elements;
+                        elements.forEach((e, index) => {
+                            lastResult.push({...result[index], distance: e.distance.text})
+                        })
+                        document.querySelector('.loading').style.display = 'none';
+                        document.querySelectorAll('select[class="form-control"]')[0].disabled = false;
+                        document.querySelectorAll('select[class="form-control"]')[1].disabled = false;
+                        cb(lastResult)
+                    })
+    
+                    thisMap.drawCircleFromCenter(thisMap.state.currentLocation, + distance)
+                    const nearbyStoreLocation = []
+                    for (let store of allStoreLocation) {
+                        let loop = 0;
+                        for (let sto of nearbyStoreLocation) {
+                            if (sto[0] === store[0] && sto[1] === store[1]) {
+                                loop = 1;
+                                break;
+                            }
+                        }
+                        if (loop === 0) {
+                            nearbyStoreLocation.push(store);
+                        }
+                    }
+                    thisMap.showNearStore(nearbyStoreLocation);
+                } else {
                     document.querySelector('.loading').style.display = 'none';
                     document.querySelectorAll('select[class="form-control"]')[0].disabled = false;
                     document.querySelectorAll('select[class="form-control"]')[1].disabled = false;
-                    cb(lastResult)
-                })
-
-                thisMap.drawCircleFromCenter(thisMap.state.currentLocation, + distance)
-                const nearbyStoreLocation = []
-                for (let store of allStoreLocation) {
-                    let loop = 0;
-                    for (let sto of nearbyStoreLocation) {
-                        if (sto[0] === store[0] && sto[1] === store[1]) {
-                            loop = 1;
-                            break;
-                        }
-                    }
-                    if (loop === 0) {
-                        nearbyStoreLocation.push(store);
-                    }
+                    // Show result in result area
+                    cb(result);
                 }
-                thisMap.showNearStore(nearbyStoreLocation);
-            } else {
-                document.querySelector('.loading').style.display = 'none';
-                document.querySelectorAll('select[class="form-control"]')[0].disabled = false;
-                document.querySelectorAll('select[class="form-control"]')[1].disabled = false;
-                // Show result in result area
-                cb(result);
-            }
-
-        })
-        .catch(err => console.log(err))
+    
+            })
+            .catch(err => console.log(err))
+        }
+    } catch (error) {
+        
     }
 }
 

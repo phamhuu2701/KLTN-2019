@@ -3,29 +3,29 @@
 }
 
 .footer-header {
-    padding: 1.5em 1em;
+    padding: 1em;
 }
 
 .footer-header-title {
+    width: 100%;
     padding: 0.5em 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
 .footer-header-title > img {
-    height: 2.5em;
+    height: 2em;
 }
 
 .footer-header-title > span {
     font-weight: bold;
-    text-transform: capitalize;
-    font-size: 1.5em;
-    margin-left: 0.2em;
+    font-size: 1.3em;
+    margin-left: 0.5em;
 }
 
 .footer-header-title-sub {
     font-weight: bold;
     text-align: center;
-    font-size: 1.2em;
     padding: 0.5em 0;
     text-transform: capitalize;
 }
@@ -34,6 +34,7 @@
     text-transform: capitalize;
     padding: 0.5em 0;
     text-align: center;
+    font-size: 0.8em;
 }
 
 .footer-body {

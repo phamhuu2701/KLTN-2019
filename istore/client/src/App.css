@@ -28,13 +28,14 @@
     right: 60px;
 }
 
+.app:hover,
 .dropdown-user:hover {
     cursor: pointer;
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 1em;
 }
 
 /* Track */
@@ -58,38 +59,21 @@
 
     .app-body-left {
         width: 100%;
-        overflow: visible;
-    }
-
-    .app-body-left > .logo {
-        width: 100%;
-        position: absolute;
-        top: 0px;
-        left: 0px;
     }
 
     .app-body-left > .field {
         width: 100%;
-        position: absolute;
-        top: 27.2em;
-        left: 0px;
-    }
-
-    .app-body-left .footer .footer-body {
-        display: block;
     }
 
     .app-body-right {
         width: 100%;
-        height: 25em;
-        position: absolute;
-        top: 2.2em;
-        left: 0px;
+        height: 30em;
+        position: relative;
     }
 
     .dropdown-user {
         position: absolute;
-        top: 45px;
-        right: 10px;
+        top: 20px;
+        right: 20px;
     }
 }

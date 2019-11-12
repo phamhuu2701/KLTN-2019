@@ -36,6 +36,13 @@ class SearchBar extends Component {
     }
 
     componentDidMount() {
+        
+        setTimeout(()=>{
+            onSearchProduct("bóng đèn led", 10000, result => {
+                this.props.findProductHandler(result);
+            });
+        }, 2000);
+
         /*setTimeout(() => {
             onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {
                 //this.props.onPlaceLoaded(addressObject);
@@ -153,7 +160,7 @@ export default class Fields extends Component {
                 <div className="field-filter">
                     <Row>
                         <Col>
-                            <Form.Group className="field-filter-form-group-search">
+                            <Form.Group className="field-filter-form-group-search field-filter-form-group-search-custom">
                                 <img
                                     alt=""
                                     src="./resources/icons/search.svg"
