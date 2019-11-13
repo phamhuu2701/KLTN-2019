@@ -1,0 +1,24 @@
+.success-feedback {
+	position: absolute;
+	bottom: 20px;
+	right: -100%;
+	z-index: 99999;
+	transition: 2s;
+}
+
+.success-feedback .show a {
+	text-decoration: none;
+	color: red;
+	font-size: 15px;
+	font-style: bold;
+	text-transform: uppercase;
+}
+
+.success-feedback .show a:hover {
+	color: yellow;
+}
+
+.show {
+	right: 20px;
+	transition: 1s;
+}

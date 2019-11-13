@@ -11,6 +11,7 @@ import DropdownUser from "./components/DropdownUser";
 import ProductInformation from "./components/ProductInformation";
 import Information from "./components/Information";
 import Store from "./components/e-shop-template/Store";
+import MessageNotify from './components/MessageNotify'
 // import StoreProducts from "./components/e-shop-template/StoreProducts";
 // import StoreProductDetail from "./components/e-shop-template/StoreProductDetail";
 
@@ -18,9 +19,11 @@ export default class App extends Component {
     constructor() {
         super();
         this.state = {
-            isLoggedIn: false
+            isLoggedIn: false,
+            message: ''
         };
         this.logInToggle = this.logInToggle.bind(this);
+        this.successSignUpHandler = this.successSignUpHandler.bind(this);
     }
 
     componentDidMount() {
@@ -32,6 +35,12 @@ export default class App extends Component {
 
     logInToggle(state) {
         this.setState({ isLoggedIn: state });
+    }
+
+    successSignUpHandler(message) {
+        this.setState({
+            message: message
+        })
     }
 
     render() {
@@ -49,21 +58,17 @@ export default class App extends Component {
                             </div>
                             <ProductInformation />
                         </div>
-                        <DropdownUser logInToggle={this.logInToggle} />
+                        <DropdownUser logInToggle={this.logInToggle} successSignUpHandler={this.successSignUpHandler} />
+
                     </Route>
                     <Route path="/information">
                         <div className="app">
                             <Information isLoggedIn={this.state.isLoggedIn} />
                         </div>
                     </Route>
-                    {/* <Route path="/mystore">
-                        <div className='app'>
-                            <StoreProducts isLoggedIn={this.state.isLoggedIn}/>
-                        </div>
-                    </Route> */}
-                    
                     <Route path="/store/:id" component={ Store }/>
                 </Switch>
+                <MessageNotify message={this.state.message}/>
             </Router>
         );
     }
