@@ -1,7 +1,7 @@
 .store-info {
   height: 90%;
   width: 65%;
-  z-index: 500;
+  z-index: 120;
   position: fixed;
   top: 10%;
   right: -100%;

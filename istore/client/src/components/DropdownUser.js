@@ -517,33 +517,33 @@ export default class DropdownUser extends Component {
                     <div className="dropdown-user-body" id="dropdown-user-body">
                         <div className="dropdown-user-body-sub"></div>
                         <div className="dropdown-user-body-main">
-                            <div className="dropdown-user-body-content">
-                                <a href="/information" className="dropdown-user-body-content-link">
-                                    <img
-                                        className="dropdown-user-body-content-imgage"
-                                        alt=""
-                                        src="./resources/icons/user.svg"
-                                    ></img>
-                                    <span className="dropdown-user-body-content-title">
-                                        {this.state.user.fullname.firstname}
-                                    </span>
-                                </a>
-                            </div>
+                            <a href="/information" className="dropdown-user-body-content-link">
+                                <div className="dropdown-user-body-content">
+                                        <img
+                                            className="dropdown-user-body-content-imgage"
+                                            alt=""
+                                            src="./resources/icons/user.svg"
+                                        ></img>
+                                        <span className="dropdown-user-body-content-title">
+                                            {this.state.user.fullname.firstname}
+                                        </span>
+                                </div>
+                            </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <div className="dropdown-user-body-content">
-                                <a href="/mystore" className="dropdown-user-body-content-link">
-                                    <img
-                                        className="dropdown-user-body-content-imgage"
-                                        alt=""
-                                        src="./resources/icons/list.svg"
-                                    ></img>
-                                    <span className="dropdown-user-body-content-title">
-                                        Quản lý cửa hàng
-                                    </span>
-                                </a>
-                            </div>
+                            <a href="/mystore" className="dropdown-user-body-content-link">
+                                <div className="dropdown-user-body-content">
+                                        <img
+                                            className="dropdown-user-body-content-imgage"
+                                            alt=""
+                                            src="./resources/icons/list.svg"
+                                        ></img>
+                                        <span className="dropdown-user-body-content-title">
+                                            Quản lý cửa hàng
+                                        </span>
+                                </div>
+                            </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <div className="dropdown-user-body-content" onClick={this.logoutHandler}>
+                            <div className="dropdown-user-body-content dropdown-user-body-content-logout" onClick={this.logoutHandler}>
                                 <img
                                     className="dropdown-user-body-content-imgage"
                                     alt=""
