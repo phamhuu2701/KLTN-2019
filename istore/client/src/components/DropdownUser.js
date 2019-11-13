@@ -9,9 +9,19 @@ class SignForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sign: props.sign
+            sign: props.sign,
+            feedback: '',
+            feedbackContent: '',
+            checkFirstname: '',
+            checkLastname: '',
+            checkEmail: '',
+            checkPhone: '',
+            checkPassword: '',
+            checkPasswordConfirm: ''
         }
         this.signInSubmit = this.signInSubmit.bind(this);
+        this.signUpSubmit = this.signUpSubmit.bind(this);
+        this.validateInput = this.validateInput.bind(this);
     }
 
     signInSubmit(e) {
@@ -37,8 +47,6 @@ class SignForm extends Component {
         .then(result => {
             if (result.status === 200) {
                 return result.json();
-            } else {
-                
             }
         })
         .then(res => {
@@ -55,14 +63,54 @@ class SignForm extends Component {
 
     signUpSubmit(e) {
         e.preventDefault();
-        const userInfo = {
-            fullname:           e.target.childNodes[0].childNodes[0].value,
-            email:              e.target.childNodes[1].childNodes[0].value,
-            phone:              e.target.childNodes[2].childNodes[0].value,
-            password:           e.target.childNodes[3].childNodes[0].value,
-            password_confirm:   e.target.childNodes[4].childNodes[0].value
-        }
-        console.log(userInfo);
+        if (this.state.checkFirstname && this.state.checkLastname && this.state.checkEmail && this.state.checkPhone && this.state.checkPassword && this.state.checkPasswordConfirm) {
+            const userInfo = {
+                fullname: {
+                    firstname: e.target.childNodes[1].childNodes[0].value,
+                    lastname: e.target.childNodes[2].childNodes[0].value
+                },
+                email:              e.target.childNodes[3].childNodes[0].value,
+                phone:              e.target.childNodes[4].childNodes[0].value,
+                password:           e.target.childNodes[5].childNodes[0].value
+            }
+
+            fetch(`/api/users`, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userInfo)
+            })
+            .then(result => {
+                return result.json();
+            })
+            .then(res => {
+                if (res.err) {
+                    // Error
+                    this.setState({
+                        feedback: 'error',
+                        feedbackContent: res.err
+                    })
+                } else {
+                    // Success
+                    this.setState({
+                        sign: 'in',
+                        feedback: 'success',
+                        feedbackContent: res.message
+                    })
+                }
+            })
+            .catch(err => console.log(err));
+        } else {
+            this.setState({
+                checkFirstname: this.state.checkFirstname ? this.state.checkFirstname : 'invalid',
+                checkEmail: this.state.checkEmail ? this.state.checkEmail : 'invalid',
+                checkPhone: this.state.checkPhone ? this.state.checkPhone : 'invalid',
+                checkPassword: this.state.checkPassword ? this.state.checkPassword : 'invalid',
+                checkPasswordConfirm: this.state.checkPasswordConfirm ? this.state.checkPasswordConfirm : 'invalid'
+            })
+        };
     }
 
     changeSign(sign) {
@@ -70,6 +118,111 @@ class SignForm extends Component {
             sign: sign,
             csrfToken: Cookies.get('csrfToken')
         });
+    }
+
+    validateInput(e) {
+        // Check something
+        const key = e.target.name;
+        const value = e.target.value;
+        switch (key) {
+            case 'firstname':
+                // Check length
+                if (value.length < 3) {
+                    this.setState({
+                        checkFirstname: 'invalid'
+                    })
+                } else {
+                    this.setState({
+                        checkFirstname: 'valid'
+                    })
+                }
+                break;
+            case 'lastname':
+                // Check length
+                if (value.length < 3) {
+                    this.setState({
+                        checkLastname: 'invalid'
+                    })
+                } else {
+                    this.setState({
+                        checkLastname: 'valid'
+                    })
+                }
+                break;
+            case 'email':
+                // Check contain @
+                if (value.includes('@') && value.length > 12) {
+                    this.setState({
+                        checkEmail: 'valid'
+                    })
+                } else {
+                    this.setState({
+                        checkEmail: 'invalid'
+                    })
+                }
+                break;
+            case 'phone':
+                // Check length and start with 0xxx
+                if (value.length < 10 || !value.startsWith('0')) {
+                    this.setState({
+                        checkPhone: 'invalid'
+                    })
+                } else {
+                    this.setState({
+                        checkPhone: 'valid'
+                    })
+                }
+                break;
+            case 'password':
+                // Check length
+                if (value.length < 3) {
+                    this.setState({
+                        checkPassword: 'invalid'
+                    })
+                } 
+                // Check contain a character
+                else if (!value.match(/[a-z]/m)) {
+                    this.setState({
+                        checkPassword: 'invalid'
+                    })
+                } else {
+                    const passwordConfirm = document.querySelector('input[name="password_confirm"]').value;
+                    if (passwordConfirm !== '' && value !== passwordConfirm) {
+                        this.setState({
+                            checkPassword: 'invalid',
+                            checkPasswordConfirm: 'invalid'
+                        })
+                    }
+                    else {
+                        this.setState({
+                            checkPassword: 'valid',
+                            checkPasswordConfirm: 'valid'
+                        })
+                    }
+                }
+                break;
+            default:
+                // Check the password equal password_confirm
+                if (value.length < 3) {
+                    this.setState({
+                        checkPasswordConfirm: 'invalid'
+                    })
+                }
+                // Compare with password
+                else if (value !== document.querySelector('input[name="password"]').value) {
+                    this.setState({
+                        checkPassword: 'invalid',
+                        checkPasswordConfirm: 'invalid'
+                    })
+                }
+                else {
+                    this.setState({
+                        checkPassword: 'valid',
+                        checkPasswordConfirm: 'valid'
+                    })
+                }
+                break;
+        }
     }
 
     render() {
@@ -109,11 +262,11 @@ class SignForm extends Component {
                     <hr className="dropdown-user-body-content-divide" />
                     <div className="dropdown-user-body-content sign-in text-center">
                         <div className="ui buttons">
-                            <button className="btn btn-fb">
+                            <button className="btn btn-fb" type="button">
                                 <img src="./resources/icons/facebook.svg" height="28px" alt=""/> Facebook
                             </button>
                             <div className="or"></div>
-                            <button className="btn btn-gplus">
+                            <button className="btn btn-gplus" type="button">
                                 <img src="./resources/icons/google.svg" height="28px"  alt=""/> Google
                             </button>
                         </div>
@@ -131,24 +284,39 @@ class SignForm extends Component {
                         />
                         
                     </div>*/}
+                    <div className={'feedback ' + this.state.feedback}>{this.state.feedbackContent}</div>
                     <div className="dropdown-user-body-content sign-up">
-                        <span><Form.Control
+                        <Form.Control
                             type="text"
-                            name="fullname"
-                            placeholder="Họ và Tên"
-                            className="field-filter-form-input-search"
+                            name="firstname"
+                            placeholder="Tên"
+                            className={'field-filter-form-input-search ' + this.state.checkFirstname}
                             required
-                        /></span>
+                            onBlur={this.validateInput}
+                        />
                         <div className="valid-feedback">Good</div>
-                        <div className="invalid-feedback"></div>
+                        <div className="invalid-feedback">Fail</div>
+                    </div>
+                    <div className="dropdown-user-body-content sign-up">
+                        <Form.Control
+                            type="text"
+                            name="lastname"
+                            placeholder="Họ"
+                            className={'field-filter-form-input-search ' + this.state.checkLastname}
+                            required
+                            onBlur={this.validateInput}
+                        />
+                        <div className="valid-feedback">Good</div>
+                        <div className="invalid-feedback">Fail</div>
                     </div>
                     <div className="dropdown-user-body-content sign-up">
                         <Form.Control
                             type="email"
                             name="email"
                             placeholder="Email"
-                            className="field-filter-form-input-search"
+                            className={'field-filter-form-input-search ' + this.state.checkEmail}
                             required
+                            onBlur={this.validateInput}
                         />
                     </div>
                     <div className="dropdown-user-body-content sign-up">
@@ -156,10 +324,11 @@ class SignForm extends Component {
                             type="phone"
                             name="phone"
                             placeholder="Số điện thoại"
-                            className="field-filter-form-input-search"
+                            className={'field-filter-form-input-search ' + this.state.checkPhone}
                             minLength="10"
                             maxLength="10"
                             required
+                            onBlur={this.validateInput}
                         />
                     </div>
                     <div className="dropdown-user-body-content sign-up">
@@ -167,8 +336,9 @@ class SignForm extends Component {
                             type="password"
                             name="password"
                             placeholder="Mật khẩu"
-                            className="field-filter-form-input-search"
+                            className={'field-filter-form-input-search ' + this.state.checkPassword}
                             required
+                            onBlur={this.validateInput}
                         />
                     </div>
                     <div className="dropdown-user-body-content sign-up">
@@ -176,8 +346,9 @@ class SignForm extends Component {
                             type="password"
                             name="password_confirm"
                             placeholder="Nhập lại mật khẩu"
-                            className="field-filter-form-input-search"
+                            className={'field-filter-form-input-search ' + this.state.checkPasswordConfirm}
                             required
+                            onBlur={this.validateInput}
                         />
                     </div>
                     <div className="dropdown-user-body-content text-center">

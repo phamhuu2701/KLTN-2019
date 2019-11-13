@@ -4,27 +4,27 @@ import {Map, /*InfoWindow,*/ Marker, GoogleApiWrapper} from 'google-maps-react';
 
 import { Spinner } from "react-bootstrap";
 
-import {onGetCurrentPositionService, geocodingService, geocodingByLocationService, onSearchProductService, showNearStoreService, getRedirectMapService, distanceMatrixService, recenterMapService, loadMapService} from '../services/maps.service.js'
+import {onGetCurrentPositionService, geocodingService, onSearchProductService, showNearStoreService, getRedirectMapService, distanceMatrixService, recenterMapService, loadMapService} from '../services/maps.service.js'
 import { showHideStoreInfoService } from '../services/store.service';
 
 import './Maps.css'
 
-let markers = [], currentDirection = null, currentCircle = null;
+let markers = [], currentDirection = null, currentCircle = null, that;
 
 export function onGetCurrentPosition() {
-    onGetCurrentPositionService(this);
+    onGetCurrentPositionService(that);
 }
 
 export function onSearchAddress(address, cb) {
-    geocodingService(address, this, cb)
+    geocodingService(address, that, cb)
 }
 
 export function onSearchProduct (search, distance, cb) {
-    onSearchProductService(search, distance, this, cb);
+    onSearchProductService(search, distance, that, cb);
 }
 
 export function showHideStoreInfo(id, info) {
-    showHideStoreInfoService(id, info, this);
+    showHideStoreInfoService(id, info, that);
 }
 
 export class MapContainer extends Component {
@@ -41,10 +41,7 @@ export class MapContainer extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        onSearchAddress = onSearchAddress.bind(this);
-        onSearchProduct = onSearchProduct.bind(this);
-        showHideStoreInfo = showHideStoreInfo.bind(this);
-        onGetCurrentPosition = onGetCurrentPosition.bind(this);
+        that = this;
     }
 
     componentDidMount() {

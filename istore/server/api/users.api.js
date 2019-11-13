@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const md5 = require('md5');
 
 const User = require("../models/user.model");
 const UserDao = require("../dao/user.dao");
@@ -40,13 +41,16 @@ router
 
     })
     .post(async (req, res, next) => {
-        let user = new User();
-        user.fullname = req.body.fullname;
-        user.gender = req.body.gender;
-        user.age = req.body.age;
+        let user = req.body;
+        user.password = md5(user.password)
+        user = new User(user);
 
         let userSave = await UserDao.save(user);
-        res.json(userSave);
+        if (userSave) {
+            userSave.password = null;
+            return res.status(200).json({'message': 'Tài khoản đã được tạo thành công!'});
+        }
+        return res.status(201).json({'err': 'Email hoặc số điện thoại đã tồn tại!'});
     });
 
 router

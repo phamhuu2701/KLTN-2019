@@ -57,7 +57,9 @@ module.exports = {
     save: model => {
         return new Promise((resolve, reject) => {
             model.save((err, result) => {
-                if (err) return reject(null);
+                if (err) {
+                    return reject(err);
+                }
                 return resolve(result);
             });
         }).catch(() => null);

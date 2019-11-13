@@ -29,7 +29,10 @@ const userSchema = new Schema(
         gender: { type: Boolean, default: false },
         birthday: { type: Date, default: Date.now },
         timeRegister: { type: Date, required: true, default: Date.now },
-        avatars: [{ type: String, required: true, maxlength: 250, trim: true, default: "https://pbs.twimg.com/profile_images/951624200787132417/qLdX4E-u.jpg" }]
+        avatars: { 
+            type: Array,
+            default: ["https://pbs.twimg.com/profile_images/951624200787132417/qLdX4E-u.jpg"]
+        }
     },
     options
 );
