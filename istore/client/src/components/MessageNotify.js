@@ -12,7 +12,7 @@ export default class MessageNotify extends Component {
 		}
 	}
 
-	componentWillMount() {
+	UNSAFE_componentWillMount() {
 		if (this.state.message) {
 			this.setState({
 				show: 'show',

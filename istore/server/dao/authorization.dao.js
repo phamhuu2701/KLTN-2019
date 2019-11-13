@@ -7,7 +7,7 @@ module.exports = {
                 if (err) return reject(null);
                 return resolve(results);
             });
-        }).catch(() => null);
+        }).catch((err) => null);
     },
     findById: id => {
         return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ module.exports = {
                 if (err) return reject(null);
                 return resolve(result);
             });
-        }).catch(() => null);
+        }).catch((err) => null);
     },
     findOneByName: name => {
         return new Promise((resolve, reject) => {
@@ -23,7 +23,7 @@ module.exports = {
                 if (err) return reject(null);
                 return resolve(result);
             });
-        }).catch(() => null);
+        }).catch((err) => null);
     },
     save: model => {
         return new Promise((resolve, reject) => {
@@ -46,7 +46,7 @@ module.exports = {
                     return resolve(result);
                 }
             );
-        }).catch(() => null);
+        }).catch((err) => null);
     },
     delete: model => {
         return new Promise((resolve, reject) => {
@@ -54,6 +54,6 @@ module.exports = {
                 if (err) return reject(false);
                 return resolve(true);
             });
-        }).catch(() => false);
+        }).catch((err) => false);
     }
 };

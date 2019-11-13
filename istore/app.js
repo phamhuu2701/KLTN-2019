@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+//app.use(express.static(path.join(__dirname, "public")));
 app.use(
     session({
         secret: "my secret",
@@ -102,11 +102,21 @@ app.use(function(err, req, res, next) {
 });
 
 // Connect to MongoDB
+// mongodb+srv://canhtoan88:eunJ&.5RcqGKH*j@istore-lthvn.mongodb.net/test?retryWrites=true&w=majority
 mongoose.connect("mongodb://localhost:27017/istore", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
 });
+
+/*if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "client", "build")));
+
+    app.get("*", (req,res) => {
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    });
+}*/
+
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
 db.once("open", function() {

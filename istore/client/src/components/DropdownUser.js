@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Form, Button, Image } from "react-bootstrap";
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 import Cookies from 'js-cookie';
 
 import "./DropdownUser.css";
@@ -22,6 +24,16 @@ class SignForm extends Component {
         this.signInSubmit = this.signInSubmit.bind(this);
         this.signUpSubmit = this.signUpSubmit.bind(this);
         this.validateInput = this.validateInput.bind(this);
+    }
+
+    UNSAFE_componentWillMount() {
+        Cookies.set('1P_JAR', 'Strick', {sameSite: 'none', secure: true})
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        this.setState({
+            sign: nextProps.sign
+        })
     }
 
     signInSubmit(e) {
@@ -114,13 +126,6 @@ class SignForm extends Component {
                 checkPasswordConfirm: this.state.checkPasswordConfirm ? this.state.checkPasswordConfirm : 'invalid'
             })
         };
-    }
-
-    changeSign(sign) {
-        this.setState({
-            sign: sign,
-            csrfToken: Cookies.get('csrfToken')
-        });
     }
 
     validateInput(e) {
@@ -229,6 +234,14 @@ class SignForm extends Component {
     }
 
     render() {
+        const responseFacebook = (response) => {
+            console.log(response);
+        }
+
+        const responseGoogle = (response) => {
+            console.log(response);
+        }
+
         if (this.state.sign === 'in') {
             return (
                 <Form id='signInForm' onSubmit={this.signInSubmit}>
@@ -265,13 +278,31 @@ class SignForm extends Component {
                     <hr className="dropdown-user-body-content-divide" />
                     <div className="dropdown-user-body-content sign-in text-center">
                         <div className="ui buttons">
-                            <button className="btn btn-fb" type="button">
+                            <FacebookLogin
+                                appId="984029191952495"
+                                textButton=" Facebook"
+                                //autoLoad={true}
+                                fields="name,email,picture"
+                                //onClick={componentClicked}
+                                cssClass="btn btn-fb"
+                                icon="fa-facebook"
+                                callback={responseFacebook}
+                            />
+                           {/* <button className="btn btn-fb" type="button" onClick={this.signInWithFacebook}>
                                 <img src="./resources/icons/facebook.svg" height="28px" alt=""/> Facebook
-                            </button>
+                            </button>*/}
                             <div className="or"></div>
-                            <button className="btn btn-gplus" type="button">
+                            {/*<button className="btn btn-gplus" type="button" onClick={this.signInWithGoogle}>
                                 <img src="./resources/icons/google.svg" height="28px"  alt=""/> Google
-                            </button>
+                            </button>*/}
+                            <GoogleLogin
+                                clientId="167843177082-13lcr3s5m9vmlbjagl8ko1qh1jekg8j0.apps.googleusercontent.com"
+                                buttonText="Google"
+                                className="btn btn-gplus"
+                                onSuccess={responseGoogle}
+                                onFailure={responseGoogle}
+                                cookiePolicy="https://localhost:3000"
+                            />
                         </div>
                     </div>
                 </Form>
@@ -381,7 +412,6 @@ export default class DropdownUser extends Component {
         this.signUp = this.signUp.bind(this);
         this.loginHandler = this.loginHandler.bind(this);
         this.logoutHandler = this.logoutHandler.bind(this);
-        this.childSignForm = React.createRef();
         this.wrapperRef = React.createRef()
     }
 
@@ -395,11 +425,15 @@ export default class DropdownUser extends Component {
     }
 
     signIn() {
-        this.childSignForm.current.changeSign('in');
+        this.setState({
+            sign: 'in'
+        })
     }
 
     signUp() {
-        this.childSignForm.current.changeSign('up');
+        this.setState({
+            sign: 'up'
+        })
     }
 
     UNSAFE_componentWillMount() {
@@ -426,6 +460,10 @@ export default class DropdownUser extends Component {
     componentWillUnmount() {
         // important
         document.removeEventListener('click', this.handleClick)
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+
     }
 
     // Logged in successfully
@@ -540,7 +578,7 @@ export default class DropdownUser extends Component {
                                     <button className="ui button btn-primary" onClick={this.signUp}>Đăng ký</button>
                                 </div>
                             </div>
-                            <SignForm ref={this.childSignForm} sign='' loginHandler={(loginSign) => this.loginHandler(loginSign)} successSignUpHandler={this.props.successSignUpHandler}/>
+                            <SignForm sign={this.state.sign} loginHandler={(loginSign) => this.loginHandler(loginSign)} successSignUpHandler={this.props.successSignUpHandler}/>
                         </div>
                     </div>
                 </div>
