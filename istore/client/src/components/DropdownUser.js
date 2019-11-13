@@ -90,15 +90,18 @@ class SignForm extends Component {
                     // Error
                     this.setState({
                         feedback: 'error',
-                        feedbackContent: res.err
+                        feedbackContent: res.err,
+                        checkEmail: 'invalid',
+                        checkPhone: 'invalid'
                     })
                 } else {
                     // Success
                     this.setState({
                         sign: 'in',
-                        feedback: 'success',
-                        feedbackContent: res.message
+                        feedback: '',
+                        feedbackContent: ''
                     })
+                    this.props.successSignUpHandler(res.message);
                 }
             })
             .catch(err => console.log(err));
@@ -537,7 +540,7 @@ export default class DropdownUser extends Component {
                                     <button className="ui button btn-primary" onClick={this.signUp}>Đăng ký</button>
                                 </div>
                             </div>
-                            <SignForm ref={this.childSignForm} sign='' loginHandler={(loginSign) => this.loginHandler(loginSign)}/>
+                            <SignForm ref={this.childSignForm} sign='' loginHandler={(loginSign) => this.loginHandler(loginSign)} successSignUpHandler={this.props.successSignUpHandler}/>
                         </div>
                     </div>
                 </div>
