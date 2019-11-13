@@ -18,6 +18,13 @@ export default class Footer extends Component {
                     <div className="footer-header-content">
                         Giúp bạn tìm kiếm cửa hàng một cách dễ dàng và nhanh chóng!
                     </div>
+                    <div className="footer-header-icons">
+                        <img alt="" src="./resources/icons/facebook.svg"></img>
+                        <img alt="" src="./resources/icons/google.svg"></img>
+                        <img alt="" src="./resources/icons/google-plus.svg"></img>
+                        <img alt="" src="./resources/icons/youtube.svg"></img>
+                        <img alt="" src="./resources/icons/zalo.svg"></img>
+                    </div>
                 </div>
                 <div className="footer-body">
                     <Row>

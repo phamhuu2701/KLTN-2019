@@ -1,11 +1,41 @@
 import React, { Component } from "react";
 
 import { showHideStoreInfo } from './Maps';
-
 import "./Field_Results_Item.css";
+import { getStarsArray } from "../utils/productUtils";
 
 export default class Fields_Result_Item extends Component {
+    constructor(){
+        super();
+
+        this.state = {
+            rateStarsUrl: []
+        }
+    }
+
+    componentDidMount(){
+
+        // lấy mảng sao đánh giá
+        let starsArray = getStarsArray(this.props.info._doc);
+        let rateStarsUrl = [];
+        for(let star of starsArray){
+            if(star === 1){
+                rateStarsUrl.push("./resources/icons/star_liked.svg");
+            }
+            else if(star === 0.5){
+                rateStarsUrl.push("./resources/icons/half_star.svg");
+            } else {
+                rateStarsUrl.push("./resources/icons/star_not_liked.svg");
+            }
+        }
+        this.setState({
+            rateStarsUrl: rateStarsUrl
+        })
+    }
+
     render() {
+        // console.log(this.props);
+        // console.log(this.props.info._doc.rates);
         return (
             <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code, this.props.info)}}>
                 <div className="field-results-item-content">
@@ -14,7 +44,7 @@ export default class Fields_Result_Item extends Component {
                     </div>
                     <div className="field-results-item-desc">
                         <div className="field-results-item-desc-title">
-                            {this.props.storeName.substring(0, 30)}
+                            <b>{this.props.storeName.substring(0, 15)}</b>
                         </div>
                         <div>
                             <span className="field-results-item-desc-price">
@@ -25,19 +55,21 @@ export default class Fields_Result_Item extends Component {
                             </span>
                         </div>
                         <div className="field-results-item-desc-sub-desc">
-                            {this.props.productName.substring(0, 75)}..
+                            {this.props.productName.substring(0, 60)}..
                         </div>
-                        <div>
+                        <div className="field-results-item-desc-rate-contact">
                             <span className="field-results-item-desc-rate">
-                                <img alt="" src="./resources/icons/star_liked.svg"></img>
-                                <img alt="" src="./resources/icons/star_liked.svg"></img>
-                                <img alt="" src="./resources/icons/star_liked.svg"></img>
-                                <img alt="" src="./resources/icons/star_liked.svg"></img>
-                                <img alt="" src="./resources/icons/star_not_liked.svg"></img>
+                                {
+                                    this.state.rateStarsUrl.map((starUrl, i) => (
+                                        <img alt="" key={i} src={starUrl}></img>
+                                    ))
+                                }
                             </span>
-                            <span className="field-results-item-desc-contact">
-                                <img alt="" src="./resources/icons/phone.svg"></img>
-                                <span>{this.props.phone}</span>
+                            <span className="field-results-item-desc-contact">                                
+                                <a href={"tel:"+this.props.phone}>
+                                    <img alt="" src="./resources/icons/phone.svg"></img>
+                                    <span>{this.props.phone}</span>
+                                </a>
                             </span>
                         </div>
                     </div>
