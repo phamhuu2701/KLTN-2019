@@ -25,13 +25,13 @@ export default class StoreInformation extends Component {
   render() {
     return (
       <div className="store-info" ref={this.wrapperStoreRef}>
-        <div className="fixed-top">
+        {/* <div className="fixed-top"> */}
           <a href="javascipt:void(0)"
             className="closebtn"
             onClick={this.closeStoreInfo}>
             <img src="./resources/icons/next_color.svg" alt="Close Infomation Windows"></img>
           </a>
-        </div>
+        {/* </div> */}
         <ProductDetail />
       </div>
     );

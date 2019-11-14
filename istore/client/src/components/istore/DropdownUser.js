@@ -276,7 +276,7 @@ export default class DropdownUser extends Component {
                     <div className="dropdown-user-body" id="dropdown-user-body">
                         <div className="dropdown-user-body-sub"></div>
                         <div className="dropdown-user-body-main">
-                            <a href="/information" className="dropdown-user-body-content-link">
+                            <a href="/admin/user-profile" target="_blank" className="dropdown-user-body-content-link">
                                 <div className="dropdown-user-body-content">
                                         <img
                                             className="dropdown-user-body-content-imgage"
@@ -289,7 +289,7 @@ export default class DropdownUser extends Component {
                                 </div>
                             </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <a href="/mystore" className="dropdown-user-body-content-link">
+                            <a href="/admin/stores-manage" target="_blank" className="dropdown-user-body-content-link">
                                 <div className="dropdown-user-body-content">
                                         <img
                                             className="dropdown-user-body-content-imgage"
