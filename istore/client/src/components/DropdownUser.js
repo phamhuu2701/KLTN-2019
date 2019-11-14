@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { Form, Button, Image } from "react-bootstrap";
-import FacebookLogin from 'react-facebook-login';
-import GoogleLogin from 'react-google-login';
 import Cookies from 'js-cookie';
+
+import Facebook from './Facebook';
+import Google from './Google';
+
+import { LoginByLocalService, SignUpByLocalService, LogOutService, ValidateInputService } from '../services/user.service'
 
 import "./DropdownUser.css";
 
@@ -37,221 +40,21 @@ class SignForm extends Component {
     }
 
     signInSubmit(e) {
-        e.preventDefault();
-        const emailInput = e.target.childNodes[1].childNodes[0];
-        const passwordInput = e.target.childNodes[2].childNodes[0];
-        const email = emailInput.value;
-        const password = passwordInput.value;
-        emailInput.style.borderColor = '#ced4da';
-        passwordInput.style.borderColor = '#ced4da';
-
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        })
-        .then(result => {
-            if (result.status === 200) {
-                return result.json();
-            }
-        })
-        .then(res => {
-            if (res && res.isLogged === true) {
-                this.props.loginHandler(res.user);
-                document.getElementById("dropdown-user-body").style.display = "none";
-            } else {
-                emailInput.style.borderColor = 'red';
-                passwordInput.style.borderColor = 'red';
-            }
-        })
-        .catch(err => console.log(err))
+        LoginByLocalService(e, this.props.loginHandler);
     }
 
     signUpSubmit(e) {
-        e.preventDefault();
-        if (this.state.checkFirstname && this.state.checkLastname && this.state.checkEmail && this.state.checkPhone && this.state.checkPassword && this.state.checkPasswordConfirm) {
-            const userInfo = {
-                fullname: {
-                    firstname: e.target.childNodes[1].childNodes[0].value,
-                    lastname: e.target.childNodes[2].childNodes[0].value
-                },
-                email:              e.target.childNodes[3].childNodes[0].value,
-                phone:              e.target.childNodes[4].childNodes[0].value,
-                password:           e.target.childNodes[5].childNodes[0].value
-            }
-
-            fetch(`/api/users`, {
-                method: "POST",
-                headers: {
-                    'Accept': 'application',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userInfo)
-            })
-            .then(result => {
-                return result.json();
-            })
-            .then(res => {
-                if (res.err) {
-                    // Error
-                    this.setState({
-                        feedback: 'error',
-                        feedbackContent: res.err,
-                        checkEmail: 'invalid',
-                        checkPhone: 'invalid'
-                    })
-                } else {
-                    // Success
-                    this.setState({
-                        sign: 'in',
-                        feedback: '',
-                        feedbackContent: ''
-                    })
-                    this.props.successSignUpHandler(res.message);
-                }
-            })
-            .catch(err => console.log(err));
-        } else {
-            this.setState({
-                checkFirstname: this.state.checkFirstname ? this.state.checkFirstname : 'invalid',
-                checkEmail: this.state.checkEmail ? this.state.checkEmail : 'invalid',
-                checkPhone: this.state.checkPhone ? this.state.checkPhone : 'invalid',
-                checkPassword: this.state.checkPassword ? this.state.checkPassword : 'invalid',
-                checkPasswordConfirm: this.state.checkPasswordConfirm ? this.state.checkPasswordConfirm : 'invalid'
-            })
-        };
+        SignUpByLocalService(e, this);
     }
 
     validateInput(e) {
-        // Check something
-        const key = e.target.name;
-        const value = e.target.value;
-        switch (key) {
-            case 'firstname':
-                // Check length
-                if (value.length < 3) {
-                    this.setState({
-                        checkFirstname: 'invalid'
-                    })
-                } else {
-                    this.setState({
-                        checkFirstname: 'valid'
-                    })
-                }
-                break;
-            case 'lastname':
-                // Check length
-                if (value.length < 3) {
-                    this.setState({
-                        checkLastname: 'invalid'
-                    })
-                } else {
-                    this.setState({
-                        checkLastname: 'valid'
-                    })
-                }
-                break;
-            case 'email':
-                // Check contain @
-                if (value.includes('@') && value.length > 12) {
-                    this.setState({
-                        checkEmail: 'valid'
-                    })
-                } else {
-                    this.setState({
-                        checkEmail: 'invalid'
-                    })
-                }
-                break;
-            case 'phone':
-                // Check length and start with 0xxx
-                if (value.length < 10 || !value.startsWith('0')) {
-                    this.setState({
-                        checkPhone: 'invalid'
-                    })
-                } else {
-                    this.setState({
-                        checkPhone: 'valid'
-                    })
-                }
-                break;
-            case 'password':
-                // Check length
-                if (value.length < 3) {
-                    this.setState({
-                        checkPassword: 'invalid'
-                    })
-                } 
-                // Check contain a character
-                else if (!value.match(/[a-z]/m)) {
-                    this.setState({
-                        checkPassword: 'invalid'
-                    })
-                } else {
-                    const passwordConfirm = document.querySelector('input[name="password_confirm"]').value;
-                    if (passwordConfirm !== '' && value !== passwordConfirm) {
-                        this.setState({
-                            checkPassword: 'invalid',
-                            checkPasswordConfirm: 'invalid'
-                        })
-                    }
-                    else {
-                        this.setState({
-                            checkPassword: 'valid',
-                            checkPasswordConfirm: 'valid'
-                        })
-                    }
-                }
-                break;
-            default:
-                // Check the password equal password_confirm
-                if (value.length < 3) {
-                    this.setState({
-                        checkPasswordConfirm: 'invalid'
-                    })
-                }
-                // Compare with password
-                else if (value !== document.querySelector('input[name="password"]').value) {
-                    this.setState({
-                        checkPassword: 'invalid',
-                        checkPasswordConfirm: 'invalid'
-                    })
-                }
-                else {
-                    this.setState({
-                        checkPassword: 'valid',
-                        checkPasswordConfirm: 'valid'
-                    })
-                }
-                break;
-        }
+        ValidateInputService(e, this);
     }
 
     render() {
-        const responseFacebook = (response) => {
-            console.log(response);
-        }
-
-        const responseGoogle = (response) => {
-            console.log(response);
-        }
-
         if (this.state.sign === 'in') {
             return (
                 <Form id='signInForm' onSubmit={this.signInSubmit}>
-                    <div className="dropdown-user-body-content sign-in">
-                        <Form.Control
-                            type="hidden"
-                            name="_csrf"
-                            defaultValue={Cookies.get('csrfToken')}
-                        />
-                    </div>
                     <div className="dropdown-user-body-content sign-in">
                         <Form.Control
                             type="text"
@@ -278,31 +81,9 @@ class SignForm extends Component {
                     <hr className="dropdown-user-body-content-divide" />
                     <div className="dropdown-user-body-content sign-in text-center">
                         <div className="ui buttons">
-                            <FacebookLogin
-                                appId="984029191952495"
-                                textButton=" Facebook"
-                                //autoLoad={true}
-                                fields="name,email,picture"
-                                //onClick={componentClicked}
-                                cssClass="btn btn-fb"
-                                icon="fa-facebook"
-                                callback={responseFacebook}
-                            />
-                           {/* <button className="btn btn-fb" type="button" onClick={this.signInWithFacebook}>
-                                <img src="./resources/icons/facebook.svg" height="28px" alt=""/> Facebook
-                            </button>*/}
+                            <Facebook loginHandler={(user) => this.props.loginHandler(user)}/>
                             <div className="or"></div>
-                            {/*<button className="btn btn-gplus" type="button" onClick={this.signInWithGoogle}>
-                                <img src="./resources/icons/google.svg" height="28px"  alt=""/> Google
-                            </button>*/}
-                            <GoogleLogin
-                                clientId="167843177082-13lcr3s5m9vmlbjagl8ko1qh1jekg8j0.apps.googleusercontent.com"
-                                buttonText="Google"
-                                className="btn btn-gplus"
-                                onSuccess={responseGoogle}
-                                onFailure={responseGoogle}
-                                cookiePolicy="https://localhost:3000"
-                            />
+                            <Google loginHandler={(user) => this.props.loginHandler(user)}/>
                         </div>
                     </div>
                 </Form>
@@ -310,14 +91,6 @@ class SignForm extends Component {
         } else if (this.state.sign === 'up'){
             return (
                 <Form id='signUpForm' onSubmit={this.signUpSubmit}>
-                    {/*<div className="dropdown-user-body-content sign-up">
-                        <Form.Control
-                            type="hidden"
-                            name="_csrf"
-                            defaultValue={Cookies.get('csrfToken')}
-                        />
-                        
-                    </div>*/}
                     <div className={'feedback ' + this.state.feedback}>{this.state.feedbackContent}</div>
                     <div className="dropdown-user-body-content sign-up">
                         <Form.Control
@@ -473,26 +246,12 @@ export default class DropdownUser extends Component {
             user: user,
             sign: ''
         });
+        document.getElementById("dropdown-user-body").style.display = "none";
         this.props.logInToggle(true);
     }
 
     logoutHandler() {
-        fetch('/api/logout', {
-            method: 'GET'
-        })
-        .then(result => {
-            if (result.status === 200) {
-                this.setState({
-                    isLogged: false,
-                    sign: ''
-                });
-                this.props.logInToggle(false);
-                document.getElementById("dropdown-user-body").style.display = "none";
-            } else {
-                alert('Đã có lỗi!!!')
-            }
-        })
-        .catch(err => console.log(err))
+        LogOutService(this);
     }
       
     handleClick = (event) => {

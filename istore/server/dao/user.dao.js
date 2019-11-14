@@ -44,6 +44,9 @@ module.exports = {
     findOneByEmailAndPassword: (email, password) => {
         return Model.findOne({email: email, password: password})
     },
+    findOrCreate: (user) => {
+        return Model.findOrCreate({email: user.email}, user)
+    },
     findOneByPhone: phone => {
         return new Promise((resolve, reject) => {
             Model.findOne({ phone: phone })

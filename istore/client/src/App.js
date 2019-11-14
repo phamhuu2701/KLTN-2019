@@ -41,6 +41,11 @@ export default class App extends Component {
         this.setState({
             message: message
         })
+        setTimeout(() => {
+            this.setState({
+                message: ''
+            })
+        }, 4000);
     }
 
     render() {
@@ -59,7 +64,6 @@ export default class App extends Component {
                             <ProductInformation />
                         </div>
                         <DropdownUser logInToggle={this.logInToggle} successSignUpHandler={this.successSignUpHandler} />
-
                     </Route>
                     <Route path="/information">
                         <div className="app">

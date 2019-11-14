@@ -31,4 +31,30 @@ app.route('/')
     })
 });
 
+app.route('/facebook')
+.post((req,res) => {
+    LoginViaSocialAccount(req, res);
+});
+
+app.route('/google')
+.post((req, res) => {
+    LoginViaSocialAccount(req, res);
+})
+
+const LoginViaSocialAccount = (req, res) => {
+    const user = req.body;
+    user.password = md5(user.password);
+    userDAO.findOrCreate(user)
+    .then(result => {
+        const user = result.doc;
+        if (user.password) {
+            user.password = null;
+            req.session.isLogged = true;
+            req.session.user = user;
+        }
+        return res.status(200).json(user);
+    })
+    .catch(err => console.log(err))
+}
+
 module.exports = app;
