@@ -1,5 +1,8 @@
 .dropdown-user-body {
     display: none;
+    /* position: absolute;
+    top: 54px;
+    right: 0px; */
 }
 
 .dropdown-user-body-sub {
@@ -16,8 +19,9 @@
     width: 270px;
     padding: 0.5em 0;
     position: absolute;
-    top: 0px;
+    top: 60px;
     right: 10px;
+    z-index: 104;
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 5px 5px 5px grey;
@@ -25,6 +29,10 @@
 
 .dropdown-user-body-content {
     padding: 0.5em 0.5em;
+}
+
+.dropdown-user-body-content-logout:hover {
+    color: red;
 }
 
 .dropdown-user-body-content a.dropdown-user-body-content-link {

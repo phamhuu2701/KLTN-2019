@@ -4,7 +4,7 @@ import {
   sortDescreaseProductsBySaleoff,
   sortDescreaseProductsByTimestamp,
   sortIncreaseProductsByPrice,
-  sortDescreaseProductsByPrice
+  sortDescreaseProductsByPrice  
 } from "./../../utils/productUtils";
 
 import "./Products.css";
