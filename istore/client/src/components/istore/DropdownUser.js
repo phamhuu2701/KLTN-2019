@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import Facebook from './Facebook';
 import Google from './Google';
 
-import { LoginByLocalService, SignUpByLocalService, LogOutService, ValidateInputService } from '../services/user.service'
+import { LoginByLocalService, SignUpByLocalService, LogOutService, ValidateInputService } from '../../services/user.service'
 
 import "./DropdownUser.css";
 

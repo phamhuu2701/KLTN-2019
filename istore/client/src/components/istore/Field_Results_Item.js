@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import { showHideStoreInfo } from './Maps';
 import "./Field_Results_Item.css";
-import { getStarsArray } from "../utils/productUtils";
+import { getStarsArray } from "../../utils/productUtils";
 
 export default class Fields_Result_Item extends Component {
     constructor(){

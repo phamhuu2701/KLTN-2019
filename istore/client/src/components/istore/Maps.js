@@ -4,8 +4,8 @@ import {Map, /*InfoWindow,*/ Marker, GoogleApiWrapper} from 'google-maps-react';
 
 import { Spinner } from "react-bootstrap";
 
-import {onGetCurrentPositionService, geocodingService, onSearchProductService, showNearStoreService, getRedirectMapService, distanceMatrixService, recenterMapService, loadMapService} from '../services/maps.service.js'
-import { showHideStoreInfoService } from '../services/store.service';
+import {onGetCurrentPositionService, geocodingService, onSearchProductService, showNearStoreService, getRedirectMapService, distanceMatrixService, recenterMapService, loadMapService} from '../../services/maps.service.js'
+import { showHideStoreInfoService } from '../../services/store.service';
 
 import './Maps.css'
 

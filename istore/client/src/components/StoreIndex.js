@@ -1,21 +1,21 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-// import "./e-shop/css/bootstrap.min.css"
-import "./e-shop/css/font-awesome.min.css";
-import "./e-shop/css/nouislider.min.css";
-import "./e-shop/css/slick-theme.css";
-import "./e-shop/css/slick.css";
-import "./e-shop/css/style.css";
+// import "./e-shop-template/e-shop/css/bootstrap.min.css"
+import "./e-shop-template/e-shop/css/font-awesome.min.css";
+import "./e-shop-template/e-shop/css/nouislider.min.css";
+import "./e-shop-template/e-shop/css/slick-theme.css";
+import "./e-shop-template/e-shop/css/slick.css";
+import "./e-shop-template/e-shop/css/style.css";
 
-import "./Store.css";
-import Header from "./Header";
-import Footer from "./Footer";
-import Home from "./Home";
-import Products from "./Products";
-import ProductDetail from "./ProductDetail";
+import Header from "./e-shop-template/Header";
+import Footer from "./e-shop-template/Footer";
+import Home from "./e-shop-template/Home";
+import Products from "./e-shop-template/Products";
+import ProductDetail from "./e-shop-template/ProductDetail";
 
-class Store extends Component {
+class StoreIndex extends Component {
     constructor(props) {
         super(props);
 
@@ -35,7 +35,7 @@ class Store extends Component {
     }
 
     componentDidMount() {
-        if(!this.state.store){
+        if (!this.state.store) {
             fetch("/api/stores/" + this.props.match.params.id, {
                 headers: {
                     "Content-Type": "application/json",
@@ -66,7 +66,9 @@ class Store extends Component {
                         </Route>
                         <Route
                             exact
-                            path={this.props.match.path + "/products/:idProduct"}
+                            path={
+                                this.props.match.path + "/products/:idProduct"
+                            }
                         >
                             <ProductDetail />
                         </Route>
@@ -80,4 +82,4 @@ class Store extends Component {
     }
 }
 
-export default Store;
+export default StoreIndex;

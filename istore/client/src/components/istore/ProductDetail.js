@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import "./ProductDetail.css";
 
-import priceFormatUtil from "../utils/priceFormat";
-import { getStarsArray, getRatesAvg } from "../utils/productUtils";
+import priceFormatUtil from "../../utils/priceFormat";
+import { getStarsArray, getRatesAvg } from "../../utils/productUtils";
 
 let that;
 
