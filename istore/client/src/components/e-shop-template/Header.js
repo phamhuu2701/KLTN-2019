@@ -249,7 +249,7 @@ class Header extends Component {
                                                     type="text"
                                                     placeholder="Tìm kiếm"
                                                 />
-                                                <select className="input search-categories">
+                                                <select className="input search-categories search-categories-custom">
                                                     <option value={-1}>
                                                         Danh mục
                                                     </option>
@@ -276,15 +276,15 @@ class Header extends Component {
                                             <li className={"header-account dropdown default-dropdown header-top-dropdown " + headerTopHeaderAccountClassName} onClick={this.onHeaderTopHeaderAccountClick}>
                                                 <div className="dropdown-toggle" role="button" data-toggle="dropdown" aria-expanded="false">
                                                     <div className="header-btns-icon">
-                                                        <i className="fa fa-user-o"></i>
+                                                        <i className="fa fa-user"></i>
                                                     </div>
                                                     <strong className="text-uppercase">Tài khoản</strong>
                                                 </div>
                                                 <Link to="#" className="text-uppercase">Nancy</Link>
                                                 <ul className="custom-menu">
-                                                    <li><span><i className="fa fa-user-o"></i> Tài khoản</span></li>
-                                                    <li><span><i className="fa fa-heart-o"></i> Ưu thích</span></li>
-                                                    <li><span><i className="fa fa-exchange"></i> So sánh</span></li>
+                                                    <li><span><i className="fa fa-user"></i> Tài khoản</span></li>
+                                                    <li><span><i className="fa fa-heart"></i> Ưu thích</span></li>
+                                                    <li><span><i className="fa fa-compass"></i> So sánh</span></li>
                                                     <li><span><i className="fa fa-check"></i> Thanh toán</span></li>
                                                     <li><span><i className="fa fa-unlock-alt"></i> Đăng nhập</span></li>
                                                     <li><span><i className="fa fa-user-plus"></i> Đăng ký</span></li>
@@ -463,7 +463,7 @@ class Header extends Component {
                 {/* BREADCRUMB */}
                 <div id="breadcrumb">
                     <div className="container">
-                        <Link to={"/store/" + this.props.store._id}>Trang chủ</Link>
+                        <Link to={"/store/" + this.props.store._id}>{this.props.store.name}</Link>
                         <span className="breadcrumb-header">
                             <i
                                 className="fa fa-angle-right"

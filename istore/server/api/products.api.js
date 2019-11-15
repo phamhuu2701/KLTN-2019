@@ -48,7 +48,7 @@ router.route("/:id").get(async (req, res, next) => {
     let id = req.params.id;
     let product = await ProductDao.findById(id);
     if (!product) {
-        res.json({});
+        res.json(null);
     } else {
         res.json(product);
     }

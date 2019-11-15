@@ -17,7 +17,7 @@ router
         if(!email && !phone){
             const users = await UserDao.find();
             if (!users) {
-                res.json({});
+                res.json(null);
             } else {
                 res.json(users);
             }
@@ -25,7 +25,7 @@ router
         else if(email != null){
             const user = await UserDao.findOneByEmail(email);
             if (!user) {
-                res.json({});
+                res.json(null);
             } else {
                 res.json(user);
             }
@@ -33,7 +33,7 @@ router
         else if(phone != null){
             const user = await UserDao.findOneByPhone(phone);
             if (!user) {
-                res.json({});
+                res.json(null);
             } else {
                 res.json(user);
             }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { formatPrice, getRatesAvg } from "./../../utils/productUtils";
+import { formatPrice, getStarsArrayClassName } from "./../../utils/productUtils";
 
 import "./Product.css";
 
@@ -13,16 +13,9 @@ class Product extends Component {
         };
     }
 
-    componentDidMount() {
-        let starsClassNames = [];
-        for (let i = 0; i < getRatesAvg(this.props.product); i++) {
-            starsClassNames.push("fa fa-star");
-        }
-        for (let i = 0; i < 5 - getRatesAvg(this.props.product); i++) {
-            starsClassNames.push("fa fa-star-o empty");
-        }
+    componentDidMount() {     
         this.setState({
-            starsClassNames: starsClassNames
+            starsClassNames: getStarsArrayClassName(this.props.product)
         });
     }
 
@@ -82,7 +75,7 @@ class Product extends Component {
                                     <i className="fa fa-heart" />
                                 </button>
                                 <button className="main-btn icon-btn">
-                                    <i className="fa fa-exchange" />
+                                    <i className="fa fa-compass" />
                                 </button>
                                 <button className="primary-btn add-to-cart">
                                     <i className="fa fa-shopping-cart" /> Mua

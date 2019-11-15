@@ -10,14 +10,14 @@ router.route("/").get(async (req, res, next) => {
     if (!name) {
         const authorizations = await AuthorizationDao.find();
         if (!authorizations) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(authorizations);
         }
     } else {
         const authorization = await AuthorizationDao.findOneByName(name);
         if (!authorization) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(authorization);
         }
@@ -28,7 +28,7 @@ router.route("/:id").get(async (req, res, next) => {
     const id = req.params.id;
     const authorization = await AuthorizationDao.findById(id);
     if (!authorization) {
-        res.json({});
+        res.json(null);
     } else {
         res.json(authorization);
     }

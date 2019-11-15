@@ -40,7 +40,7 @@ class Footer extends Component {
                                                 <p>
                                                     <i className="fa fa-phone"></i>
                                                     <span>
-                                                        {this.props.store.phone}
+                                                        <b>{this.props.store.phone}</b>
                                                     </span>
                                                 </p>
                                                 <p>
@@ -81,7 +81,7 @@ class Footer extends Component {
                                                 </li>
                                                 <li>
                                                     <Link to="#">
-                                                        <i className="fa fa-pinterest" />
+                                                        <i className="fa fa-pinterest" aria-hidden="true"></i>
                                                     </Link>
                                                 </li>
                                             </ul>

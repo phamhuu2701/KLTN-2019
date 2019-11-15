@@ -7,8 +7,9 @@
 
 .app-body-left {
     width: 30%;
-    height: 100%;
-    overflow-y: auto;
+    overflow: auto;
+    /* height: 100%; */
+    /* overflow-y: auto; */
     position: relative;
 }
 
@@ -18,7 +19,11 @@
 
 .app-body-right {
     width: 70%;
-    height: 100%;
+    /* height: 100%; */
+}
+
+.app > .footer {    
+    display: none;
 }
 
 .dropdown-user {
@@ -28,8 +33,7 @@
     right: 60px;
 }
 
-.app:hover,
-.dropdown-user:hover {
+.app:hover {
     cursor: pointer;
 }
 
@@ -53,27 +57,43 @@
 
 @media only screen and (max-width: 768px) {
     .app {
-        display: flex;
-        flex-direction: column;
+        display: block;
     }
 
     .app-body-left {
         width: 100%;
     }
 
-    .app-body-left > .field {
-        width: 100%;
+    .app-body-left .header {
+        position: fixed;
+        z-index: 103;
+    }
+
+    .app-body-left .field {
+        margin-top: 2.8em;
+        display: block;
+    }
+
+    .app-body-left .footer {
+        display: none;
     }
 
     .app-body-right {
         width: 100%;
         height: 30em;
-        position: relative;
+    }
+
+    .app > .footer {
+        display: block;
+    }
+
+    .app > .footer > .footer-body {
+        /* display: none; */
     }
 
     .dropdown-user {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 3.4em;
+        right: 10px;
     }
 }

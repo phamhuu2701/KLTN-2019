@@ -65,6 +65,10 @@
     cursor: pointer;
 }
 
+.StoreHeader .category-list li {
+    width: 100%;
+}
+
 .StoreHeader .category-list span:hover {
     color: #F8694A;
 }
@@ -84,4 +88,8 @@
 
 .StoreHeader .shopping-cart-btns{
     font-size: 0.8em;
+}
+
+.search-categories-custom {
+    height: 100%;
 }

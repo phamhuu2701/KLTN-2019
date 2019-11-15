@@ -87,3 +87,20 @@ export function getStarsArray(product) {
     }
     return starsArray;
 }
+
+// lấy mảng classname sao
+export function getStarsArrayClassName(product) {
+    let rateAvg = getRatesAvg(product);
+    let starsArray = [];
+    for(let i=1; i<=5; i++){
+        if(i<rateAvg){
+            starsArray.push("fa fa-star");
+        }
+        else if((i - rateAvg >0) && (i - rateAvg < 1)){
+            starsArray.push("fa fa-star-half-o");
+        } else {
+            starsArray.push("fa fa-star-o empty");
+        }
+    }
+    return starsArray;
+}

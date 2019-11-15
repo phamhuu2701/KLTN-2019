@@ -10,14 +10,14 @@ router.route("/").get(async (req, res, next) => {
     if (!name) {
         const cities = await CityDao.find();
         if (!cities) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(cities);
         }
     } else {
         const city = await CityDao.findOneByName(name);
         if (!city) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(city);
         }
@@ -28,7 +28,7 @@ router.route("/:id").get(async (req, res, next) => {
     const id = req.params.id;
     const city = await CityDao.findById(id);
     if (!city) {
-        res.json({});
+        res.json(null);
     } else {
         res.json(city);
     }

@@ -1,9 +1,9 @@
 .store-info {
-  height: 90%;
+  height: 85%;
   width: 65%;
+  top: 15%;
   z-index: 120;
   position: fixed;
-  top: 10%;
   right: -100%;
   background-color: #fff;
   overflow-x: hidden;
@@ -12,17 +12,17 @@
 
 @media only screen and (max-width: 768px) {
   .store-info {
-    height: 100%;
+    height: 85%;
     width: 85%;
-    top: 6%;
+    top: 15%;
   }
 }
 
 @media only screen and (min-width: 769px) {
   .store-info {
-    height: 90%;
+    height: 85%;
     width: 65%;
-    top: 10%;
+    top: 15%;
   }
 }
 
@@ -34,6 +34,8 @@
   display: block;
   padding: 0.2em 0.5em;
   font-size: 2em;
+  position: fixed;
+  z-index: 105;
 }
 
 .closebtn img {

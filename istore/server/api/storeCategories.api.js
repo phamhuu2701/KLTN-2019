@@ -10,14 +10,14 @@ router.route("/").get(async (req, res, next) => {
     if (!name) {
         const storeCategorys = await StoreCategoryDao.find();
         if (!storeCategorys) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(storeCategorys);
         }
     } else {
         const storeCategory = await StoreCategoryDao.findOneByName(name);
         if (!storeCategory) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(storeCategory);
         }
@@ -28,7 +28,7 @@ router.route("/:id").get(async (req, res, next) => {
     const id = req.params.id;
     const storeCategory = await StoreCategoryDao.findById(id);
     if (!storeCategory) {
-        res.json({});
+        res.json(null);
     } else {
         res.json(storeCategory);
     }

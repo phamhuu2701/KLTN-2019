@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { formatPrice, getRatesAvg } from "./../../utils/productUtils";
+import { formatPrice, getStarsArrayClassName } from "./../../utils/productUtils";
+
+import "./ProductSaleOff.css";
 
 class ProductSaleOff extends Component {
     constructor() {
@@ -11,16 +13,9 @@ class ProductSaleOff extends Component {
         };
     }
 
-    componentDidMount() {
-        let starsClassNames = [];
-        for (let i = 0; i < getRatesAvg(this.props.product); i++) {
-            starsClassNames.push("fa fa-star");
-        }
-        for (let i = 0; i < 5 - getRatesAvg(this.props.product); i++) {
-            starsClassNames.push("fa fa-star-o empty");
-        }
+    componentDidMount() {     
         this.setState({
-            starsClassNames: starsClassNames
+            starsClassNames: getStarsArrayClassName(this.props.product)
         });
     }
 

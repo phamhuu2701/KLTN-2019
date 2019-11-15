@@ -65,7 +65,7 @@ class ProductDetail extends Component {
         .then(res => res.json())
         .then(productCategory => {
           this.setState({
-            productCategoryName: productCategory.name
+            productCategoryName: (productCategory && productCategory.name)
           });
         });
     }

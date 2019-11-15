@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router-dom";
-import "bootstrap/dist/css/bootstrap.min.css";
+import { Switch, Route, Redirect } from "react-router-dom";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 // import "./e-shop-template/e-shop/css/bootstrap.min.css"
 import "./e-shop-template/e-shop/css/font-awesome.min.css";
@@ -20,19 +20,20 @@ class StoreIndex extends Component {
         super(props);
 
         this.state = {
-            store: null
+            store: null,
+            isNotFounded: false
         };
     }
 
-    UNSAFE_componentWillMount() {
-        fetch("/api/stores/" + this.props.match.params.id)
-            .then(res => res.json())
-            .then(store => {
-                this.setState({
-                    store: store
-                });
-            });
-    }
+    // UNSAFE_componentWillMount() {
+    //     fetch("/api/stores/" + this.props.match.params.id)
+    //         .then(res => res.json())
+    //         .then(store => {
+    //             this.setState({
+    //                 store: store
+    //             });
+    //         });
+    // }
 
     componentDidMount() {
         if (!this.state.store) {
@@ -44,9 +45,15 @@ class StoreIndex extends Component {
             })
                 .then(res => res.json())
                 .then(store => {
-                    this.setState({
-                        store: store
-                    });
+                    if (store) {
+                        this.setState({
+                            store: store
+                        });
+                    } else {
+                        this.setState({
+                            isNotFounded: true
+                        });
+                    }
                 });
         }
     }
@@ -76,8 +83,10 @@ class StoreIndex extends Component {
                     <Footer store={this.state.store} />
                 </div>
             );
-        } else {
+        } else if (!this.state.store && this.state.isNotFounded === false) {
             return <div></div>;
+        } else {
+            return <Redirect to="/" />;
         }
     }
 }

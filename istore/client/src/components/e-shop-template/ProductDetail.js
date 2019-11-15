@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { formatPrice, getRatesAvg } from "./../../utils/productUtils";
+import { formatPrice, getStarsArrayClassName } from "./../../utils/productUtils";
 
 import "./ProductDetail.css";
 
@@ -83,15 +83,8 @@ class ProductDetail extends Component {
             .then(res => res.json())
             .then(product => {
                 // update rates
-                let starsClassNames = [];
-                for (let i = 0; i < getRatesAvg(product); i++) {
-                    starsClassNames.push("fa fa-star");
-                }
-                for (let i = 0; i < 5 - getRatesAvg(product); i++) {
-                    starsClassNames.push("fa fa-star-o empty");
-                }
                 this.setState({
-                    starsClassNames: starsClassNames
+                    starsClassNames: getStarsArrayClassName(product)
                 });
 
                 // update review
@@ -257,7 +250,7 @@ class ProductDetail extends Component {
                                                     <i className="fa fa-heart" />
                                                 </button>
                                                 <button className="main-btn icon-btn">
-                                                    <i className="fa fa-exchange" />
+                                                    <i className="fa fa-compass" />
                                                 </button>
                                                 <button className="main-btn icon-btn">
                                                     <i className="fa fa-share-alt" />
@@ -374,7 +367,7 @@ class ProductDetail extends Component {
                                                                         <div className="review-heading">
                                                                             <div>
                                                                                 <Link to="#">
-                                                                                    <i className="fa fa-user-o" />{" "}
+                                                                                    <i className="fa fa-user" />{" "}
                                                                                     {
                                                                                         rate.fullname
                                                                                     }
@@ -382,7 +375,7 @@ class ProductDetail extends Component {
                                                                             </div>
                                                                             <div>
                                                                                 <Link to="#">
-                                                                                    <i className="fa fa-clock-o" />{" "}
+                                                                                    <i className="fa fa-clock" />{" "}
                                                                                     {
                                                                                         rate.timestamp
                                                                                     }

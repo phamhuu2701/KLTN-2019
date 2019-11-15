@@ -8,6 +8,7 @@ import Maps from "./istore/Maps";
 import DropdownUser from "./istore/DropdownUser";
 import ProductInformation from "./istore/ProductInformation";
 import MessageNotify from "./istore/MessageNotify";
+import Footer from "./istore/Footer";
 
 class HomeIndex extends Component {
     constructor() {
@@ -50,6 +51,7 @@ class HomeIndex extends Component {
                     logInToggle={this.logInToggle}
                     successSignUpHandler={this.successSignUpHandler}
                 />
+                <Footer />
                 <MessageNotify message={this.state.message} />
             </div>
         );

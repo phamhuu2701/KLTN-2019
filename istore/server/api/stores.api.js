@@ -11,14 +11,14 @@ router.route("/").get(async (req, res, next) => {
     if (!name) {
         const stores = await StoreDao.find();
         if (!stores) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(stores);
         }
     } else {
         const store = await StoreDao.findByName(name);
         if (!store) {
-            res.json({});
+            res.json(null);
         } else {
             res.json(store);
         }
@@ -29,7 +29,7 @@ router.route("/:id").get(async (req, res, next) => {
     let id = req.params.id;
     let store = await StoreDao.findById(id);
     if (!store) {
-        res.json({});
+        res.json(null);
     } else {
         res.json(store);
     }

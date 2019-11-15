@@ -15,7 +15,7 @@ class AdminIndex extends Component {
         this.state = {
             isLogged: false,
             user: null,
-            loginError: false
+            isLoginError: false
         };
     }
 
@@ -23,7 +23,7 @@ class AdminIndex extends Component {
         fetch("/api/login")
             .then(res => res.json())
             .then(result => {
-                if (result.isLogged === true && result.user) {
+                if (result.isLogged === true) {
                     this.setState({
                         isLogged: true,
                         user: result.user
@@ -61,7 +61,7 @@ class AdminIndex extends Component {
                     </Switch>
                 </BrowserRouter>
             );
-        } else if (this.state.loginError) {
+        } else if (this.state.isLoginError) {
             alert("Vui lòng đăng nhập để có thể thực hiện chức năng này!");
             return <Redirect from="/" to="/" />;
         } else {
