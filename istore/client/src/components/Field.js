@@ -5,7 +5,7 @@ import "./Field.css";
 import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
 import { onSearchProduct } from "./Maps";
-import { onSortStoreListService } from "../../services/store.service";
+import { onSortStoreListService } from "../services/store.service";
 
 class SearchBar extends Component {
     constructor(props) {
