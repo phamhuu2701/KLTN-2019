@@ -1,5 +1,5 @@
 import { sortProductByDistance, sortIncreseProductByPrice, sortDescreseProductByPrice, sortProductByRating } from '../utils/sortModel'
-import { showProductDetail } from '../components/ProductDetail';
+import { showProductDetail } from '../components/istore/ProductDetail';
 
 export function showHideStoreInfoService(id, info, thisMap) {
 	const storeInfo = document.querySelector('.store-info');
