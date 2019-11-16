@@ -18,7 +18,7 @@ export default class Google extends Component {
     		avatars: [data.profileObj.imageUrl]
     	}
 
-    	fetch('/api/login/facebook', {
+    	fetch('/api/login/google', {
     		method: 'POST',
     		headers: {
     			'Accept': 'application/json',
