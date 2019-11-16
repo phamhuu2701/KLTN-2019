@@ -1,49 +1,64 @@
-const Model = require('../models/store.model');
+const Model = require("../models/store.model");
 
 module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
             Model.find({})
-            .populate("storeCategory")
-            .populate("user")
-            .populate("city")
-            .populate("district")
-            .populate("street")
-            .populate("products")
-            .exec((err, results) => {
-                if (err) return reject(null);
-                return resolve(results);
-            });
+                .populate("storeCategory")
+                .populate("user")
+                .populate("city")
+                .populate("district")
+                .populate("street")
+                .populate("products")
+                .exec((err, results) => {
+                    if (err) return reject(null);
+                    return resolve(results);
+                });
+        }).catch(() => null);
+    },
+    findByIdUser: (user) => {
+        return new Promise((resolve, reject) => {
+            Model.find({user: user})
+                .populate("storeCategory")
+                .populate("user")
+                .populate("city")
+                .populate("district")
+                .populate("street")
+                .populate("products")
+                .exec((err, results) => {
+                    if (err) return reject(null);
+                    return resolve(results);
+                });
         }).catch(() => null);
     },
     findById: id => {
         return new Promise((resolve, reject) => {
             Model.findById(id)
-            .populate("storeCategory")
-            .populate("user")
-            .populate("city")
-            .populate("district")
-            .populate("street")
-            .populate("products")
-            .exec((err, result) => {
-                if (err) return reject(null);
-                return resolve(result);
-            });
+                .populate("storeCategory")
+                .populate("user")
+                .populate("city")
+                .populate("district")
+                .populate("street")
+                .populate("products")
+                .exec((err, result) => {
+                    if (err) return reject(null);
+                    return resolve(result);
+                });
         }).catch(() => null);
     },
     findByName: name => {
         return new Promise((resolve, reject) => {
             Model.findOne({ name: name })
-            .populate("storeCategory")
-            .populate("user")
-            .populate("city")
-            .populate("district")
-            .populate("street")
-            .populate("products")
-            .exec((err, result) => {
-                if (err) return reject(null);
-                return resolve(result);
-            });
+                .populate("storeCategory")
+                .populate("user")
+                .populate("city")
+                .populate("district")
+                .populate("street")
+                .populate("products")
+                .exec((err, result) => {
+                    if (err) return reject(null);
+                    return resolve(result);
+                });
         }).catch(() => null);
     },
     searchByName: search => {
@@ -85,29 +100,30 @@ module.exports = {
         }).catch(() => false);
     },
     findByProducts: productIds => {
-		return Model.find({products: {$in: productIds}});
-		//return Model.find();
-	},
-	findByProduct: (productId, latlng, distance) => {
+        return Model.find({ products: { $in: productIds } });
+        //return Model.find();
+    },
+    findByProduct: (productId, latlng, distance) => {
         return new Promise((resolve, reject) => {
-    		Model.findOne({
-    			products: productId, 
-    			location: {
-    				$near: {
-    					$maxDistance: distance,
-    					$geometry: 
-    					{
-    						type: 'Point',
-    						coordinates: latlng
-    					}
-    				}
-    			}
-    		})
-            .populate('storeCategory')
-            .exec((err, store) => {
-                if (err) { return reject(err) }
-                return resolve(store);
+            Model.findOne({
+                products: productId,
+                location: {
+                    $near: {
+                        $maxDistance: distance,
+                        $geometry: {
+                            type: "Point",
+                            coordinates: latlng
+                        }
+                    }
+                }
             })
-        })
-	}
-}
+                .populate("storeCategory")
+                .exec((err, store) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(store);
+                });
+        });
+    }
+};

@@ -4,6 +4,7 @@ const md5 = require('md5');
 
 const User = require("../models/user.model");
 const UserDao = require("../dao/user.dao");
+const StoreDao = require("../dao/store.dao");
 
 router
     .route("/")
@@ -77,4 +78,13 @@ router
     //     res.json({ message: b });
     // });
 
+
+router
+    .route("/:id/stores")
+    .get(async (req, res, next) => {
+        let id = req.params.id;
+        let user = await UserDao.findById(id);
+        let stores = await StoreDao.findByIdUser(user);
+        res.json(stores);
+    });
 module.exports = router;

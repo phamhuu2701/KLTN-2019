@@ -40,7 +40,8 @@ class Profile extends React.Component {
         super();
 
         this.state = {
-            user: null
+            user: null,
+            stores: 0
         }
     }
 
@@ -51,6 +52,15 @@ class Profile extends React.Component {
                 this.setState({
                     user: result.user
                 })
+
+                fetch("/api/users/" + result.user._id + "/stores")
+                    .then(res => res.json())
+                    .then(stores => {
+                        
+                        this.setState({
+                            stores: stores
+                        })
+                    });
             });
     }
 
@@ -104,7 +114,7 @@ class Profile extends React.Component {
                                         <div className="col">
                                             <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                                                 <div>
-                                                    <span className="heading">0</span>
+                                                    <span className="heading">{this.state.stores && this.state.stores.length}</span>
                                                     <span className="description">Cửa hàng</span>
                                                 </div>
                                                 <div>
@@ -150,7 +160,7 @@ class Profile extends React.Component {
                                 <CardHeader className="bg-white border-0">
                                     <Row className="align-items-center">
                                         <Col xs="8">
-                                            <h3 className="mb-0">Thông tin tài khoản</h3>
+                                            <h3 id="user-info" className="mb-0">Thông tin tài khoản</h3>
                                         </Col>
                                         <Col className="text-right" xs="4">
                                             <Button
@@ -159,7 +169,7 @@ class Profile extends React.Component {
                                                 onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
-                                                Cập nhập
+                                                Cập nhật
                                             </Button>
                                         </Col>
                                     </Row>
@@ -363,7 +373,7 @@ class Profile extends React.Component {
                                         </div>
                                         <hr className="my-4" />
                                         {/* Description */}
-                                        <h6 className="heading-small text-muted mb-4">About me</h6>
+                                        <h6 className="heading-small text-muted mb-4">Giới thiệu</h6>
                                         <div className="pl-lg-4">
                                             <FormGroup>
                                                 <label>Giới thiệu</label>
@@ -374,7 +384,12 @@ class Profile extends React.Component {
                                                     type="textarea"
                                                 />
                                             </FormGroup>
-                                        </div>
+                                        </div>                                        
+                                        <div className="pl-lg-4">
+                                            <FormGroup>
+                                                <Button className="btn btn-info" style={{float: "right"}}>CẬP NHẬT</Button>
+                                            </FormGroup>
+                                        </div>                                        
                                     </Form>
                                 </CardBody>
                             </Card>

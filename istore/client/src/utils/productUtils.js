@@ -97,7 +97,7 @@ export function getStarsArrayClassName(product) {
             starsArray.push("fa fa-star");
         }
         else if((i - rateAvg >0) && (i - rateAvg < 1)){
-            starsArray.push("fa fa-star-half-o");
+            starsArray.push("fa fa-star-half");
         } else {
             starsArray.push("fa fa-star-o empty");
         }

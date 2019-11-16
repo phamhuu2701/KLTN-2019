@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { formatPrice, getStarsArrayClassName } from "./../../utils/productUtils";
 
 import "./ProductDetail.css";
+import { formatDate2 } from "../../utils/dateUtils";
 
 class ProductDetail extends Component {
     constructor() {
@@ -195,10 +196,10 @@ class ProductDetail extends Component {
                                                     )
                                                 )}
                                             </div>
-                                            <Link to="#">
+                                            <a href="#tab3" onClick={this.onReviewsTabClick}>
                                                 {this.state.productRates.length}{" "}
                                                 Đánh giá / Thêm đánh giá
-                                            </Link>
+                                            </a>
                                         </div>
                                         <p>
                                             {this.state.product.description.substring(
@@ -315,6 +316,7 @@ class ProductDetail extends Component {
                                             </span>
                                         </li>
                                         <li
+                                            id="tab3"
                                             className={
                                                 reviewsHeaderTabClassname
                                             }
@@ -377,7 +379,7 @@ class ProductDetail extends Component {
                                                                                 <Link to="#">
                                                                                     <i className="fa fa-clock" />{" "}
                                                                                     {
-                                                                                        rate.timestamp
+                                                                                        formatDate2(rate.timestamp)
                                                                                     }
                                                                                 </Link>
                                                                             </div>

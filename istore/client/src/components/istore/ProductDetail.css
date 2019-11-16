@@ -72,8 +72,8 @@
   padding: 0 20px 20px;
 }
 
-.product-detail-product-body-title {
-  color: red;
+.product-detail-product-body-title h3 {
+  color: red !important;
   text-transform: uppercase;
 }
 
