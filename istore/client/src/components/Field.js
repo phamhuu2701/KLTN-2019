@@ -37,11 +37,11 @@ class SearchBar extends Component {
 
     componentDidMount() {
         
-        /*setTimeout(()=>{
+        setTimeout(()=>{
             onSearchProduct("bóng đèn led", 10000, result => {
                 this.props.findProductHandler(result);
             });
-        }, 2000);*/
+        }, 2000);
 
         /*setTimeout(() => {
             onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {

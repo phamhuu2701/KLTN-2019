@@ -289,7 +289,7 @@ export default class DropdownUser extends Component {
                                 </div>
                             </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <a href="/information#" className="dropdown-user-body-content-link">
+                            <a href="/mystore" className="dropdown-user-body-content-link">
                                 <div className="dropdown-user-body-content">
                                         <img
                                             className="dropdown-user-body-content-imgage"
