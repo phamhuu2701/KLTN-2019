@@ -102,8 +102,8 @@ app.use(function(err, req, res, next) {
 });
 
 // Connect to MongoDB
-// mongodb://localhost:27017/istore
-mongoose.connect("mongodb+srv://canhtoan88:eunJ&.5RcqGKH*j@istore-lthvn.mongodb.net/test?retryWrites=true&w=majority", {
+// mongodb+srv://canhtoan88:eunJ&.5RcqGKH*j@istore-lthvn.mongodb.net/test?retryWrites=true&w=majority
+mongoose.connect("mongodb://localhost:27017/istore", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
