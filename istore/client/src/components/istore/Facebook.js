@@ -1,66 +1,72 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 //import FacebookLogin from 'react-facebook-login';
-import { FacebookProvider, LoginButton } from 'react-facebook';
+import { FacebookProvider, LoginButton } from "react-facebook";
 
 export default class facebook extends Component {
+    constructor(props) {
+        super(props);
+        this.handleResponse = this.handleResponse.bind(this);
+    }
 
-	constructor(props) {
-		super(props);
-		this.handleResponse = this.handleResponse.bind(this);
-	}
+    componentDidMount() {
+        setTimeout(() => {
+            if (document.querySelector("#fb-root")) {
+                document.querySelector("#fb-root").remove();
+            }
+        }, 150);
+    }
 
-	componentDidMount() {
-		setTimeout(()=> {
-			if (document.querySelector('#fb-root')) {
-				document.querySelector('#fb-root').remove();
-			}
-		}, 150)
-	}
+    handleResponse(data) {
+        const user = {
+            fullname: {
+                firstname: data.profile.first_name,
+                lastname: data.profile.last_name
+            },
+            email: data.profile.email,
+            password: "facebook" + data.profile.id,
+            avatars: [data.profile.picture.data.url]
+        };
 
-	handleResponse(data) {
-    	const user = {
-    		fullname: {
-    			firstname: data.profile.first_name,
-    			lastname: data.profile.last_name
-    		},
-    		email: data.profile.email,
-    		password: 'facebook' + data.profile.id,
-    		avatars: [data.profile.picture.data.url]
-    	}
+        fetch("/api/login/facebook", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+            .then(result => {
+                return result.json();
+            })
+            .then(user => {
+                this.props.loginHandler(user);
+            })
+            .catch(err => console.log(err));
+    }
 
-    	fetch('/api/login/facebook', {
-    		method: 'POST',
-    		headers: {
-    			'Accept': 'application/json',
-    			'Content-Type': 'application/json'
-    		},
-    		body: JSON.stringify(user)
-    	})
-    	.then(result => {
-    		return result.json();
-    	})
-    	.then(user => {
-    		this.props.loginHandler(user)
-    	})
-    	.catch(err => console.log(err));
-	}
-	 
-	handleError(error) {
-	    console.log(error);
-	}
+    handleError(error) {
+        console.log(error);
+    }
 
-	render() {
+    render() {
         return (
-			<FacebookProvider appId="984029191952495">
-		        <LoginButton
-		          scope="email"
-		          onCompleted={this.handleResponse}
-		          onError={this.handleError}
-		          className='btn btn-fb'
-		        >
-		          <span><img src="./resources/icons/facebook.svg" height="24px" alt="Login Via Facebook"/> Facebook</span>
-		        </LoginButton>
-		    </FacebookProvider>
-		);
-	}
+            <FacebookProvider appId="984029191952495">
+                <LoginButton
+                    scope="email"
+                    onCompleted={this.handleResponse}
+                    onError={this.handleError}
+                    className="btn btn-fb"
+                >
+                    <span>
+                        <img
+                            src="./resources/icons/facebook.svg"
+                            height="24px"
+                            alt="Login Via Facebook"
+                        />{" "}
+                        Facebook
+                    </span>
+                </LoginButton>
+            </FacebookProvider>
+        );
+    }
 }

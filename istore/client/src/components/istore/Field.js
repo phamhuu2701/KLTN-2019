@@ -37,24 +37,24 @@ class SearchBar extends Component {
 
     componentDidMount() {
         
-        /*setTimeout(()=>{
-            onSearchProduct("bóng đèn led", 10000, result => {
+        setTimeout(()=>{
+            onSearchProduct("bóng đèn", 10000, result => {
                 this.props.findProductHandler(result);
             });
-        }, 2000);*/
+        }, 2000);
 
-        /*setTimeout(() => {
-            onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {
-                //this.props.onPlaceLoaded(addressObject);
-                const address = addressObject.address_components;
-                if (address){
-                    this.setState({
-                        city: address[0].long_name,
-                        query: addressObject.formatted_address
-                    })
-                }
-            })
-        }, 2000);*/
+        // setTimeout(() => {
+        //     onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {
+        //         //this.props.onPlaceLoaded(addressObject);
+        //         const address = addressObject.address_components;
+        //         if (address){
+        //             this.setState({
+        //                 city: address[0].long_name,
+        //                 query: addressObject.formatted_address
+        //             })
+        //         }
+        //     })
+        // }, 2000);
     }
 
     render() {

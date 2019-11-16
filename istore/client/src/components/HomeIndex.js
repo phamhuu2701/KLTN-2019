@@ -10,6 +10,8 @@ import ProductInformation from "./istore/ProductInformation";
 import MessageNotify from "./istore/MessageNotify";
 import Footer from "./istore/Footer";
 
+// console.log(window.location.href);
+
 class HomeIndex extends Component {
     constructor() {
         super();

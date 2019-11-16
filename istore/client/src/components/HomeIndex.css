@@ -67,6 +67,7 @@
     .app-body-left .header {
         position: fixed;
         z-index: 103;
+        width: 100%;
     }
 
     .app-body-left .field {

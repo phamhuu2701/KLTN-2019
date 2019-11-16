@@ -284,7 +284,7 @@ export default class DropdownUser extends Component {
                                             src="./resources/icons/user.svg"
                                         ></img>
                                         <span className="dropdown-user-body-content-title">
-                                            {this.state.user.fullname.firstname}
+                                            {this.state.user.fullname.firstname +" "+ this.state.user.fullname.lastname}
                                         </span>
                                 </div>
                             </a>

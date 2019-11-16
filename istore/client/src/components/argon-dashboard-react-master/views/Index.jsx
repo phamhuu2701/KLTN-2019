@@ -46,6 +46,7 @@ import {
     chartExample2
 } from "components/argon-dashboard-react-master/variables/charts.jsx";
 
+import "./Index.css";
 import Header from "components/argon-dashboard-react-master/components/Headers/Header.jsx";
 
 class Index extends React.Component {
@@ -77,7 +78,7 @@ class Index extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7" fluid>
+                <Container className="mt--7 mt--7-custom" fluid>
                     <Row>
                         <Col className="mb-5 mb-xl-0" xl="8">
                             <Card className="bg-gradient-default shadow">
