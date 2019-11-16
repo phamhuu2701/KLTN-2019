@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import GoogleLogin from 'react-google-login';
+import React, { Component } from "react";
+import GoogleLogin from "react-google-login";
 
 export default class Google extends Component {
-	constructor(props) {
-		super(props);
-		this.responseGoogle = this.responseGoogle.bind(this);
-	}
+    constructor(props) {
+        super(props);
+        this.responseGoogle = this.responseGoogle.bind(this);
+    }
 
-	responseGoogle(data) {
-		const user = {
-    		fullname: {
-    			firstname: data.profileObj.givenName,
-    			lastname: data.profileObj.familyName
-    		},
-    		email: data.profileObj.email,
-    		password: 'google' + data.profileObj.googleId,
-    		avatars: [data.profileObj.imageUrl]
-    	}
+    responseGoogle(data) {
+        const user = {
+            fullname: {
+                firstname: data.profileObj.givenName,
+                lastname: data.profileObj.familyName
+            },
+            email: data.profileObj.email,
+            password: "google" + data.profileObj.googleId,
+            avatars: [data.profileObj.imageUrl]
+        };
 
     	fetch('/api/login/google', {
     		method: 'POST',
@@ -35,15 +35,15 @@ export default class Google extends Component {
     	.catch(err => console.log(err));
 	}
 
-	render() {
-		return (
-			<GoogleLogin
+    render() {
+        return (
+            <GoogleLogin
                 clientId="167843177082-13lcr3s5m9vmlbjagl8ko1qh1jekg8j0.apps.googleusercontent.com"
                 buttonText="Google"
                 className="btn btn-gplus"
                 onSuccess={this.responseGoogle}
                 onFailure={this.responseGoogle}
             />
-		);
-	}
+        );
+    }
 }

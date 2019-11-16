@@ -8,6 +8,7 @@ import "components/argon-dashboard-react-master/assets/scss/argon-dashboard-reac
 import AdminLayout from "components/argon-dashboard-react-master/layouts/Admin.jsx";
 import AuthLayout from "components/argon-dashboard-react-master/layouts/Auth.jsx";
 
+
 class AdminIndex extends Component {
     constructor() {
         super();

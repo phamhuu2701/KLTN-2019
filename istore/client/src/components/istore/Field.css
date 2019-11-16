@@ -33,7 +33,7 @@
 }
 
 .field-filter-form-input-search {
-    border-radius: 20px;
+    border-radius: 50px !important;
 }
 
 .field-hr {
