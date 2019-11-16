@@ -71,14 +71,6 @@ app.use(
     next();
 })*/
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, "client", "build")));
-
-    app.get("*", (req,res) => {
-        res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-    });
-}
-
 app.use("/", indexRouter);
 app.use("/database", databaseRouter);
 app.use("/api/login", loginRouter);
@@ -116,6 +108,14 @@ mongoose.connect("mongodb+srv://canhtoan88:eunJ&.5RcqGKH*j@istore-lthvn.mongodb.
     useUnifiedTopology: true,
     useCreateIndex: true
 });
+
+/*if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, "client", "build")));
+
+    app.get("*", (req,res) => {
+        res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+    });
+}*/
 
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error:"));
