@@ -1,0 +1,18 @@
+.table-flush-custom .is-active-true {
+    color: rgb(36, 233, 36);
+    font-size: 0.9em;
+}
+
+.table-flush-custom .is-active-false {
+    color: #f74b4b;
+    font-size: 0.9em;
+}
+
+.container-button-add-store {
+    margin: 1em auto;
+    text-align: right;
+}
+
+.container-button-add-store button {
+    border-radius: 20px;
+}

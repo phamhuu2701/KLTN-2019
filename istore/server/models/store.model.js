@@ -37,6 +37,7 @@ const storeSchema = new Schema(
             trim: true
         },
         timestamp: { type: Date, required: true, default: Date.now },
+        isActive: { type: Boolean, required: true, default: true},
         products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
         logo: {
             type: String,

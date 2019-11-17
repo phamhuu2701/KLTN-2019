@@ -10,7 +10,7 @@ import {
 import "./Products.css";
 import Product from "./Product";
 import ProductSaleOff from "./ProductSaleOff";
-import { getProductsBySize } from "../../utils/arrayUtils";
+import { getNewArrayBySize } from "../../utils/arrayUtils";
 
 class Products extends Component {
   constructor() {
@@ -64,7 +64,7 @@ class Products extends Component {
         array = sortDescreaseProductsByTimestamp(this.props.store.products);
     }
     this.setState({
-      top12ProductsNew: getProductsBySize(array, 0, this.state.productsSize)
+      top12ProductsNew: getNewArrayBySize(array, 0, this.state.productsSize)
     });
     // console.log(this.state.top12ProductsNew);
   }
@@ -73,14 +73,14 @@ class Products extends Component {
 
     let products = sortDescreaseProductsBySaleoff(this.props.store.products);
     this.setState({
-      top3ProductsSaleoff: getProductsBySize(products, 0, 3)
+      top3ProductsSaleoff: getNewArrayBySize(products, 0, 3)
     });
 
     let productsSortDescreaseProductsByTimestamp = sortDescreaseProductsByTimestamp(
       this.props.store.products
     );
     this.setState({
-        top12ProductsNew: getProductsBySize(productsSortDescreaseProductsByTimestamp, 0, this.state.productsSize)
+        top12ProductsNew: getNewArrayBySize(productsSortDescreaseProductsByTimestamp, 0, this.state.productsSize)
       });
   }
 

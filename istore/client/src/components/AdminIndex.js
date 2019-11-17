@@ -35,6 +35,7 @@ class AdminIndex extends Component {
         //         }
         //     });
 
+        // test
         fetch("/api/users/5dc662f9066b0f3b6cfd6263")
             .then(res => res.json())
             .then(user => {

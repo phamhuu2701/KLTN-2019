@@ -1,3 +1,5 @@
+import { getNewArrayBySize } from "../utils/arrayUtils";
+
 export function LoginByLocalService(e, loginHandler) {
     e.preventDefault();
     const emailInput = e.target.childNodes[0].childNodes[0];
@@ -233,14 +235,26 @@ export function ValidateInputService(e, that) {
     }
 }
 
-export function getStoresByIdUser(e, idStores) {
-    fetch("/api/users/" + idStores + "/stores")
+export function getStoresByIdUser(e, idUser) {
+    fetch("/api/users/" + idUser + "/stores")
         .then(res => res.json())
         .then(stores => {
             // return stores;
 
             e.setState({
                 stores: stores
+            })
+        });
+}
+
+export function getStoresBySizeByIdUser(e, idUser, firstIndex, size) {
+    fetch("/api/users/" + idUser + "/stores")
+        .then(res => res.json())
+        .then(stores => {
+            // return stores;
+
+            e.setState({
+                stores: getNewArrayBySize(stores, firstIndex, size)
             })
         });
 }
