@@ -1,3 +1,5 @@
+import { zoomSizeOfMap } from '../utils/mapUtil'
+
 export function onGetCurrentPositionService(thisMap) {
     thisMap.cleanMapAndClientPosition();
 
@@ -99,6 +101,10 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                                 document.querySelectorAll(
                                     'select[class="form-control"]'
                                 )[1].disabled = false;
+                                // Change zoom on map
+                                thisMap.map.setZoom(zoomSizeOfMap(distance))
+
+                                // Show result on result area
                                 cb(lastResult);
                             }
                         );

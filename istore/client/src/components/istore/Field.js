@@ -88,6 +88,15 @@ export class ResultArea extends Component {
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isFound === true) {
+            this.setState({
+                result: (nextProps.result.length > 10) ? nextProps.result.splice(0, 10) : nextProps.result,
+                message: "Không tìm thấy sản phẩm!"
+            });
+        }
+    }
+
     render() {
         if (this.state.result.length > 0) {
             return (
@@ -122,9 +131,9 @@ export default class Fields extends Component {
     constructor() {
         super();
         this.state = {
-            result: []
+            result: [],
+            isFound: false
         };
-        this.findProductRef = React.createRef();
 
         this.onDistanceSelectChange = this.onDistanceSelectChange.bind(this);
         this.onPrioritySelectChange = this.onPrioritySelectChange.bind(this);
@@ -149,9 +158,9 @@ export default class Fields extends Component {
 
     findProductHandler(result) {
         this.setState({
-            result: result
+            result: result,
+            isFound: true
         });
-        this.findProductRef.current.findStore();
     }
 
     render() {
@@ -231,6 +240,7 @@ export default class Fields extends Component {
                     <ResultArea
                         ref={this.findProductRef}
                         result={this.state.result}
+                        isFound={this.state.isFound}
                     />
                 </div>
                 <hr className="field-hr" />
