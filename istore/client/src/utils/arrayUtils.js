@@ -1,5 +1,5 @@
 // get array by size
-export function getProductsBySize(array, firstIndex, size){
+export function getNewArrayBySize(array, firstIndex, size){
     let newArray = [];
     if(array.length - firstIndex > size){
         for(let i=firstIndex; i<(firstIndex+size); i++){
