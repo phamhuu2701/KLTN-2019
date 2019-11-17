@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { formatPrice, getStarsArrayClassName } from "./../../utils/productUtils";
+import {
+    formatPrice,
+    getStarsArrayClassName,
+    getStarsArrayClassNameOfRate,
+    getStarsReviewNewest
+} from "./../../utils/productUtils";
 
 import "./ProductDetail.css";
 import { formatDate2 } from "../../utils/dateUtils";
+import getFullname from "../../utils/userUtils";
 
 class ProductDetail extends Component {
     constructor() {
@@ -26,12 +32,21 @@ class ProductDetail extends Component {
                 timestamp: null
             },
             starsClassNames: [],
-            productRates: []
+            productRates: [],
+            productRatesReview: [],
+            userSession: null,
+            stars: 0,
+            fullnameInputErrorMessage: "",
+            emailInputErrorMessage: "",
+            contentInputErrorMessage: "",
+            starsInputErrorMessage: ""
         };
 
         this.onDescriptionTabClick = this.onDescriptionTabClick.bind(this);
         this.onDetailsTabClick = this.onDetailsTabClick.bind(this);
         this.onReviewsTabClick = this.onReviewsTabClick.bind(this);
+        this.onStarsRateClick = this.onStarsRateClick.bind(this);
+        this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
     }
 
     onDescriptionTabClick() {
@@ -70,13 +85,13 @@ class ProductDetail extends Component {
             idProduct: idProduct
         });
 
-        fetch("/api/products/" + idProduct)
-            .then(res => res.json())
-            .then(product => {
-                this.setState({
-                    product: product
-                });
-            });
+        // fetch("/api/products/" + idProduct)
+        //     .then(res => res.json())
+        //     .then(product => {
+        //         this.setState({
+        //             product: product
+        //         });
+        //     });
     }
 
     componentDidMount() {
@@ -85,26 +100,131 @@ class ProductDetail extends Component {
             .then(product => {
                 // update rates
                 this.setState({
-                    starsClassNames: getStarsArrayClassName(product)
+                    product: product,
+                    starsClassNames: getStarsArrayClassName(product),
+                    productRatesReview: getStarsReviewNewest(product, 5)
                 });
 
                 // update review
                 // console.log(this.state.product.rates);
-                let productRatesNew = [];
+                let productRates = [];
                 for (let rate of product.rates) {
                     rate.rateStarClassName = [];
                     for (let i = 0; i < rate.stars; i++) {
                         rate.rateStarClassName.push("fa fa-star");
                     }
                     for (let i = 0; i < 5 - rate.stars; i++) {
-                        rate.rateStarClassName.push("fa fa-star-o empty");
+                        rate.rateStarClassName.push("fa fa-star empty");
                     }
-                    productRatesNew.push(rate);
+                    productRates.push(rate);
                 }
                 this.setState({
-                    productRates: productRatesNew
+                    productRates: productRates
                 });
             });
+
+        fetch("/api/login")
+            .then(res => res.json())
+            .then(result => {
+                if (result.isLogged === true) {
+                    this.setState({
+                        userSession: result.user
+                    });
+                }
+            });
+    }
+
+    onStarsRateClick(e) {
+        // console.log(e.target.value);
+        this.setState({
+            stars: e.target.value
+        });
+    }
+
+    onSubmitButtonClick() {
+        let fullname = document.getElementById("input-fullname").value;
+        let email = document.getElementById("input-email").value;
+        let content = document.getElementById("input-content").value;
+
+        if (fullname === "") {
+            this.setState({
+                fullnameInputErrorMessage: "Họ tên không được để trống."
+            });
+        } else {
+            this.setState({
+                fullnameInputErrorMessage: ""
+            });
+        }
+
+        if (email === "") {
+            this.setState({
+                emailInputErrorMessage: "Email không được để trống."
+            });
+        } else {
+            this.setState({
+                emailInputErrorMessage: ""
+            });
+        }
+
+        if (content === "") {
+            this.setState({
+                contentInputErrorMessage: "Hãy nhập gì đó đánh giá về sản phẩm."
+            });
+        } else {
+            this.setState({
+                contentInputErrorMessage: ""
+            });
+        }
+
+        if (this.state.stars === 0) {
+            this.setState({
+                starsInputErrorMessage: "Bạn chưa đánh giá chất lượng sản phẩm."
+            });
+        } else {
+            this.setState({
+                starsInputErrorMessage: ""
+            });
+        }
+
+        // console.log(fullname);
+        // console.log(email);
+        // console.log(content);
+        // console.log(this.state.stars);
+
+        if (
+            fullname !== "" &&
+            email !== null &&
+            (content !== "") & (this.state.stars !== 0)
+        ) {
+            fetch("/api/products/" + this.state.idProduct, {
+                method: "PUT",
+                body: JSON.stringify({
+                    rate: {
+                        fullname: fullname,
+                        email: email,
+                        content: content,
+                        stars: this.state.stars,
+                        timestamp: new Date()
+                    }
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+                .then(res => res.json())
+                .then(productUpdate => {
+                    // console.log("Update success!");
+                    // console.log(productUpdate);
+                    // console.log(productUpdate.rates);
+
+                    this.setState({
+                        productRatesReview: getStarsReviewNewest(
+                            productUpdate,
+                            5
+                        )
+                    });
+                });
+        }
     }
 
     render() {
@@ -196,8 +316,15 @@ class ProductDetail extends Component {
                                                     )
                                                 )}
                                             </div>
-                                            <a href="#tab3" onClick={this.onReviewsTabClick}>
-                                                {this.state.productRates.length}{" "}
+                                            <a
+                                                href="#tab3"
+                                                onClick={this.onReviewsTabClick}
+                                            >
+                                                {
+                                                    this.state
+                                                        .productRatesReview
+                                                        .length
+                                                }{" "}
                                                 Đánh giá / Thêm đánh giá
                                             </a>
                                         </div>
@@ -358,9 +485,9 @@ class ProductDetail extends Component {
                                             <div className="row">
                                                 <div className="col-md-6">
                                                     <div className="product-reviews">
-                                                        {this.state.productRates
-                                                            .length > 0 &&
-                                                            this.state.productRates.map(
+                                                        {this.state
+                                                            .productRatesReview &&
+                                                            this.state.productRatesReview.map(
                                                                 (rate, i) => (
                                                                     <div
                                                                         key={i}
@@ -378,13 +505,15 @@ class ProductDetail extends Component {
                                                                             <div>
                                                                                 <Link to="#">
                                                                                     <i className="fa fa-clock" />{" "}
-                                                                                    {
-                                                                                        formatDate2(rate.timestamp)
-                                                                                    }
+                                                                                    {formatDate2(
+                                                                                        rate.timestamp
+                                                                                    )}
                                                                                 </Link>
                                                                             </div>
                                                                             <div className="review-rating pull-right">
-                                                                                {rate.rateStarClassName.map(
+                                                                                {getStarsArrayClassNameOfRate(
+                                                                                    rate
+                                                                                ).map(
                                                                                     (
                                                                                         starsClassName,
                                                                                         i
@@ -445,26 +574,90 @@ class ProductDetail extends Component {
                                                     <form className="review-form">
                                                         <div className="form-group">
                                                             <input
+                                                                id="input-fullname"
                                                                 className="input"
                                                                 type="text"
                                                                 placeholder="Họ tên"
+                                                                defaultValue={
+                                                                    this.state
+                                                                        .userSession &&
+                                                                    getFullname(
+                                                                        this
+                                                                            .state
+                                                                            .userSession
+                                                                    )
+                                                                }
                                                             />
+                                                            <span
+                                                                className={
+                                                                    "message " +
+                                                                    (this.state
+                                                                        .fullnameInputErrorMessage ===
+                                                                    ""
+                                                                        ? "ok"
+                                                                        : "error")
+                                                                }
+                                                            >
+                                                                {
+                                                                    this.state
+                                                                        .fullnameInputErrorMessage
+                                                                }
+                                                            </span>
                                                         </div>
                                                         <div className="form-group">
                                                             <input
+                                                                id="input-email"
                                                                 className="input"
                                                                 type="email"
                                                                 placeholder="Email"
+                                                                defaultValue={
+                                                                    this.state
+                                                                        .userSession &&
+                                                                    this.state
+                                                                        .userSession
+                                                                        .email
+                                                                }
                                                             />
+                                                            <span
+                                                                className={
+                                                                    "message " +
+                                                                    (this.state
+                                                                        .emailInputErrorMessage ===
+                                                                    ""
+                                                                        ? "ok"
+                                                                        : "error")
+                                                                }
+                                                            >
+                                                                {
+                                                                    this.state
+                                                                        .emailInputErrorMessage
+                                                                }
+                                                            </span>
                                                         </div>
                                                         <div className="form-group">
                                                             <textarea
+                                                                id="input-content"
                                                                 className="input"
                                                                 placeholder="Nội dung đáng giá"
                                                                 defaultValue={
                                                                     ""
                                                                 }
                                                             />
+                                                            <span
+                                                                className={
+                                                                    "message " +
+                                                                    (this.state
+                                                                        .contentInputErrorMessage ===
+                                                                    ""
+                                                                        ? "ok"
+                                                                        : "error")
+                                                                }
+                                                            >
+                                                                {
+                                                                    this.state
+                                                                        .contentInputErrorMessage
+                                                                }
+                                                            </span>
                                                         </div>
                                                         <div className="form-group">
                                                             <div className="input-rating">
@@ -479,6 +672,10 @@ class ProductDetail extends Component {
                                                                         defaultValue={
                                                                             5
                                                                         }
+                                                                        onClick={
+                                                                            this
+                                                                                .onStarsRateClick
+                                                                        }
                                                                     />
                                                                     <label htmlFor="star5" />
                                                                     <input
@@ -487,6 +684,10 @@ class ProductDetail extends Component {
                                                                         name="rating"
                                                                         defaultValue={
                                                                             4
+                                                                        }
+                                                                        onClick={
+                                                                            this
+                                                                                .onStarsRateClick
                                                                         }
                                                                     />
                                                                     <label htmlFor="star4" />
@@ -497,6 +698,10 @@ class ProductDetail extends Component {
                                                                         defaultValue={
                                                                             3
                                                                         }
+                                                                        onClick={
+                                                                            this
+                                                                                .onStarsRateClick
+                                                                        }
                                                                     />
                                                                     <label htmlFor="star3" />
                                                                     <input
@@ -505,6 +710,10 @@ class ProductDetail extends Component {
                                                                         name="rating"
                                                                         defaultValue={
                                                                             2
+                                                                        }
+                                                                        onClick={
+                                                                            this
+                                                                                .onStarsRateClick
                                                                         }
                                                                     />
                                                                     <label htmlFor="star2" />
@@ -515,12 +724,42 @@ class ProductDetail extends Component {
                                                                         defaultValue={
                                                                             1
                                                                         }
+                                                                        onClick={
+                                                                            this
+                                                                                .onStarsRateClick
+                                                                        }
                                                                     />
                                                                     <label htmlFor="star1" />
                                                                 </div>
+                                                                <div>
+                                                                    <span
+                                                                        className={
+                                                                            "message " +
+                                                                            (this
+                                                                                .state
+                                                                                .starsInputErrorMessage ===
+                                                                            ""
+                                                                                ? "ok"
+                                                                                : "error")
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            this
+                                                                                .state
+                                                                                .starsInputErrorMessage
+                                                                        }
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <button className="primary-btn">
+                                                        <button
+                                                            type="button"
+                                                            className="primary-btn"
+                                                            onClick={
+                                                                this
+                                                                    .onSubmitButtonClick
+                                                            }
+                                                        >
                                                             Xác nhận
                                                         </button>
                                                     </form>

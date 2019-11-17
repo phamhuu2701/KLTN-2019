@@ -8,7 +8,6 @@ import "components/argon-dashboard-react-master/assets/scss/argon-dashboard-reac
 import AdminLayout from "components/argon-dashboard-react-master/layouts/Admin.jsx";
 import AuthLayout from "components/argon-dashboard-react-master/layouts/Auth.jsx";
 
-
 class AdminIndex extends Component {
     constructor() {
         super();
@@ -21,24 +20,32 @@ class AdminIndex extends Component {
     }
 
     componentDidMount() {
-        fetch("/api/login")
+        // fetch("/api/login")
+        //     .then(res => res.json())
+        //     .then(result => {
+        //         if (result.isLogged === true) {
+        //             this.setState({
+        //                 isLogged: true,
+        //                 user: result.user
+        //             });
+        //         } else {
+        //             this.setState({
+        //                 isLoginError: true
+        //             });
+        //         }
+        //     });
+
+        fetch("/api/users/5dc662f9066b0f3b6cfd6263")
             .then(res => res.json())
-            .then(result => {
-                if (result.isLogged === true) {
-                    this.setState({
-                        isLogged: true,
-                        user: result.user
-                    });
-                } else {
-                    this.setState({
-                        loginError: true
-                    });
-                }
+            .then(user => {
+                this.setState({
+                    user: user,
+                    isLogged: true
+                });
             });
     }
 
     render() {
-        // console.log(this.state.user);
         if (this.state.isLogged) {
             return (
                 <BrowserRouter>

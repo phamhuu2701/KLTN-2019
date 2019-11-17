@@ -7,7 +7,7 @@ const options = {
 
 const productCategorySchema = new Schema(
     {
-        name: { type: String, required: true, maxlength: 50, trim: true }
+        name: { type: String, required: true, maxlength: 100, trim: true }
     },
     options
 );

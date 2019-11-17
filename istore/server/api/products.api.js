@@ -52,6 +52,19 @@ router.route("/:id").get(async (req, res, next) => {
     } else {
         res.json(product);
     }
+})
+.put(async (req, res, next) => {
+
+    let id = req.params.id;
+    let product = await ProductDao.findById(id);
+    
+    // update rate
+    if(req.body.rate){
+        product.rates.push(req.body.rate);
+    }
+
+    let productUpdate = await ProductDao.update(product);
+    res.json(productUpdate);
 });
 
 const addStoreIntoProduct = async (products, latlng, distance, cb) => {

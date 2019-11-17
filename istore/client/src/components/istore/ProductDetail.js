@@ -137,7 +137,7 @@ class ProductDetail extends Component {
                     }
                     target="_blank"
                   >
-                    <h3>{this.state.product._doc.name}</h3>
+                    <h2>{this.state.product._doc.name}</h2>
                   </Link>
                 </div>
                 <div className="product-detail-product-body-title-sub">
@@ -245,7 +245,7 @@ class ProductDetail extends Component {
                 </div>
                 <div className="product-detail-info-content">
                   <div className="product-detail-info-content-store-name">
-                      <h5>{this.state.product.store.name}</h5>
+                      <h3>{this.state.product.store.name}</h3>
                   </div>
                   <div className="product-detail-info-content-store-address"></div>
                 </div>

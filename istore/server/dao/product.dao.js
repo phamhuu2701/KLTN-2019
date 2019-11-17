@@ -51,7 +51,7 @@ module.exports = {
             Model.findByIdAndUpdate(
                 model._id,
                 {
-                    
+                    rates: model.rates
                 },
                 { new: true },
                 (err, result) => {

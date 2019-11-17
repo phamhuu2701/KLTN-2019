@@ -34,42 +34,157 @@ import {
 // core components
 import UserHeader from "components/argon-dashboard-react-master/components/Headers/UserHeader.jsx";
 import formatDate from "../../../../utils/dateUtils";
+import { getStoresByIdUser } from "../../../../services/user.service";
+import "./Profile.css";
+import MessageNotify from "../../../istore/MessageNotify";
 
 class Profile extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
-            user: null,
-            stores: 0
+            // user: props.user,
+            stores: [],
+            inputFirstname: {
+                errorMessage: "",
+                value: props.user.fullname.firstname
+            },
+            inputLastname: {
+                errorMessage: "",
+                value: props.user.fullname.lastname
+            },
+            inputAddress: {
+                errorMessage: "",
+                value: props.user.address
+            },
+            inputBirthday: {
+                errorMessage: "",
+                value: props.user.birthday
+            },
+            inputGender: {
+                errorMessage: "",
+                value: props.user.gender
+            },
+            updateResultMessage: null
         }
+
+        this.onInputChange = this.onInputChange.bind(this);
+        this.onRadioGenderChange = this.onRadioGenderChange.bind(this);
+        this.onUpdateSubmitClick = this.onUpdateSubmitClick.bind(this);
     }
 
     componentDidMount() {
-        fetch("/api/login")
-            .then(res => res.json())
-            .then(result => {
-                this.setState({
-                    user: result.user
-                })
+        this.setState({
+            stores: getStoresByIdUser(this, this.props.user._id)
+        })
+    }
 
-                fetch("/api/users/" + result.user._id + "/stores")
-                    .then(res => res.json())
-                    .then(stores => {
-                        
-                        this.setState({
-                            stores: stores
-                        })
-                    });
+    onInputChange(e) {
+        // console.log(e.target.id);
+        // console.log(e.target.value);
+
+        if (e.target.id === "input-first-name") {
+            if (e.target.value.trim() === "") {
+                this.setState({
+                    inputFirstname: {
+                        errorMessage: "Tên không được để trống!",
+                        value: this.props.user.fullname.firstname
+                    }
+                })
+            }
+            else {
+                this.setState({
+                    inputFirstname: {
+                        errorMessage: "",
+                        value: e.target.value
+                    }
+                })
+            }
+        }
+        if (e.target.id === "input-last-name") {
+            if (e.target.value.trim() === "") {
+                this.setState({
+                    inputLastname: {
+                        errorMessage: "Họ không được để trống!",
+                        value: this.props.user.fullname.lastname
+                    }
+                })
+            }
+            else {
+                this.setState({
+                    inputLastname: {
+                        errorMessage: "",
+                        value: e.target.value
+                    }
+                })
+            }
+        }
+        if (e.target.id === "input-birthday") {
+            this.setState({
+                inputBirthday: {
+                    errorMessage: "",
+                    value: e.target.value
+                }
+            })
+        }
+        if (e.target.id === "input-address") {
+            this.setState({
+                inputAddress: {
+                    errorMessage: "",
+                    value: e.target.value
+                }
+            })
+        }
+    }
+
+    onRadioGenderChange(e) {
+        this.setState({
+            inputGender: {
+                errorMessage: "",
+                value: (e.target.value === "true" ? true : false)
+            }
+        })
+    }
+
+    onUpdateSubmitClick() {
+        // console.log(this.state.inputFirstname);
+        // console.log(this.state.inputLastname);
+        // console.log(this.state.inputAddress);
+        // console.log(this.state.inputBirthday);
+        // console.log(this.state.inputGender);
+
+        fetch("/api/users/" + this.props.user._id,
+            {
+                method: "PUT",
+                body: JSON.stringify({
+                    fullname: {
+                        firstname: this.state.inputFirstname.value,
+                        lastname: this.state.inputLastname.value
+                    },
+                    gender: this.state.inputGender.value,
+                    birthday: this.state.inputBirthday.value,
+                    address: this.state.inputAddress.value
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(userUpdate => {
+                // console.log("Update success!");
+                this.setState({
+                    updateResultMessage: "Cập nhập thông tin thành công!"
+                })
             });
     }
 
     render() {
+
         return (
             <>
-                <UserHeader user={this.state.user} />
+                <UserHeader user={this.props.user} />
                 {/* Page content */}
-                <Container className="mt--7" fluid>
+                <Container className="mt--7 user-profile" fluid>
                     <Row>
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">
@@ -81,9 +196,12 @@ class Profile extends React.Component {
                                                     alt="..."
                                                     className="rounded-circle"
                                                     //   src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                    src={this.state.user && this.state.user.avatars[0]}
+                                                    src={this.props.user.avatars[0]}
                                                 />
                                             </a>
+                                        </div>
+                                        <div className="card-profile-image-change">
+                                            <i class="fa fa-camera" aria-hidden="true"></i>
                                         </div>
                                     </Col>
                                 </Row>
@@ -130,23 +248,23 @@ class Profile extends React.Component {
                                     </Row>
                                     <div className="text-center">
                                         <h3>
-                                            {this.state.user && (this.state.user.fullname.lastname + " " + this.state.user.fullname.firstname)}
+                                            {(this.props.user.fullname.lastname + " " + this.props.user.fullname.firstname)}
                                         </h3>
                                         <div className="h5 font-weight-300">
                                             <i className="ni location_pin mr-2" />
-                                            {this.state.user && this.state.user.address}
+                                            {this.props.user.address}
                                         </div>
                                         <div className="h5 mt-4">
                                             <i className="ni business_briefcase-24 mr-2" />
-                                            Công việc:
+                                            Công việc: ...
                                         </div>
                                         <div>
                                             <i className="ni education_hat mr-2" />
-                                            Chức vụ:
+                                            Chức vụ: ...
                                         </div>
                                         <hr className="my-4" />
                                         <p>
-                                            (Hãy giới thiệu về bạn..)
+                                            Hãy giới thiệu về bạn..
                                         </p>
                                         <a href="#pablo" onClick={e => e.preventDefault()}>
                                             Xem thêm
@@ -191,11 +309,18 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.state.user && this.state.user.fullname.firstname}
+                                                            defaultValue={this.props.user.fullname.firstname}
                                                             id="input-first-name"
                                                             placeholder="Tên"
                                                             type="text"
+                                                            minLength={1}
+                                                            maxLength={10}
+                                                            required={true}
+                                                            onChange={this.onInputChange}
                                                         />
+                                                        <span className={"message " + ((this.state.inputFirstname.errorMessage === "") ? "ok" : "error")}>
+                                                            {this.state.inputFirstname.errorMessage}
+                                                        </span>
                                                     </FormGroup>
                                                 </Col>
                                                 <Col lg="6">
@@ -208,11 +333,18 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.state.user && this.state.user.fullname.lastname}
+                                                            defaultValue={this.props.user.fullname.lastname}
                                                             id="input-last-name"
                                                             placeholder="Họ"
                                                             type="text"
+                                                            minLength={1}
+                                                            maxLength={10}
+                                                            required={true}
+                                                            onChange={this.onInputChange}
                                                         />
+                                                        <span className={"message " + ((this.state.inputLastname.errorMessage === "") ? "ok" : "error")}>
+                                                            {this.state.inputLastname.errorMessage}
+                                                        </span>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
@@ -227,10 +359,13 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.state.user && this.state.user.phone}
+                                                            defaultValue={this.props.user.phone}
                                                             id="input-phone"
                                                             placeholder="Số điện thoại"
                                                             type="tel"
+                                                            minLength={1}
+                                                            maxLength={10}
+                                                            readOnly={true}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -244,10 +379,13 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.state.user && this.state.user.email}
+                                                            defaultValue={this.props.user.email}
                                                             id="input-email"
                                                             placeholder="istore@gmail.com"
                                                             type="email"
+                                                            minLength={1}
+                                                            maxLength={30}
+                                                            readOnly={true}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -256,21 +394,24 @@ class Profile extends React.Component {
                                                 <Col lg="6">
                                                     <label
                                                         className="form-control-label"
-                                                        htmlFor="input-birthday"
                                                     >
                                                         Giới tính
                                                     </label>
                                                     <FormGroup check>
                                                         <Label check>
-                                                            <Input type="radio" name="radio2" 
-                                                            defaultChecked={this.state.user && this.state.user.gender ? true : false}/>{' '}
+                                                            <Input type="radio" name="radio2"
+                                                                defaultValue={true}
+                                                                onChange={this.onRadioGenderChange}
+                                                                defaultChecked={this.props.user.gender ? true : false} />{' '}
                                                             Nam
                                                         </Label>
                                                     </FormGroup>
                                                     <FormGroup check>
                                                         <Label check>
-                                                            <Input type="radio" name="radio2" 
-                                                            defaultChecked={this.state.user && this.state.user.gender ? false : true}/>{' '}
+                                                            <Input type="radio" name="radio2"
+                                                                defaultValue={false}
+                                                                onChange={this.onRadioGenderChange}
+                                                                defaultChecked={this.props.user.gender ? false : true} />{' '}
                                                             Nữ
                                                         </Label>
                                                     </FormGroup>
@@ -287,7 +428,8 @@ class Profile extends React.Component {
                                                             type="date"
                                                             id="input-birthday"
                                                             placeholder="Ngày sinh"
-                                                            defaultValue={this.state.user && formatDate(this.state.user.birthday)}
+                                                            defaultValue={formatDate(this.props.user.birthday)}
+                                                            onChange={this.onInputChange}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -310,10 +452,13 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.state.user && this.state.user.address}
+                                                            defaultValue={this.props.user.address}
                                                             id="input-address"
                                                             placeholder="Địa chỉ"
                                                             type="text"
+                                                            minLength={1}
+                                                            maxLength={100}
+                                                            onChange={this.onInputChange}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -384,17 +529,16 @@ class Profile extends React.Component {
                                                     type="textarea"
                                                 />
                                             </FormGroup>
-                                        </div>                                        
+                                        </div>
                                         <div className="pl-lg-4">
-                                            <FormGroup>
-                                                <Button className="btn btn-info" style={{float: "right"}}>CẬP NHẬT</Button>
-                                            </FormGroup>
-                                        </div>                                        
+                                            <Button onClick={this.onUpdateSubmitClick} type="button" className="btn" style={{ float: "right" }} color="primary">CẬP NHẬT</Button>
+                                        </div>
                                     </Form>
                                 </CardBody>
                             </Card>
                         </Col>
                     </Row>
+                    <MessageNotify message={this.state.updateResultMessage} />
                 </Container>
             </>
         );

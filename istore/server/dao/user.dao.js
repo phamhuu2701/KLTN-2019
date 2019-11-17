@@ -72,11 +72,17 @@ module.exports = {
             Model.findByIdAndUpdate(
                 model._id,
                 {
-
+                    fullname: model.fullname,
+                    gender: model.gender,
+                    address: model.address,
+                    birthday: model.birthday
                 },
                 { new: true },
                 (err, result) => {
-                    if (err) return reject(null);
+                    if (err) {
+                        console.log(err);
+                        return reject(null);
+                    }
                     return resolve(result);
                 }
             );

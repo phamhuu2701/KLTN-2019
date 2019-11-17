@@ -7,7 +7,7 @@ const options = {
 
 const citySchema = new Schema(
     {
-        name: { type: String, required: true, maxlength: 50, trim: true }
+        name: { type: String, required: true, maxlength: 30, trim: true }
     },
     options
 );

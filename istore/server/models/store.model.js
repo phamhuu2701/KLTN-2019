@@ -27,8 +27,8 @@ const storeSchema = new Schema(
             },
             coordinates: [{ type: Number, required: true, index: '2dsphere' }] //[lng, lat]
         },
-        phone: { type: String, maxlength: 30, trim: true, required: true },
-        email: { type: String, maxlength: 50, trim: true, required: true },
+        phone: { type: String, maxlength: 10, trim: true, required: true },
+        email: { type: String, maxlength: 30, trim: true, required: true },
         name: { type: String, required: true, maxlength: 50, trim: true },
         description: {
             type: String,
@@ -40,23 +40,23 @@ const storeSchema = new Schema(
         products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
         logo: {
             type: String,
-            maxlength: 250,
+            maxlength: 300,
             trim: true,
             default:
                 "https://musicplanetradio.com/wp-content/uploads/2015/07/2BKKR-Shop-Local-Logo1.png"
         },
-        images: [{ type: String, required: true, maxlength: 250, trim: true }],
-        videos: [{ type: String, required: true, maxlength: 250, trim: true }],
+        images: [{ type: String, required: true, maxlength: 300, trim: true }],
+        videos: [{ type: String, required: true, maxlength: 300, trim: true }],
         website: {
             hasWebsite: { type: Boolean, required: true, default: false },
-            url: { type: String, maxlength: 250, trim: true }
+            url: { type: String, maxlength: 100, trim: true }
         },
-        facebook: { type: String, maxlength: 250, trim: true },
-        youtube: { type: String, maxlength: 250, trim: true },
-        twitter: { type: String, maxlength: 250, trim: true },
-        instagram: { type: String, maxlength: 250, trim: true },
-        googlePlus: { type: String, maxlength: 250, trim: true },
-        pinterest: { type: String, maxlength: 250, trim: true }
+        facebook: { type: String, maxlength: 100, trim: true },
+        youtube: { type: String, maxlength: 100, trim: true },
+        twitter: { type: String, maxlength: 100, trim: true },
+        instagram: { type: String, maxlength: 100, trim: true },
+        googlePlus: { type: String, maxlength: 100, trim: true },
+        pinterest: { type: String, maxlength: 100, trim: true }
     },
     options
 );

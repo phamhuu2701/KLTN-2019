@@ -232,3 +232,15 @@ export function ValidateInputService(e, that) {
             break;
     }
 }
+
+export function getStoresByIdUser(e, idStores) {
+    fetch("/api/users/" + idStores + "/stores")
+        .then(res => res.json())
+        .then(stores => {
+            // return stores;
+
+            e.setState({
+                stores: stores
+            })
+        });
+}

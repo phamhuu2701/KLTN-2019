@@ -26,8 +26,8 @@ const productSchema = new Schema(
         },
         price: { type: Number, required: true, min: 0 },
         saleoff: { type: Number, required: true, default: 0 },
-        images: [{ type: String, required: true, maxlength: 250, trim: true }],
-        videos: [{ type: String, required: true, maxlength: 250, trim: true }],
+        images: [{ type: String, required: true, maxlength: 300, trim: true }],
+        videos: [{ type: String, required: true, maxlength: 300, trim: true }],
         rates: [
             {
                 fullname: {
@@ -38,7 +38,7 @@ const productSchema = new Schema(
                 },
                 email: {
                     type: String,
-                    maxlength: 50,
+                    maxlength: 30,
                     trim: true,
                     unique: true
                 },
