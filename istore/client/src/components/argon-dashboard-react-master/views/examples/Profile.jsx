@@ -37,6 +37,7 @@ import formatDate from "../../../../utils/dateUtils";
 import { getStoresByIdUser } from "../../../../services/user.service";
 import "./Profile.css";
 import MessageNotify from "../../../istore/MessageNotify";
+import { Link } from "react-router-dom";
 
 class Profile extends React.Component {
     constructor(props) {
@@ -233,7 +234,9 @@ class Profile extends React.Component {
                                             <div className="card-profile-stats d-flex justify-content-center mt-md-5">
                                                 <div>
                                                     <span className="heading">{this.state.stores && this.state.stores.length}</span>
-                                                    <span className="description">Cửa hàng</span>
+                                                    <span className="description">
+                                                        <Link to="/admin/stores-manage">Cửa hàng</Link>
+                                                    </span>
                                                 </div>
                                                 <div>
                                                     <span className="heading">0</span>
