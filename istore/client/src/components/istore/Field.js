@@ -37,11 +37,11 @@ class SearchBar extends Component {
 
     componentDidMount() {
         
-        setTimeout(()=>{
+        /*setTimeout(()=>{
             onSearchProduct("bóng đèn", 10000, result => {
                 this.props.findProductHandler(result);
             });
-        }, 2000);
+        }, 2000);*/
 
         // setTimeout(() => {
         //     onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {
@@ -83,9 +83,18 @@ export class ResultArea extends Component {
 
     findStore() {
         this.setState({
-            result: this.props.result,
+            result: (this.props.result.length > 10) ? this.props.result.splice(0, 10) : this.props.result,
             message: "Không tìm thấy sản phẩm!"
         });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isFound === true) {
+            this.setState({
+                result: (nextProps.result.length > 10) ? nextProps.result.splice(0, 10) : nextProps.result,
+                message: "Không tìm thấy sản phẩm!"
+            });
+        }
     }
 
     render() {
@@ -122,9 +131,9 @@ export default class Fields extends Component {
     constructor() {
         super();
         this.state = {
-            result: []
+            result: [],
+            isFound: false
         };
-        this.findProductRef = React.createRef();
 
         this.onDistanceSelectChange = this.onDistanceSelectChange.bind(this);
         this.onPrioritySelectChange = this.onPrioritySelectChange.bind(this);
@@ -149,9 +158,9 @@ export default class Fields extends Component {
 
     findProductHandler(result) {
         this.setState({
-            result: result
+            result: result,
+            isFound: true
         });
-        this.findProductRef.current.findStore();
     }
 
     render() {
@@ -231,6 +240,7 @@ export default class Fields extends Component {
                     <ResultArea
                         ref={this.findProductRef}
                         result={this.state.result}
+                        isFound={this.state.isFound}
                     />
                 </div>
                 <hr className="field-hr" />

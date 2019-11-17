@@ -1,3 +1,5 @@
+import { zoomSizeOfMap } from '../utils/mapUtil'
+
 export function onGetCurrentPositionService(thisMap) {
     thisMap.cleanMapAndClientPosition();
 
@@ -57,7 +59,7 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                     ).style.display = "block";
                     document.querySelector(
                         ".field-results-number"
-                    ).textContent = `Kết quả (${result.length})`;
+                    ).textContent = `Kết quả (${result.length > 10 ? 10 : result.length})`;
 
                     // Show nearby store existing product
                     thisMap.cleanMaps();
@@ -99,6 +101,10 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                                 document.querySelectorAll(
                                     'select[class="form-control"]'
                                 )[1].disabled = false;
+                                // Change zoom on map
+                                thisMap.map.setZoom(zoomSizeOfMap(distance))
+
+                                // Show result on result area
                                 cb(lastResult);
                             }
                         );
