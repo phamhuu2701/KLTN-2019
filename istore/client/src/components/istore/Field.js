@@ -37,11 +37,11 @@ class SearchBar extends Component {
 
     componentDidMount() {
         
-        setTimeout(()=>{
+        /*setTimeout(()=>{
             onSearchProduct("bóng đèn", 10000, result => {
                 this.props.findProductHandler(result);
             });
-        }, 2000);
+        }, 2000);*/
 
         // setTimeout(() => {
         //     onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {
@@ -83,7 +83,7 @@ export class ResultArea extends Component {
 
     findStore() {
         this.setState({
-            result: this.props.result,
+            result: (this.props.result.length > 10) ? this.props.result.splice(0, 10) : this.props.result,
             message: "Không tìm thấy sản phẩm!"
         });
     }

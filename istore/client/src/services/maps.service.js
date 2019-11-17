@@ -57,7 +57,7 @@ export function onSearchProductService(search, distance, thisMap, cb) {
                     ).style.display = "block";
                     document.querySelector(
                         ".field-results-number"
-                    ).textContent = `Kết quả (${result.length})`;
+                    ).textContent = `Kết quả (${result.length > 10 ? 10 : result.length})`;
 
                     // Show nearby store existing product
                     thisMap.cleanMaps();

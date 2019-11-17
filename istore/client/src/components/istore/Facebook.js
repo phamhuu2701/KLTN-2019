@@ -13,7 +13,7 @@ export default class facebook extends Component {
             if (document.querySelector("#fb-root")) {
                 document.querySelector("#fb-root").remove();
             }
-        }, 150);
+        }, 200);
     }
 
     handleResponse(data) {

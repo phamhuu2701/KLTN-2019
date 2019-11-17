@@ -83,11 +83,11 @@
 }
 
 .valid {
-  border-color: #28a745;
+  border-color: #28a745 !important;
 }
 
 .invalid {
-  border-color: #dc3545;
+  border-color: #dc3545 !important;
 }
 
 .sign-in:hover {

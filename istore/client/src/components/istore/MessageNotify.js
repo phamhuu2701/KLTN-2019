@@ -7,7 +7,7 @@ export default class MessageNotify extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: '',
+			show: 'animate-box',
 			message: ''
 		}
 	}
@@ -15,7 +15,7 @@ export default class MessageNotify extends Component {
 	UNSAFE_componentWillMount() {
 		if (this.state.message) {
 			this.setState({
-				show: 'show',
+				show: 'animated bounceInUp',
 				message: this.props.message
 			})
 		}
@@ -24,13 +24,13 @@ export default class MessageNotify extends Component {
 	UNSAFE_componentWillReceiveProps(nextProps) {
 		if (nextProps.message) {
 			this.setState({
-				show: 'show',
+				show: 'animated bounceInUp',
 				message: nextProps.message + ' Vui lòng kiểm tra <a href="https://mail.google.com/" target="_blank">mail</a> để xác thực!'
 			})
 
 			setTimeout(()=> {
 				this.setState({
-					show: ''
+					show: 'animated bounceOutDown'
 				})
 			}, 4000);
 		}
@@ -39,7 +39,7 @@ export default class MessageNotify extends Component {
 	render() {
 		return (
 			<div className={'success-feedback ' + this.state.show}>
-				<Alert variant='success'><span dangerouslySetInnerHTML={{__html: this.state.message}}></span></Alert>
+				<Alert variant='success' className="abc"><span dangerouslySetInnerHTML={{__html: this.state.message}}></span></Alert>
 			</div>
 		);
 	}
