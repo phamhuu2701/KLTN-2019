@@ -47,13 +47,14 @@ class UserHeader extends React.Component {
                                 <p className="text-white mt-0 mb-5">
                                     Chào mừng <b>{this.props.user && this.props.user.fullname.firstname}</b> đến với <b>iStore</b>. Bạn có thể quản lý thông tin cá nhân và các cửa hàng của bạn tại đây. Chúc bạn một ngày làm việc hiệu quả với <b>iStore</b>. 
                                 </p>
+                                <a href="#user-info">
                                 <Button
                                     color="info"
-                                    href="#pablo"
                                     onClick={e => e.preventDefault()}
                                 >
                                     Thông tin cá nhân
                                 </Button>
+                                </a>
                             </Col>
                         </Row>
                     </Container>

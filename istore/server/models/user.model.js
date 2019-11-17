@@ -13,26 +13,26 @@ const userSchema = new Schema(
             firstname: {
                 type: String,
                 required: true,
-                maxlength: 20,
+                maxlength: 10,
                 trim: true
             },
             lastname: {
                 type: String,
                 required: true,
-                maxlength: 20,
+                maxlength: 10,
                 trim: true
             }
         },
-        phone: { type: String, maxlength: 30, trim: true, unique: true },
-        email: { type: String, maxlength: 50, trim: true, unique: true },
+        phone: { type: String, maxlength: 10, trim: true, unique: true },
+        email: { type: String, maxlength: 30, trim: true, unique: true },
         password: { type: String, required: true, maxlength: 50, trim: true },
-        address: { type: String, maxlength: 250, trim: true },
+        address: { type: String, maxlength: 100, trim: true },
         gender: { type: Boolean, default: false },
         birthday: { type: Date, default: Date.now },
         timeRegister: { type: Date, required: true, default: Date.now },
         avatars: { 
             type: Array,
-            default: ["https://pbs.twimg.com/profile_images/951624200787132417/qLdX4E-u.jpg"]
+            default: ["https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1"]
         }
     },
     options

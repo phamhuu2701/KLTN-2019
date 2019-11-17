@@ -41,3 +41,16 @@
 .ProductDetail .product-view-custom {
     margin: 20px 0 !important;
 }
+
+.ProductDetail .message {
+    font-size: 0.8em;
+    padding: 0.5em 1em;
+}
+
+.ProductDetail .ok {
+    color: rgb(107, 226, 107);
+}
+
+.ProductDetail .error {
+    color: rgb(255, 119, 119);
+}

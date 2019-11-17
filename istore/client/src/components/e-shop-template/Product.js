@@ -67,7 +67,7 @@ class Product extends Component {
                                         this.props.product._id
                                     }
                                 >
-                                    {this.props.product.name}
+                                    {this.props.product.name.substring(0, 30)}
                                 </Link>
                             </h2>
                             <div className="product-btns">

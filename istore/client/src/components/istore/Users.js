@@ -121,13 +121,14 @@ export default class Users extends Component {
                     user.age = document.getElementById("age").value;
                     user.gender = this.state.radioOption;
 
-                    fetch("/api/users/" + id, {
-                        method: "PUT",
-                        body: JSON.stringify(user),
-                        headers: {
-                            "Content-Type": "application/json"
-                        }
-                    })
+                    fetch("/api/users/" + id, 
+                        {
+                            method: "PUT",
+                            body: JSON.stringify(user),
+                            headers: {
+                                "Content-Type": "application/json"
+                            }
+                        })
                         .then(res => res.json())
                         .then(userUpdate => {
                             fetch("/api/users")

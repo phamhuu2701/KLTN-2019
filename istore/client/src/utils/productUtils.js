@@ -59,8 +59,7 @@ export function sortDescreaseProductsByTimestamp(products) {
 
 // get rates avg
 export function getRatesAvg(product) {
-
-    if(!product.rates || product.rates.length === 0){
+    if (!product.rates || product.rates.length === 0) {
         return 0;
     }
 
@@ -75,11 +74,10 @@ export function getRatesAvg(product) {
 export function getStarsArray(product) {
     let rateAvg = getRatesAvg(product);
     let starsArray = [];
-    for(let i=1; i<=5; i++){
-        if(i<rateAvg){
+    for (let i = 1; i <= 5; i++) {
+        if (i < rateAvg) {
             starsArray.push(1);
-        }
-        else if((i - rateAvg >0) && (i - rateAvg < 1)){
+        } else if (i - rateAvg > 0 && i - rateAvg < 1) {
             starsArray.push(0.5);
         } else {
             starsArray.push(0);
@@ -92,14 +90,47 @@ export function getStarsArray(product) {
 export function getStarsArrayClassName(product) {
     let rateAvg = getRatesAvg(product);
     let starsArray = [];
-    for(let i=1; i<=5; i++){
-        if(i<rateAvg){
+    for (let i = 1; i <= 5; i++) {
+        if (i < rateAvg) {
             starsArray.push("fa fa-star");
-        }
-        else if((i - rateAvg >0) && (i - rateAvg < 1)){
-            starsArray.push("fa fa-star-half-o");
+        } else if (i - rateAvg > 0 && i - rateAvg < 1) {
+            starsArray.push("fa fa-star-half");
         } else {
-            starsArray.push("fa fa-star-o empty");
+            starsArray.push("fa fa-star empty");
+        }
+    }
+    return starsArray;
+}
+
+// lấy mảng classname sao
+export function getStarsArrayClassNameOfRate(rate) {
+    let starsArray = [];
+    for (let i = 1; i <= 5; i++) {
+        if (i < rate.stars) {
+            starsArray.push("fa fa-star");
+        } else {
+            starsArray.push("fa fa-star empty");
+        }
+    }
+    return starsArray;
+}
+
+// lấy top n lượt đánh giá mới nhất
+export function getStarsReviewNewest(product, n) {
+    let starsArray = [];
+    if (product.rates) {
+        if (product.rates.length > 0 && product.rates.length > n) {
+            for (
+                let i = product.rates.length - 1;
+                i > product.rates.length - 1 - n;
+                i--
+            ) {
+                starsArray.push(product.rates[i]);
+            }
+        } else {
+            for (let i = product.rates.length - 1; i >= 0; i--) {
+                starsArray.push(product.rates[i]);
+            }
         }
     }
     return starsArray;

@@ -37,7 +37,7 @@ class ProductSaleOff extends Component {
                                         this.props.product._id
                                     }
                                 >
-                                    {this.props.product.name}
+                                    {this.props.product.name.substring(0, 20)}
                                 </Link>
                             </h2>
                             <h3 className="product-price">
