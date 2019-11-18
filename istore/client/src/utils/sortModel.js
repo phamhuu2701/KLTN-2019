@@ -25,3 +25,15 @@ export function sortDescreseProductByPrice(stores) {
         return second._doc.price*((100 - second._doc.saleoff)/100) - first._doc.price*((100 - first._doc.saleoff)/100);
     })
 }
+
+export function sortByName(array, callback) {
+	array.sort((first, second) => {
+	    if (first.name < second.name)
+	        return -1;
+	    else if (first.name > second.name)
+	        return 1;
+	    else return 0;
+    })
+    
+    callback();
+}

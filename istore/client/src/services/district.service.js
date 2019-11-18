@@ -1,7 +1,7 @@
 import { sortByName } from "../utils/sortModel";
 
-export default function getCities(that) {
-    fetch("/api/cities")
+export default function getDistricts(that) {
+    fetch("/api/districts")
             .then(res => res.json())
             .then(results => {
                 // console.log(results);
@@ -9,13 +9,12 @@ export default function getCities(that) {
             });
 }
 
-export function getDistrictsByIdCity(that, idCity) {
-    fetch("/api/cities/" + idCity + "/districts")
+export function getStreetsByIdDistrict(that, idDistrict) {
+    fetch("/api/districts/" + idDistrict + "/streets")
             .then(res => res.json())
             .then(results => {
                 // console.log(results);
                 // that.setState({ districts: sortByName(results) });
-                sortByName(results, () => {that.setState({ districts: results })});
+                sortByName(results, () => {that.setState({ streets: results })});
             });
 }
-

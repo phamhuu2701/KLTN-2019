@@ -40,7 +40,7 @@ class PhoneActivate extends Component {
     }
 
     render() {
-        console.log(this.state.phone);
+        // console.log(this.state.phone);
         return (
             <>
                 <Modal show={this.state.show} onHide={this.handleClose} className="phone-activate">

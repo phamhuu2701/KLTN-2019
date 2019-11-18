@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const DistrictDao = require("../dao/district.dao");
-const CityDao = require("../dao/city.dao");
+const StreetDao = require("../dao/street.dao");
 
 router.route("/").get(async (req, res, next) => {
     const name = req.query.name;
@@ -35,17 +35,17 @@ router.route("/:id").get(async (req, res, next) => {
     }
 });
 
-router.route("/cities/:id").get(async (req, res, next) => {
+router.route("/:id/streets").get(async (req, res, next) => {
     const id = req.params.id;
-    const city = await CityDao.findById(id);
-    if (!city) {
+    const district = await DistrictDao.findById(id);
+    if (!district) {
         res.json(null);
     } else {
-        const districts = await DistrictDao.findByCity(city);
-        if (!districts) {
+        const streets = await StreetDao.findByDistrict(district);
+        if (!streets) {
             res.json(null);
         } else {
-            res.json(districts);
+            res.json(streets);
         }
     }
 });
