@@ -72,9 +72,10 @@
     padding: 0 20px 20px;
 }
 
-.product-detail-product-body-title h2 {
+.product-detail-product-body-title h4 {
     color: red !important;
     text-transform: uppercase;
+    font-size: 1.3em;
 }
 
 .product-detail-product-body-title-sub {

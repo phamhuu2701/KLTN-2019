@@ -29,8 +29,10 @@
 }
 
 .user-profile .card-profile-image-change i:hover {
+    border: 3px solid #a0f1ff;
     cursor: pointer;
     margin-top: -1px;
+    margin-left: -2px;
 }
 
 @media only screen and (max-width: 1000px) {

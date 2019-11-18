@@ -20,7 +20,6 @@ import React from "react";
 // reactstrap components
 import {
     Badge,
-    Card,
     CardHeader,
     CardFooter,
     DropdownMenu,
@@ -34,42 +33,116 @@ import {
     Table,
     Container,
     Row,
-    Button
+    Col,
+    Button,
+    Card,
+    Form,
+    FormGroup,
+    Label,
+    Input,
+    FormText
 } from "reactstrap";
 import { Link } from "react-router-dom";
 // core components
 import Header from "components/argon-dashboard-react-master/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
 import "./Tables.css";
+import PhoneActivate from "./PhoneActivate";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
+import getStoreCategories from "../../../../services/storeCategory.service";
+import getCities from "../../../../services/city.service";
+
+
 class Tables extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            stores: []
+            stores: [],
+            showPhoneActivateModal: false,
+            isTemplateItem1Clicked: false,
+            isTemplateItem2Clicked: false,
+            templateNumber: null,
+            isShowTemplateSelect: false,
+            isShowStoreInfoInput: false,
+            isHasWebsite: false,
+            storeCategories: [],
+            cities: []
         }
+
+        this.onAddStoreClick = this.onAddStoreClick.bind(this);
+        this.onTemplatesItemClick = this.onTemplatesItemClick.bind(this);
+        this.onCheckboxHasWebsiteClick = this.onCheckboxHasWebsiteClick.bind(this);
     }
 
     componentDidMount() {
         this.setState({
             stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10)
         })
+
+        getStoreCategories(this);
+        getCities(this);     
+    }
+
+    onAddStoreClick() {
+        if(!this.props.user.isPhoneActivated){
+            this.setState({
+                showPhoneActivateModal: true,
+                isShowTemplateSelect: true
+            })
+        }
+        else{
+            this.setState({
+                isShowTemplateSelect: true
+            })
+        }
+    }
+
+    onTemplatesItemClick(e) {
+        // console.log(e.target.id);
+
+        if (e.target.id === "item-1") {
+            this.setState({
+                isTemplateItem1Clicked: true,
+                isTemplateItem2Clicked: false,
+                templateNumber: 1,
+                showPhoneActivateModal: false,
+                isShowStoreInfoInput: true
+            })
+        }
+        else if (e.target.id === "item-2") {
+            this.setState({
+                isTemplateItem1Clicked: false,
+                isTemplateItem2Clicked: true,
+                templateNumber: 2,
+                showPhoneActivateModal: false,
+                isShowStoreInfoInput: true
+            })
+        }
+
+    }
+
+    onCheckboxHasWebsiteClick() {
+        this.setState({
+            isHasWebsite: !this.state.isHasWebsite,
+            isShowTemplateSelect: true,
+            isShowStoreInfoInput: this.state.isHasWebsite ? false : true,
+            showPhoneActivateModal: false,
+            templateNumber: null
+        })
     }
 
     render() {
-        // console.log(this.props);
-            // console.log(this.props.user);
-            // console.log(this.state.stores);
         return (
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7 mt--7-custom" fluid>
+                <Container className="mt--7 mt--7-custom stores-manage" fluid>
+                    {/* Button Add Store */}
                     <Row>
                         <Container className="container-button-add-store">
-                        <Button className="btn btn-success">Thêm cửa hàng</Button>
+                            <Button onClick={this.onAddStoreClick} className="btn btn-success">Thêm cửa hàng</Button>
                         </Container>
                     </Row>
                     {/* Table */}
@@ -95,11 +168,11 @@ class Tables extends React.Component {
                                             this.state.stores.map((store, key) => (
                                                 <tr key={key}>
                                                     <th scope="row">
-                                                    <Link to={"/store/" + store._id} target="_blank">
+                                                        <Link to={"/store/" + store._id} target="_blank">
                                                             <Media className="align-items-center">
                                                                 <span
                                                                     className="avatar rounded-circle mr-3"
-                                                                    // onClick={e => e.preventDefault()}
+                                                                // onClick={e => e.preventDefault()}
                                                                 >
                                                                     <img
                                                                         alt="..."
@@ -107,13 +180,13 @@ class Tables extends React.Component {
                                                                         src={store.logo}
                                                                     />
                                                                 </span>
-                                                                <Media>                                                                
+                                                                <Media>
                                                                     <span className="mb-0 text-sm">
                                                                         {store.name}
                                                                     </span>
                                                                 </Media>
                                                             </Media>
-                                                    </Link>
+                                                        </Link>
                                                     </th>
                                                     <td>{store.storeCategory.name}</td>
                                                     <td>{getFullAddress(store)}</td>
@@ -139,8 +212,8 @@ class Tables extends React.Component {
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
                                                                 <Link to={"/store/" + store._id} target="_blank">
                                                                     <DropdownItem
-                                                                        // href="#pablo"
-                                                                        // onClick={e => e.preventDefault()}
+                                                                    // href="#pablo"
+                                                                    // onClick={e => e.preventDefault()}
                                                                     >
                                                                         Chi tiết
                                                                     </DropdownItem>
@@ -187,7 +260,7 @@ class Tables extends React.Component {
                                                     onClick={e => e.preventDefault()}
                                                 >
                                                     1
-                        </PaginationLink>
+                                                </PaginationLink>
                                             </PaginationItem>
                                             <PaginationItem>
                                                 <PaginationLink
@@ -203,7 +276,7 @@ class Tables extends React.Component {
                                                     onClick={e => e.preventDefault()}
                                                 >
                                                     3
-                        </PaginationLink>
+                                                </PaginationLink>
                                             </PaginationItem>
                                             <PaginationItem>
                                                 <PaginationLink
@@ -220,1609 +293,192 @@ class Tables extends React.Component {
                             </Card>
                         </div>
                     </Row>
-                    {/* Table */}
-                    {/* <Row>
-                        <div className="col">
-                            <Card className="shadow">
-                                <CardHeader className="border-0">
-                                    <h3 className="mb-0">Card tables</h3>
-                                </CardHeader>
-                                <Table className="align-items-center table-flush" responsive>
-                                    <thead className="thead-light">
-                                        <tr>
-                                            <th scope="col">Project</th>
-                                            <th scope="col">Budget</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Users</th>
-                                            <th scope="col">Completion</th>
-                                            <th scope="col" />
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/bootstrap.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Argon Design System
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$2,500 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-warning" />
-                                                    pending
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip742438047"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip742438047"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip941738690"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip941738690"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip804044742"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip804044742"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip996637554"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip996637554"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">60%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="60"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/angular.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Angular Now UI Kit PRO
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$1,800 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot">
-                                                    <i className="bg-success" />
-                                                    completed
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip746418347"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip746418347"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip102182364"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip102182364"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip406489510"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip406489510"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip476840018"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip476840018"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">100%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="100"
-                                                            barClassName="bg-success"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/sketch.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Black Dashboard
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$3,150 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-danger" />
-                                                    delayed
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip753056318"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip753056318"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip441753266"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip441753266"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip188462246"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip188462246"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip621168444"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip621168444"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">72%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="72"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/react.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            React Material Dashboard
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$4,400 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot">
-                                                    <i className="bg-info" />
-                                                    on schedule
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip875258217"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip875258217"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip834416663"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip834416663"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip372449339"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip372449339"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip108714769"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip108714769"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">90%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="90"
-                                                            barClassName="bg-info"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/vue.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Vue Paper UI Kit PRO
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$2,200 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-success" />
-                                                    completed
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip664029969"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip664029969"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip806693074"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip806693074"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip844096937"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip844096937"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip757459971"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip757459971"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">100%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="100"
-                                                            barClassName="bg-success"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                                <CardFooter className="py-4">
-                                    <nav aria-label="...">
-                                        <Pagination
-                                            className="pagination justify-content-end mb-0"
-                                            listClassName="justify-content-end mb-0"
-                                        >
-                                            <PaginationItem className="disabled">
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                    tabIndex="-1"
-                                                >
-                                                    <i className="fas fa-angle-left" />
-                                                    <span className="sr-only">Previous</span>
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem className="active">
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    1
-                        </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    2 <span className="sr-only">(current)</span>
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    3
-                        </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    <i className="fas fa-angle-right" />
-                                                    <span className="sr-only">Next</span>
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                        </Pagination>
-                                    </nav>
-                                </CardFooter>
-                            </Card>
+                    <PhoneActivate show={this.state.showPhoneActivateModal} phone={this.props.user.phone}/>
+                    <hr />
+                    {/* Add store */}
+                    <div className={"store-template-select " + (this.state.isShowTemplateSelect ? "show" : "hide")}>
+                        <h3>CHỌN MẪU GIAO DIỆN CỬA HÀNG</h3>
+                        <div>
+                            <Label check className="checkbox-has-website">
+                                <Input type="checkbox" id="checkbox" onClick={this.onCheckboxHasWebsiteClick} />{' '}
+                                Tôi đã có website riêng
+                            </Label>
                         </div>
-                    </Row> */}
-                    {/* Dark table */}
-                    {/* <Row className="mt-5">
-                        <div className="col">
-                            <Card className="bg-default shadow">
-                                <CardHeader className="bg-transparent border-0">
-                                    <h3 className="text-white mb-0">Card tables</h3>
-                                </CardHeader>
-                                <Table
-                                    className="align-items-center table-dark table-flush"
-                                    responsive
-                                >
-                                    <thead className="thead-dark">
-                                        <tr>
-                                            <th scope="col">Project</th>
-                                            <th scope="col">Budget</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Users</th>
-                                            <th scope="col">Completion</th>
-                                            <th scope="col" />
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/bootstrap.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Argon Design System
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$2,500 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-warning" />
-                                                    pending
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip731399078"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip731399078"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip491083084"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip491083084"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip528540780"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip528540780"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip237898869"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip237898869"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">60%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="60"
-                                                            barClassName="bg-warning"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/angular.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Angular Now UI Kit PRO
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$1,800 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot">
-                                                    <i className="bg-success" />
-                                                    completed
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip188614932"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip188614932"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip66535734"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip66535734"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip427561578"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip427561578"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip904098289"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip904098289"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">100%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="100"
-                                                            barClassName="bg-success"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/sketch.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Black Dashboard
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$3,150 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-danger" />
-                                                    delayed
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip707904950"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip707904950"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip353988222"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip353988222"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip467171202"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip467171202"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip362118155"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip362118155"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">72%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="72"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/react.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            React Material Dashboard
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$4,400 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot">
-                                                    <i className="bg-info" />
-                                                    on schedule
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip226319315"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip226319315"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip711961370"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip711961370"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip216246707"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip216246707"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip638048561"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip638048561"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">90%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="90"
-                                                            barClassName="bg-info"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">
-                                                <Media className="align-items-center">
-                                                    <a
-                                                        className="avatar rounded-circle mr-3"
-                                                        href="#pablo"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/vue.jpg")}
-                                                        />
-                                                    </a>
-                                                    <Media>
-                                                        <span className="mb-0 text-sm">
-                                                            Vue Paper UI Kit PRO
-                            </span>
-                                                    </Media>
-                                                </Media>
-                                            </th>
-                                            <td>$2,200 USD</td>
-                                            <td>
-                                                <Badge color="" className="badge-dot mr-4">
-                                                    <i className="bg-success" />
-                                                    completed
-                        </Badge>
-                                            </td>
-                                            <td>
-                                                <div className="avatar-group">
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip781594051"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-1-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip781594051"
-                                                    >
-                                                        Ryan Tompson
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip840372212"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-2-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip840372212"
-                                                    >
-                                                        Romina Hadid
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip497647175"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-3-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip497647175"
-                                                    >
-                                                        Alexander Smith
-                          </UncontrolledTooltip>
-                                                    <a
-                                                        className="avatar avatar-sm"
-                                                        href="#pablo"
-                                                        id="tooltip951447946"
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <img
-                                                            alt="..."
-                                                            className="rounded-circle"
-                                                            src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                        />
-                                                    </a>
-                                                    <UncontrolledTooltip
-                                                        delay={0}
-                                                        target="tooltip951447946"
-                                                    >
-                                                        Jessica Doe
-                          </UncontrolledTooltip>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">100%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="100"
-                                                            barClassName="bg-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td className="text-right">
-                                                <UncontrolledDropdown>
-                                                    <DropdownToggle
-                                                        className="btn-icon-only text-light"
-                                                        href="#pablo"
-                                                        role="button"
-                                                        size="sm"
-                                                        color=""
-                                                        onClick={e => e.preventDefault()}
-                                                    >
-                                                        <i className="fas fa-ellipsis-v" />
-                                                    </DropdownToggle>
-                                                    <DropdownMenu className="dropdown-menu-arrow" right>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Another action
-                            </DropdownItem>
-                                                        <DropdownItem
-                                                            href="#pablo"
-                                                            onClick={e => e.preventDefault()}
-                                                        >
-                                                            Something else here
-                            </DropdownItem>
-                                                    </DropdownMenu>
-                                                </UncontrolledDropdown>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </Table>
-                            </Card>
+                        <hr />
+                        <div className={this.state.isHasWebsite ? "hide" : "show"}>
+                            <Row>
+                                <Col xs="6" sm="3">
+                                    <div className={"store-template-select-item " + (this.state.isTemplateItem1Clicked ? "item-selected" : "")}>
+                                        <img alt="" src="https://www.joomla-monster.com/media/djcatalog2/images/item/1/jm-computers-electronics-store_l.jpg" />
+                                        <span className="title-bg-success">Thương mại bán lẻ</span>
+                                        <span id="item-1" className="item-over" onClick={this.onTemplatesItemClick}></span>
+                                    </div>
+                                </Col>
+                                <Col xs="6" sm="3">
+                                    <div className={"store-template-select-item " + (this.state.isTemplateItem2Clicked ? "item-selected" : "")}>
+                                        <img alt="" src="https://cdn.freshdesignweb.com/wp-content/uploads/site/la-resto-cafe-responsive-website-template.jpg" />
+                                        <span className="title-bg-primary">Dịch vụ ăn uống</span>
+                                        <span id="item-2" className="item-over" onClick={this.onTemplatesItemClick}></span>
+                                    </div>
+                                </Col>
+                                <Col xs="6" sm="3">
+                                    <div className="store-template-select-item">
+                                        <img alt="" src="https://cdn.freshdesignweb.com/wp-content/uploads/site/tasfiu-business-html-template.jpg" />
+                                        <span className="title-bg-warning">Doanh nghiệp</span>
+                                    </div>
+                                </Col>
+                                <Col xs="6" sm="3">
+                                    <div className="store-template-select-item">
+                                        <img alt="" src="https://s.tmimgcdn.com/scr/54700/electromo-electronics-store-ecommerce-clean-opencart-template_54714-original.jpg" />
+                                        <span className="title-bg-info">Xem thêm..</span>
+                                    </div>
+                                </Col>
+                            </Row>
                         </div>
-                    </Row> */}
+                    </div>
+                    <div className={"store-info-input " + (this.state.isShowStoreInfoInput ? "show" : "hide")}>
+                        <h3>THÔNG TIN CỬA HÀNG</h3>
+                        <hr />
+                        <Form>
+                            <FormGroup row>
+                                <Label for="template" sm={2}>Mẫu giao diện website</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="template" id="template" defaultValue={this.state.templateNumber} readOnly={true} />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="storeCategory" sm={2}>Nhóm cửa hàng</Label>
+                                <Col sm={10}>
+                                    <Input type="select" name="storeCategory" id="storeCategory">
+                                    {
+                                        this.state.storeCategories && 
+                                        this.state.storeCategories.map((storeCategory, key) => (
+                                        <option key={key} value={storeCategory._id}>{storeCategory.name}</option>
+                                        ))
+                                    }
+                                    </Input>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="name" sm={2}>Tên cửa hàng</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="name" id="name" placeholder="Tên cửa hàng" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="description" sm={2}>Giới thiệu</Label>
+                                <Col sm={10}>
+                                    <Input type="textarea" name="description" id="description" placeholder="Hãy giới thiệu về cửa hàng bạn.." />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="" sm={2}>Địa chỉ</Label>
+                                <Col sm={10}>
+                                    <Row form>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label for="houseNumber">Số nhà</Label>
+                                                <Input type="text" name="houseNumber" id="houseNumber" placeholder="Số nhà" />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label for="city">Thành phố</Label>
+                                                <Input type="select" name="city" id="city">
+                                                {
+                                                    this.state.cities && 
+                                                    this.state.cities.map((city, key) => (
+                                                    <option key={key} value={city._id}>{city.name}</option>
+                                                    ))
+                                                }
+                                                </Input>
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label for="district">Quận</Label>
+                                                <Input type="select" name="district" id="district" />
+                                            </FormGroup>
+                                        </Col>
+                                        <Col md={3}>
+                                            <FormGroup>
+                                                <Label for="street">Tên đường</Label>
+                                                <Input type="select" name="street" id="street" />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="email" sm={2}>Email</Label>
+                                <Col sm={10}>
+                                    <Input type="email" name="email" id="email" placeholder="Email" defaultValue={this.props.user.email}/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="phone" sm={2}>Số điện thoại</Label>
+                                <Col sm={10}>
+                                    <Input type="phone" name="phone" id="phone" placeholder="Số điện thoại" defaultValue={this.props.user.phone}/>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row  className={this.state.isHasWebsite ? "" : "hide"}>
+                                <Label for="website" sm={2}>Website</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="website" id="website" placeholder="Website" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="facebook" sm={2}>Facebook</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="facebook" id="facebook" placeholder="Facebook" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="youtube" sm={2}>Youtube</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="youtube" id="youtube" placeholder="Youtube" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="twitter" sm={2}>Twitter</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="twitter" id="twitter" placeholder="Twitter" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="instagram" sm={2}>Instagram</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="instagram" id="instagram" placeholder="Instagram" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="googlePlus" sm={2}>Google Plus</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="googlePlus" id="googlePlus" placeholder="Google Plus" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="pinterest" sm={2}>Pinterest</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="pinterest" id="pinterest" placeholder="Pinterest" />
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="logo" sm={2}>Logo</Label>
+                                <Col sm={10}>
+                                    <Input type="file" name="file" id="logo" />
+                                    <FormText color="muted">
+
+                                    </FormText>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup check row>
+                                <Col sm={{ size: 10, offset: 2 }} style={{ textAlign: "center" }}>
+                                    <Button type="button" color="success">Thêm cửa hàng</Button>
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                    </div>
                 </Container>
             </>
         );

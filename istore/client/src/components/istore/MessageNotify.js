@@ -25,6 +25,7 @@ export default class MessageNotify extends Component {
 		if (nextProps.message) {
 			this.setState({
 				show: 'animated bounceInUp',
+				// message: nextProps.message + ' Vui lòng kiểm tra <a href="https://mail.google.com/" target="_blank">mail</a> để xác thực!'
 				message: nextProps.message
 			})
 
