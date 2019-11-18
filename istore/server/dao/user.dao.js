@@ -65,7 +65,7 @@ module.exports = {
                 }
                 return resolve(result);
             });
-        }).catch(() => null);
+        }).catch((err) => err);
     },
     update: model => {
         return new Promise((resolve, reject) => {
