@@ -16,6 +16,7 @@ class SearchBar extends Component {
         };
         this.autocompleteInput = React.createRef();
         this.onEnterProduct = this.onEnterProduct.bind(this);
+        this.onClickSearchProduct = this.onClickSearchProduct.bind(this);
     }
 
     onEnterProduct(e) {
@@ -33,6 +34,17 @@ class SearchBar extends Component {
             //this.handleScriptLoad();
             //onPlaceAutocomplete(this.autocompleteInput.current)
         }
+    }
+
+    onClickSearchProduct() {
+        // Find product
+        const search = this.autocompleteInput.current.value;
+        const distance = document.querySelector(
+            'select[class="form-control"]'
+        ).value;
+        onSearchProduct(search, distance, result => {
+            this.props.findProductHandler(result);
+        });
     }
 
     componentDidMount() {
@@ -59,15 +71,24 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <Form.Control
-                ref={this.autocompleteInput}
-                id="autocomplete"
-                onKeyPress={this.onEnterProduct}
-                type="text"
-                placeholder="Nhập tên sản phẩm..."
-                className="field-filter-form-input-search"
-                defaultValue={this.state.query}
-            />
+            <Form.Group className="field-filter-form-group-search field-filter-form-group-search-custom">
+                <img
+                    alt="Tìm cửa hàng"
+                    src="./resources/icons/search.svg"
+                    onClick={this.onClickSearchProduct}
+                ></img>
+                <div>
+                    <Form.Control
+                        ref={this.autocompleteInput}
+                        id="autocomplete"
+                        onKeyPress={this.onEnterProduct}
+                        type="text"
+                        placeholder="Nhập tên sản phẩm..."
+                        className="field-filter-form-input-search"
+                        defaultValue={this.state.query}
+                    />
+                </div>
+            </Form.Group>
         );
     }
 }
@@ -169,19 +190,11 @@ export default class Fields extends Component {
                 <div className="field-filter">
                     <Row>
                         <Col>
-                            <Form.Group className="field-filter-form-group-search field-filter-form-group-search-custom">
-                                <img
-                                    alt=""
-                                    src="./resources/icons/search.svg"
-                                ></img>
-                                <div>
-                                    <SearchBar
-                                        findProductHandler={
-                                            this.findProductHandler
-                                        }
-                                    />
-                                </div>
-                            </Form.Group>
+                            <SearchBar
+                                findProductHandler={
+                                    this.findProductHandler
+                                }
+                            />
                         </Col>
                     </Row>
                     <Row>

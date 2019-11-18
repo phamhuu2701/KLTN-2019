@@ -67,6 +67,9 @@ module.exports = {
             });
         }).catch((err) => err);
     },
+    verify: (id, mailVerifyToken) => {
+        return model.update({_id: id, mailVerifyToken: mailVerifyToken}, {isEmailActivated: true})
+    },
     update: model => {
         return new Promise((resolve, reject) => {
             Model.findByIdAndUpdate(
