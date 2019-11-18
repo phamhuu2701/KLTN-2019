@@ -32,6 +32,8 @@ class ProductSaleOff extends Component {
                                 <Link
                                     to={
                                         "/store/" +
+                                        this.props.store.template +
+                                        "/" +
                                         this.props.store._id +
                                         "/products/" +
                                         this.props.product._id

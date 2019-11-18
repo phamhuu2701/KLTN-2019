@@ -16,9 +16,9 @@ module.exports = {
                 });
         }).catch(() => null);
     },
-    findByIdUser: (user) => {
+    findByIdUser: user => {
         return new Promise((resolve, reject) => {
-            Model.find({user: user})
+            Model.find({ user: user })
                 .populate("storeCategory")
                 .populate("user")
                 .populate("city")
@@ -71,10 +71,16 @@ module.exports = {
     save: model => {
         return new Promise((resolve, reject) => {
             model.save((err, result) => {
-                if (err) return reject(null);
+                if (err) {
+                    console.log(err);
+                    return reject(null);
+                }
                 return resolve(result);
             });
-        }).catch(() => null);
+        }).catch(() => {
+            console.log(err);
+            return null;
+        });
     },
     update: model => {
         return new Promise((resolve, reject) => {

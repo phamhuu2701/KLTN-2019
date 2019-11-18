@@ -193,9 +193,9 @@ class Header extends Component {
                                 <Col md="6">
                                     <div className="pull-right">
                                     <ul className="header-top-links">
-                                        <li><Link to={"/store/" + this.props.store._id}>Trang chủ</Link></li>
-                                        <li><Link to={"/store/" + this.props.store._id + "/products"}>Sản phẩm</Link></li>
-                                        <li><Link to={"/store/" + this.props.store._id}>Bản tin</Link></li>
+                                        <li><Link to={"/store/" + this.props.store.template + "/" + this.props.store._id}>Trang chủ</Link></li>
+                                        <li><Link to={"/store/" + this.props.store.template + "/" + this.props.store._id + "/products"}>Sản phẩm</Link></li>
+                                        <li><Link to={"/store/" + this.props.store.template + "/" + this.props.store._id}>Bản tin</Link></li>
                                         <li className={"dropdown default-dropdown header-top-dropdown " + topHeaderLanguageClassName} onClick={this.onTopHeaderLanguageClick}>
                                             <span className="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">VN</span>
                                             <ul className="custom-menu">
@@ -229,7 +229,7 @@ class Header extends Component {
                                     <div className="pull-left">
                                         {/* Logo */}
                                         <div className="header-logo store-header-logo">
-                                            <Link className="logo" to={"/store/" + this.props.store._id}>
+                                            <Link className="logo" to={"/store/" + this.props.store.template + "/" + this.props.store._id}>
                                                 <img
                                                     src={this.props.store.logo}
                                                     alt=""
@@ -390,10 +390,10 @@ class Header extends Component {
                                     </span>
                                     <ul className={"menu-list " + menuListClassName}>
                                         <li>
-                                            <Link to={"/store/" + this.props.store._id}>Trang chủ</Link>
+                                            <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id}>Trang chủ</Link>
                                         </li>
                                         <li>
-                                            <Link to={"/store/" + this.props.store._id + "/products"}>Sản phẩm</Link>
+                                            <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id + "/products"}>Sản phẩm</Link>
                                         </li>
                                         <li className="dropdown mega-dropdown">
                                             <Link
@@ -416,7 +416,7 @@ class Header extends Component {
                                             </Link>
                                         </li>
                                         <li>
-                                            <Link to={"/store/" + this.props.store._id + "/products"}>Khuyến mãi</Link>
+                                            <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id + "/products"}>Khuyến mãi</Link>
                                         </li>
                                         <li className={"dropdown default-dropdown menu-nav-about-us " + menuNavAboutUsClassName}
                                             onClick={this.onMenuNavAboutUsClick}>
@@ -430,12 +430,12 @@ class Header extends Component {
                                             </Link>
                                             <ul className="custom-menu">
                                                 <li>
-                                                    <Link to={"/store/" + this.props.store._id}>
+                                                    <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id}>
                                                         Trang chủ
                                                     </Link>
                                                 </li>
                                                 <li>
-                                                    <Link to={"/store/" + this.props.store._id + "/products"}>
+                                                    <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id + "/products"}>
                                                         Sản phẩm
                                                     </Link>
                                                 </li>
@@ -463,13 +463,13 @@ class Header extends Component {
                 {/* BREADCRUMB */}
                 <div id="breadcrumb">
                     <div className="container">
-                        <Link to={"/store/" + this.props.store._id}>{this.props.store.name}</Link>
+                        <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id}>{this.props.store.name}</Link>
                         <span className="breadcrumb-header">
                             <i
                                 className="fa fa-angle-right"
                                 aria-hidden="true"
                             ></i>
-                            {/* <Link to={"/store/" + this.props.store._id + "/products"}>Danh sách sản phẩm</Link> */}
+                            {/* <Link to={"/store/" + this.props.store.template + "/" + this.props.store._id + "/products"}>Danh sách sản phẩm</Link> */}
                         </span>
                     </div>
                 </div>

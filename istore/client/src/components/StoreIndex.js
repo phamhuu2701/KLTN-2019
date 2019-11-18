@@ -59,34 +59,52 @@ class StoreIndex extends Component {
     }
 
     render() {
+        // console.log(this.props.match);
+        // console.log(this.props.match.params.template);
+        // console.log(this.props.match.params.id);
         // console.log(this.state.store);
-        if (this.state.store) {
-            return (
-                <div>
-                    <Header store={this.state.store} />
-                    <Switch>
-                        <Route exact path={this.props.match.path}>
-                            <Home store={this.state.store} />
-                        </Route>
-                        <Route exact path={this.props.match.path + "/products"}>
-                            <Products store={this.state.store} />
-                        </Route>
-                        <Route
-                            exact
-                            path={
-                                this.props.match.path + "/products/:idProduct"
-                            }
-                        >
-                            <ProductDetail />
-                        </Route>
-                    </Switch>
-                    <Footer store={this.state.store} />
-                </div>
-            );
-        } else if (!this.state.store && this.state.isNotFounded === false) {
-            return <div></div>;
+
+        if (this.props.match.params.template !== "null") {
+            if (this.state.store) {
+                return (
+                    <div>
+                        <Header store={this.state.store} />
+                        <Switch>
+                            <Route exact path={this.props.match.path}>
+                                <Home store={this.state.store} />
+                            </Route>
+                            <Route
+                                exact
+                                path={this.props.match.path + "/products"}
+                            >
+                                <Products store={this.state.store} />
+                            </Route>
+                            <Route
+                                exact
+                                path={
+                                    this.props.match.path +
+                                    "/products/:idProduct"
+                                }
+                            >
+                                <ProductDetail />
+                            </Route>
+                        </Switch>
+                        <Footer store={this.state.store} />
+                    </div>
+                );
+            } else if (!this.state.store && this.state.isNotFounded === false) {
+                return <div></div>;
+            } else {
+                return <Redirect to="/" />;
+            }
         } else {
-            return <Redirect to="/" />;
+            if (this.state.store) {
+                return window.location.replace(this.state.store.website.url);
+            } else if (!this.state.store && this.state.isNotFounded === false) {
+                return <div></div>;
+            } else {
+                return <Redirect to="/" />;
+            }
         }
     }
 }

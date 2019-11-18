@@ -115,3 +115,20 @@
 .stores-manage .hide {
     display: none;
 }
+
+.stores-manage .error-message {
+    color: rgb(236, 105, 105);
+    font-size: 0.8em;
+    margin-left: 5px;
+    display: none;
+}
+
+.stores-manage .error-message2 {
+    color: rgb(236, 105, 105);
+    margin: 5px;
+    display: none;
+}
+
+.stores-manage .show {
+    display: block;
+}

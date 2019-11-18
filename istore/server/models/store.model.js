@@ -25,19 +25,18 @@ const storeSchema = new Schema(
                 trim: true,
                 default: "Point"
             },
-            coordinates: [{ type: Number, required: true, index: '2dsphere' }] //[lng, lat]
+            coordinates: [{ type: Number, required: true, index: "2dsphere" }] //[lng, lat]
         },
         phone: { type: String, maxlength: 10, trim: true, required: true },
         email: { type: String, maxlength: 30, trim: true, required: true },
         name: { type: String, required: true, maxlength: 50, trim: true },
         description: {
             type: String,
-            required: true,
             maxlength: 2500,
             trim: true
         },
         timestamp: { type: Date, required: true, default: Date.now },
-        isActive: { type: Boolean, required: true, default: true},
+        isActive: { type: Boolean, required: true, default: true },
         products: [{ type: Schema.Types.ObjectId, ref: "Product" }],
         logo: {
             type: String,
@@ -57,10 +56,11 @@ const storeSchema = new Schema(
         twitter: { type: String, maxlength: 100, trim: true },
         instagram: { type: String, maxlength: 100, trim: true },
         googlePlus: { type: String, maxlength: 100, trim: true },
-        pinterest: { type: String, maxlength: 100, trim: true }
+        pinterest: { type: String, maxlength: 100, trim: true },
+        template: { type: Number, default: 1 }
     },
     options
 );
-storeSchema.index({location: "2dsphere"});
+storeSchema.index({ location: "2dsphere" });
 
 module.exports = mongoose.model("Store", storeSchema);

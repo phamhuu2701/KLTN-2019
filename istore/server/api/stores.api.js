@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const ProductDao = require("../dao/product.dao");
 const StoreDao = require("../dao/store.dao");
+const Store = require("../models/store.model");
 
 router
     .route("/")
@@ -30,17 +30,23 @@ router
         let store = req.body;
         store = new Store(store);
 
+        // console.log("new store: ", store);
+
         let storeSave = await StoreDao.save(store);
-        if (storeSave) {
-            storeSave.password = null;
-            return res.status(200).json({
-                message: `Thêm cửa hàng thành công!`
-            });
-        }
-        return res.status(201).json({ err: "Thêm cửa hàng thất bại." });
+        res.json(storeSave);
     });
 
 router.route("/:id").get(async (req, res, next) => {
+    let id = req.params.id;
+    let store = await StoreDao.findById(id);
+    if (!store) {
+        res.json(null);
+    } else {
+        res.json(store);
+    }
+});
+
+router.route("/:template/:id").get(async (req, res, next) => {
     let id = req.params.id;
     let store = await StoreDao.findById(id);
     if (!store) {
