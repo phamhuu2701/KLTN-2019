@@ -51,12 +51,13 @@ import PhoneActivate from "./PhoneActivate";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
 import getStoreCategories from "../../../../services/storeCategory.service";
-import getCities from "../../../../services/city.service";
+import getCities, { getDistrictsByIdCity } from "../../../../services/city.service";
+import { getStreetsByIdDistrict } from "../../../../services/district.service";
 
 
 class Tables extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             stores: [],
@@ -66,14 +67,35 @@ class Tables extends React.Component {
             templateNumber: null,
             isShowTemplateSelect: false,
             isShowStoreInfoInput: false,
-            isHasWebsite: false,
             storeCategories: [],
-            cities: []
+            cities: [],
+            districts: [],
+            streets: [],
+
+
+            hasWebsite: false,
+            inputStoreTemplateId: "",
+            inputStoreCategoryId: "",
+            inputStoreName: "",
+            inputStoreDescription: "",
+            inputStoreHouseNumber: "",
+            inputStoreCityId: "",
+            inputStoreDistrictId: "",
+            inputStoreStreetId: "",
+            inputStoreEmail: props.user.email,
+            inputStorePhone: props.user.phone,
+            inputStoreWebsite: ""
         }
 
         this.onAddStoreClick = this.onAddStoreClick.bind(this);
         this.onTemplatesItemClick = this.onTemplatesItemClick.bind(this);
         this.onCheckboxHasWebsiteClick = this.onCheckboxHasWebsiteClick.bind(this);
+        this.onStoreCategoryChange = this.onStoreCategoryChange.bind(this);
+        this.onSelectCityChange = this.onSelectCityChange.bind(this);
+        this.onSelectDistrictChange = this.onSelectDistrictChange.bind(this);
+        this.onSelectStreetsChange = this.onSelectStreetsChange.bind(this);
+        this.onInputStoreInfoChange = this.onInputStoreInfoChange.bind(this);
+        this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
     }
 
     componentDidMount() {
@@ -82,17 +104,17 @@ class Tables extends React.Component {
         })
 
         getStoreCategories(this);
-        getCities(this);     
+        getCities(this);
     }
 
     onAddStoreClick() {
-        if(!this.props.user.isPhoneActivated){
+        if (!this.props.user.isPhoneActivated) {
             this.setState({
                 showPhoneActivateModal: true,
                 isShowTemplateSelect: true
             })
         }
-        else{
+        else {
             this.setState({
                 isShowTemplateSelect: true
             })
@@ -108,7 +130,9 @@ class Tables extends React.Component {
                 isTemplateItem2Clicked: false,
                 templateNumber: 1,
                 showPhoneActivateModal: false,
-                isShowStoreInfoInput: true
+                isShowStoreInfoInput: true,
+                inputStoreTemplateId: 1,
+                hasWebsite: false
             })
         }
         else if (e.target.id === "item-2") {
@@ -117,7 +141,9 @@ class Tables extends React.Component {
                 isTemplateItem2Clicked: true,
                 templateNumber: 2,
                 showPhoneActivateModal: false,
-                isShowStoreInfoInput: true
+                isShowStoreInfoInput: true,
+                inputStoreTemplateId: 2,
+                hasWebsite: false
             })
         }
 
@@ -125,12 +151,99 @@ class Tables extends React.Component {
 
     onCheckboxHasWebsiteClick() {
         this.setState({
-            isHasWebsite: !this.state.isHasWebsite,
+            hasWebsite: !this.state.hasWebsite,
             isShowTemplateSelect: true,
-            isShowStoreInfoInput: this.state.isHasWebsite ? false : true,
+            isShowStoreInfoInput: this.state.hasWebsite ? false : true,
             showPhoneActivateModal: false,
-            templateNumber: null
+            templateNumber: null,
+            inputStoreTemplateId: null
         })
+    }
+
+    onStoreCategoryChange(e) {
+        this.setState({
+            inputStoreCategoryId: e.target.value
+        })
+    }
+
+    onSelectCityChange(e) {
+        let idCity = e.target.value;
+        // console.log(id);
+
+        this.setState({
+            inputStoreCityId: e.target.value
+        })
+
+        getDistrictsByIdCity(this, idCity);
+    }
+
+    onSelectDistrictChange(e) {
+        let idDistrict = e.target.value;
+        // console.log(id);
+
+        this.setState({
+            inputStoreDistrictId: e.target.value
+        })
+
+        getStreetsByIdDistrict(this, idDistrict);
+    }
+
+    onSelectStreetsChange(e) {
+        // let idStreet = e.target.value;
+        // console.log(id);
+
+        this.setState({
+            inputStoreStreetId: e.target.value
+        })
+    }
+
+    onInputStoreInfoChange(e) {
+        // console.log(e.target.id + " - " + e.target.value);
+        if (e.target.id === "name") {
+            this.setState({
+                inputStoreName: e.target.value
+            })
+        }
+        if (e.target.id === "description") {
+            this.setState({
+                inputStoreDescription: e.target.value
+            })
+        }
+        if (e.target.id === "houseNumber") {
+            this.setState({
+                inputStoreHouseNumber: e.target.value
+            })
+        }
+        if (e.target.id === "email") {
+            this.setState({
+                inputStoreEmail: e.target.value
+            })
+        }
+        if (e.target.id === "phone") {
+            this.setState({
+                inputStorePhone: e.target.value
+            })
+        }
+        if (e.target.id === "website") {
+            this.setState({
+                inputStoreWebsite: e.target.value
+            })
+        }
+    }
+
+    onSubmitButtonClick() {
+        console.log(this.state.hasWebsite);
+        console.log(this.state.inputStoreTemplateId);
+        console.log(this.state.inputStoreCategoryId);
+        console.log(this.state.inputStoreName);
+        console.log(this.state.inputStoreDescription);
+        console.log(this.state.inputStoreHouseNumber);
+        console.log(this.state.inputStoreCityId);
+        console.log(this.state.inputStoreDistrictId);
+        console.log(this.state.inputStoreStreetId);
+        console.log(this.state.inputStoreEmail);
+        console.log(this.state.inputStorePhone);
+        console.log(this.state.hasWebsite ? this.state.inputStoreWebsite : "");
     }
 
     render() {
@@ -293,7 +406,7 @@ class Tables extends React.Component {
                             </Card>
                         </div>
                     </Row>
-                    <PhoneActivate show={this.state.showPhoneActivateModal} phone={this.props.user.phone}/>
+                    <PhoneActivate show={this.state.showPhoneActivateModal} phone={this.props.user.phone} />
                     <hr />
                     {/* Add store */}
                     <div className={"store-template-select " + (this.state.isShowTemplateSelect ? "show" : "hide")}>
@@ -305,7 +418,7 @@ class Tables extends React.Component {
                             </Label>
                         </div>
                         <hr />
-                        <div className={this.state.isHasWebsite ? "hide" : "show"}>
+                        <div className={this.state.hasWebsite ? "hide" : "show"}>
                             <Row>
                                 <Col xs="6" sm="3">
                                     <div className={"store-template-select-item " + (this.state.isTemplateItem1Clicked ? "item-selected" : "")}>
@@ -343,32 +456,39 @@ class Tables extends React.Component {
                             <FormGroup row>
                                 <Label for="template" sm={2}>Mẫu giao diện website</Label>
                                 <Col sm={10}>
-                                    <Input type="text" name="template" id="template" defaultValue={this.state.templateNumber} readOnly={true} />
+                                    <Input type="text"
+                                        name="template"
+                                        id="template"
+                                        defaultValue={this.state.templateNumber}
+                                        readOnly={true} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="storeCategory" sm={2}>Nhóm cửa hàng</Label>
                                 <Col sm={10}>
-                                    <Input type="select" name="storeCategory" id="storeCategory">
-                                    {
-                                        this.state.storeCategories && 
-                                        this.state.storeCategories.map((storeCategory, key) => (
-                                        <option key={key} value={storeCategory._id}>{storeCategory.name}</option>
-                                        ))
-                                    }
+                                    <Input type="select" name="storeCategory" id="storeCategory"
+                                        onChange={this.onStoreCategoryChange}>
+                                        {
+                                            this.state.storeCategories &&
+                                            this.state.storeCategories.map((storeCategory, key) => (
+                                                <option key={key} value={storeCategory._id}>{storeCategory.name}</option>
+                                            ))
+                                        }
                                     </Input>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="name" sm={2}>Tên cửa hàng</Label>
                                 <Col sm={10}>
-                                    <Input type="text" name="name" id="name" placeholder="Tên cửa hàng" />
+                                    <Input type="text" name="name" id="name" placeholder="Tên cửa hàng" onChange={this.onInputStoreInfoChange} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="description" sm={2}>Giới thiệu</Label>
                                 <Col sm={10}>
-                                    <Input type="textarea" name="description" id="description" placeholder="Hãy giới thiệu về cửa hàng bạn.." />
+                                    <Input type="textarea" name="description" id="description"
+                                        placeholder="Hãy giới thiệu về cửa hàng bạn.."
+                                        onChange={this.onInputStoreInfoChange} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -378,32 +498,48 @@ class Tables extends React.Component {
                                         <Col md={3}>
                                             <FormGroup>
                                                 <Label for="houseNumber">Số nhà</Label>
-                                                <Input type="text" name="houseNumber" id="houseNumber" placeholder="Số nhà" />
+                                                <Input type="text" name="houseNumber" id="houseNumber"
+                                                    placeholder="Số nhà"
+                                                    onChange={this.onInputStoreInfoChange} />
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
                                             <FormGroup>
                                                 <Label for="city">Thành phố</Label>
-                                                <Input type="select" name="city" id="city">
-                                                {
-                                                    this.state.cities && 
-                                                    this.state.cities.map((city, key) => (
-                                                    <option key={key} value={city._id}>{city.name}</option>
-                                                    ))
-                                                }
+                                                <Input type="select" name="city" id="city" onChange={this.onSelectCityChange}>
+                                                    {
+                                                        this.state.cities &&
+                                                        this.state.cities.map((city, key) => (
+                                                            <option key={key} value={city._id}>{city.name}</option>
+                                                        ))
+                                                    }
                                                 </Input>
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
                                             <FormGroup>
                                                 <Label for="district">Quận</Label>
-                                                <Input type="select" name="district" id="district" />
+                                                <Input type="select" name="district" id="district" onChange={this.onSelectDistrictChange}>
+                                                    {
+                                                        this.state.districts &&
+                                                        this.state.districts.map((district, key) => (
+                                                            <option key={key} value={district._id}>{district.name}</option>
+                                                        ))
+                                                    }
+                                                </Input>
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
                                             <FormGroup>
                                                 <Label for="street">Tên đường</Label>
-                                                <Input type="select" name="street" id="street" />
+                                                <Input type="select" name="street" id="street" onChange={this.onSelectStreetsChange}>
+                                                    {
+                                                        this.state.streets &&
+                                                        this.state.streets.map((street, key) => (
+                                                            <option key={key} value={street._id}>{street.name}</option>
+                                                        ))
+                                                    }
+                                                </Input>
                                             </FormGroup>
                                         </Col>
                                     </Row>
@@ -412,19 +548,27 @@ class Tables extends React.Component {
                             <FormGroup row>
                                 <Label for="email" sm={2}>Email</Label>
                                 <Col sm={10}>
-                                    <Input type="email" name="email" id="email" placeholder="Email" defaultValue={this.props.user.email}/>
+                                    <Input type="email" name="email"
+                                        id="email" placeholder="Email"
+                                        defaultValue={this.props.user.email}
+                                        onChange={this.onInputStoreInfoChange} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="phone" sm={2}>Số điện thoại</Label>
                                 <Col sm={10}>
-                                    <Input type="phone" name="phone" id="phone" placeholder="Số điện thoại" defaultValue={this.props.user.phone}/>
+                                    <Input type="phone" name="phone"
+                                        id="phone" placeholder="Số điện thoại"
+                                        defaultValue={this.props.user.phone}
+                                        onChange={this.onInputStoreInfoChange} />
                                 </Col>
                             </FormGroup>
-                            <FormGroup row  className={this.state.isHasWebsite ? "" : "hide"}>
+                            <FormGroup row className={this.state.hasWebsite ? "" : "hide"}>
                                 <Label for="website" sm={2}>Website</Label>
                                 <Col sm={10}>
-                                    <Input type="text" name="website" id="website" placeholder="Website" />
+                                    <Input type="text" name="website" id="website"
+                                        placeholder="Website"
+                                        onChange={this.onInputStoreInfoChange} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -474,7 +618,7 @@ class Tables extends React.Component {
                             </FormGroup>
                             <FormGroup check row>
                                 <Col sm={{ size: 10, offset: 2 }} style={{ textAlign: "center" }}>
-                                    <Button type="button" color="success">Thêm cửa hàng</Button>
+                                    <Button type="button" color="success" onClick={this.onSubmitButtonClick}>Thêm cửa hàng</Button>
                                 </Col>
                             </FormGroup>
                         </Form>
