@@ -47,7 +47,7 @@ router
             userSave.password = null;
             return res
                 .status(200)
-                .json({ message: "Tài khoản đã được tạo thành công!" });
+                .json({ message: `Tài khoản đã được tạo thành công! Vui lòng kiểm tra <a href="https://mail.google.com/" target="_blank">mail</a> để xác thực!` });
         }
         return res
             .status(201)
