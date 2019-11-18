@@ -134,7 +134,6 @@ class Tables extends React.Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <>
                 <Header />
@@ -294,7 +293,7 @@ class Tables extends React.Component {
                             </Card>
                         </div>
                     </Row>
-                    <PhoneActivate show={this.state.showPhoneActivateModal} />
+                    <PhoneActivate show={this.state.showPhoneActivateModal} phone={this.props.user.phone}/>
                     <hr />
                     {/* Add store */}
                     <div className={"store-template-select " + (this.state.isShowTemplateSelect ? "show" : "hide")}>

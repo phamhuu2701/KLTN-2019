@@ -20,7 +20,8 @@ class PhoneActivate extends Component {
 
     UNSAFE_componentWillReceiveProps(nextProps){
         this.setState({
-            show: nextProps.show
+            show: nextProps.show,
+            phone: nextProps.phone
         })
     }
 
@@ -39,6 +40,7 @@ class PhoneActivate extends Component {
     }
 
     render() {
+        console.log(this.state.phone);
         return (
             <>
                 <Modal show={this.state.show} onHide={this.handleClose} className="phone-activate">
@@ -49,7 +51,8 @@ class PhoneActivate extends Component {
                     <Form>
                         <Form.Group>
                             <Form.Label>Số điện thoại</Form.Label>
-                            <Form.Control className={(this.state.showSelectWayButtons ? "" : "input-bg-grey")} type="phone" placeholder="Số điện thoại" />
+                            <Form.Control className={(this.state.showSelectWayButtons ? "" : "input-bg-grey")} 
+                                type="phone" placeholder="Số điện thoại" defaultValue={this.state.phone}/>
                             <Form.Text className="text-muted">
                             Chúng tôi sẽ không chia sẻ số điện thoại của bạn với bất kỳ ai.
                             </Form.Text>

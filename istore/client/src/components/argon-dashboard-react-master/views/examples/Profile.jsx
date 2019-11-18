@@ -180,7 +180,8 @@ class Profile extends React.Component {
     }
 
     render() {
-
+        // console.log(this.props);
+        console.log(this.props.user);
         return (
             <>
                 <UserHeader user={this.props.user} />
@@ -202,7 +203,7 @@ class Profile extends React.Component {
                                             </a>
                                         </div>
                                         <div className="card-profile-image-change">
-                                            <i class="fa fa-camera" aria-hidden="true"></i>
+                                            <i className="fa fa-camera" aria-hidden="true"></i>
                                         </div>
                                     </Col>
                                 </Row>

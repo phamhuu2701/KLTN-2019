@@ -66,7 +66,7 @@ class AdminIndex extends Component {
                                 <AuthLayout {...props} user={this.state.user} />
                             )}
                         />
-                        <Redirect from="/" to="/admin/index" />
+                        {/* <Redirect from="/" to="/admin/index" /> */}
                     </Switch>
                 </BrowserRouter>
             );
