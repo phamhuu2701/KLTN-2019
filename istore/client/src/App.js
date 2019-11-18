@@ -5,7 +5,7 @@ import HomeIndex from "./components/HomeIndex";
 import StoreIndex from "./components/StoreIndex";
 import AdminIndex from "./components/AdminIndex";
 
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default class App extends Component {
     render() {

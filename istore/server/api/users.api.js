@@ -1,10 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const md5 = require("md5");
+const uid = require('uid');
 
 const User = require("../models/user.model");
 const UserDao = require("../dao/user.dao");
 const StoreDao = require("../dao/store.dao");
+
+const mailer = require('../util/mailer');
 
 router
     .route("/")
@@ -40,11 +43,27 @@ router
     .post(async (req, res, next) => {
         let user = req.body;
         user.password = md5(user.password);
+        user.mailVerifyToken = uid(10);
         user = new User(user);
 
         let userSave = await UserDao.save(user);
         if (userSave) {
             userSave.password = null;
+
+            // Send verify mail to user
+            const mailOption = {
+                from: 'Istore',
+                to: userSave.email,
+                subject: 'Xác thực tài khoản trên IStore',
+                html: `Bạn vừa tạo thành công tài khoản trên IStore. Vui lòng click vào <a href="https://localhost:5000/api/users/verify?id=${userSave._id}&mailVerifyToken=${userSave.mailVerifyToken}">đây</a> để xác thực tài khoản và sử dụng trên IStore!`
+            }
+            mailer.sendMail(mailOption)
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => console.log(err))
+
+            // Return result for user
             return res
                 .status(200)
                 .json({ message: `Tài khoản đã được tạo thành công! Vui lòng kiểm tra <a href="https://mail.google.com/" target="_blank">mail</a> để xác thực!` });
@@ -54,9 +73,22 @@ router
             .json({ err: "Email hoặc số điện thoại đã tồn tại!" });
     });
 
+router.route('/verify')
+.get((req, res) => {
+    const {id, mailVerifyToken} = req.query;
+    console.log(id, mailVerifyToken);
+    UserDao.verify(id, mailVerifyToken)
+    .then(result => {
+        console.log(result);
+    })
+    .catch(err => console.log(err))
+})
+
+
 router
     .route("/:id")
     .get(async (req, res, next) => {
+        console.log(123);
         let id = req.params.id;
         let user = await UserDao.findById(id);
         res.json(user);

@@ -34,6 +34,11 @@ export default class MessageNotify extends Component {
 					show: 'animated bounceOutDown'
 				})
 			}, 4000);
+			setTimeout(() => {
+				this.setState({
+					show: 'animate-box'
+				})
+			}, 5000)
 		}
 	}
 
