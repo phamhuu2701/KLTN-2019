@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const md5 = require("md5");
 const uid = require('uid');
+const config = require('config');
 
 const User = require("../models/user.model");
 const UserDao = require("../dao/user.dao");
@@ -52,34 +53,44 @@ router
 
             // Send verify mail to user
             const mailOption = {
-                from: 'Istore',
+                from: config.get('domainName'),
                 to: userSave.email,
-                subject: 'Xác thực tài khoản trên IStore',
-                html: `Bạn vừa tạo thành công tài khoản trên IStore. Vui lòng click vào <a href="https://localhost:5000/api/users/verify?id=${userSave._id}&mailVerifyToken=${userSave.mailVerifyToken}">đây</a> để xác thực tài khoản và sử dụng trên IStore!`
+                subject: `Xác thực tài khoản trên ${config.get('domainName')}`,
+                html: `Bạn vừa tạo thành công tài khoản trên ${config.get('domainName')}. Vui lòng click vào <a href="${config.get('localhost')}/verify?id=${userSave._id}&mailVerifyToken=${userSave.mailVerifyToken}">đây</a> để xác thực tài khoản và sử dụng trên ${config.get('domainName')}!`
             }
             mailer.sendMail(mailOption)
             .then(result => {
-                console.log(result);
+                // Return result for user
+                return res
+                    .status(200)
+                    .json({ message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com/" target="_blank">${result.accepted[0]}</a>!` });
             })
             .catch(err => console.log(err))
-
-            // Return result for user
+        } else {
             return res
-                .status(200)
-                .json({ message: `Tài khoản đã được tạo thành công! Vui lòng kiểm tra <a href="https://mail.google.com/" target="_blank">mail</a> để xác thực!` });
+                .status(201)
+                .json({ err: "Email hoặc số điện thoại đã tồn tại!" });
         }
-        return res
-            .status(201)
-            .json({ err: "Email hoặc số điện thoại đã tồn tại!" });
     });
 
 router.route('/verify')
-.get((req, res) => {
+.put((req, res) => {
     const {id, mailVerifyToken} = req.query;
-    console.log(id, mailVerifyToken);
-    UserDao.verify(id, mailVerifyToken)
+    UserDao.findById(id)
     .then(result => {
-        console.log(result);
+        if (!result.isEmailActivated) {
+            // Need verify email
+            return UserDao.verify(id, mailVerifyToken)
+            .then(verified => {
+                if (verified) {
+                    return res.status(200).json(verified.email + ' đã xác thực thành công!');
+                } else
+                    return res.status(202).json('Mã xác thực không chính xác!')
+            })
+        } else {
+            // Email is actived on IStore
+            return res.status(201).json('Tài khoản của bạn đã được xác thực!');
+        }
     })
     .catch(err => console.log(err))
 })
@@ -88,7 +99,6 @@ router.route('/verify')
 router
     .route("/:id")
     .get(async (req, res, next) => {
-        console.log(123);
         let id = req.params.id;
         let user = await UserDao.findById(id);
         res.json(user);

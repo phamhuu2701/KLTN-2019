@@ -1,0 +1,34 @@
+.verify {
+	height: 100%;
+	width: 100%;
+	background-image: url('http://www.edm.sk/sites/default/files/tech.jpg');
+	display: flex;
+	text-align: center;
+	align-items: center;
+}
+
+.verify div {
+	margin: auto;
+}
+
+.verify h2 {
+	text-transform: uppercase;
+	font-weight: bold;
+	color: #f207df;
+}
+
+.verify h2.status-success {
+	color: #32f207;
+}
+
+.verify h2.status-warning {
+	color: yellow;
+}
+
+.verify h2.status-danger {
+	color: red;
+}
+
+.verify h5 {
+	color: #fff;
+}

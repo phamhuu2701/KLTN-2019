@@ -14,6 +14,7 @@ export default class Google extends Component {
                 lastname: data.profileObj.familyName
             },
             email: data.profileObj.email,
+            isEmailActivated: true,
             password: "google" + data.profileObj.googleId,
             avatars: [data.profileObj.imageUrl]
         };

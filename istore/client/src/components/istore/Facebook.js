@@ -12,6 +12,7 @@ export default class facebook extends Component {
         setTimeout(() => {
             if (document.querySelector("#fb-root")) {
                 document.querySelector("#fb-root").remove();
+                document.querySelector('body').style.overflowY = 'auto';
             }
         }, 200);
     }
@@ -23,6 +24,7 @@ export default class facebook extends Component {
                 lastname: data.profile.last_name
             },
             email: data.profile.email,
+            isEmailActivated: true,
             password: "facebook" + data.profile.id,
             avatars: [data.profile.picture.data.url]
         };

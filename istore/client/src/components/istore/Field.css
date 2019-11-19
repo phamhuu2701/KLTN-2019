@@ -4,9 +4,12 @@
 }
 
 .field-filter {
-    margin: 0;
     padding-left: 1em;
     padding-right: 1em;
+}
+
+.field-filter > .row {
+    margin-right: 0 !important;
 }
 
 .field-filter-form-group-search {
@@ -43,6 +46,10 @@
 .field-results {
     margin: 0;
     padding: 1em 1em;
+}
+
+.field-results > .row {
+    margin-right: 0 !important;
 }
 
 .field-results-title {
