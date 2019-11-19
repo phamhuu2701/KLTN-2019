@@ -6,7 +6,7 @@ import StoreIndex from "./components/StoreIndex";
 import AdminIndex from "./components/AdminIndex";
 import VerifyIndex from "./components/VerifyIndex";
 
-import "bootstrap/dist/css/bootstrap.min.css";
+//import "bootstrap/dist/css/bootstrap.min.css";
 
 export default class App extends Component {
     render() {

@@ -46,11 +46,11 @@ class HomeIndex extends Component {
     render() {
         return (
             <div className="app">
-                <div className="app-body-left">
+                <div className="app-body-left small">
                     <Logo />
                     <Field />
                 </div>
-                <div className="app-body-right">
+                <div className="app-body-right medium">
                     <Maps />
                 </div>
                 <ProductInformation />
