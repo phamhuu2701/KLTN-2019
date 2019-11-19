@@ -14,7 +14,7 @@ export default class App extends Component {
             <Router>
                 <Switch>
                     <Route exact path="/" component={HomeIndex} />
-                    <Route path="/store/:id" component={StoreIndex} />
+                    <Route path="/store/:template/:id" component={StoreIndex} />
                     <Route path="/admin" component={AdminIndex} />
                     <Route path="/auth" component={AdminIndex} />
                     <Route path="/verify" component={VerifyIndex} />

@@ -26,6 +26,7 @@ import {
     DropdownItem,
     UncontrolledDropdown,
     DropdownToggle,
+
     Media,
     Pagination,
     PaginationItem,
@@ -50,9 +51,13 @@ import "./Tables.css";
 import PhoneActivate from "./PhoneActivate";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
-import getStoreCategories from "../../../../services/storeCategory.service";
-import getCities, { getDistrictsByIdCity } from "../../../../services/city.service";
-import { getStreetsByIdDistrict } from "../../../../services/district.service";
+import getStoreCategories, { getStoreCategoryById } from "../../../../services/storeCategory.service";
+import getCities, { getDistrictsByIdCity, getCityById } from "../../../../services/city.service";
+import { getStreetsByIdDistrict, getDistrictById } from "../../../../services/district.service";
+import { getStreetById } from "../../../../services/street.service";
+import MessageNotify from "./../../../istore/MessageNotify";
+import { addStore } from "../../../../services/store.service";
+import getLatLngFromAddress from "../../../../services/map2.service";
 
 
 class Tables extends React.Component {
@@ -65,13 +70,22 @@ class Tables extends React.Component {
             isTemplateItem1Clicked: false,
             isTemplateItem2Clicked: false,
             templateNumber: null,
+            isShowStoresTable: true,
             isShowTemplateSelect: false,
             isShowStoreInfoInput: false,
             storeCategories: [],
             cities: [],
             districts: [],
             streets: [],
-
+            storeCategory: null,
+            city: null,
+            district: null,
+            street: null,
+            website: {
+                hasWebsite: false,
+                url: ""
+            },
+            coordinates: [],
 
             hasWebsite: false,
             inputStoreTemplateId: "",
@@ -84,7 +98,20 @@ class Tables extends React.Component {
             inputStoreStreetId: "",
             inputStoreEmail: props.user.email,
             inputStorePhone: props.user.phone,
-            inputStoreWebsite: ""
+            inputStoreWebsite: "",
+
+            storeCategoryErrorMessage: "",
+            storeNameErrorMessage: "",
+            storeHouseNumberErrorMessage: "",
+            storeCityErrorMessage: "",
+            storeDistrictErrorMessage: "",
+            storeStreetErrorMessage: "",
+            storeEmailErrorMessage: "",
+            storePhoneErrorMessage: "",
+            storeWebsiteErrorMessage: "",
+
+            addStoreErrorMessage: "",
+            addStoreResultMessage: ""
         }
 
         this.onAddStoreClick = this.onAddStoreClick.bind(this);
@@ -111,12 +138,14 @@ class Tables extends React.Component {
         if (!this.props.user.isPhoneActivated) {
             this.setState({
                 showPhoneActivateModal: true,
-                isShowTemplateSelect: true
+                isShowTemplateSelect: true,
+                isShowStoresTable: false
             })
         }
         else {
             this.setState({
-                isShowTemplateSelect: true
+                isShowTemplateSelect: true,
+                isShowStoresTable: false
             })
         }
     }
@@ -156,52 +185,69 @@ class Tables extends React.Component {
             isShowStoreInfoInput: this.state.hasWebsite ? false : true,
             showPhoneActivateModal: false,
             templateNumber: null,
-            inputStoreTemplateId: null
+            inputStoreTemplateId: null,
+            website: {
+                hasWebsite: this.state.hasWebsite ? false : true,
+                url: ""
+            }
         })
     }
 
     onStoreCategoryChange(e) {
+        let id = e.target.value;
+
         this.setState({
-            inputStoreCategoryId: e.target.value
+            inputStoreCategoryId: id,
+            storeCategoryErrorMessage: ""
         })
+
+        getStoreCategoryById(this, id);
     }
 
     onSelectCityChange(e) {
-        let idCity = e.target.value;
+        let id = e.target.value;
         // console.log(id);
 
         this.setState({
-            inputStoreCityId: e.target.value
+            inputStoreCityId: id,
+            storeCityErrorMessage: ""
         })
 
-        getDistrictsByIdCity(this, idCity);
+        getDistrictsByIdCity(this, id);
+        getCityById(this, id);
     }
 
     onSelectDistrictChange(e) {
-        let idDistrict = e.target.value;
+        let id = e.target.value;
         // console.log(id);
 
         this.setState({
-            inputStoreDistrictId: e.target.value
+            inputStoreDistrictId: id,
+            storeDistrictErrorMessage: ""
         })
 
-        getStreetsByIdDistrict(this, idDistrict);
+        getStreetsByIdDistrict(this, id);
+        getDistrictById(this, id);
     }
 
     onSelectStreetsChange(e) {
-        // let idStreet = e.target.value;
+        let id = e.target.value;
         // console.log(id);
 
         this.setState({
-            inputStoreStreetId: e.target.value
+            inputStoreStreetId: id,
+            storeStreetErrorMessage: ""
         })
+
+        getStreetById(this, id);
     }
 
     onInputStoreInfoChange(e) {
         // console.log(e.target.id + " - " + e.target.value);
         if (e.target.id === "name") {
             this.setState({
-                inputStoreName: e.target.value
+                inputStoreName: e.target.value,
+                storeNameErrorMessage: ""
             })
         }
         if (e.target.id === "description") {
@@ -211,39 +257,146 @@ class Tables extends React.Component {
         }
         if (e.target.id === "houseNumber") {
             this.setState({
-                inputStoreHouseNumber: e.target.value
+                inputStoreHouseNumber: e.target.value,
+                storeHouseNumberErrorMessage: ""
             })
         }
         if (e.target.id === "email") {
             this.setState({
-                inputStoreEmail: e.target.value
+                inputStoreEmail: e.target.value,
+                storeEmailErrorMessage: ""
             })
         }
         if (e.target.id === "phone") {
             this.setState({
-                inputStorePhone: e.target.value
+                inputStorePhone: e.target.value,
+                storePhoneErrorMessage: ""
             })
         }
         if (e.target.id === "website") {
             this.setState({
-                inputStoreWebsite: e.target.value
+                inputStoreWebsite: e.target.value,
+                website: {
+                    hasWebsite: true,
+                    url: e.target.value
+                },
+                storeWebsiteErrorMessage: ""
             })
         }
     }
 
     onSubmitButtonClick() {
-        console.log(this.state.hasWebsite);
-        console.log(this.state.inputStoreTemplateId);
-        console.log(this.state.inputStoreCategoryId);
-        console.log(this.state.inputStoreName);
-        console.log(this.state.inputStoreDescription);
-        console.log(this.state.inputStoreHouseNumber);
-        console.log(this.state.inputStoreCityId);
-        console.log(this.state.inputStoreDistrictId);
-        console.log(this.state.inputStoreStreetId);
-        console.log(this.state.inputStoreEmail);
-        console.log(this.state.inputStorePhone);
-        console.log(this.state.hasWebsite ? this.state.inputStoreWebsite : "");
+        if (!this.state.storeCategory) {
+            this.setState({
+                storeCategoryErrorMessage: "Nhóm cửa hàng không được để trống."
+            })
+        }
+        if (!this.state.city) {
+            this.setState({
+                storeCityErrorMessage: "Thành phố không được để trống."
+            })
+        }
+        if (!this.state.district) {
+            this.setState({
+                storeDistrictErrorMessage: "Quận huyện không được để trống."
+            })
+        }
+        if (!this.state.street) {
+            this.setState({
+                storeStreetErrorMessage: "Quận huyện không được để trống."
+            })
+        }
+        if (!this.state.inputStoreHouseNumber) {
+            this.setState({
+                storeHouseNumberErrorMessage: "Số nhà không được để trống."
+            })
+        }
+        if (!this.state.inputStorePhone) {
+            this.setState({
+                storePhoneErrorMessage: "Số điện thoại không được để trống."
+            })
+        }
+        if (!this.state.inputStoreEmail) {
+            this.setState({
+                storeEmailErrorMessage: "Email không được để trống."
+            })
+        }
+        if (!this.state.inputStoreName) {
+            this.setState({
+                storeNameErrorMessage: "Tên cửa hàng không được để trống."
+            })
+        }
+        if (this.state.website.hasWebsite && !this.state.website.url) {
+            this.setState({
+                storeWebsiteErrorMessage: "Website cửa hàng không được để trống."
+            })
+        }
+
+        const store = {
+            storeCategory: this.state.storeCategory,
+            user: this.props.user,
+            city: this.state.city,
+            district: this.state.district,
+            street: this.state.street,
+            houseNumber: this.state.inputStoreHouseNumber,
+            phone: this.state.inputStorePhone,
+            email: this.state.inputStoreEmail,
+            name: this.state.inputStoreName,
+            description: this.state.inputStoreDescription,
+            website: this.state.website,
+            template: this.state.inputStoreTemplateId
+        }
+
+        if (store.storeCategory && store.user && store.city
+            && store.district && store.street && store.houseNumber
+            && store.phone && store.email && store.name) {
+            if (store.website.hasWebsite && !store.website.url) {
+                this.setState({
+                    addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
+                })
+            }
+            else if (!store.website.hasWebsite && !store.template) {
+                this.setState({
+                    addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
+                })
+            }
+            else {
+
+                getLatLngFromAddress(getFullAddress(store), (location) => {
+                    // console.log(location); // {lat, lng}
+
+                    // let coordinates = [location.lng, location.lat]; // [lng, lat] 
+
+                    const storeLocation = {
+                        type: "Point",
+                        coordinates: [location.lng, location.lat] // [lng, lat]
+                    }
+
+                    store.location = storeLocation;
+                    // console.log(store);
+
+                    // add store
+                    addStore(store, (messageResult) => {
+                        // hide add store form
+                        this.setState({
+                            stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10),
+                            isShowStoresTable: true,
+                            isShowTemplateSelect: false,
+                            isShowStoreInfoInput: false,
+                            addStoreErrorMessage: "",
+                            addStoreResultMessage: messageResult
+                        })
+                    });
+                });
+
+
+            }
+        }
+        else {
+            this.setState({
+                addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
+            })
+        }
     }
 
     render() {
@@ -259,7 +412,7 @@ class Tables extends React.Component {
                         </Container>
                     </Row>
                     {/* Table */}
-                    <Row>
+                    <Row className={this.state.isShowStoresTable ? "" : "hide"}>
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
@@ -281,7 +434,7 @@ class Tables extends React.Component {
                                             this.state.stores.map((store, key) => (
                                                 <tr key={key}>
                                                     <th scope="row">
-                                                        <Link to={"/store/" + store._id} target="_blank">
+                                                        <Link to={"/store/" + store.template + "/" + store._id} target="_blank">
                                                             <Media className="align-items-center">
                                                                 <span
                                                                     className="avatar rounded-circle mr-3"
@@ -323,7 +476,7 @@ class Tables extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to={"/store/" + store._id} target="_blank">
+                                                                <Link to={"/store/" + store.template +"/" + store._id} target="_blank">
                                                                     <DropdownItem
                                                                     // href="#pablo"
                                                                     // onClick={e => e.preventDefault()}
@@ -453,7 +606,7 @@ class Tables extends React.Component {
                         <h3>THÔNG TIN CỬA HÀNG</h3>
                         <hr />
                         <Form>
-                            <FormGroup row>
+                            <FormGroup row className={this.state.hasWebsite ? "hide" : ""}>
                                 <Label for="template" sm={2}>Mẫu giao diện website</Label>
                                 <Col sm={10}>
                                     <Input type="text"
@@ -475,12 +628,21 @@ class Tables extends React.Component {
                                             ))
                                         }
                                     </Input>
+                                    <span className={"error-message " + (this.state.storeCategoryErrorMessage ? "show" : "")}>
+                                        {this.state.storeCategoryErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
                                 <Label for="name" sm={2}>Tên cửa hàng</Label>
                                 <Col sm={10}>
-                                    <Input type="text" name="name" id="name" placeholder="Tên cửa hàng" onChange={this.onInputStoreInfoChange} />
+                                    <Input type="text" name="name" id="name"
+                                        placeholder="Tên cửa hàng"
+                                        onChange={this.onInputStoreInfoChange}
+                                        required={true} />
+                                    <span className={"error-message " + (this.state.storeNameErrorMessage ? "show" : "")}>
+                                        {this.state.storeNameErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -500,7 +662,11 @@ class Tables extends React.Component {
                                                 <Label for="houseNumber">Số nhà</Label>
                                                 <Input type="text" name="houseNumber" id="houseNumber"
                                                     placeholder="Số nhà"
-                                                    onChange={this.onInputStoreInfoChange} />
+                                                    onChange={this.onInputStoreInfoChange}
+                                                    required={true} />
+                                                <span className={"error-message " + (this.state.storeHouseNumberErrorMessage ? "show" : "")}>
+                                                    {this.state.storeHouseNumberErrorMessage}
+                                                </span>
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
@@ -514,6 +680,9 @@ class Tables extends React.Component {
                                                         ))
                                                     }
                                                 </Input>
+                                                <span className={"error-message " + (this.state.storeCityErrorMessage ? "show" : "")}>
+                                                    {this.state.storeCityErrorMessage}
+                                                </span>
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
@@ -527,6 +696,9 @@ class Tables extends React.Component {
                                                         ))
                                                     }
                                                 </Input>
+                                                <span className={"error-message " + (this.state.storeDistrictErrorMessage ? "show" : "")}>
+                                                    {this.state.storeDistrictErrorMessage}
+                                                </span>
                                             </FormGroup>
                                         </Col>
                                         <Col md={3}>
@@ -540,6 +712,9 @@ class Tables extends React.Component {
                                                         ))
                                                     }
                                                 </Input>
+                                                <span className={"error-message " + (this.state.storeStreetErrorMessage ? "show" : "")}>
+                                                    {this.state.storeStreetErrorMessage}
+                                                </span>
                                             </FormGroup>
                                         </Col>
                                     </Row>
@@ -551,7 +726,11 @@ class Tables extends React.Component {
                                     <Input type="email" name="email"
                                         id="email" placeholder="Email"
                                         defaultValue={this.props.user.email}
-                                        onChange={this.onInputStoreInfoChange} />
+                                        onChange={this.onInputStoreInfoChange}
+                                        required={true} />
+                                    <span className={"error-message " + (this.state.storeEmailErrorMessage ? "show" : "")}>
+                                        {this.state.storeEmailErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -560,7 +739,11 @@ class Tables extends React.Component {
                                     <Input type="phone" name="phone"
                                         id="phone" placeholder="Số điện thoại"
                                         defaultValue={this.props.user.phone}
-                                        onChange={this.onInputStoreInfoChange} />
+                                        onChange={this.onInputStoreInfoChange}
+                                        required={true} />
+                                    <span className={"error-message " + (this.state.storePhoneErrorMessage ? "show" : "")}>
+                                        {this.state.storePhoneErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row className={this.state.hasWebsite ? "" : "hide"}>
@@ -569,6 +752,9 @@ class Tables extends React.Component {
                                     <Input type="text" name="website" id="website"
                                         placeholder="Website"
                                         onChange={this.onInputStoreInfoChange} />
+                                    <span className={"error-message " + (this.state.storeWebsiteErrorMessage ? "show" : "")}>
+                                        {this.state.storeWebsiteErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -618,11 +804,15 @@ class Tables extends React.Component {
                             </FormGroup>
                             <FormGroup check row>
                                 <Col sm={{ size: 10, offset: 2 }} style={{ textAlign: "center" }}>
+                                    <span className={"error-message2 " + (this.state.addStoreErrorMessage ? "show" : "")}>
+                                        {this.state.addStoreErrorMessage}
+                                    </span>
                                     <Button type="button" color="success" onClick={this.onSubmitButtonClick}>Thêm cửa hàng</Button>
                                 </Col>
                             </FormGroup>
                         </Form>
                     </div>
+                    <MessageNotify message={this.state.addStoreResultMessage} />
                 </Container>
             </>
         );

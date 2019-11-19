@@ -9,6 +9,15 @@ export default function getDistricts(that) {
             });
 }
 
+export function getDistrictById(that, id) {
+    fetch("/api/districts/" + id)
+            .then(res => res.json())
+            .then(district => {
+                // console.log(district);
+                that.setState({ district: district });
+            });
+}
+
 export function getStreetsByIdDistrict(that, idDistrict) {
     fetch("/api/districts/" + idDistrict + "/streets")
             .then(res => res.json())

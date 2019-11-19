@@ -28,7 +28,7 @@ class Footer extends Component {
                                         <div className="footer">
                                             {/* footer logo */}
                                             <div className="footer-logo">
-                                                <Link className="logo" to={"/store/" + this.props.store._id}>
+                                                <Link className="logo" to={"/store/" + this.props.store.template + "/" + this.props.store._id}>
                                                     <img
                                                         src={this.props.store.logo}
                                                         alt=""
@@ -57,35 +57,6 @@ class Footer extends Component {
                                                     </span>
                                                 </p>
                                             </div>
-                                            {/* footer social */}
-                                            <ul className="footer-social">
-                                                <li>
-                                                    <Link to="#">
-                                                        <i className="fa fa-facebook" />
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="#">
-                                                        <i className="fa fa-twitter" />
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="#">
-                                                        <i className="fa fa-instagram" />
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="#">
-                                                        <i className="fa fa-google-plus" />
-                                                    </Link>
-                                                </li>
-                                                <li>
-                                                    <Link to="#">
-                                                        <i className="fa fa-pinterest" aria-hidden="true"></i>
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                            {/* /footer social */}
                                         </div>
                                     </Col>
                                     {/* /footer widget */}

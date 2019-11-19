@@ -6,3 +6,13 @@ export default function getStoreCategories(that) {
                 that.setState({ storeCategories: results });
             });
 }
+
+export function getStoreCategoryById(that, id) {
+    fetch("/api/store-categories/" + id)
+            .then(res => res.json())
+            .then(storeCategory => {
+                // console.log(storeCategory);
+                that.setState({ storeCategory: storeCategory });
+            });
+}
+
