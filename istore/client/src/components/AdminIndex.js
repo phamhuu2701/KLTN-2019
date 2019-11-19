@@ -36,7 +36,7 @@ class AdminIndex extends Component {
         //     });
 
         // test
-        fetch("/api/users/5dc662f9066b0f3b6cfd6263")
+        fetch("/api/users/5dd3ad1132a6c82a603a6f49")
             .then(res => res.json())
             .then(user => {
                 this.setState({

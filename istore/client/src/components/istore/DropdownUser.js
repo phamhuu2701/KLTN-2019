@@ -198,6 +198,7 @@ export default class DropdownUser extends Component {
     }
 
     signIn() {
+        document.querySelector('body').style.overflowY = 'hidden';
         this.setState({
             sign: 'in'
         })
@@ -210,7 +211,6 @@ export default class DropdownUser extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        document.querySelector('body').style.overflowY = 'hidden';
          // Check user logged in
         fetch('/api/login')
         .then(res => {

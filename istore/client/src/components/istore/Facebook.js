@@ -14,7 +14,7 @@ export default class facebook extends Component {
                 document.querySelector("#fb-root").remove();
                 document.querySelector('body').style.overflowY = 'auto';
             }
-        }, 200);
+        }, 300);
     }
 
     handleResponse(data) {
