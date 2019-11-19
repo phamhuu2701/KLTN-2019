@@ -104,20 +104,45 @@ router
         res.json(user);
     })
     .put(async (req, res, next) => {
+        // console.log(req.body);
         let id = req.params.id;
         let user = await UserDao.findById(id);
-
-        // update basic info
-        user.fullname = req.body.fullname;
-        user.gender = req.body.gender;
-        user.birthday = req.body.birthday;
-        user.address = req.body.address;
-
         // console.log(user);
 
-        let userUpdate = await UserDao.update(user);
-        // console.log(userUpdate);
-        res.json(userUpdate);
+        const phone = req.body.phone;
+        const email = req.body.email;
+
+        if(phone && !email){ // update phone
+            user.phone = phone;
+
+            // console.log(user);
+
+            let userUpdate = await UserDao.update(user);
+            // console.log(userUpdate);
+            res.json(userUpdate);
+        }
+        else if(email & !phone){ // update email           
+            user.email = email;
+
+            // console.log(user);
+
+            let userUpdate = await UserDao.update(user);
+            // console.log(userUpdate);
+            res.json(userUpdate);
+        } else {    // update basic info
+
+            // update basic info
+            user.fullname = req.body.fullname;
+            user.gender = req.body.gender;
+            user.birthday = req.body.birthday;
+            user.address = req.body.address;
+
+            // console.log(user);
+
+            let userUpdate = await UserDao.update(user);
+            // console.log(userUpdate);
+            res.json(userUpdate);
+        }
     });
 // .delete(async (req, res, next) => {
 //     let id = req.params.id;

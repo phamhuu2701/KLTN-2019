@@ -20,13 +20,14 @@ import Profile from "components/argon-dashboard-react-master/views/examples/Prof
 import Maps from "components/argon-dashboard-react-master/views/examples/Maps.jsx";
 import Register from "components/argon-dashboard-react-master/views/examples/Register.jsx";
 import Login from "components/argon-dashboard-react-master/views/examples/Login.jsx";
-import Tables from "components/argon-dashboard-react-master/views/examples/Tables.jsx";
+import StoreManage from "components/argon-dashboard-react-master/views/examples/StoreManage.jsx";
 import Icons from "components/argon-dashboard-react-master/views/examples/Icons.jsx";
 import Messages from "./components/argon-dashboard-react-master/views/examples/Messages";
 import ChangeEmail from "./components/argon-dashboard-react-master/views/examples/ChangeEmail";
 import ChangePhone from "./components/argon-dashboard-react-master/views/examples/ChangePhone";
 import ChangePassword from "./components/argon-dashboard-react-master/views/examples/ChangePassword";
 import Statistical from "./components/argon-dashboard-react-master/views/examples/Statistical";
+import StoreManageUpdateProduct from "./components/argon-dashboard-react-master/views/examples/StoreManageUpdateProduct";
 
 var routes = [
     {
@@ -54,7 +55,14 @@ var routes = [
         path: "/stores-manage",
         name: "Quản lý cửa hàng",
         icon: "ni ni-bullet-list-67 text-red",
-        component: Tables,
+        component: StoreManage,
+        layout: "/admin"
+    },
+    {
+        path: "/stores-manage-update-product",
+        name: "Cập nhập cửa hàng, sản phẩm",
+        icon: "ni ni-ruler-pencil",
+        component: StoreManageUpdateProduct,
         layout: "/admin"
     },
     {
@@ -84,13 +92,6 @@ var routes = [
         icon: "ni ni-chart-pie-35 text-orange",
         component: Statistical,
         layout: "/admin"
-    },
-    {
-        path: "/",
-        name: "Thoát",
-        icon: "ni ni-user-run text-pink",
-        component: null,
-        layout: ""
     },
     {
         path: "/index",
@@ -124,7 +125,7 @@ var routes = [
         path: "/tables",
         name: "Tables",
         icon: "ni ni-bullet-list-67 text-red",
-        component: Tables,
+        component: StoreManage,
         layout: "/admin"
     },
     {

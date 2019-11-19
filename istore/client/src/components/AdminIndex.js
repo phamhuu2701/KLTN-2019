@@ -20,30 +20,30 @@ class AdminIndex extends Component {
     }
 
     componentDidMount() {
-        // fetch("/api/login")
-        //     .then(res => res.json())
-        //     .then(result => {
-        //         if (result.isLogged === true) {
-        //             this.setState({
-        //                 isLogged: true,
-        //                 user: result.user
-        //             });
-        //         } else {
-        //             this.setState({
-        //                 isLoginError: true
-        //             });
-        //         }
-        //     });
-
-        // test
-        fetch("/api/users/5dd3ad1132a6c82a603a6f49")
+        fetch("/api/login")
             .then(res => res.json())
-            .then(user => {
-                this.setState({
-                    user: user,
-                    isLogged: true
-                });
+            .then(result => {
+                if (result.isLogged === true) {
+                    this.setState({
+                        isLogged: true,
+                        user: result.user
+                    });
+                } else {
+                    this.setState({
+                        isLoginError: true
+                    });
+                }
             });
+
+        // // test
+        // fetch("/api/users/5dc662f9066b0f3b6cfd6263")
+        //     .then(res => res.json())
+        //     .then(user => {
+        //         this.setState({
+        //             user: user,
+        //             isLogged: true
+        //         });
+        //     });
     }
 
     render() {

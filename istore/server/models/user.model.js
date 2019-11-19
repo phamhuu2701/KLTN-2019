@@ -24,7 +24,7 @@ const userSchema = new Schema(
             }
         },
         phone: { type: String, maxlength: 10, trim: true, unique: true },
-        isPhoneActivated: { type: Boolean, required: true, default: false },
+        isPhoneActivated: { type: Boolean, required: true, default: true },
         email: { type: String, maxlength: 30, trim: true, unique: true },
         isEmailActivated: { type: Boolean, required: true, default: false },
         mailVerifyToken: {type: String, maxlength: 10, trim: true, unique: true},
