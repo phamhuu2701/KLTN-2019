@@ -99,7 +99,6 @@ router.route('/verify')
 router
     .route("/:id")
     .get(async (req, res, next) => {
-        console.log(123);
         let id = req.params.id;
         let user = await UserDao.findById(id);
         res.json(user);
