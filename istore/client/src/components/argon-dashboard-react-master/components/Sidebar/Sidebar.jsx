@@ -51,6 +51,8 @@ import {
     Row,
     Col
 } from "reactstrap";
+import { logoutAdmin } from "../../../../services/user.service";
+import "./Sidebar.css";
 
 var ps;
 
@@ -257,14 +259,14 @@ class Sidebar extends React.Component {
                         {/* Heading */}
                         {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
                         {/* Navigation */}
-                        {/* <Nav className="mb-md-3" navbar>
+                        <Nav className="mb-md-3" navbar>
                             <NavItem>
-                                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/overview?ref=adr-admin-sidebar">
-                                    <i className="ni ni-spaceship" />
-                                    Getting started
+                                <NavLink className="sildebar-logout" onClick={logoutAdmin}>
+                                    <i className="ni ni-user-run text-pink" />
+                                    Thoát
                                 </NavLink>
                             </NavItem>
-                            <NavItem>
+                            {/* <NavItem>
                                 <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/colors?ref=adr-admin-sidebar">
                                     <i className="ni ni-palette" />
                                     Foundation
@@ -275,8 +277,8 @@ class Sidebar extends React.Component {
                                     <i className="ni ni-ui-04" />
                                     Components
                                 </NavLink>
-                            </NavItem>
-                        </Nav> */}
+                            </NavItem> */}
+                        </Nav>
                     </Collapse>
                 </Container>
             </Navbar>

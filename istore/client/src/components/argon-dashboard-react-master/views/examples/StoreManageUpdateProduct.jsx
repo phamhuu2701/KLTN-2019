@@ -47,357 +47,191 @@ import { Link } from "react-router-dom";
 // core components
 import Header from "components/argon-dashboard-react-master/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
-import "./Tables.css";
-import PhoneActivate from "./PhoneActivate";
+import "./StoreManageUpdateProduct.css";
+// import PhoneActivate from "./PhoneActivate";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
 import getStoreCategories, { getStoreCategoryById } from "../../../../services/storeCategory.service";
 import getCities, { getDistrictsByIdCity, getCityById } from "../../../../services/city.service";
 import { getStreetsByIdDistrict, getDistrictById } from "../../../../services/district.service";
 import { getStreetById } from "../../../../services/street.service";
-import MessageNotify from "./../../../istore/MessageNotify";
+import MessageNotify from "../../../istore/MessageNotify";
 import { addStore } from "../../../../services/store.service";
 import getLatLngFromAddress from "../../../../services/map2.service";
+import PhoneAdd from "./PhoneAdd";
 
 
-class Tables extends React.Component {
+class StoreManageUpdateProduct extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stores: [],
-            showPhoneActivateModal: false,
-            isTemplateItem1Clicked: false,
-            isTemplateItem2Clicked: false,
-            templateNumber: null,
-            isShowStoresTable: true,
-            isShowTemplateSelect: false,
-            isShowStoreInfoInput: false,
-            storeCategories: [],
-            cities: [],
-            districts: [],
-            streets: [],
-            storeCategory: null,
-            city: null,
-            district: null,
-            street: null,
-            website: {
-                hasWebsite: false,
-                url: ""
-            },
-            coordinates: [],
-
-            hasWebsite: false,
-            inputStoreTemplateId: "",
-            inputStoreCategoryId: "",
-            inputStoreName: "",
-            inputStoreDescription: "",
-            inputStoreHouseNumber: "",
-            inputStoreCityId: "",
-            inputStoreDistrictId: "",
-            inputStoreStreetId: "",
-            inputStoreEmail: props.user.email,
-            inputStorePhone: props.user.phone,
-            inputStoreWebsite: "",
-
-            storeCategoryErrorMessage: "",
-            storeNameErrorMessage: "",
-            storeHouseNumberErrorMessage: "",
-            storeCityErrorMessage: "",
-            storeDistrictErrorMessage: "",
-            storeStreetErrorMessage: "",
-            storeEmailErrorMessage: "",
-            storePhoneErrorMessage: "",
-            storeWebsiteErrorMessage: "",
-
-            addStoreErrorMessage: "",
-            addStoreResultMessage: ""
+            stores: []
         }
-
-        this.onAddStoreClick = this.onAddStoreClick.bind(this);
-        this.onTemplatesItemClick = this.onTemplatesItemClick.bind(this);
-        this.onCheckboxHasWebsiteClick = this.onCheckboxHasWebsiteClick.bind(this);
-        this.onStoreCategoryChange = this.onStoreCategoryChange.bind(this);
-        this.onSelectCityChange = this.onSelectCityChange.bind(this);
-        this.onSelectDistrictChange = this.onSelectDistrictChange.bind(this);
-        this.onSelectStreetsChange = this.onSelectStreetsChange.bind(this);
-        this.onInputStoreInfoChange = this.onInputStoreInfoChange.bind(this);
-        this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
     }
 
     componentDidMount() {
         this.setState({
             stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10)
         })
-
-        getStoreCategories(this);
-        getCities(this);
     }
 
-    onAddStoreClick() {
-        if (!this.props.user.isPhoneActivated) {
-            this.setState({
-                showPhoneActivateModal: true,
-                isShowTemplateSelect: true,
-                isShowStoresTable: false
-            })
-        }
-        else {
-            this.setState({
-                isShowTemplateSelect: true,
-                isShowStoresTable: false
-            })
-        }
-    }
+    // onInputStoreInfoChange(e) {
+    //     // console.log(e.target.id + " - " + e.target.value);
+    //     if (e.target.id === "name") {
+    //         this.setState({
+    //             inputStoreName: e.target.value,
+    //             storeNameErrorMessage: ""
+    //         })
+    //     }
+    //     if (e.target.id === "description") {
+    //         this.setState({
+    //             inputStoreDescription: e.target.value
+    //         })
+    //     }
+    //     if (e.target.id === "houseNumber") {
+    //         this.setState({
+    //             inputStoreHouseNumber: e.target.value,
+    //             storeHouseNumberErrorMessage: ""
+    //         })
+    //     }
+    //     if (e.target.id === "email") {
+    //         this.setState({
+    //             inputStoreEmail: e.target.value,
+    //             storeEmailErrorMessage: ""
+    //         })
+    //     }
+    //     if (e.target.id === "phone") {
+    //         this.setState({
+    //             inputStorePhone: e.target.value,
+    //             storePhoneErrorMessage: ""
+    //         })
+    //     }
+    //     if (e.target.id === "website") {
+    //         this.setState({
+    //             inputStoreWebsite: e.target.value,
+    //             website: {
+    //                 hasWebsite: true,
+    //                 url: e.target.value
+    //             },
+    //             storeWebsiteErrorMessage: ""
+    //         })
+    //     }
+    // }
 
-    onTemplatesItemClick(e) {
-        // console.log(e.target.id);
+    // onSubmitButtonClick() {
+    //     if (!this.state.storeCategory) {
+    //         this.setState({
+    //             storeCategoryErrorMessage: "Nhóm cửa hàng không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.city) {
+    //         this.setState({
+    //             storeCityErrorMessage: "Thành phố không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.district) {
+    //         this.setState({
+    //             storeDistrictErrorMessage: "Quận huyện không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.street) {
+    //         this.setState({
+    //             storeStreetErrorMessage: "Quận huyện không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.inputStoreHouseNumber) {
+    //         this.setState({
+    //             storeHouseNumberErrorMessage: "Số nhà không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.inputStorePhone) {
+    //         this.setState({
+    //             storePhoneErrorMessage: "Số điện thoại không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.inputStoreEmail) {
+    //         this.setState({
+    //             storeEmailErrorMessage: "Email không được để trống."
+    //         })
+    //     }
+    //     if (!this.state.inputStoreName) {
+    //         this.setState({
+    //             storeNameErrorMessage: "Tên cửa hàng không được để trống."
+    //         })
+    //     }
+    //     if (this.state.website.hasWebsite && !this.state.website.url) {
+    //         this.setState({
+    //             storeWebsiteErrorMessage: "Website cửa hàng không được để trống."
+    //         })
+    //     }
 
-        if (e.target.id === "item-1") {
-            this.setState({
-                isTemplateItem1Clicked: true,
-                isTemplateItem2Clicked: false,
-                templateNumber: 1,
-                showPhoneActivateModal: false,
-                isShowStoreInfoInput: true,
-                inputStoreTemplateId: 1,
-                hasWebsite: false
-            })
-        }
-        else if (e.target.id === "item-2") {
-            this.setState({
-                isTemplateItem1Clicked: false,
-                isTemplateItem2Clicked: true,
-                templateNumber: 2,
-                showPhoneActivateModal: false,
-                isShowStoreInfoInput: true,
-                inputStoreTemplateId: 2,
-                hasWebsite: false
-            })
-        }
+    //     const store = {
+    //         storeCategory: this.state.storeCategory,
+    //         user: this.props.user,
+    //         city: this.state.city,
+    //         district: this.state.district,
+    //         street: this.state.street,
+    //         houseNumber: this.state.inputStoreHouseNumber,
+    //         phone: this.state.inputStorePhone,
+    //         email: this.state.inputStoreEmail,
+    //         name: this.state.inputStoreName,
+    //         description: this.state.inputStoreDescription,
+    //         website: this.state.website,
+    //         template: this.state.inputStoreTemplateId
+    //     }
 
-    }
+    //     if (store.storeCategory && store.user && store.city
+    //         && store.district && store.street && store.houseNumber
+    //         && store.phone && store.email && store.name) {
+    //         if (store.website.hasWebsite && !store.website.url) {
+    //             this.setState({
+    //                 addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
+    //             })
+    //         }
+    //         else if (!store.website.hasWebsite && !store.template) {
+    //             this.setState({
+    //                 addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
+    //             })
+    //         }
+    //         else {
 
-    onCheckboxHasWebsiteClick() {
-        this.setState({
-            hasWebsite: !this.state.hasWebsite,
-            isShowTemplateSelect: true,
-            isShowStoreInfoInput: this.state.hasWebsite ? false : true,
-            showPhoneActivateModal: false,
-            templateNumber: null,
-            inputStoreTemplateId: null,
-            website: {
-                hasWebsite: this.state.hasWebsite ? false : true,
-                url: ""
-            }
-        })
-    }
+    //             getLatLngFromAddress(getFullAddress(store), (location) => {
+    //                 // console.log(location); // {lat, lng}
 
-    onStoreCategoryChange(e) {
-        let id = e.target.value;
+    //                 // let coordinates = [location.lng, location.lat]; // [lng, lat] 
 
-        this.setState({
-            inputStoreCategoryId: id,
-            storeCategoryErrorMessage: ""
-        })
+    //                 const storeLocation = {
+    //                     type: "Point",
+    //                     coordinates: [location.lng, location.lat] // [lng, lat]
+    //                 }
 
-        getStoreCategoryById(this, id);
-    }
+    //                 store.location = storeLocation;
+    //                 // console.log(store);
 
-    onSelectCityChange(e) {
-        let id = e.target.value;
-        // console.log(id);
-
-        this.setState({
-            inputStoreCityId: id,
-            storeCityErrorMessage: ""
-        })
-
-        getDistrictsByIdCity(this, id);
-        getCityById(this, id);
-    }
-
-    onSelectDistrictChange(e) {
-        let id = e.target.value;
-        // console.log(id);
-
-        this.setState({
-            inputStoreDistrictId: id,
-            storeDistrictErrorMessage: ""
-        })
-
-        getStreetsByIdDistrict(this, id);
-        getDistrictById(this, id);
-    }
-
-    onSelectStreetsChange(e) {
-        let id = e.target.value;
-        // console.log(id);
-
-        this.setState({
-            inputStoreStreetId: id,
-            storeStreetErrorMessage: ""
-        })
-
-        getStreetById(this, id);
-    }
-
-    onInputStoreInfoChange(e) {
-        // console.log(e.target.id + " - " + e.target.value);
-        if (e.target.id === "name") {
-            this.setState({
-                inputStoreName: e.target.value,
-                storeNameErrorMessage: ""
-            })
-        }
-        if (e.target.id === "description") {
-            this.setState({
-                inputStoreDescription: e.target.value
-            })
-        }
-        if (e.target.id === "houseNumber") {
-            this.setState({
-                inputStoreHouseNumber: e.target.value,
-                storeHouseNumberErrorMessage: ""
-            })
-        }
-        if (e.target.id === "email") {
-            this.setState({
-                inputStoreEmail: e.target.value,
-                storeEmailErrorMessage: ""
-            })
-        }
-        if (e.target.id === "phone") {
-            this.setState({
-                inputStorePhone: e.target.value,
-                storePhoneErrorMessage: ""
-            })
-        }
-        if (e.target.id === "website") {
-            this.setState({
-                inputStoreWebsite: e.target.value,
-                website: {
-                    hasWebsite: true,
-                    url: e.target.value
-                },
-                storeWebsiteErrorMessage: ""
-            })
-        }
-    }
-
-    onSubmitButtonClick() {
-        if (!this.state.storeCategory) {
-            this.setState({
-                storeCategoryErrorMessage: "Nhóm cửa hàng không được để trống."
-            })
-        }
-        if (!this.state.city) {
-            this.setState({
-                storeCityErrorMessage: "Thành phố không được để trống."
-            })
-        }
-        if (!this.state.district) {
-            this.setState({
-                storeDistrictErrorMessage: "Quận huyện không được để trống."
-            })
-        }
-        if (!this.state.street) {
-            this.setState({
-                storeStreetErrorMessage: "Quận huyện không được để trống."
-            })
-        }
-        if (!this.state.inputStoreHouseNumber) {
-            this.setState({
-                storeHouseNumberErrorMessage: "Số nhà không được để trống."
-            })
-        }
-        if (!this.state.inputStorePhone) {
-            this.setState({
-                storePhoneErrorMessage: "Số điện thoại không được để trống."
-            })
-        }
-        if (!this.state.inputStoreEmail) {
-            this.setState({
-                storeEmailErrorMessage: "Email không được để trống."
-            })
-        }
-        if (!this.state.inputStoreName) {
-            this.setState({
-                storeNameErrorMessage: "Tên cửa hàng không được để trống."
-            })
-        }
-        if (this.state.website.hasWebsite && !this.state.website.url) {
-            this.setState({
-                storeWebsiteErrorMessage: "Website cửa hàng không được để trống."
-            })
-        }
-
-        const store = {
-            storeCategory: this.state.storeCategory,
-            user: this.props.user,
-            city: this.state.city,
-            district: this.state.district,
-            street: this.state.street,
-            houseNumber: this.state.inputStoreHouseNumber,
-            phone: this.state.inputStorePhone,
-            email: this.state.inputStoreEmail,
-            name: this.state.inputStoreName,
-            description: this.state.inputStoreDescription,
-            website: this.state.website,
-            template: this.state.inputStoreTemplateId
-        }
-
-        if (store.storeCategory && store.user && store.city
-            && store.district && store.street && store.houseNumber
-            && store.phone && store.email && store.name) {
-            if (store.website.hasWebsite && !store.website.url) {
-                this.setState({
-                    addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
-                })
-            }
-            else if (!store.website.hasWebsite && !store.template) {
-                this.setState({
-                    addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
-                })
-            }
-            else {
-
-                getLatLngFromAddress(getFullAddress(store), (location) => {
-                    // console.log(location); // {lat, lng}
-
-                    // let coordinates = [location.lng, location.lat]; // [lng, lat] 
-
-                    const storeLocation = {
-                        type: "Point",
-                        coordinates: [location.lng, location.lat] // [lng, lat]
-                    }
-
-                    store.location = storeLocation;
-                    // console.log(store);
-
-                    // add store
-                    addStore(store, (messageResult) => {
-                        // hide add store form
-                        this.setState({
-                            stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10),
-                            isShowStoresTable: true,
-                            isShowTemplateSelect: false,
-                            isShowStoreInfoInput: false,
-                            addStoreErrorMessage: "",
-                            addStoreResultMessage: messageResult
-                        })
-                    });
-                });
+    //                 // add store
+    //                 addStore(store, (messageResult) => {
+    //                     // hide add store form
+    //                     this.setState({
+    //                         stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10),
+    //                         isShowStoresTable: true,
+    //                         isShowTemplateSelect: false,
+    //                         isShowStoreInfoInput: false,
+    //                         addStoreErrorMessage: "",
+    //                         addStoreResultMessage: messageResult
+    //                     })
+    //                 });
+    //             });
 
 
-            }
-        }
-        else {
-            this.setState({
-                addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
-            })
-        }
-    }
+    //         }
+    //     }
+    //     else {
+    //         this.setState({
+    //             addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
+    //         })
+    //     }
+    // }
 
     render() {
         return (
@@ -405,14 +239,8 @@ class Tables extends React.Component {
                 <Header />
                 {/* Page content */}
                 <Container className="mt--7 mt--7-custom stores-manage" fluid>
-                    {/* Button Add Store */}
-                    <Row>
-                        <Container className="container-button-add-store">
-                            <Button onClick={this.onAddStoreClick} className="btn btn-success">Thêm cửa hàng</Button>
-                        </Container>
-                    </Row>
                     {/* Table */}
-                    <Row className={this.state.isShowStoresTable ? "" : "hide"}>
+                    <Row>
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
@@ -482,6 +310,14 @@ class Tables extends React.Component {
                                                                     // onClick={e => e.preventDefault()}
                                                                     >
                                                                         Chi tiết
+                                                                    </DropdownItem>
+                                                                </Link>
+                                                                <Link to={"/admin/stores-manage-update-product"}>
+                                                                    <DropdownItem
+                                                                    // href="#pablo"
+                                                                    // onClick={e => e.preventDefault()}
+                                                                    >
+                                                                        Cập nhập sản phẩm
                                                                     </DropdownItem>
                                                                 </Link>
                                                                 <DropdownItem
@@ -559,7 +395,8 @@ class Tables extends React.Component {
                             </Card>
                         </div>
                     </Row>
-                    <PhoneActivate show={this.state.showPhoneActivateModal} phone={this.props.user.phone} />
+                    {/* <PhoneActivate show={this.state.showPhoneAddModal} phone={this.props.user.phone} /> */}
+                    <PhoneAdd show={this.state.showPhoneAddModal} user={this.props.user} handeResultPhoneAdd={this.handeResultPhoneAdd}/>
                     <hr />
                     {/* Add store */}
                     <div className={"store-template-select " + (this.state.isShowTemplateSelect ? "show" : "hide")}>
@@ -819,4 +656,4 @@ class Tables extends React.Component {
     }
 }
 
-export default Tables;
+export default StoreManageUpdateProduct;

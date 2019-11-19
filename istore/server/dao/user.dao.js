@@ -76,20 +76,23 @@ module.exports = {
                 model._id,
                 {
                     fullname: model.fullname,
-                    gender: model.gender,
+                    phone: model.phone,
+                    email: model.email,
+                    password: model.password,
                     address: model.address,
+                    gender: model.gender,
                     birthday: model.birthday
                 },
                 { new: true },
                 (err, result) => {
                     if (err) {
                         console.log(err);
-                        return reject(null);
+                        return reject(new Error(err));
                     }
                     return resolve(result);
                 }
             );
-        }).catch(() => null);
+        });
     },
     delete: model => {
         return new Promise((resolve, reject) => {

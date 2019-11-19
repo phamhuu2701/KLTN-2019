@@ -243,7 +243,7 @@ export function getStoresByIdUser(e, idUser) {
 
             e.setState({
                 stores: stores
-            })
+            });
         });
 }
 
@@ -255,6 +255,49 @@ export function getStoresBySizeByIdUser(e, idUser, firstIndex, size) {
 
             e.setState({
                 stores: getNewArrayBySize(stores, firstIndex, size)
-            })
+            });
         });
+}
+
+export function updateUserPhone(id, phone, callback) {
+    fetch("/api/users/" + id, {
+        method: "PUT",
+        body: JSON.stringify({
+            phone: phone
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(userUpdate => {
+            if(userUpdate){
+                // console.log(userUpdate);
+                callback(userUpdate);
+            }
+            else {
+                callback(null);
+            }
+        });
+}
+
+export function logoutAdmin() {
+    fetch("/api/logout", {
+        method: "GET"
+    })
+        .then(result => {
+            // if (result.status === 200) {
+            //     that.setState({
+            //         isLogged: false,
+            //         sign: ""
+            //     });
+            //     that.propslogInToggle(false);
+            //     document.getElementById("dropdown-user-body").style.display =
+            //         "none";
+            // } else {
+            //     alert("Đã có lỗi!!!");
+            // }
+            window.location.href = "/";
+        })
+        .catch(err => console.log(err));
 }
