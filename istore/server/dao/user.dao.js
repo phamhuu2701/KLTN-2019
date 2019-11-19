@@ -29,7 +29,7 @@ module.exports = {
                     if (err) return reject(null);
                     return resolve(results);
                 });
-        }).catch(() => null);
+        }).catch(() => err);
     },
     findOneByEmail: email => {
         return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ module.exports = {
         }).catch((err) => err);
     },
     verify: (id, mailVerifyToken) => {
-        return model.update({_id: id, mailVerifyToken: mailVerifyToken}, {isEmailActivated: true})
+        return Model.findOneAndUpdate({_id: id, mailVerifyToken: mailVerifyToken}, {isEmailActivated: true}, {useFindAndModify: false})
     },
     update: model => {
         return new Promise((resolve, reject) => {

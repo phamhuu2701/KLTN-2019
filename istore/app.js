@@ -8,6 +8,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 var bodyParser = require("body-parser");
+const config = require('config');
 
 const indexRouter = require("./server/routes/index");
 const databaseRouter = require("./server/routes/database");
@@ -102,8 +103,8 @@ app.use(function(err, req, res, next) {
 });
 
 // Connect to MongoDB
-// mongodb+srv://canhtoan88:eunJ&.5RcqGKH*j@istore-lthvn.mongodb.net/test?retryWrites=true&w=majority
-mongoose.connect("mongodb://localhost:27017/istore", {
+// 
+mongoose.connect(config.get('localMongoDBUri'), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

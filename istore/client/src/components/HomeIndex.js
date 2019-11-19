@@ -28,6 +28,10 @@ class HomeIndex extends Component {
         this.setState({ isLoggedIn: state });
     }
 
+    UNSAFE_componentReceiveProps(nextProps) {
+        console.log(nextProps);
+    }
+
     successSignUpHandler(message) {
         this.setState({
             message: message

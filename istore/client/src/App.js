@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomeIndex from "./components/HomeIndex";
 import StoreIndex from "./components/StoreIndex";
 import AdminIndex from "./components/AdminIndex";
+import VerifyIndex from "./components/VerifyIndex";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -16,6 +17,7 @@ export default class App extends Component {
                     <Route path="/store/:id" component={StoreIndex} />
                     <Route path="/admin" component={AdminIndex} />
                     <Route path="/auth" component={AdminIndex} />
+                    <Route path="/verify" component={VerifyIndex} />
                 </Switch>
             </Router>
         );
