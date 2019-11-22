@@ -305,6 +305,10 @@ class StoreManage extends React.Component {
         }
     }
 
+    onCancelButtonClick(){
+        window.location.reload();
+    }
+
     onSubmitButtonClick() {
         if (!this.state.storeCategory) {
             this.setState({
@@ -427,9 +431,9 @@ class StoreManage extends React.Component {
                 <Container className="mt--7 mt--7-custom stores-manage" fluid>
                     {/* Button Add Store */}
                     <Row>
-                        <Container className="container-button-add-store">
+                        <Col className="container-button-add-store">
                             <Button onClick={this.onAddStoreClick} className="btn btn-success">Thêm cửa hàng</Button>
-                        </Container>
+                        </Col>
                     </Row>
                     {/* Table */}
                     <Row className={this.state.isShowStoresTable ? "" : "hide"}>
@@ -650,6 +654,7 @@ class StoreManage extends React.Component {
                                 <Col sm={10}>
                                     <Input type="select" name="storeCategory" id="storeCategory"
                                         onChange={this.onStoreCategoryChange}>
+                                            <option value={null}>Phân loại</option>
                                         {
                                             this.state.storeCategories &&
                                             this.state.storeCategories.map((storeCategory, key) => (
@@ -702,6 +707,7 @@ class StoreManage extends React.Component {
                                             <FormGroup>
                                                 <Label for="city">Thành phố</Label>
                                                 <Input type="select" name="city" id="city" onChange={this.onSelectCityChange}>
+                                                    <option value={null}>Thành phố</option>
                                                     {
                                                         this.state.cities &&
                                                         this.state.cities.map((city, key) => (
@@ -718,6 +724,7 @@ class StoreManage extends React.Component {
                                             <FormGroup>
                                                 <Label for="district">Quận</Label>
                                                 <Input type="select" name="district" id="district" onChange={this.onSelectDistrictChange}>
+                                                    <option value={null}>Quận huyện</option>
                                                     {
                                                         this.state.districts &&
                                                         this.state.districts.map((district, key) => (
@@ -734,6 +741,7 @@ class StoreManage extends React.Component {
                                             <FormGroup>
                                                 <Label for="street">Tên đường</Label>
                                                 <Input type="select" name="street" id="street" onChange={this.onSelectStreetsChange}>
+                                                    <option value={null}>Tên đường</option>
                                                     {
                                                         this.state.streets &&
                                                         this.state.streets.map((street, key) => (
@@ -836,6 +844,7 @@ class StoreManage extends React.Component {
                                     <span className={"error-message2 " + (this.state.addStoreErrorMessage ? "show" : "")}>
                                         {this.state.addStoreErrorMessage}
                                     </span>
+                                    <Button type="button" color="warning" onClick={this.onCancelButtonClick}>Hủy</Button>
                                     <Button type="button" color="success" onClick={this.onSubmitButtonClick}>Thêm cửa hàng</Button>
                                 </Col>
                             </FormGroup>

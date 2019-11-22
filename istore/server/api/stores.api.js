@@ -46,6 +46,16 @@ router.route("/:id").get(async (req, res, next) => {
     }
 });
 
+router.route("/:id/products").get(async (req, res, next) => {
+    let id = req.params.id;
+    let store = await StoreDao.findById(id);
+    if (!store) {
+        res.json(null);
+    } else {
+        res.json(store);
+    }
+});
+
 router.route("/:template/:id").get(async (req, res, next) => {
     let id = req.params.id;
     let store = await StoreDao.findById(id);

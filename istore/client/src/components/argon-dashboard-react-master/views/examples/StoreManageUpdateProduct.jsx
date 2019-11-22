@@ -48,192 +48,152 @@ import { Link } from "react-router-dom";
 import Header from "components/argon-dashboard-react-master/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
 import "./StoreManageUpdateProduct.css";
-// import PhoneActivate from "./PhoneActivate";
 
-import { getFullAddress } from "../../../../utils/storeUtils";
-import getStoreCategories, { getStoreCategoryById } from "../../../../services/storeCategory.service";
-import getCities, { getDistrictsByIdCity, getCityById } from "../../../../services/city.service";
-import { getStreetsByIdDistrict, getDistrictById } from "../../../../services/district.service";
-import { getStreetById } from "../../../../services/street.service";
 import MessageNotify from "../../../istore/MessageNotify";
-import { addStore } from "../../../../services/store.service";
-import getLatLngFromAddress from "../../../../services/map2.service";
-import PhoneAdd from "./PhoneAdd";
-
+import { getStoreById } from "../../../../services/store.service";
+import { sortDescreaseProductsByTimestamp } from "../../../../utils/productUtils";
+import { getProductCategories } from "../../../../services/productCategory.service";
+import removeAccents from "../../../../utils/stringUtils";
 
 class StoreManageUpdateProduct extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stores: []
+            stores: [],
+            storeMain: null,
+            products: [],
+            productMain: null,
+
+            isShowProductInfoInput: false,
+
+            productCategories: [],
+
+            productCategoryInput: null,
+            productNameInput: "",
+            productDescriptionInput: "",
+            productPriceInput: 0,
+            productSaleoffInput: 0,
+
+            productCategoryErrorMessage: "",
+            productNameErrorMessage: "",
+            productDescriptionErrorMessage: "",
+            productPriceErrorMessage: "",
+            productSaleoffErrorMessage: ""
         }
+
+        this.onStoresSelectChange = this.onStoresSelectChange.bind(this);
+        this.onButtonAddProductClick = this.onButtonAddProductClick.bind(this);
+        this.onSelectProductCategoriesChange = this.onSelectProductCategoriesChange.bind(this);
+        this.onInputProductInfoChange = this.onInputProductInfoChange.bind(this);
+        this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
     }
 
     componentDidMount() {
         this.setState({
             stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10)
         })
+
+        getProductCategories(this);
     }
 
-    // onInputStoreInfoChange(e) {
-    //     // console.log(e.target.id + " - " + e.target.value);
-    //     if (e.target.id === "name") {
-    //         this.setState({
-    //             inputStoreName: e.target.value,
-    //             storeNameErrorMessage: ""
-    //         })
-    //     }
-    //     if (e.target.id === "description") {
-    //         this.setState({
-    //             inputStoreDescription: e.target.value
-    //         })
-    //     }
-    //     if (e.target.id === "houseNumber") {
-    //         this.setState({
-    //             inputStoreHouseNumber: e.target.value,
-    //             storeHouseNumberErrorMessage: ""
-    //         })
-    //     }
-    //     if (e.target.id === "email") {
-    //         this.setState({
-    //             inputStoreEmail: e.target.value,
-    //             storeEmailErrorMessage: ""
-    //         })
-    //     }
-    //     if (e.target.id === "phone") {
-    //         this.setState({
-    //             inputStorePhone: e.target.value,
-    //             storePhoneErrorMessage: ""
-    //         })
-    //     }
-    //     if (e.target.id === "website") {
-    //         this.setState({
-    //             inputStoreWebsite: e.target.value,
-    //             website: {
-    //                 hasWebsite: true,
-    //                 url: e.target.value
-    //             },
-    //             storeWebsiteErrorMessage: ""
-    //         })
-    //     }
-    // }
+    onStoresSelectChange(e) {
+        const id = e.target.value;
+        // console.log(id);
 
-    // onSubmitButtonClick() {
-    //     if (!this.state.storeCategory) {
-    //         this.setState({
-    //             storeCategoryErrorMessage: "Nhóm cửa hàng không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.city) {
-    //         this.setState({
-    //             storeCityErrorMessage: "Thành phố không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.district) {
-    //         this.setState({
-    //             storeDistrictErrorMessage: "Quận huyện không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.street) {
-    //         this.setState({
-    //             storeStreetErrorMessage: "Quận huyện không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.inputStoreHouseNumber) {
-    //         this.setState({
-    //             storeHouseNumberErrorMessage: "Số nhà không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.inputStorePhone) {
-    //         this.setState({
-    //             storePhoneErrorMessage: "Số điện thoại không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.inputStoreEmail) {
-    //         this.setState({
-    //             storeEmailErrorMessage: "Email không được để trống."
-    //         })
-    //     }
-    //     if (!this.state.inputStoreName) {
-    //         this.setState({
-    //             storeNameErrorMessage: "Tên cửa hàng không được để trống."
-    //         })
-    //     }
-    //     if (this.state.website.hasWebsite && !this.state.website.url) {
-    //         this.setState({
-    //             storeWebsiteErrorMessage: "Website cửa hàng không được để trống."
-    //         })
-    //     }
+        getStoreById(id, (result) => {
+            this.setState({
+                storeMain: result,
+                products: (result ? sortDescreaseProductsByTimestamp(result.products) : null)
+            })
+        })
+    }
 
-    //     const store = {
-    //         storeCategory: this.state.storeCategory,
-    //         user: this.props.user,
-    //         city: this.state.city,
-    //         district: this.state.district,
-    //         street: this.state.street,
-    //         houseNumber: this.state.inputStoreHouseNumber,
-    //         phone: this.state.inputStorePhone,
-    //         email: this.state.inputStoreEmail,
-    //         name: this.state.inputStoreName,
-    //         description: this.state.inputStoreDescription,
-    //         website: this.state.website,
-    //         template: this.state.inputStoreTemplateId
-    //     }
+    onButtonAddProductClick() {
+        if (this.state.storeMain) {
+            this.setState({
+                isShowProductInfoInput: true
+            })
+        }
+    }
 
-    //     if (store.storeCategory && store.user && store.city
-    //         && store.district && store.street && store.houseNumber
-    //         && store.phone && store.email && store.name) {
-    //         if (store.website.hasWebsite && !store.website.url) {
-    //             this.setState({
-    //                 addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
-    //             })
-    //         }
-    //         else if (!store.website.hasWebsite && !store.template) {
-    //             this.setState({
-    //                 addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
-    //             })
-    //         }
-    //         else {
+    onSelectProductCategoriesChange(e){
+        const key = e.target.value;
+        // console.log(this.state.productCategories[key]);
 
-    //             getLatLngFromAddress(getFullAddress(store), (location) => {
-    //                 // console.log(location); // {lat, lng}
+        this.setState({
+            productCategoryInput: this.state.productCategories[key],
+            productCategoryErrorMessage: ""
+        })
+    }
 
-    //                 // let coordinates = [location.lng, location.lat]; // [lng, lat] 
+    onInputProductInfoChange(e){
+        // console.log(e.target.id + " - " + e.target.value);
+        if (e.target.id === "name") {
+            this.setState({
+                productNameInput: e.target.value,
+                productNameErrorMessage: ""
+            })
+        }
+        if (e.target.id === "description") {
+            this.setState({
+                productDescriptionInput: e.target.value,
+                productDescriptionErrorMessage: ""
+            })
+        }
+        if (e.target.id === "price") {
+            this.setState({
+                productPriceInput: e.target.value,
+                productPriceErrorMessage: ""
+            })
+        }
+        if (e.target.id === "saleoff") {
+            this.setState({
+                productSaleoffInput: e.target.value,
+                productSaleoffErrorMessage: ""
+            })
+        }
+        
+    }
 
-    //                 const storeLocation = {
-    //                     type: "Point",
-    //                     coordinates: [location.lng, location.lat] // [lng, lat]
-    //                 }
+    onCancelButtonClick(){
+        window.location.reload();
+    }
 
-    //                 store.location = storeLocation;
-    //                 // console.log(store);
+    onSubmitButtonClick(){
+        if (!this.state.productCategory) {
+            this.setState({
+                productCategoryErrorMessage: "Phân loại sản phẩm không được để trống."
+            })
+        }
+        if (!this.state.productNameInput) {
+            this.setState({
+                productNameErrorMessage: "Tên sản phẩm không được để trống."
+            })
+        }
+        if (!this.state.productPriceInput) {
+            this.setState({
+                productPriceErrorMessage: "Giá sản phẩm không được để trống."
+            })
+        }
 
-    //                 // add store
-    //                 addStore(store, (messageResult) => {
-    //                     // hide add store form
-    //                     this.setState({
-    //                         stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10),
-    //                         isShowStoresTable: true,
-    //                         isShowTemplateSelect: false,
-    //                         isShowStoreInfoInput: false,
-    //                         addStoreErrorMessage: "",
-    //                         addStoreResultMessage: messageResult
-    //                     })
-    //                 });
-    //             });
+        const product = {
+            store: this.state.storeMain,
+            productCategory: this.state.productCategoryInput,
+            name: this.state.productNameInput,
+            description: this.state.productDescriptionInput,
+            price: this.state.productPriceInput,
+            saleoff: this.state.productSaleoffInput,
+            nameRemoveAccents: removeAccents(this.state.productNameInput)
+        }
 
+        console.log(product);
 
-    //         }
-    //     }
-    //     else {
-    //         this.setState({
-    //             addStoreErrorMessage: "Thông tin nhà trọ chưa hợp lệ. Vui lòng kiểm tra lại."
-    //         })
-    //     }
-    // }
+    }
 
     render() {
+        // console.log(this.state.stores);
+        // console.log(this.state.storeMain);
         return (
             <>
                 <Header />
@@ -241,57 +201,82 @@ class StoreManageUpdateProduct extends React.Component {
                 <Container className="mt--7 mt--7-custom stores-manage" fluid>
                     {/* Table */}
                     <Row>
+                        <Col>
+                        <Form>
+                            <FormGroup>
+                                <Label for="stores">Chọn cửa hàng</Label>
+                                <Input type="select" name="stores" id="stores" onChange={this.onStoresSelectChange}>
+                                    <option value={null}>Cửa hàng</option>
+                                    {
+                                        this.state.stores && this.state.stores.map((store, key) => (
+                                            <option key={key} value={store._id}>{store.name}</option>
+                                        ))
+                                    }
+                                </Input>
+                            </FormGroup>
+                        </Form>
+                        </Col>
+                    </Row>
+                    {/* Button Add Store */}
+                    <Row>
+                        <Col className="container-button-add-store">
+                        <Button onClick={this.onButtonAddProductClick} className="btn btn-success">Thêm sản phẩrm</Button>
+                        </Col>
+                    </Row>
+                    {/* Table */}
+                    <Row>
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
-                                    <h3 className="mb-0">Danh sách cửa hàng</h3>
+                                    <h3 className="mb-0">Danh sách sản phẩm</h3>
                                 </CardHeader>
                                 <Table className="align-items-center table-flush table-flush-custom" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col">Cửa hàng</th>
-                                            <th scope="col">Phân loại</th>
-                                            <th scope="col">Địa chỉ</th>
-                                            <th scope="col">Trạng thái</th>
+                                            <th scope="col" className="th-custom">Sản phẩm</th>
+                                            <th scope="col" className="th-custom">Mô tả</th>
+                                            <th scope="col" className="th-custom">Giá gốc</th>
+                                            <th scope="col" className="th-custom">Khuyến mãi</th>
+                                            <th scope="col" className="th-custom">Còn hàng</th>
                                             <th scope="col" />
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className="table-body">
                                         {
-                                            this.state.stores &&
-                                            this.state.stores.map((store, key) => (
+                                            this.state.products &&
+                                            this.state.products.map((product, key) => (
                                                 <tr key={key}>
                                                     <th scope="row">
-                                                        <Link to={"/store/" + store.template + "/" + store._id} target="_blank">
+                                                        <Link to={"/store/" + this.state.storeMain.template + "/" + this.state.storeMain._id + "/products/" + product._id} target="_blank">
                                                             <Media className="align-items-center">
                                                                 <span
                                                                     className="avatar rounded-circle mr-3"
-                                                                // onClick={e => e.preventDefault()}
                                                                 >
                                                                     <img
                                                                         alt="..."
-                                                                        // src={require("components/argon-dashboard-react-master/assets/img/theme/bootstrap.jpg")}
-                                                                        src={store.logo}
+                                                                        src={product.images[0]}
                                                                     />
                                                                 </span>
                                                                 <Media>
-                                                                    <span className="mb-0 text-sm">
-                                                                        {store.name}
+                                                                    <span className="mb-0 text-sm product-title">
+                                                                        {product.name}
                                                                     </span>
                                                                 </Media>
                                                             </Media>
                                                         </Link>
                                                     </th>
-                                                    <td>{store.storeCategory.name}</td>
-                                                    <td>{getFullAddress(store)}</td>
-                                                    <td>
+                                                    <td className="td-custom">...</td>
+                                                    <td className="td-custom">{product.price}</td>
+                                                    <td className="td-custom">{product.saleoff}%</td>
+                                                    <td className="td-custom">
                                                         <Badge color="" className="badge-dot mr-4">
-                                                            {store.isActive ?
+                                                            <span className="is-active-true"><i className="bg-success" />Còn hàng</span>
+                                                            {/* {store.isActive ?
                                                                 (<span className="is-active-true"><i className="bg-success" />Đang hoạt động</span>) :
-                                                                (<span className="is-active-false"><i className="bg-warning" />Ngừng hoạt động</span>)}
+                                                                (<span className="is-active-false"><i className="bg-warning" />Ngừng hoạt động</span>)} */}
                                                         </Badge>
                                                     </td>
-                                                    <td className="text-right">
+                                                    <td className="text-right td-custom">
                                                         <UncontrolledDropdown>
                                                             <DropdownToggle
                                                                 className="btn-icon-only text-light"
@@ -304,20 +289,12 @@ class StoreManageUpdateProduct extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to={"/store/" + store.template +"/" + store._id} target="_blank">
+                                                                <Link to={"/store/" + this.state.storeMain.template + "/" + this.state.storeMain._id + "/products/" + product._id} target="_blank">
                                                                     <DropdownItem
                                                                     // href="#pablo"
                                                                     // onClick={e => e.preventDefault()}
                                                                     >
                                                                         Chi tiết
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <Link to={"/admin/stores-manage-update-product"}>
-                                                                    <DropdownItem
-                                                                    // href="#pablo"
-                                                                    // onClick={e => e.preventDefault()}
-                                                                    >
-                                                                        Cập nhập sản phẩm
                                                                     </DropdownItem>
                                                                 </Link>
                                                                 <DropdownItem
@@ -395,90 +372,50 @@ class StoreManageUpdateProduct extends React.Component {
                             </Card>
                         </div>
                     </Row>
-                    {/* <PhoneActivate show={this.state.showPhoneAddModal} phone={this.props.user.phone} /> */}
-                    <PhoneAdd show={this.state.showPhoneAddModal} user={this.props.user} handeResultPhoneAdd={this.handeResultPhoneAdd}/>
                     <hr />
-                    {/* Add store */}
-                    <div className={"store-template-select " + (this.state.isShowTemplateSelect ? "show" : "hide")}>
-                        <h3>CHỌN MẪU GIAO DIỆN CỬA HÀNG</h3>
-                        <div>
-                            <Label check className="checkbox-has-website">
-                                <Input type="checkbox" id="checkbox" onClick={this.onCheckboxHasWebsiteClick} />{' '}
-                                Tôi đã có website riêng
-                            </Label>
-                        </div>
-                        <hr />
-                        <div className={this.state.hasWebsite ? "hide" : "show"}>
-                            <Row>
-                                <Col xs="6" sm="3">
-                                    <div className={"store-template-select-item " + (this.state.isTemplateItem1Clicked ? "item-selected" : "")}>
-                                        <img alt="" src="https://www.joomla-monster.com/media/djcatalog2/images/item/1/jm-computers-electronics-store_l.jpg" />
-                                        <span className="title-bg-success">Thương mại bán lẻ</span>
-                                        <span id="item-1" className="item-over" onClick={this.onTemplatesItemClick}></span>
-                                    </div>
-                                </Col>
-                                <Col xs="6" sm="3">
-                                    <div className={"store-template-select-item " + (this.state.isTemplateItem2Clicked ? "item-selected" : "")}>
-                                        <img alt="" src="https://cdn.freshdesignweb.com/wp-content/uploads/site/la-resto-cafe-responsive-website-template.jpg" />
-                                        <span className="title-bg-primary">Dịch vụ ăn uống</span>
-                                        <span id="item-2" className="item-over" onClick={this.onTemplatesItemClick}></span>
-                                    </div>
-                                </Col>
-                                <Col xs="6" sm="3">
-                                    <div className="store-template-select-item">
-                                        <img alt="" src="https://cdn.freshdesignweb.com/wp-content/uploads/site/tasfiu-business-html-template.jpg" />
-                                        <span className="title-bg-warning">Doanh nghiệp</span>
-                                    </div>
-                                </Col>
-                                <Col xs="6" sm="3">
-                                    <div className="store-template-select-item">
-                                        <img alt="" src="https://s.tmimgcdn.com/scr/54700/electromo-electronics-store-ecommerce-clean-opencart-template_54714-original.jpg" />
-                                        <span className="title-bg-info">Xem thêm..</span>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
-                    </div>
-                    <div className={"store-info-input " + (this.state.isShowStoreInfoInput ? "show" : "hide")}>
-                        <h3>THÔNG TIN CỬA HÀNG</h3>
+                    <div className={"store-info-input " + (this.state.isShowProductInfoInput ? "show" : "hide")}>
+                        <h3>THÔNG TIN SẢN PHẨM</h3>
                         <hr />
                         <Form>
-                            <FormGroup row className={this.state.hasWebsite ? "hide" : ""}>
-                                <Label for="template" sm={2}>Mẫu giao diện website</Label>
+                            <FormGroup row>
+                                <Label for="store" sm={2}>Cửa hàng</Label>
                                 <Col sm={10}>
                                     <Input type="text"
-                                        name="template"
-                                        id="template"
-                                        defaultValue={this.state.templateNumber}
+                                        name="store"
+                                        id="store"
+                                        defaultValue={this.state.storeMain && this.state.storeMain.name}
+                                        required={true}
                                         readOnly={true} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="storeCategory" sm={2}>Nhóm cửa hàng</Label>
+                                <Label for="storeCategory" sm={2}>Phân loại</Label>
                                 <Col sm={10}>
                                     <Input type="select" name="storeCategory" id="storeCategory"
-                                        onChange={this.onStoreCategoryChange}>
+                                        required={true}
+                                        onChange={this.onSelectProductCategoriesChange}>
+                                        <option value={null}>Phân loại</option>
                                         {
-                                            this.state.storeCategories &&
-                                            this.state.storeCategories.map((storeCategory, key) => (
-                                                <option key={key} value={storeCategory._id}>{storeCategory.name}</option>
+                                            this.state.productCategories &&
+                                            this.state.productCategories.map((productCategory, key) => (
+                                                <option key={key} value={key}>{productCategory.name}</option>
                                             ))
                                         }
                                     </Input>
-                                    <span className={"error-message " + (this.state.storeCategoryErrorMessage ? "show" : "")}>
-                                        {this.state.storeCategoryErrorMessage}
+                                    <span className={"error-message " + (this.state.productCategoryErrorMessage ? "show" : "")}>
+                                        {this.state.productCategoryErrorMessage}
                                     </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="name" sm={2}>Tên cửa hàng</Label>
+                                <Label for="name" sm={2}>Tên sản phẩm</Label>
                                 <Col sm={10}>
                                     <Input type="text" name="name" id="name"
-                                        placeholder="Tên cửa hàng"
-                                        onChange={this.onInputStoreInfoChange}
+                                        placeholder="Tên sản phẩm"
+                                        onChange={this.onInputProductInfoChange}
                                         required={true} />
-                                    <span className={"error-message " + (this.state.storeNameErrorMessage ? "show" : "")}>
-                                        {this.state.storeNameErrorMessage}
+                                    <span className={"error-message " + (this.state.productNameErrorMessage ? "show" : "")}>
+                                        {this.state.productNameErrorMessage}
                                     </span>
                                 </Col>
                             </FormGroup>
@@ -486,170 +423,57 @@ class StoreManageUpdateProduct extends React.Component {
                                 <Label for="description" sm={2}>Giới thiệu</Label>
                                 <Col sm={10}>
                                     <Input type="textarea" name="description" id="description"
-                                        placeholder="Hãy giới thiệu về cửa hàng bạn.."
-                                        onChange={this.onInputStoreInfoChange} />
+                                        placeholder="Hãy giới thiệu về sản phẩm.."
+                                        onChange={this.onInputProductInfoChange} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="" sm={2}>Địa chỉ</Label>
-                                <Col sm={10}>
-                                    <Row form>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label for="houseNumber">Số nhà</Label>
-                                                <Input type="text" name="houseNumber" id="houseNumber"
-                                                    placeholder="Số nhà"
-                                                    onChange={this.onInputStoreInfoChange}
-                                                    required={true} />
-                                                <span className={"error-message " + (this.state.storeHouseNumberErrorMessage ? "show" : "")}>
-                                                    {this.state.storeHouseNumberErrorMessage}
-                                                </span>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label for="city">Thành phố</Label>
-                                                <Input type="select" name="city" id="city" onChange={this.onSelectCityChange}>
-                                                    {
-                                                        this.state.cities &&
-                                                        this.state.cities.map((city, key) => (
-                                                            <option key={key} value={city._id}>{city.name}</option>
-                                                        ))
-                                                    }
-                                                </Input>
-                                                <span className={"error-message " + (this.state.storeCityErrorMessage ? "show" : "")}>
-                                                    {this.state.storeCityErrorMessage}
-                                                </span>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label for="district">Quận</Label>
-                                                <Input type="select" name="district" id="district" onChange={this.onSelectDistrictChange}>
-                                                    {
-                                                        this.state.districts &&
-                                                        this.state.districts.map((district, key) => (
-                                                            <option key={key} value={district._id}>{district.name}</option>
-                                                        ))
-                                                    }
-                                                </Input>
-                                                <span className={"error-message " + (this.state.storeDistrictErrorMessage ? "show" : "")}>
-                                                    {this.state.storeDistrictErrorMessage}
-                                                </span>
-                                            </FormGroup>
-                                        </Col>
-                                        <Col md={3}>
-                                            <FormGroup>
-                                                <Label for="street">Tên đường</Label>
-                                                <Input type="select" name="street" id="street" onChange={this.onSelectStreetsChange}>
-                                                    {
-                                                        this.state.streets &&
-                                                        this.state.streets.map((street, key) => (
-                                                            <option key={key} value={street._id}>{street.name}</option>
-                                                        ))
-                                                    }
-                                                </Input>
-                                                <span className={"error-message " + (this.state.storeStreetErrorMessage ? "show" : "")}>
-                                                    {this.state.storeStreetErrorMessage}
-                                                </span>
-                                            </FormGroup>
-                                        </Col>
-                                    </Row>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="email" sm={2}>Email</Label>
-                                <Col sm={10}>
-                                    <Input type="email" name="email"
-                                        id="email" placeholder="Email"
-                                        defaultValue={this.props.user.email}
-                                        onChange={this.onInputStoreInfoChange}
-                                        required={true} />
-                                    <span className={"error-message " + (this.state.storeEmailErrorMessage ? "show" : "")}>
-                                        {this.state.storeEmailErrorMessage}
+                                <Label for="price" sm={2}>Giá gốc (VND)</Label>
+                                <Col sm={4}>
+                                    <Input type="number" name="price"
+                                        id="price" placeholder="Giá gốc"
+                                        onChange={this.onInputProductInfoChange}
+                                        required={true}/>
+                                    <span className={"error-message " + (this.state.productPriceErrorMessage ? "show" : "")}>
+                                        {this.state.productPriceErrorMessage}
                                     </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="phone" sm={2}>Số điện thoại</Label>
-                                <Col sm={10}>
-                                    <Input type="phone" name="phone"
-                                        id="phone" placeholder="Số điện thoại"
-                                        defaultValue={this.props.user.phone}
-                                        onChange={this.onInputStoreInfoChange}
-                                        required={true} />
-                                    <span className={"error-message " + (this.state.storePhoneErrorMessage ? "show" : "")}>
-                                        {this.state.storePhoneErrorMessage}
-                                    </span>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row className={this.state.hasWebsite ? "" : "hide"}>
-                                <Label for="website" sm={2}>Website</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="website" id="website"
-                                        placeholder="Website"
-                                        onChange={this.onInputStoreInfoChange} />
-                                    <span className={"error-message " + (this.state.storeWebsiteErrorMessage ? "show" : "")}>
-                                        {this.state.storeWebsiteErrorMessage}
+                                <Label for="saleoff" sm={2}>Khuyến mãi (%)</Label>
+                                <Col sm={4}>
+                                    <Input type="number" name="saleoff"
+                                        id="saleoff" placeholder="Khuyến mãi"
+                                        defaultValue={0}
+                                        onChange={this.onInputProductInfoChange}
+                                        min={0}
+                                        max={100} />
+                                    <span className={"error-message " + (this.state.productSaleoffErrorMessage ? "show" : "")}>
+                                        {this.state.productSaleoffErrorMessage}
                                     </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="facebook" sm={2}>Facebook</Label>
+                                <Label for="images" sm={2}>Hình ảnh</Label>
                                 <Col sm={10}>
-                                    <Input type="text" name="facebook" id="facebook" placeholder="Facebook" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="youtube" sm={2}>Youtube</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="youtube" id="youtube" placeholder="Youtube" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="twitter" sm={2}>Twitter</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="twitter" id="twitter" placeholder="Twitter" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="instagram" sm={2}>Instagram</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="instagram" id="instagram" placeholder="Instagram" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="googlePlus" sm={2}>Google Plus</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="googlePlus" id="googlePlus" placeholder="Google Plus" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="pinterest" sm={2}>Pinterest</Label>
-                                <Col sm={10}>
-                                    <Input type="text" name="pinterest" id="pinterest" placeholder="Pinterest" />
-                                </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                                <Label for="logo" sm={2}>Logo</Label>
-                                <Col sm={10}>
-                                    <Input type="file" name="file" id="logo" />
+                                    <Input type="file" name="images" id="images" />
                                     <FormText color="muted">
-
+                                        Tối đa 10 ảnh.
                                     </FormText>
                                 </Col>
                             </FormGroup>
                             <FormGroup check row>
                                 <Col sm={{ size: 10, offset: 2 }} style={{ textAlign: "center" }}>
-                                    <span className={"error-message2 " + (this.state.addStoreErrorMessage ? "show" : "")}>
-                                        {this.state.addStoreErrorMessage}
+                                    <span className={"error-message2 " + (this.state.addProductErrorMessage ? "show" : "")}>
+                                        {this.state.addProductErrorMessage}
                                     </span>
-                                    <Button type="button" color="success" onClick={this.onSubmitButtonClick}>Thêm cửa hàng</Button>
+                                    <Button type="button" color="warning" onClick={this.onCancelButtonClick}>Hủy</Button>
+                                    <Button type="button" color="success" onClick={this.onSubmitButtonClick}>Thêm sản phẩm</Button>
                                 </Col>
                             </FormGroup>
                         </Form>
                     </div>
-                    <MessageNotify message={this.state.addStoreResultMessage} />
+                    <MessageNotify message={this.state.addProductResultMessage} />
                 </Container>
             </>
         );
