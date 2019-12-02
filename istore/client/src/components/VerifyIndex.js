@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Spinner } from "react-bootstrap";
 
 import './VerifyIndex.css'
 
@@ -7,7 +8,7 @@ export default class VerifyIndex extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			message: 'Đang xác thực ...',
+			message: 'Đang xác thực ',
 			statusNotify: '',
 			timeout: 5
 		}
@@ -42,7 +43,7 @@ export default class VerifyIndex extends Component {
 			setInterval(() => {
 				if (i === 0) {
 					this.setState({
-						message: 'Đang chuyển đến trang chủ ...',
+						message: 'Đang chuyển đến trang chủ ',
 						statusNotify: ''
 					})
 					window.location.href = 'https://localhost:3000';
@@ -59,7 +60,9 @@ export default class VerifyIndex extends Component {
 		if (this.state.statusNotify) {
 			return (
 				<div className="verify">
-					<div>
+					<div className="verify-box">
+					</div>
+					<div className="verify-content">
 						<h2 className={this.state.statusNotify}>{this.state.message}</h2>
 						<h5>Bạn sẽ trở lại trang chủ trong {this.state.timeout} giây nữa!</h5>
 					</div>
@@ -68,8 +71,15 @@ export default class VerifyIndex extends Component {
 		} else {
 			return (
 				<div className="verify">
-					<div>
+					<div className="verify-box">
+					</div>
+					<div className="verify-content">
 						<h2 className={this.state.statusNotify}>{this.state.message}</h2>
+						<h2>
+							<Spinner animation="grow" size="sm" />
+							<Spinner animation="grow" size="sm" />
+							<Spinner animation="grow" size="sm" />
+						</h2>
 					</div>
 				</div>
 			)

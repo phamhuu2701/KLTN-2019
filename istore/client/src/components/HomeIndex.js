@@ -9,9 +9,13 @@ import ProductInformation from "./istore/ProductInformation";
 import MessageNotify from "./istore/MessageNotify";
 import Footer from "./istore/Footer";
 
-// import "bootstrap/dist/css/bootstrap.min.css";
+import { onZoomSearchFieldService } from '../services/store.service';
 
-// console.log(window.location.href);
+let that;
+
+export function onZoomSearchField(zoom) {
+    onZoomSearchFieldService(that, zoom);
+}
 
 class HomeIndex extends Component {
     constructor() {
@@ -22,6 +26,11 @@ class HomeIndex extends Component {
         };
         this.logInToggle = this.logInToggle.bind(this);
         this.successSignUpHandler = this.successSignUpHandler.bind(this);
+        this.onZoom = this.onZoom.bind(this);
+    }
+
+    UNSAFE_componentWillMount() {
+        that = this;
     }
 
     logInToggle(state) {
@@ -38,19 +47,46 @@ class HomeIndex extends Component {
         });
         setTimeout(() => {
             this.setState({
-                message: ""
+                message: "",
+                leftBody: '',
+                rigthBody: ''
             });
         }, 4000);
+    }
+
+    onZoom(zoom) {
+        if (zoom === 'in') {
+            this.setState({
+                leftBody: 'big',
+                rigthBody: 'small'
+            })
+        } else if (zoom === 'out') {
+            this.setState({
+                leftBody: 'small',
+                rigthBody: 'big' 
+            })
+        } else if (zoom === 'normal') {
+            this.setState({
+                leftBody: '',
+                rigthBody: '' 
+            })
+        } else {
+            // Hidden search field
+            this.setState({
+                leftBody: 'hidden',
+                rigthBody: 'fullScreen' 
+            })
+        }
     }
 
     render() {
         return (
             <div className="app">
-                <div className="app-body-left small">
+                <div className={"app-body-left " + this.state.leftBody}>
                     <Logo />
-                    <Field />
+                    <Field onZoom={this.onZoom}/>
                 </div>
-                <div className="app-body-right medium">
+                <div className={"app-body-right " + this.state.rigthBody}>
                     <Maps />
                 </div>
                 <ProductInformation />

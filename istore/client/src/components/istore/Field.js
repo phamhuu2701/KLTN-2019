@@ -4,7 +4,7 @@ import { Form, Row, Col, Spinner } from "react-bootstrap";
 import "./Field.css";
 import FieldResultsItem from "./Field_Results_Item";
 import Footer from "./Footer";
-import { onSearchProduct } from "./Maps";
+import { effectOnSearchProduct } from "./ProductInformation";
 import { onSortStoreListService } from "../../services/store.service";
 
 class SearchBar extends Component {
@@ -27,7 +27,10 @@ class SearchBar extends Component {
             const distance = document.querySelector(
                 'select[class="form-control"]'
             ).value;
-            onSearchProduct(search, distance, result => {
+            effectOnSearchProduct(search, distance, result => {
+                if (result.length > 0) {
+                    this.props.onZoom('in');
+                } else this.props.onZoom('out');
                 this.props.findProductHandler(result);
             });
         } else {
@@ -42,7 +45,7 @@ class SearchBar extends Component {
         const distance = document.querySelector(
             'select[class="form-control"]'
         ).value;
-        onSearchProduct(search, distance, result => {
+        effectOnSearchProduct(search, distance, result => {
             this.props.findProductHandler(result);
         });
     }
@@ -135,6 +138,7 @@ export class ResultArea extends Component {
                                 phone={res.store.phone}
                                 productName={res._doc.name}
                                 distance={res.distance}
+                                onZoom={this.props.onZoom}
                             />
                         );
                     })}
@@ -164,7 +168,7 @@ export default class Fields extends Component {
     onDistanceSelectChange(e) {
         const search = document.querySelector("#autocomplete").value;
         const distance = e.target.value;
-        onSearchProduct(search, distance, result => {
+        effectOnSearchProduct(search, distance, result => {
             this.findProductHandler(result);
         });
     }
@@ -194,6 +198,7 @@ export default class Fields extends Component {
                                 findProductHandler={
                                     this.findProductHandler
                                 }
+                                onZoom={this.props.onZoom} 
                             />
                         </Col>
                     </Row>
@@ -254,6 +259,7 @@ export default class Fields extends Component {
                         ref={this.findProductRef}
                         result={this.state.result}
                         isFound={this.state.isFound}
+                        onZoom={this.props.onZoom}
                     />
                 </div>
                 <hr className="field-hr" />

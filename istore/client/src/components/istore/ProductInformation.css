@@ -4,7 +4,6 @@
   top: 15%;
   z-index: 120;
   position: fixed;
-  right: -100%;
   background-color: #fff;
   overflow-x: hidden;
   transition: 0.5s;
@@ -12,9 +11,18 @@
 
 @media only screen and (max-width: 768px) {
   .store-info {
-    height: 85%;
-    width: 85%;
-    top: 15%;
+    height: 65%;
+    width: 100%;
+    top: 100%;
+    right: 0;
+  }
+
+  .hide {
+  }
+
+  .show {
+    top: 35%;
+    right: 0;
   }
 }
 
@@ -22,7 +30,16 @@
   .store-info {
     height: 85%;
     width: 65%;
-    top: 15%;
+    bottom: 0;
+    right: -100%;
+  }
+
+  .hide {
+  }
+
+  .show {
+    bottom: 0;
+    right: 0;
   }
 }
 

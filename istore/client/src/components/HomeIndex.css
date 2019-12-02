@@ -11,9 +11,16 @@
     /* height: 100%; */
     /* overflow-y: auto; */
     position: relative;
+    transition: 0.3s;
 }
-
 .app-body-left.small {
+    width: 30%;
+}
+.app-body-left.big {
+    width: 60%;
+}
+.app-body-left.hidden {
+    width: 0%;
 }
 
 .app-body-left .footer .footer-body {
@@ -22,7 +29,16 @@
 
 .app-body-right {
     width: 60%;
-    /* height: 100%; */
+    transition: 0.3s;
+}
+.app-body-right.small {
+    width: 40%;
+}
+.app-body-right.big {
+    width: 70%;
+}
+.app-body-right.fullScreen {
+    width: 100%;
 }
 
 .app > .footer {    

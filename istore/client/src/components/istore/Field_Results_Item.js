@@ -1,20 +1,24 @@
 import React, { Component } from "react";
 
-import { showHideStoreInfo } from './Maps';
+import { effectStoreInformationWindow } from './ProductInformation';
 import "./Field_Results_Item.css";
 import { getStarsArray } from "../../utils/productUtils";
 
 export default class Fields_Result_Item extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
 
         this.state = {
             rateStarsUrl: []
         }
     }
 
-    componentDidMount(){
+    viewProductInformation(id, info) {
+        this.props.onZoom('out');
+        effectStoreInformationWindow(id, info);
+    }
 
+    componentDidMount(){
         // lấy mảng sao đánh giá
         let starsArray = getStarsArray(this.props.info._doc);
         let rateStarsUrl = [];
@@ -37,7 +41,7 @@ export default class Fields_Result_Item extends Component {
         // console.log(this.props);
         // console.log(this.props.info._doc.rates);
         return (
-            <div className="field-results-item" onClick={() => {showHideStoreInfo(this.props.code, this.props.info)}}>
+            <div className="field-results-item" onClick={() => {this.viewProductInformation(this.props.code, this.props.info)}}>
                 <div className="field-results-item-content">
                     <div className="field-results-item-img">
                         <img src={this.props.imageAvatar} alt="" />

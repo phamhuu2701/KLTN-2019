@@ -19,7 +19,7 @@ export function onGetCurrentPositionService(thisMap) {
 }
 
 // Get Address or geometry (latitude and longitude)
-export function onSearchProductService(search, distance, thisMap, cb) {
+export function onSearchProductService(search, distance, thisMap, thisStoreWindow, cb) {
     try {
         // Find product and location of that products
         if (search !== "") {
@@ -35,7 +35,22 @@ export function onSearchProductService(search, distance, thisMap, cb) {
             document.querySelector(
                 ".field-results-number"
             ).textContent = `Kết quả`;
-            document.querySelector(".store-info").style.right = "-100%";
+            
+            // Hidden store information windows
+            const items = document.querySelectorAll(".field-results-item");
+            if (items.length > 0) {
+                for(let item of items) {
+                    if (item.style.backgroundColor) {
+                        item.style.backgroundColor = '';
+                        if (thisStoreWindow.state.effect) {
+                            thisStoreWindow.setState({
+                                effect: ''
+                            })
+                        }
+                    }
+                }
+
+            }
 
             const { lat, lng } = thisMap.state.currentLocation;
 

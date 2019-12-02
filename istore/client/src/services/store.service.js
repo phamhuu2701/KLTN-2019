@@ -5,16 +5,21 @@ import {
     sortProductByRating
 } from "../utils/sortModel";
 import { showProductDetail } from "../components/istore/ProductDetail";
+import { onZoomSearchField } from "../components/HomeIndex";
 
-export function showHideStoreInfoService(id, info, thisMap) {
+export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
     const storeInfo = document.querySelector(".store-info");
     const items = document.querySelectorAll(".field-results-item");
     if (
         items[id].style.backgroundColor === "" ||
-        storeInfo.style.right === "-100%"
+        //storeInfo.style.right === "-100%"
+        thisStoreWindow.state.effect === ''
     ) {
         if (items[id].style.backgroundColor !== "") {
-            storeInfo.style.right = "0px";
+            //storeInfo.style.right = "0px";
+            thisStoreWindow.setState({
+                effect: 'show'
+            })
         } else {
             for (let i = 0; i < items.length; i++) {
                 items[i].style.backgroundColor = "";
@@ -24,11 +29,18 @@ export function showHideStoreInfoService(id, info, thisMap) {
 
             // Marker
 
-            storeInfo.style.right = "0px";
+            //storeInfo.style.right = "0px";
+            thisStoreWindow.setState({
+                effect: 'show'
+            })
             items[id].style.backgroundColor = "#C7F0AA";
         }
     } else {
-        storeInfo.style.right = "-100%";
+        //storeInfo.style.right = "-100%";
+        thisStoreWindow.setState({
+            effect: ''
+        })
+        onZoomSearchField('in');
         items[id].style.backgroundColor = "";
     }
 
@@ -45,6 +57,10 @@ export function showHideStoreInfoService(id, info, thisMap) {
         new latLng(lat, lng),
         new latLng(latlng.lat, latlng.lng)
     );
+}
+
+export function onZoomSearchFieldService(that, zoom) {
+    that.onZoom(zoom);
 }
 
 export function onSortStoreListService(stores, priority, cb) {

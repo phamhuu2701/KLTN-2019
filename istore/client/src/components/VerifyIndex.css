@@ -7,8 +7,21 @@
 	align-items: center;
 }
 
-.verify div {
+.verify-box {
+	height: 40%;
+	width: 60%;
+	background-color: #000;
+	opacity: 40%;
 	margin: auto;
+}
+
+.verify > .verify-content {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	align-items: center;
+	opacity: 100%;
+	z-index: 99;
 }
 
 .verify h2 {
@@ -26,7 +39,7 @@
 }
 
 .verify h2.status-danger {
-	color: red;
+	color: #dc3545;
 }
 
 .verify h5 {

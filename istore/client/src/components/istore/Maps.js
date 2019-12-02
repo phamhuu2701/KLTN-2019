@@ -19,12 +19,12 @@ export function onSearchAddress(address, cb) {
     geocodingService(address, that, cb)
 }
 
-export function onSearchProduct (search, distance, cb) {
-    onSearchProductService(search, distance, that, cb);
+export function onSearchProduct (search, distance, thisStoreWindow, cb) {
+    onSearchProductService(search, distance, that, thisStoreWindow, cb);
 }
 
-export function showHideStoreInfo(id, info) {
-    showHideStoreInfoService(id, info, that);
+export function showHideStoreInfo(id, info, thisStoreWindow) {
+    showHideStoreInfoService(id, info, that, thisStoreWindow);
 }
 
 export class MapContainer extends Component {
