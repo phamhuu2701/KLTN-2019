@@ -132,3 +132,8 @@
 .stores-manage .show {
     display: block;
 }
+
+.product-title {
+    max-width: 200px;
+    overflow: hidden;
+}

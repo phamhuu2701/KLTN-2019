@@ -108,3 +108,16 @@ export function addStore(store, callback) {
         })
         .catch(err => console.log(err));
 }
+
+export function getStoreById(id, callback) {
+    fetch("/api/stores/" + id)
+        .then(res => res.json())
+        .then(store => {
+            if (store) {
+                callback(store);
+            } else {
+                callback(null);
+            }
+        })
+        .catch(err => console.log(err));
+}
