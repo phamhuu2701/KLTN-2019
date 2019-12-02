@@ -17,6 +17,7 @@ class AdminIndex extends Component {
             user: null,
             isLoginError: false
         };
+        this.updateUserHandler = this.updateUserHandler.bind(this)
     }
 
     componentDidMount() {
@@ -46,6 +47,16 @@ class AdminIndex extends Component {
         //     });
     }
 
+    updateUserHandler() {
+        fetch("/api/login")
+            .then(res => res.json())
+            .then(result => {
+                this.setState({
+                    user: result.user
+                });
+            });
+    }
+
     render() {
         if (this.state.isLogged) {
             return (
@@ -57,6 +68,7 @@ class AdminIndex extends Component {
                                 <AdminLayout
                                     {...props}
                                     user={this.state.user}
+                                    updateUserHandler={this.updateUserHandler}
                                 />
                             )}
                         />

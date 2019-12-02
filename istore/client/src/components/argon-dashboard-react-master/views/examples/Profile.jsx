@@ -174,14 +174,27 @@ class Profile extends React.Component {
             .then(userUpdate => {
                 // console.log("Update success!");
                 this.setState({
-                    updateResultMessage: "Cập nhập thông tin thành công!"
+                    updateResultMessage: "Cập nhập thông tin thành công!",
+                    inputFirstname: {
+                        errorMessage: "",
+                        value: userUpdate.fullname.firstname
+                    },
+                    inputLastname: {
+                        errorMessage: "",
+                        value: userUpdate.fullname.lastname
+                    }
                 })
+                this.props.updateUserHandler();
             });
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+
     }
 
     render() {
         // console.log(this.props);
-        console.log(this.props.user);
+        //console.log(this.props.user);
         return (
             <>
                 <UserHeader user={this.props.user} />

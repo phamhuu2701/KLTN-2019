@@ -27,6 +27,30 @@
     display: none;
 }
 
+img.zoom-icon {
+    position: absolute;
+    left: 40.2% !important;
+    top: 3.3em !important;
+    height: 2.4em !important;
+    z-index: 99;
+    transition: 0.3s;
+}
+img.zoom-icon:hover {
+    height: 2.8em !important;
+}
+img.zoom-icon.left {
+    left: 30.2% !important;
+}
+img.zoom-icon.right {
+    left: 60.2% !important;
+}
+
+@media only screen and (max-width: 768px) {
+    img.zoom-icon {
+        display: none;
+    }
+}
+
 .app-body-right {
     width: 60%;
     transition: 0.3s;

@@ -17,16 +17,22 @@ export function onZoomSearchField(zoom) {
     onZoomSearchFieldService(that, zoom);
 }
 
-class HomeIndex extends Component {
+export default class HomeIndex extends Component {
     constructor() {
         super();
         this.state = {
             isLoggedIn: false,
-            message: ""
+            message: "",
+            leftBody: '',
+            rigthBody: '',
+            zoomIcon: '/resources/icons/zoom-in.svg',
+            zoomTitle: 'Thu nhỏ',
+            zoom_icon: 'zoom-icon'
         };
         this.logInToggle = this.logInToggle.bind(this);
         this.successSignUpHandler = this.successSignUpHandler.bind(this);
         this.onZoom = this.onZoom.bind(this);
+        this.onZoomToogle = this.onZoomToogle.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -48,33 +54,48 @@ class HomeIndex extends Component {
         setTimeout(() => {
             this.setState({
                 message: "",
-                leftBody: '',
-                rigthBody: ''
             });
         }, 4000);
+    }
+
+    onZoomToogle() {
+        if (this.state.zoom_icon.includes('left')) {
+            this.onZoom('normal')
+        } else if (this.state.zoom_icon === 'zoom-icon') {
+            this.onZoom('in')
+        } else this.onZoom('out');
     }
 
     onZoom(zoom) {
         if (zoom === 'in') {
             this.setState({
                 leftBody: 'big',
-                rigthBody: 'small'
+                rigthBody: 'small',
+                zoomIcon: '/resources/icons/zoom-out.svg',
+                zoomTitle: 'Thu nhỏ',
+                zoom_icon: 'zoom-icon right'
             })
         } else if (zoom === 'out') {
             this.setState({
                 leftBody: 'small',
-                rigthBody: 'big' 
+                rigthBody: 'big',
+                zoomIcon: '/resources/icons/zoom-in.svg',
+                zoomTitle: 'Phóng to',
+                zoom_icon: 'zoom-icon left'
             })
         } else if (zoom === 'normal') {
             this.setState({
                 leftBody: '',
-                rigthBody: '' 
+                rigthBody: '',
+                zoomIcon: '/resources/icons/zoom-in.svg',
+                zoomTitle: 'Phóng to nhất',
+                zoom_icon: 'zoom-icon'
             })
         } else {
             // Hidden search field
             this.setState({
                 leftBody: 'hidden',
-                rigthBody: 'fullScreen' 
+                rigthBody: 'fullScreen'
             })
         }
     }
@@ -86,6 +107,7 @@ class HomeIndex extends Component {
                     <Logo />
                     <Field onZoom={this.onZoom}/>
                 </div>
+                <img className={this.state.zoom_icon} src={this.state.zoomIcon} alt={this.state.zoomTitle} onClick={this.onZoomToogle}/>
                 <div className={"app-body-right " + this.state.rigthBody}>
                     <Maps />
                 </div>
@@ -100,5 +122,3 @@ class HomeIndex extends Component {
         );
     }
 }
-
-export default HomeIndex;

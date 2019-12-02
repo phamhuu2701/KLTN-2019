@@ -145,6 +145,9 @@ export function onSearchProductService(search, distance, thisMap, thisStoreWindo
                             }
                         }
                         thisMap.showNearStore(nearbyStoreLocation);
+
+                        // Recenter map
+                        thisMap.map.panTo(new latLng(lat, lng))
                     } else {
                         document.querySelector(".loading").style.display =
                             "none";

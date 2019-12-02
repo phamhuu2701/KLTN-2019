@@ -8,13 +8,14 @@ import { showProductDetail } from "../components/istore/ProductDetail";
 import { onZoomSearchField } from "../components/HomeIndex";
 
 export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
-    const storeInfo = document.querySelector(".store-info");
+    //const storeInfo = document.querySelector(".store-info");
     const items = document.querySelectorAll(".field-results-item");
     if (
         items[id].style.backgroundColor === "" ||
         //storeInfo.style.right === "-100%"
         thisStoreWindow.state.effect === ''
     ) {
+        onZoomSearchField('out');
         if (items[id].style.backgroundColor !== "") {
             //storeInfo.style.right = "0px";
             thisStoreWindow.setState({

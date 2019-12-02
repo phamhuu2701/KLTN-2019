@@ -46,6 +46,9 @@ class SearchBar extends Component {
             'select[class="form-control"]'
         ).value;
         effectOnSearchProduct(search, distance, result => {
+            if (result.length > 0) {
+                this.props.onZoom('in');
+            } else this.props.onZoom('out');
             this.props.findProductHandler(result);
         });
     }
@@ -138,7 +141,6 @@ export class ResultArea extends Component {
                                 phone={res.store.phone}
                                 productName={res._doc.name}
                                 distance={res.distance}
-                                onZoom={this.props.onZoom}
                             />
                         );
                     })}
@@ -169,6 +171,9 @@ export default class Fields extends Component {
         const search = document.querySelector("#autocomplete").value;
         const distance = e.target.value;
         effectOnSearchProduct(search, distance, result => {
+            if (result.length > 0) {
+                this.props.onZoom('in');
+            } else this.props.onZoom('out');
             this.findProductHandler(result);
         });
     }

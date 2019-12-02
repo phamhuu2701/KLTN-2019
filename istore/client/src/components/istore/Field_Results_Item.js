@@ -13,11 +13,6 @@ export default class Fields_Result_Item extends Component {
         }
     }
 
-    viewProductInformation(id, info) {
-        this.props.onZoom('out');
-        effectStoreInformationWindow(id, info);
-    }
-
     componentDidMount(){
         // lấy mảng sao đánh giá
         let starsArray = getStarsArray(this.props.info._doc);
@@ -41,7 +36,7 @@ export default class Fields_Result_Item extends Component {
         // console.log(this.props);
         // console.log(this.props.info._doc.rates);
         return (
-            <div className="field-results-item" onClick={() => {this.viewProductInformation(this.props.code, this.props.info)}}>
+            <div className="field-results-item" onClick={() => {effectStoreInformationWindow(this.props.code, this.props.info)}}>
                 <div className="field-results-item-content">
                     <div className="field-results-item-img">
                         <img src={this.props.imageAvatar} alt="" />

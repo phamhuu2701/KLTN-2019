@@ -9,10 +9,6 @@ import "./Logo.css";
 class SearchPlace extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            city: '',
-            query: ''
-        }
         this.autocompleteInput = React.createRef();
         this.onEnterPlace = this.onEnterPlace.bind(this);
         this.getCurrentPosition = this.getCurrentPosition.bind(this);

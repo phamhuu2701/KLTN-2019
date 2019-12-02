@@ -140,7 +140,8 @@ router
             // console.log(user);
 
             let userUpdate = await UserDao.update(user);
-            // console.log(userUpdate);
+            //console.log(userUpdate);
+            req.session.user = userUpdate;
             res.json(userUpdate);
         }
     });
