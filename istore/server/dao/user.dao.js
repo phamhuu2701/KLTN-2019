@@ -94,6 +94,19 @@ module.exports = {
             );
         });
     },
+    updateForgetPasswordToken: (email, token) => {
+        return Model.findOneAndUpdate(
+            {email: email}, 
+            {
+                forgetPasswordToken: token,
+                forgetPasswordTokenExpire: Date.now() + 900000
+            },
+            {useFindAndModify: false}
+        )
+    },
+    updateNewPassword: (email, password) => {
+        return Model.findOneAndUpdate({email: email}, {password: password}, {useFindAndModify: false});
+    },
     delete: model => {
         return new Promise((resolve, reject) => {
             Model.findByIdAndDelete(model.id, err => {

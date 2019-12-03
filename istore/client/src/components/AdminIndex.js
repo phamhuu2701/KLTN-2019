@@ -8,7 +8,7 @@ import "components/argon-dashboard-react-master/assets/scss/argon-dashboard-reac
 import AdminLayout from "components/argon-dashboard-react-master/layouts/Admin.jsx";
 import AuthLayout from "components/argon-dashboard-react-master/layouts/Auth.jsx";
 
-class AdminIndex extends Component {
+export default class AdminIndex extends Component {
     constructor() {
         super();
 
@@ -16,8 +16,7 @@ class AdminIndex extends Component {
             isLogged: false,
             user: null,
             isLoginError: false
-        };
-        this.updateUserHandler = this.updateUserHandler.bind(this)
+        }
     }
 
     componentDidMount() {
@@ -47,16 +46,6 @@ class AdminIndex extends Component {
         //     });
     }
 
-    updateUserHandler() {
-        fetch("/api/login")
-            .then(res => res.json())
-            .then(result => {
-                this.setState({
-                    user: result.user
-                });
-            });
-    }
-
     render() {
         if (this.state.isLogged) {
             return (
@@ -68,7 +57,6 @@ class AdminIndex extends Component {
                                 <AdminLayout
                                     {...props}
                                     user={this.state.user}
-                                    updateUserHandler={this.updateUserHandler}
                                 />
                             )}
                         />
@@ -90,5 +78,3 @@ class AdminIndex extends Component {
         }
     }
 }
-
-export default AdminIndex;

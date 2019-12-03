@@ -63,7 +63,7 @@ router
                 // Return result for user
                 return res
                     .status(200)
-                    .json({ message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com/" target="_blank">${result.accepted[0]}</a>!` });
+                    .json({ message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com" target="_blank">${result.accepted[0]}</a>!` });
             })
             .catch(err => console.log(err))
         } else {
@@ -72,6 +72,64 @@ router
                 .json({ err: "Email hoặc số điện thoại đã tồn tại!" });
         }
     });
+
+router.route('/forgotpassword-:email')
+.get(async (req, res) => {
+    // Check email existing
+    const email = req.params.email;
+    const user = await UserDao.findOneByEmail(email);
+    if (user) {
+        // Update token and token expire
+        const token = uid(10);
+        UserDao.updateForgetPasswordToken(email, token)
+        .then(result => {
+            // Send token to email
+            const mailOption = {
+                from: config.get('domainName'),
+                to: email,
+                subject: `Lấy lại mật khẩu - ${config.get('domainName')}`,
+                html: `Bạn vừa yêu cầu cấp lại mật khẩu trên ${config.get('domainName')}. Vui lòng nhập token dể cập nhật lại mật khẩu!
+                Token: ${token}`
+            }
+            mailer.sendMail(mailOption)
+            .then(result => {
+                // Response to client
+                return res.status(200).json({isMatch: true, err: null});
+            })
+            .catch(err => res.status(202).json({isMatch: false, err: 'Xảy ra lỗi. Vui lòng thử lại!'}))
+            //return res.status(200).json({isMatch: true, err: null});
+        })
+        .catch(err => {
+            return res.status(202).json({isMatch: false, err: 'Xảy ra lỗi. Vui lòng thử lại!'});
+        });
+    } else {
+        return res.status(201).json({isMatch: false, err: '*Email không trùng khớp!'});
+    }
+})
+.put(async (req, res) => {
+    // Update new password for user
+    const email = req.params.email;
+    const {token, password} = req.body;
+    const user = await UserDao.findOneByEmail(email);
+    if (user.forgetPasswordToken === token) {
+        if (user.forgetPasswordTokenExpire - Date.now() <= 0) {
+            // Expire
+            return res.status(201).json({err: 'Token đã hết hạn!'});
+        } else {
+            // Success
+            UserDao.updateNewPassword(email, md5(password))
+            .then(result => {
+                return res.status(200).json({err: ''});
+            })
+            .catch(err => {
+                return res.status(201).json({err: 'Xảy ra lỗi. Vui lòng thử lại!'});
+            })
+        }
+    } else {
+        // Don't same token
+        return res.status(201).json({err: 'Token không trùng khớp!'});
+    }
+})
 
 router.route('/verify')
 .put((req, res) => {

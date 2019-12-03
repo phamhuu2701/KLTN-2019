@@ -36,6 +36,19 @@ import {
 } from "reactstrap";
 
 class AdminNavbar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: props.user
+        }
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        this.setState({
+            user: nextProps.user
+        })
+    }
+
     render() {
         return (
             <>
@@ -67,12 +80,12 @@ class AdminNavbar extends React.Component {
                                             <img
                                                 alt="..."
                                                 // src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                src={this.props.user && this.props.user.avatars[0]}
+                                                src={this.state.user && this.state.user.avatars[0]}
                                             />
                                         </span>
                                         <Media className="ml-2 d-none d-lg-block">
                                             <span className="mb-0 text-sm font-weight-bold">
-                                                {this.props.user && (this.props.user.fullname.firstname + " " + this.props.user.fullname.lastname)}
+                                                {this.state.user && (this.state.user.fullname.firstname + " " + this.state.user.fullname.lastname)}
                                             </span>
                                         </Media>
                                     </Media>

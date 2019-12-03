@@ -30,6 +30,8 @@ const userSchema = new Schema(
         mailVerifyToken: {type: String, maxlength: 10, trim: true, unique: true},
         phoneVerifyToken: {type: String, maxlength: 6, trim: true, unique: true},
         phoneVerifyTokenExpire: {type: Date},
+        forgetPasswordToken: {type: String, maxlength: 10, trim: true, unique: true},
+        forgetPasswordTokenExpire: {type: Date},
         password: { type: String, required: true, maxlength: 50, trim: true },
         address: { type: String, maxlength: 100, trim: true },
         gender: { type: Boolean, default: false },

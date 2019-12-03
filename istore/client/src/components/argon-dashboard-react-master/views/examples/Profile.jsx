@@ -44,7 +44,7 @@ class Profile extends React.Component {
         super(props);
 
         this.state = {
-            // user: props.user,
+            user: this.props.user,
             stores: [],
             inputFirstname: {
                 errorMessage: "",
@@ -174,6 +174,7 @@ class Profile extends React.Component {
             .then(userUpdate => {
                 // console.log("Update success!");
                 this.setState({
+                    user: userUpdate,
                     updateResultMessage: "Cập nhập thông tin thành công!",
                     inputFirstname: {
                         errorMessage: "",
@@ -184,12 +185,8 @@ class Profile extends React.Component {
                         value: userUpdate.fullname.lastname
                     }
                 })
-                this.props.updateUserHandler();
+                document.querySelectorAll('.media')[2].children[0].textContent = userUpdate.fullname.lastname + ' ' + userUpdate.fullname.firstname;
             });
-    }
-
-    UNSAFE_componentWillReceiveProps(nextProps) {
-
     }
 
     render() {
@@ -197,7 +194,7 @@ class Profile extends React.Component {
         //console.log(this.props.user);
         return (
             <>
-                <UserHeader user={this.props.user} />
+                <UserHeader user={this.state.user} />
                 {/* Page content */}
                 <Container className="mt--7 user-profile" fluid>
                     <Row>
@@ -211,7 +208,7 @@ class Profile extends React.Component {
                                                     alt="..."
                                                     className="rounded-circle"
                                                     //   src={require("components/argon-dashboard-react-master/assets/img/theme/team-4-800x800.jpg")}
-                                                    src={this.props.user.avatars[0]}
+                                                    src={this.state.user.avatars[0]}
                                                 />
                                             </a>
                                         </div>
@@ -265,11 +262,11 @@ class Profile extends React.Component {
                                     </Row>
                                     <div className="text-center">
                                         <h3>
-                                            {(this.props.user.fullname.lastname + " " + this.props.user.fullname.firstname)}
+                                            {(this.state.user.fullname.lastname + " " + this.state.user.fullname.firstname)}
                                         </h3>
                                         <div className="h5 font-weight-300">
                                             <i className="ni location_pin mr-2" />
-                                            {this.props.user.address}
+                                            {this.state.user.address}
                                         </div>
                                         <div className="h5 mt-4">
                                             <i className="ni business_briefcase-24 mr-2" />
@@ -326,12 +323,12 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.props.user.fullname.firstname}
+                                                            defaultValue={this.state.user.fullname.firstname}
                                                             id="input-first-name"
                                                             placeholder="Tên"
                                                             type="text"
                                                             minLength={1}
-                                                            maxLength={10}
+                                                            maxLength={20}
                                                             required={true}
                                                             onChange={this.onInputChange}
                                                         />
@@ -350,12 +347,12 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.props.user.fullname.lastname}
+                                                            defaultValue={this.state.user.fullname.lastname}
                                                             id="input-last-name"
                                                             placeholder="Họ"
                                                             type="text"
                                                             minLength={1}
-                                                            maxLength={10}
+                                                            maxLength={30}
                                                             required={true}
                                                             onChange={this.onInputChange}
                                                         />
@@ -376,7 +373,7 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.props.user.phone}
+                                                            defaultValue={this.state.user.phone}
                                                             id="input-phone"
                                                             placeholder="Số điện thoại"
                                                             type="tel"
@@ -396,7 +393,7 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.props.user.email}
+                                                            defaultValue={this.state.user.email}
                                                             id="input-email"
                                                             placeholder="istore@gmail.com"
                                                             type="email"
@@ -419,7 +416,7 @@ class Profile extends React.Component {
                                                             <Input type="radio" name="radio2"
                                                                 defaultValue={true}
                                                                 onChange={this.onRadioGenderChange}
-                                                                defaultChecked={this.props.user.gender ? true : false} />{' '}
+                                                                defaultChecked={this.state.user.gender ? true : false} />{' '}
                                                             Nam
                                                         </Label>
                                                     </FormGroup>
@@ -428,7 +425,7 @@ class Profile extends React.Component {
                                                             <Input type="radio" name="radio2"
                                                                 defaultValue={false}
                                                                 onChange={this.onRadioGenderChange}
-                                                                defaultChecked={this.props.user.gender ? false : true} />{' '}
+                                                                defaultChecked={this.state.user.gender ? false : true} />{' '}
                                                             Nữ
                                                         </Label>
                                                     </FormGroup>
@@ -445,7 +442,7 @@ class Profile extends React.Component {
                                                             type="date"
                                                             id="input-birthday"
                                                             placeholder="Ngày sinh"
-                                                            defaultValue={formatDate(this.props.user.birthday)}
+                                                            defaultValue={formatDate(this.state.user.birthday)}
                                                             onChange={this.onInputChange}
                                                         />
                                                     </FormGroup>
@@ -469,7 +466,7 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.props.user.address}
+                                                            defaultValue={this.state.user.address}
                                                             id="input-address"
                                                             placeholder="Địa chỉ"
                                                             type="text"

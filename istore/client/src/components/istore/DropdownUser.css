@@ -310,3 +310,25 @@ fieldset:disabled a.btn {
     color: #fff!important;
 }
 
+.forgot-password {
+    margin-left: 50%;
+    font-style: italic;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    color: gray;
+}
+
+.forgot-password:hover {
+    color: #1c7430;
+}
+
+span.cancelForgotPassword {
+    color: blue;
+    font-size: 0.8rem;
+    font-style: italic;
+    cursor: pointer;
+}
+
+.loading.show {
+    display: block !important;
+}

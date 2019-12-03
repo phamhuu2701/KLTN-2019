@@ -1,13 +1,92 @@
 import React, { Component } from "react";
-import { Form, Button, Image } from "react-bootstrap";
+import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
 import Cookies from 'js-cookie';
 
 import Facebook from './Facebook';
 import Google from './Google';
 
-import { LoginByLocalService, SignUpByLocalService, LogOutService, ValidateInputService } from '../../services/user.service'
+import { LoginByLocalService, SignUpByLocalService, LogOutService, ValidateInputService, ForgotPasswordService } from '../../services/user.service'
 
 import "./DropdownUser.css";
+
+export class ForgotPasswordForm extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            emailValue: props.emailValue
+        }
+        this.onEnterForgotPassword = this.onEnterForgotPassword.bind(this);
+        this.changeEmailForgotPassword = this.changeEmailForgotPassword.bind(this);
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        this.setState({
+            emailValue: nextProps.emailValue
+        })
+    }
+
+    onEnterForgotPassword(e) {
+        if (e.which === 13 || e.which === 10) {
+            this.props.forgotPassword();
+        }
+    }
+
+    changeEmailForgotPassword() {
+        this.props.setDefaultEmailValue();
+    }
+
+    render() {
+        if (this.state.emailValue) {
+            return (
+                <div>
+                    <h5 className='text-success'>Email: <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer">{this.state.emailValue}</a> <span className='cancelForgotPassword' onClick={this.changeEmailForgotPassword}>Thay đổi</span></h5>
+                    <div className="dropdown-user-body-content">
+                        <Form.Control
+                            type="text"
+                            name="token"
+                            placeholder="Nhập Token"
+                            className="field-filter-form-input-search"
+                            ref={this.props.forgotPassword_TokenRef}
+                            required
+                        />
+                    </div>
+                    <div className="dropdown-user-body-content">
+                        <Form.Control
+                            type="password"
+                            name="password"
+                            placeholder="Nhập mật khẩu mới"
+                            className="field-filter-form-input-search"
+                            ref={this.props.forgotPassword_PasswordRef}
+                            required
+                        />
+                    </div>
+                    <div className="dropdown-user-body-content">
+                        <Form.Control
+                            type="password"
+                            name="passwordConfirm"
+                            placeholder="Nhập lại mật khẩu mới"
+                            className="field-filter-form-input-search"
+                            ref={this.props.forgotPassword_rePasswordRef}
+                            required
+                        />
+                    </div>
+                </div>
+            );
+        } else {
+            return (
+                <Form.Control
+                    type="email"
+                    name="email"
+                    placeholder="Nhập Email"
+                    className="field-filter-form-input-search"
+                    ref={this.props.forgotPassword_EmailRef}
+                    required
+                    onKeyPress={this.onEnterForgotPassword}
+                />
+            )
+        }
+    }
+}
 
 
 class SignForm extends Component {
@@ -22,11 +101,26 @@ class SignForm extends Component {
             checkEmail: '',
             checkPhone: '',
             checkPassword: '',
-            checkPasswordConfirm: ''
+            checkPasswordConfirm: '',
+            showLoading: '',
+            showModal: false,
+            emailValue: '',
+            forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
+            confirmForgotPasswordValue: 'Xác nhận',
+            errorForgotPassword: ''
         }
+        this.forgotPassword_EmailRef = React.createRef();
+        this.forgotPassword_TokenRef = React.createRef();
+        this.forgotPassword_PasswordRef = React.createRef();
+        this.forgotPassword_rePasswordRef = React.createRef();
+
         this.signInSubmit = this.signInSubmit.bind(this);
         this.signUpSubmit = this.signUpSubmit.bind(this);
         this.validateInput = this.validateInput.bind(this);
+        this.open = this.open.bind(this);
+        this.close = this.close.bind(this);
+        this.forgotPassword = this.forgotPassword.bind(this);
+        this.setDefaultEmailValue = this.setDefaultEmailValue.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -48,45 +142,101 @@ class SignForm extends Component {
     }
 
     validateInput(e) {
-        ValidateInputService(e, this);
+        ValidateInputService(e.target.key, e.target.value, this);
+    }
+
+    close() {
+        this.setState({ showModal: false });
+    }
+
+    open() {
+        this.setState({ showModal: true });
+    }
+
+    setDefaultEmailValue(show = true) {
+        this.setState({
+            forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
+            confirmForgotPasswordValue: 'Xác nhận',
+            emailValue: '',
+            showModal: show
+        })
+    }
+
+    async forgotPassword() {
+        ForgotPasswordService(this);
     }
 
     render() {
         if (this.state.sign === 'in') {
             return (
-                <Form id='signInForm' onSubmit={this.signInSubmit}>
-                    <div className="dropdown-user-body-content sign-in">
-                        <Form.Control
-                            type="text"
-                            name="email"
-                            placeholder="Email"
-                            className="field-filter-form-input-search"
-                            required
-                        />
-                    </div>
-                    <div className="dropdown-user-body-content sign-in">
-                        <Form.Control
-                            type="password"
-                            name="password"
-                            placeholder="Mật khẩu"
-                            className="field-filter-form-input-search"
-                            required
-                        />
-                    </div>
-                    <div className="dropdown-user-body-content text-center">
-                        <Button variant="success" type="submit">
-                            Đăng nhập
-                        </Button>
-                    </div>
-                    <hr className="dropdown-user-body-content-divide" />
-                    <div className="dropdown-user-body-content sign-in text-center">
-                        <div className="ui buttons">
-                            <Facebook loginHandler={(user) => this.props.loginHandler(user)}/>
-                            <div className="or"></div>
-                            <Google loginHandler={(user) => this.props.loginHandler(user)}/>
+                <div>
+                    <Form id='signInForm' onSubmit={this.signInSubmit}>
+                        <div className="dropdown-user-body-content sign-in">
+                            <Form.Control
+                                type="text"
+                                name="email"
+                                placeholder="Email"
+                                className="field-filter-form-input-search"
+                                required
+                            />
                         </div>
-                    </div>
-                </Form>
+                        <div className="dropdown-user-body-content sign-in">
+                            <Form.Control
+                                type="password"
+                                name="password"
+                                placeholder="Mật khẩu"
+                                className="field-filter-form-input-search"
+                                required
+                            />
+                        </div>
+                        <div className="dropdown-user-body-content text-center">
+                            <Button variant="success" type="submit">
+                                Đăng nhập
+                            </Button>
+                        </div>
+                        <center><span className='forgot-password' onClick={this.open}>Quên mật khẩu</span></center>
+                        <hr className="dropdown-user-body-content-divide" />
+                        <div className="dropdown-user-body-content sign-in text-center">
+                            <div className="ui buttons">
+                                <Facebook loginHandler={(user) => this.props.loginHandler(user)}/>
+                                <div className="or"></div>
+                                <Google loginHandler={(user) => this.props.loginHandler(user)}/>
+                            </div>
+                        </div>
+                    </Form>
+
+                    {/*Forgot password modal*/}
+                    <Modal 
+                        show={this.state.showModal} 
+                        onHide={this.close}
+                        size="sm"
+                        aria-labelledby="contained-modal-title-vcenter"
+                        centered>
+                        <Modal.Header closeButton>
+                            <Modal.Title>{this.state.forgotPasswordNotify}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div className={"loading " + this.state.showLoading}>
+                                Đang kiểm tra email
+                                <Spinner animation="grow" variant="success" size="sm"/>
+                                <Spinner animation="grow" variant="warning" size="sm"/>
+                                <Spinner animation="grow" variant="success" size="sm"/>
+                            </div>
+                            <p className="text-danger text-center">{this.state.errorForgotPassword}</p>
+                            <ForgotPasswordForm 
+                                emailValue={this.state.emailValue} 
+                                forgotPassword={this.forgotPassword}
+                                setDefaultEmailValue={this.setDefaultEmailValue}
+                                forgotPassword_EmailRef={this.forgotPassword_EmailRef}
+                                forgotPassword_TokenRef={this.forgotPassword_TokenRef}
+                                forgotPassword_PasswordRef={this.forgotPassword_PasswordRef}
+                                forgotPassword_rePasswordRef={this.forgotPassword_rePasswordRef}/>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button onClick={this.forgotPassword}>{this.state.confirmForgotPasswordValue}</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
             )
         } else if (this.state.sign === 'up'){
             return (
@@ -178,7 +328,8 @@ export default class DropdownUser extends Component {
         super();
         this.state = {
             isLogged: false,
-            sign: ''
+            sign: '',
+            emailValue: ''
         }
         this.onClicked = this.onClicked.bind(this);
         this.signIn = this.signIn.bind(this);

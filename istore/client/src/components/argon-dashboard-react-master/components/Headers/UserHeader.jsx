@@ -21,6 +21,18 @@ import React from "react";
 import { Button, Container, Row, Col } from "reactstrap";
 
 class UserHeader extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: props.user
+        }
+    }
+
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        this.setState({
+            user: nextProps.user
+        })
+    }
     render() {
         // console.log(this.props);
         return (
@@ -42,10 +54,10 @@ class UserHeader extends React.Component {
                         <Row>
                             <Col lg="7" md="10">
                                 <h1 className="display-2 text-white">
-                                    Hello {this.props.user && this.props.user.fullname.firstname}
+                                    Hello {this.state.user && this.state.user.fullname.firstname}
                                 </h1>
                                 <p className="text-white mt-0 mb-5">
-                                    Chào mừng <b>{this.props.user && this.props.user.fullname.firstname}</b> đến với <b>iStore</b>. Bạn có thể quản lý thông tin cá nhân và các cửa hàng của bạn tại đây. Chúc bạn một ngày làm việc hiệu quả với <b>iStore</b>. 
+                                    Chào mừng <b>{this.state.user && this.state.user.fullname.firstname}</b> đến với <b>iStore</b>. Bạn có thể quản lý thông tin cá nhân và các cửa hàng của bạn tại đây. Chúc bạn một ngày làm việc hiệu quả với <b>iStore</b>. 
                                 </p>
                                 <a href="#user-info">
                                 <Button

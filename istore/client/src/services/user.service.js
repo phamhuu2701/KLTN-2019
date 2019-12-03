@@ -128,10 +128,102 @@ export function LogOutService(that) {
         .catch(err => console.log(err));
 }
 
-export function ValidateInputService(e, that) {
+export async function ForgotPasswordService(that) {
+    if (that.state.emailValue) {
+        that.setState({
+            showLoading: 'show'
+        })
+        // Update new password
+        const token = that.forgotPassword_TokenRef.current.value;
+        const password = that.forgotPassword_PasswordRef.current.value;
+        const repassword = that.forgotPassword_rePasswordRef.current.value;
+        if (password !== repassword) {
+            alert('Mật khẩu nhập lại không chính xác!');
+        } else {
+            fetch('/api/users/forgotpassword-'+ that.state.emailValue, {
+                method: 'PUT',
+                headers: {
+                    Accept: "application",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({token: token, password: password})
+            })
+            .then(result => {
+                that.setState({
+                    showLoading: ''
+                })
+                if (result.status === 200) {
+                    // Update new password successfully
+                    that.setDefaultEmailValue(false);
+                    return result.json();
+                } else {
+                    // Failed
+                    return result.json();
+                }
+            })
+            .then(res => {
+                if (res.err) {
+                    that.setState({
+                        errorForgotPassword: res.err
+                    })
+                } else {
+                    // Show massage
+                    //alert()
+                    that.props.successSignUpHandler('Lấy lại mật khẩu thành công!');
+                }
+            })
+            .catch(err => console.log(err))
+        }
+    } else {
+        const email = that.forgotPassword_EmailRef.current.value;
+        that.setState({
+            showLoading: 'show'
+        })
+        await ValidateInputService('email', email, that);
+        if (that.state.checkEmail === 'valid') {
+            // Check email in database
+            fetch('/api/users/forgotpassword-' + email, {
+                method: 'GET'
+            })
+            .then(result => {
+                that.setState({
+                    showLoading: ''
+                })
+                if (result.status === 200) {
+                    return result.json();
+                } else if (result.status === 201) {
+                    that.setState({
+                        errorForgotPassword: '*Email không trùng khớp!'
+                    })
+                } else {
+                    return result.json();
+                }
+            })
+            .then(res => {
+                if (res.isMatch) {
+                    // Show new password and token input
+                    that.setState({
+                        forgotPasswordNotify: 'Hãy kiểm tra email để lấy Token!',
+                        errorForgotPassword: '',
+                        confirmForgotPasswordValue: 'Cập nhật',
+                        emailValue: email
+                    })
+                } else {
+                    that.setState({
+                        errorForgotPassword: res.err
+                    })
+                }
+            })
+        } else {
+            that.setState({
+                errorForgotPassword: 'Vui lòng nhập đúng định dạng email!'
+            })
+        }
+    }
+}
+
+export function ValidateInputService(key, value, that) {
     // Check something
-    const key = e.target.name;
-    const value = e.target.value;
     switch (key) {
         case "firstname":
             // Check length
