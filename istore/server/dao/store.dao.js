@@ -16,7 +16,7 @@ module.exports = {
                 });
         }).catch(() => null);
     },
-    findByIdUser: user => {
+    findByUser: user => {
         return new Promise((resolve, reject) => {
             Model.find({ user: user })
                 .populate("storeCategory")

@@ -1,4 +1,5 @@
 import { getNewArrayBySize } from "../utils/arrayUtils";
+import { getAvgRatesStore } from "./store.service";
 
 export function LoginByLocalService(e, loginHandler) {
     e.preventDefault();
@@ -131,93 +132,96 @@ export function LogOutService(that) {
 export async function ForgotPasswordService(that) {
     if (that.state.emailValue) {
         that.setState({
-            showLoading: 'show'
-        })
+            showLoading: "show"
+        });
         // Update new password
         const token = that.forgotPassword_TokenRef.current.value;
         const password = that.forgotPassword_PasswordRef.current.value;
         const repassword = that.forgotPassword_rePasswordRef.current.value;
         if (password !== repassword) {
-            alert('Mật khẩu nhập lại không chính xác!');
+            alert("Mật khẩu nhập lại không chính xác!");
         } else {
-            fetch('/api/users/forgotpassword-'+ that.state.emailValue, {
-                method: 'PUT',
+            fetch("/api/users/forgotpassword-" + that.state.emailValue, {
+                method: "PUT",
                 headers: {
                     Accept: "application",
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({token: token, password: password})
+                body: JSON.stringify({ token: token, password: password })
             })
-            .then(result => {
-                that.setState({
-                    showLoading: ''
-                })
-                if (result.status === 200) {
-                    // Update new password successfully
-                    that.setDefaultEmailValue(false);
-                    return result.json();
-                } else {
-                    // Failed
-                    return result.json();
-                }
-            })
-            .then(res => {
-                if (res.err) {
+                .then(result => {
                     that.setState({
-                        errorForgotPassword: res.err
-                    })
-                } else {
-                    // Show massage
-                    //alert()
-                    that.props.successSignUpHandler('Lấy lại mật khẩu thành công!');
-                }
-            })
-            .catch(err => console.log(err))
+                        showLoading: ""
+                    });
+                    if (result.status === 200) {
+                        // Update new password successfully
+                        that.setDefaultEmailValue(false);
+                        return result.json();
+                    } else {
+                        // Failed
+                        return result.json();
+                    }
+                })
+                .then(res => {
+                    if (res.err) {
+                        that.setState({
+                            errorForgotPassword: res.err
+                        });
+                    } else {
+                        // Show massage
+                        //alert()
+                        that.props.successSignUpHandler(
+                            "Lấy lại mật khẩu thành công!"
+                        );
+                    }
+                })
+                .catch(err => console.log(err));
         }
     } else {
         const email = that.forgotPassword_EmailRef.current.value;
         that.setState({
-            showLoading: 'show'
-        })
-        await ValidateInputService('email', email, that);
-        if (that.state.checkEmail === 'valid') {
+            showLoading: "show"
+        });
+        await ValidateInputService("email", email, that);
+        if (that.state.checkEmail === "valid") {
             // Check email in database
-            fetch('/api/users/forgotpassword-' + email, {
-                method: 'GET'
+            fetch("/api/users/forgotpassword-" + email, {
+                method: "GET"
             })
-            .then(result => {
-                that.setState({
-                    showLoading: ''
+                .then(result => {
+                    that.setState({
+                        showLoading: ""
+                    });
+                    if (result.status === 200) {
+                        return result.json();
+                    } else if (result.status === 201) {
+                        that.setState({
+                            errorForgotPassword: "*Email không trùng khớp!"
+                        });
+                    } else {
+                        return result.json();
+                    }
                 })
-                if (result.status === 200) {
-                    return result.json();
-                } else if (result.status === 201) {
-                    that.setState({
-                        errorForgotPassword: '*Email không trùng khớp!'
-                    })
-                } else {
-                    return result.json();
-                }
-            })
-            .then(res => {
-                if (res.isMatch) {
-                    // Show new password and token input
-                    that.setState({
-                        forgotPasswordNotify: 'Hãy kiểm tra email để lấy Token!',
-                        errorForgotPassword: '',
-                        confirmForgotPasswordValue: 'Cập nhật',
-                        emailValue: email
-                    })
-                } else {
-                    that.setState({
-                        errorForgotPassword: res.err
-                    })
-                }
-            })
+                .then(res => {
+                    if (res.isMatch) {
+                        // Show new password and token input
+                        that.setState({
+                            forgotPasswordNotify:
+                                "Hãy kiểm tra email để lấy Token!",
+                            errorForgotPassword: "",
+                            confirmForgotPasswordValue: "Cập nhật",
+                            emailValue: email
+                        });
+                    } else {
+                        that.setState({
+                            errorForgotPassword: res.err
+                        });
+                    }
+                });
         } else {
             that.setState({
-                errorForgotPassword: 'Vui lòng nhập đúng định dạng email!'
-            })
+                errorForgotPassword: "Vui lòng nhập đúng định dạng email!"
+            });
         }
     }
 }
@@ -363,11 +367,10 @@ export function updateUserPhone(id, phone, callback) {
     })
         .then(res => res.json())
         .then(userUpdate => {
-            if(userUpdate){
+            if (userUpdate) {
                 // console.log(userUpdate);
                 callback(userUpdate);
-            }
-            else {
+            } else {
                 callback(null);
             }
         });
@@ -392,4 +395,48 @@ export function logoutAdmin() {
             window.location.href = "/";
         })
         .catch(err => console.log(err));
+}
+
+export function getUserLogged(callback) {
+    fetch("/api/login")
+        .then(res => res.json())
+        .then(results => {
+            callback(results);
+        })
+        .catch(err => console.log(err));
+}
+
+export function getStoresByIdUser2(idUser, callback) {
+    fetch("/api/users/" + idUser + "/stores")
+        .then(res => res.json())
+        .then(results => {
+            callback(results);
+        })
+        .catch(err => console.log(err));
+}
+
+export function getAvgRatesStoresByUser(user, callback) {
+    let sumAvgStarsStoresUser = 0;
+    let ratesCountStores = 0;
+    getStoresByIdUser2(user._id, stores => {
+        if (stores.length > 0) {
+            stores.map((store, key) => {
+                let avgRatesStore = getAvgRatesStore(store);
+                if (avgRatesStore > 0) {
+                    sumAvgStarsStoresUser += avgRatesStore;
+                    ratesCountStores++;
+                }
+                return null;
+            });
+
+            if (ratesCountStores > 0) {
+                // console.log(sumAvgStarsStoresUser / ratesCountStores);
+                callback(sumAvgStarsStoresUser / ratesCountStores);
+            } else {
+                callback(0);
+            }
+        } else {
+            callback(0);
+        }
+    });
 }

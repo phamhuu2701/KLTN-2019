@@ -39,7 +39,7 @@ const userSchema = new Schema(
         timeRegister: { type: Date, required: true, default: Date.now },
         avatars: { 
             type: Array,
-            default: ["https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png?fit=256%2C256&quality=100&ssl=1"]
+            default: ["https://img.icons8.com/bubbles/2x/user.png"]
         }
     },
     options

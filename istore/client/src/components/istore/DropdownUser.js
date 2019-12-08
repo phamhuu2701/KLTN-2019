@@ -178,6 +178,7 @@ class SignForm extends Component {
                                 placeholder="Email"
                                 className="field-filter-form-input-search"
                                 required
+                                defaultValue="user10@gmail.com"
                             />
                         </div>
                         <div className="dropdown-user-body-content sign-in">
@@ -187,6 +188,7 @@ class SignForm extends Component {
                                 placeholder="Mật khẩu"
                                 className="field-filter-form-input-search"
                                 required
+                                defaultValue="123456"
                             />
                         </div>
                         <div className="dropdown-user-body-content text-center">

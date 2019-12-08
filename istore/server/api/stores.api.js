@@ -4,6 +4,8 @@ const router = express.Router();
 const StoreDao = require("../dao/store.dao");
 const Store = require("../models/store.model");
 
+const UserDao = require("../dao/user.dao");
+
 router
     .route("/")
     .get(async (req, res, next) => {

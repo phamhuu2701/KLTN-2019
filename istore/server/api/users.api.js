@@ -213,7 +213,7 @@ router
 router.route("/:id/stores").get(async (req, res, next) => {
     let id = req.params.id;
     let user = await UserDao.findById(id);
-    let stores = await StoreDao.findByIdUser(user);
+    let stores = await StoreDao.findByUser(user);
     res.json(stores);
 });
 module.exports = router;

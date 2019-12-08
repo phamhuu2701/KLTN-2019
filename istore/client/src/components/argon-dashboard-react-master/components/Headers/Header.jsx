@@ -19,12 +19,62 @@ import React from "react";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
+import { getUserLogged, getStoresByIdUser2, getAvgRatesStoresByUser } from "../../../../services/user.service";
+import { getStoreViewsCount } from "../../../../services/store.service";
 
 class Header extends React.Component {
+    constructor() {
+        super();
+
+        this.state = {
+            user: {},
+            storeViewsCount: 0,
+            storesCount: 0,
+            productsCount: 0,
+            avgRateStoresCount: 0
+        }
+    }
+
+    componentDidMount() {
+        getUserLogged((session) => {
+            this.setState({
+                user: session.user
+            });
+
+            getStoresByIdUser2(session.user._id, (stores) => {
+                if (stores.length > 0) {
+                    let storeViewsCount = 0;
+                    let productsCount = 0;
+                    stores.map((store, key) => {
+
+                        getStoreViewsCount(store, result => {
+                            storeViewsCount += result;
+                        })
+
+                        productsCount += store.products.length;
+
+                        return null;
+                    })
+
+                    this.setState({
+                        storeViewsCount: storeViewsCount,
+                        storesCount: stores.length,
+                        productsCount: productsCount
+                    })
+                }
+
+                getAvgRatesStoresByUser(session.user, result => {
+                    this.setState({
+                        avgRateStoresCount: result
+                    })
+                })
+            })
+        });
+    }
     render() {
         return (
             <>
-                <div className="header bg-gradient-info pb-8 pt-5 pt-md-8">
+                <div className="header bg-gradient-info pb-8 pt-5 pt-md-8 header-custom">
                     <Container fluid>
                         <div className="header-body">
                             {/* Card stats */}
@@ -38,10 +88,10 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Traffic
+                                                        Tổng lượt xem
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
-                                                        350,897
+                                                        {this.state.storeViewsCount}
                                                     </span>
                                                 </div>
                                                 <Col className="col-auto">
@@ -50,12 +100,6 @@ class Header extends React.Component {
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            <p className="mt-3 mb-0 text-muted text-sm">
-                                                <span className="text-success mr-2">
-                                                    <i className="fa fa-arrow-up" /> 3.48%
-                                                </span>{" "}
-                                                <span className="text-nowrap">Since last month</span>
-                                            </p>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -68,10 +112,10 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        New users
+                                                        Tất cả cửa hàng
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
-                                                        2,356
+                                                        {this.state.storesCount}
                                                     </span>
                                                 </div>
                                                 <Col className="col-auto">
@@ -80,12 +124,6 @@ class Header extends React.Component {
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            <p className="mt-3 mb-0 text-muted text-sm">
-                                                <span className="text-danger mr-2">
-                                                    <i className="fas fa-arrow-down" /> 3.48%
-                                                </span>{" "}
-                                                <span className="text-nowrap">Since last week</span>
-                                            </p>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -98,22 +136,18 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Sales
+                                                        Tất cả sản phẩm
                                                     </CardTitle>
-                                                    <span className="h2 font-weight-bold mb-0">924</span>
+                                                    <span className="h2 font-weight-bold mb-0">
+                                                        {this.state.productsCount}
+                                                    </span>
                                                 </div>
                                                 <Col className="col-auto">
                                                     <div className="icon icon-shape bg-yellow text-white rounded-circle shadow">
-                                                        <i className="fas fa-users" />
+                                                        <i className="fas fa-cart-plus"></i>
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            <p className="mt-3 mb-0 text-muted text-sm">
-                                                <span className="text-warning mr-2">
-                                                    <i className="fas fa-arrow-down" /> 1.10%
-                                                </span>{" "}
-                                                <span className="text-nowrap">Since yesterday</span>
-                                            </p>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -126,24 +160,18 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Performance
+                                                        Trung bình đánh giá
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
-                                                        49,65%
+                                                        {Math.round(this.state.avgRateStoresCount * 100) / 100}
                                                     </span>
                                                 </div>
                                                 <Col className="col-auto">
                                                     <div className="icon icon-shape bg-info text-white rounded-circle shadow">
-                                                        <i className="fas fa-percent" />
+                                                        <i className="fas fa-star-half-alt" />
                                                     </div>
                                                 </Col>
                                             </Row>
-                                            <p className="mt-3 mb-0 text-muted text-sm">
-                                                <span className="text-success mr-2">
-                                                    <i className="fas fa-arrow-up" /> 12%
-                                                </span>{" "}
-                                                <span className="text-nowrap">Since last month</span>
-                                            </p>
                                         </CardBody>
                                     </Card>
                                 </Col>

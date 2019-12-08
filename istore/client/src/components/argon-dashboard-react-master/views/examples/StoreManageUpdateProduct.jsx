@@ -235,8 +235,8 @@ class StoreManageUpdateProduct extends React.Component {
                                         <tr>
                                             <th scope="col" className="th-custom">Sản phẩm</th>
                                             <th scope="col" className="th-custom">Mô tả</th>
-                                            <th scope="col" className="th-custom">Giá gốc</th>
-                                            <th scope="col" className="th-custom">Khuyến mãi</th>
+                                            <th scope="col" className="th-custom">Giá gốc (VND)</th>
+                                            <th scope="col" className="th-custom">Khuyến mãi (%)</th>
                                             <th scope="col" className="th-custom">Còn hàng</th>
                                             <th scope="col" />
                                         </tr>

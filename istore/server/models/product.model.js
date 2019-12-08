@@ -59,7 +59,8 @@ const productSchema = new Schema(
             }
         ],
         rateAvg: { type: Number, required: true, default: 0 },
-        timestamp: { type: Date, required: true, default: Date.now }
+        timestamp: { type: Date, required: true, default: Date.now },
+        viewsCount: [{ type: Date, required: true, default: Date.now }]
     },
     options
 );

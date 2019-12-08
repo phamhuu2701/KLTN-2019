@@ -31,7 +31,6 @@ import {
     NavItem,
     NavLink,
     Nav,
-    Progress,
     Table,
     Container,
     Row,
@@ -58,8 +57,8 @@ class Index extends React.Component {
         e.preventDefault();
         this.setState({
             activeNav: index,
-            chartExample1Data:
-                this.state.chartExample1Data === "data1" ? "data2" : "data1"
+            chartExample1Data: "data" + index
+                // this.state.chartExample1Data === "data1" ? "data2" : "data1"
         });
         let wow = () => {
             console.log(this.state);
@@ -80,15 +79,16 @@ class Index extends React.Component {
                 {/* Page content */}
                 <Container className="mt--7 mt--7-custom" fluid>
                     <Row>
-                        <Col className="mb-5 mb-xl-0" xl="8">
+                        {/* <Col className="mb-5 mb-xl-0" xl="8"> */}
+                        <Col>
                             <Card className="bg-gradient-default shadow">
                                 <CardHeader className="bg-transparent">
                                     <Row className="align-items-center">
                                         <div className="col">
                                             <h6 className="text-uppercase text-light ls-1 mb-1">
-                                                Overview
+                                                Thống kê
                                             </h6>
-                                            <h2 className="text-white mb-0">Sales value</h2>
+                                            <h2 className="text-white mb-0">Lượt xem cửa hàng</h2>
                                         </div>
                                         <div className="col">
                                             <Nav className="justify-content-end" pills>
@@ -100,7 +100,7 @@ class Index extends React.Component {
                                                         href="#pablo"
                                                         onClick={e => this.toggleNavs(e, 1)}
                                                     >
-                                                        <span className="d-none d-md-block">Month</span>
+                                                        <span className="d-none d-md-block">Tháng</span>
                                                         <span className="d-md-none">M</span>
                                                     </NavLink>
                                                 </NavItem>
@@ -113,8 +113,21 @@ class Index extends React.Component {
                                                         href="#pablo"
                                                         onClick={e => this.toggleNavs(e, 2)}
                                                     >
-                                                        <span className="d-none d-md-block">Week</span>
-                                                        <span className="d-md-none">W</span>
+                                                        <span className="d-none d-md-block">Quý</span>
+                                                        <span className="d-md-none">Q</span>
+                                                    </NavLink>
+                                                </NavItem>
+                                                <NavItem>
+                                                    <NavLink
+                                                        className={classnames("py-2 px-3", {
+                                                            active: this.state.activeNav === 3
+                                                        })}
+                                                        data-toggle="tab"
+                                                        href="#pablo"
+                                                        onClick={e => this.toggleNavs(e, 3)}
+                                                    >
+                                                        <span className="d-none d-md-block">Năm</span>
+                                                        <span className="d-md-none">Y</span>
                                                     </NavLink>
                                                 </NavItem>
                                             </Nav>
@@ -133,13 +146,16 @@ class Index extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Col xl="4">
+                    </Row>
+                    <Row className="mt-5">
+                        {/* <Col xl="4"> */}
+                        <Col>
                             <Card className="shadow">
                                 <CardHeader className="bg-transparent">
                                     <Row className="align-items-center">
                                         <div className="col">
                                             <h6 className="text-uppercase text-muted ls-1 mb-1">
-                                                Performance
+                                                Thống kê
                                             </h6>
                                             <h2 className="mb-0">Total orders</h2>
                                         </div>
@@ -158,12 +174,12 @@ class Index extends React.Component {
                         </Col>
                     </Row>
                     <Row className="mt-5">
-                        <Col className="mb-5 mb-xl-0" xl="8">
+                        <Col className="mb-5 mb-xl-0" xl="7">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
                                         <div className="col">
-                                            <h3 className="mb-0">Page visits</h3>
+                                            <h3 className="mb-0">Top sản phẩm</h3>
                                         </div>
                                         <div className="col text-right">
                                             <Button
@@ -172,7 +188,7 @@ class Index extends React.Component {
                                                 onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
-                                                See all
+                                                Xem tất cả
                                             </Button>
                                         </div>
                                     </Row>
@@ -180,68 +196,29 @@ class Index extends React.Component {
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col">Page name</th>
-                                            <th scope="col">Visitors</th>
-                                            <th scope="col">Unique users</th>
-                                            <th scope="col">Bounce rate</th>
+                                            <th scope="col">Tên sản phẩm</th>
+                                            <th scope="col">Lượt xem</th>
+                                            <th scope="col">Lượt đặt hàng</th>
+                                            <th scope="col">Đánh giá</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">/argon/</th>
+                                            <th scope="row">Bóng đén led DN6218</th>
                                             <td>4,569</td>
                                             <td>340</td>
-                                            <td>
-                                                <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                                                46,53%
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">/argon/index.html</th>
-                                            <td>3,985</td>
-                                            <td>319</td>
-                                            <td>
-                                                <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                                                46,53%
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">/argon/charts.html</th>
-                                            <td>3,513</td>
-                                            <td>294</td>
-                                            <td>
-                                                <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                                                36,49%
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">/argon/tables.html</th>
-                                            <td>2,050</td>
-                                            <td>147</td>
-                                            <td>
-                                                <i className="fas fa-arrow-up text-success mr-3" />{" "}
-                                                50,87%
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">/argon/profile.html</th>
-                                            <td>1,795</td>
-                                            <td>190</td>
-                                            <td>
-                                                <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                                                46,53%
-                                            </td>
+                                            <td>3.8</td>
                                         </tr>
                                     </tbody>
                                 </Table>
                             </Card>
                         </Col>
-                        <Col xl="4">
+                        <Col xl="5">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
                                         <div className="col">
-                                            <h3 className="mb-0">Social traffic</h3>
+                                            <h3 className="mb-0">Top cửa hàng</h3>
                                         </div>
                                         <div className="col text-right">
                                             <Button
@@ -250,7 +227,7 @@ class Index extends React.Component {
                                                 onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
-                                                See all
+                                                Xem tất cả
                                             </Button>
                                         </div>
                                     </Row>
@@ -258,85 +235,18 @@ class Index extends React.Component {
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col">Referral</th>
-                                            <th scope="col">Visitors</th>
-                                            <th scope="col" />
+                                            <th scope="col">Tên cửa hàng</th>
+                                            <th scope="col">Lượt xem</th>
+                                            <th scope="col">Đánh giá</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope="row">Facebook</th>
+                                            <th scope="row">Tanasa</th>
                                             <td>1,480</td>
                                             <td>
                                                 <div className="d-flex align-items-center">
-                                                    <span className="mr-2">60%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="60"
-                                                            barClassName="bg-gradient-danger"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Facebook</th>
-                                            <td>5,480</td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">70%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="70"
-                                                            barClassName="bg-gradient-success"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Google</th>
-                                            <td>4,807</td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">80%</span>
-                                                    <div>
-                                                        <Progress max="100" value="80" />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">Instagram</th>
-                                            <td>3,678</td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">75%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="75"
-                                                            barClassName="bg-gradient-info"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row">twitter</th>
-                                            <td>2,645</td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">30%</span>
-                                                    <div>
-                                                        <Progress
-                                                            max="100"
-                                                            value="30"
-                                                            barClassName="bg-gradient-warning"
-                                                        />
-                                                    </div>
+                                                    <span className="mr-2">3.5</span>
                                                 </div>
                                             </td>
                                         </tr>

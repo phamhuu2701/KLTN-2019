@@ -6,6 +6,7 @@ import {
 } from "../utils/sortModel";
 import { showProductDetail } from "../components/istore/ProductDetail";
 import { onZoomSearchField } from "../components/HomeIndex";
+import getAvgRatesProduct from "./product.service";
 
 export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
     //const storeInfo = document.querySelector(".store-info");
@@ -13,14 +14,14 @@ export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
     if (
         items[id].style.backgroundColor === "" ||
         //storeInfo.style.right === "-100%"
-        thisStoreWindow.state.effect === ''
+        thisStoreWindow.state.effect === ""
     ) {
-        onZoomSearchField('out');
+        onZoomSearchField("out");
         if (items[id].style.backgroundColor !== "") {
             //storeInfo.style.right = "0px";
             thisStoreWindow.setState({
-                effect: 'show'
-            })
+                effect: "show"
+            });
         } else {
             for (let i = 0; i < items.length; i++) {
                 items[i].style.backgroundColor = "";
@@ -32,16 +33,16 @@ export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
 
             //storeInfo.style.right = "0px";
             thisStoreWindow.setState({
-                effect: 'show'
-            })
+                effect: "show"
+            });
             items[id].style.backgroundColor = "#C7F0AA";
         }
     } else {
         //storeInfo.style.right = "-100%";
         thisStoreWindow.setState({
-            effect: ''
-        })
-        onZoomSearchField('in');
+            effect: ""
+        });
+        onZoomSearchField("in");
         items[id].style.backgroundColor = "";
     }
 
@@ -121,4 +122,43 @@ export function getStoreById(id, callback) {
             }
         })
         .catch(err => console.log(err));
+}
+
+export function getAvgRatesStore(store) {
+    let sumAvgStarsProducts = 0;
+    let rateCountsProducts = 0;
+    if (store.products.length > 0) {
+        store.products.map((product, key) => {
+            let avgRatesProduct = getAvgRatesProduct(product);
+            if (avgRatesProduct > 0) {
+                sumAvgStarsProducts += avgRatesProduct;
+                rateCountsProducts++;
+            }
+            return null;
+        });
+
+        if (rateCountsProducts > 0) {
+            // console.log(sumAvgStarsProducts / rateCountsProducts);
+            return sumAvgStarsProducts / rateCountsProducts;
+        } else {
+            return 0;
+        }
+    } else {
+        return 0;
+    }
+}
+
+export function getStoreViewsCount(store, callback) {
+    if (store.products.length > 0) {
+        let storeViewsCount = 0;
+        store.products.map((product, key) => {
+            storeViewsCount += product.viewsCount.length;
+
+            return null;
+        });
+
+        callback(storeViewsCount);
+    } else {
+        callback(0);
+    }
 }
