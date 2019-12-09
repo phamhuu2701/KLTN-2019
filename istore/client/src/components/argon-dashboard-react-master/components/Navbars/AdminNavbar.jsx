@@ -94,31 +94,31 @@ class AdminNavbar extends React.Component {
                                     <DropdownItem className="noti-title" header tag="div">
                                         <h6 className="text-overflow m-0">Welcome!</h6>
                                     </DropdownItem>
-                                    <DropdownItem to="/admin/user-profile" tag={Link}>
+                                    <DropdownItem to="/user/user-profile" tag={Link}>
                                         <i className="ni ni-single-02" />
                                         <span>Thông tin cá nhân</span>
                                     </DropdownItem>
-                                    <DropdownItem to="/admin/messages" tag={Link}>
+                                    {/* <DropdownItem to="/user/messages" tag={Link}>
                                         <i className="ni ni-chat-round" />
                                         <span>Tin nhắn</span>
-                                    </DropdownItem>
-                                    <DropdownItem to="/admin/stores-manage" tag={Link}>
+                                    </DropdownItem> */}
+                                    <DropdownItem to="/user/stores-manage" tag={Link}>
                                         <i className="ni ni-bullet-list-67" />
                                         <span>Quản lý cửa hàng</span>
                                     </DropdownItem>
-                                    <DropdownItem to="/admin/change-email" tag={Link}>
+                                    {/* <DropdownItem to="/user/change-email" tag={Link}>
                                         <i className="ni ni-email-83" />
                                         <span>Đổi email</span>
                                     </DropdownItem>
-                                    <DropdownItem to="/admin/change-phone" tag={Link}>
+                                    <DropdownItem to="/user/change-phone" tag={Link}>
                                         <i className="ni ni-mobile-button" />
                                         <span>Đổi số điện thoại</span>
                                     </DropdownItem>
-                                    <DropdownItem to="/admin/change-pasword" tag={Link}>
+                                    <DropdownItem to="/user/change-pasword" tag={Link}>
                                         <i className="ni ni-key-25" />
                                         <span>Đổi mật khẩu</span>
-                                    </DropdownItem>
-                                    <DropdownItem to="/admin/index" tag={Link}>
+                                    </DropdownItem> */}
+                                    <DropdownItem to="/user/index" tag={Link}>
                                         <i className="ni ni-support-16" />
                                         <span>Liên hệ hỗ trợ</span>
                                     </DropdownItem>

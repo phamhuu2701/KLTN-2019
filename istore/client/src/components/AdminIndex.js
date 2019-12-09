@@ -52,7 +52,7 @@ export default class AdminIndex extends Component {
                 <BrowserRouter>
                     <Switch>
                         <Route
-                            path="/admin"
+                            path="/user"
                             render={props => (
                                 <AdminLayout
                                     {...props}
@@ -66,7 +66,7 @@ export default class AdminIndex extends Component {
                                 <AuthLayout {...props} user={this.state.user} />
                             )}
                         />
-                        {/* <Redirect from="/" to="/admin/index" /> */}
+                        {/* <Redirect from="/" to="/user/index" /> */}
                     </Switch>
                 </BrowserRouter>
             );

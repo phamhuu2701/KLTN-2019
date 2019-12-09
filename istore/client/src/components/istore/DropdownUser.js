@@ -1,28 +1,36 @@
 import React, { Component } from "react";
 import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-import Facebook from './Facebook';
-import Google from './Google';
+import Facebook from "./Facebook";
+import Google from "./Google";
 
-import { LoginByLocalService, SignUpByLocalService, LogOutService, ValidateInputService, ForgotPasswordService } from '../../services/user.service'
+import {
+    LoginByLocalService,
+    SignUpByLocalService,
+    LogOutService,
+    ValidateInputService,
+    ForgotPasswordService
+} from "../../services/user.service";
 
 import "./DropdownUser.css";
 
 export class ForgotPasswordForm extends Component {
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             emailValue: props.emailValue
-        }
+        };
         this.onEnterForgotPassword = this.onEnterForgotPassword.bind(this);
-        this.changeEmailForgotPassword = this.changeEmailForgotPassword.bind(this);
+        this.changeEmailForgotPassword = this.changeEmailForgotPassword.bind(
+            this
+        );
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             emailValue: nextProps.emailValue
-        })
+        });
     }
 
     onEnterForgotPassword(e) {
@@ -39,7 +47,22 @@ export class ForgotPasswordForm extends Component {
         if (this.state.emailValue) {
             return (
                 <div>
-                    <h5 className='text-success'>Email: <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer">{this.state.emailValue}</a> <span className='cancelForgotPassword' onClick={this.changeEmailForgotPassword}>Thay đổi</span></h5>
+                    <h5 className="text-success">
+                        Email:{" "}
+                        <a
+                            href="https://mail.google.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            {this.state.emailValue}
+                        </a>{" "}
+                        <span
+                            className="cancelForgotPassword"
+                            onClick={this.changeEmailForgotPassword}
+                        >
+                            Thay đổi
+                        </span>
+                    </h5>
                     <div className="dropdown-user-body-content">
                         <Form.Control
                             type="text"
@@ -83,32 +106,31 @@ export class ForgotPasswordForm extends Component {
                     required
                     onKeyPress={this.onEnterForgotPassword}
                 />
-            )
+            );
         }
     }
 }
-
 
 class SignForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
             sign: props.sign,
-            feedback: '',
-            feedbackContent: '',
-            checkFirstname: '',
-            checkLastname: '',
-            checkEmail: '',
-            checkPhone: '',
-            checkPassword: '',
-            checkPasswordConfirm: '',
-            showLoading: '',
+            feedback: "",
+            feedbackContent: "",
+            checkFirstname: "",
+            checkLastname: "",
+            checkEmail: "",
+            checkPhone: "",
+            checkPassword: "",
+            checkPasswordConfirm: "",
+            showLoading: "",
             showModal: false,
-            emailValue: '',
-            forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
-            confirmForgotPasswordValue: 'Xác nhận',
-            errorForgotPassword: ''
-        }
+            emailValue: "",
+            forgotPasswordNotify: "Vui lòng nhập Email để lấy lại mật khẩu!!",
+            confirmForgotPasswordValue: "Xác nhận",
+            errorForgotPassword: ""
+        };
         this.forgotPassword_EmailRef = React.createRef();
         this.forgotPassword_TokenRef = React.createRef();
         this.forgotPassword_PasswordRef = React.createRef();
@@ -124,13 +146,13 @@ class SignForm extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        Cookies.set('1P_JAR', 'Strick', {sameSite: 'none', secure: true})
+        Cookies.set("1P_JAR", "Strick", { sameSite: "none", secure: true });
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             sign: nextProps.sign
-        })
+        });
     }
 
     signInSubmit(e) {
@@ -155,11 +177,11 @@ class SignForm extends Component {
 
     setDefaultEmailValue(show = true) {
         this.setState({
-            forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
-            confirmForgotPasswordValue: 'Xác nhận',
-            emailValue: '',
+            forgotPasswordNotify: "Vui lòng nhập Email để lấy lại mật khẩu!!",
+            confirmForgotPasswordValue: "Xác nhận",
+            emailValue: "",
             showModal: show
-        })
+        });
     }
 
     async forgotPassword() {
@@ -167,10 +189,10 @@ class SignForm extends Component {
     }
 
     render() {
-        if (this.state.sign === 'in') {
+        if (this.state.sign === "in") {
             return (
                 <div>
-                    <Form id='signInForm' onSubmit={this.signInSubmit}>
+                    <Form id="signInForm" onSubmit={this.signInSubmit}>
                         <div className="dropdown-user-body-content sign-in">
                             <Form.Control
                                 type="text"
@@ -196,60 +218,110 @@ class SignForm extends Component {
                                 Đăng nhập
                             </Button>
                         </div>
-                        <center><span className='forgot-password' onClick={this.open}>Quên mật khẩu</span></center>
+                        <center>
+                            <span
+                                className="forgot-password"
+                                onClick={this.open}
+                            >
+                                Quên mật khẩu
+                            </span>
+                        </center>
                         <hr className="dropdown-user-body-content-divide" />
                         <div className="dropdown-user-body-content sign-in text-center">
                             <div className="ui buttons">
-                                <Facebook loginHandler={(user) => this.props.loginHandler(user)}/>
+                                <Facebook
+                                    loginHandler={user =>
+                                        this.props.loginHandler(user)
+                                    }
+                                />
                                 <div className="or"></div>
-                                <Google loginHandler={(user) => this.props.loginHandler(user)}/>
+                                <Google
+                                    loginHandler={user =>
+                                        this.props.loginHandler(user)
+                                    }
+                                />
                             </div>
                         </div>
                     </Form>
 
                     {/*Forgot password modal*/}
-                    <Modal 
-                        show={this.state.showModal} 
+                    <Modal
+                        show={this.state.showModal}
                         onHide={this.close}
                         size="sm"
                         aria-labelledby="contained-modal-title-vcenter"
-                        centered>
+                        centered
+                    >
                         <Modal.Header closeButton>
-                            <Modal.Title>{this.state.forgotPasswordNotify}</Modal.Title>
+                            <Modal.Title>
+                                {this.state.forgotPasswordNotify}
+                            </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            <div className={"loading " + this.state.showLoading}>
+                            <div
+                                className={"loading " + this.state.showLoading}
+                            >
                                 Đang kiểm tra email
-                                <Spinner animation="grow" variant="success" size="sm"/>
-                                <Spinner animation="grow" variant="warning" size="sm"/>
-                                <Spinner animation="grow" variant="success" size="sm"/>
+                                <Spinner
+                                    animation="grow"
+                                    variant="success"
+                                    size="sm"
+                                />
+                                <Spinner
+                                    animation="grow"
+                                    variant="warning"
+                                    size="sm"
+                                />
+                                <Spinner
+                                    animation="grow"
+                                    variant="success"
+                                    size="sm"
+                                />
                             </div>
-                            <p className="text-danger text-center">{this.state.errorForgotPassword}</p>
-                            <ForgotPasswordForm 
-                                emailValue={this.state.emailValue} 
+                            <p className="text-danger text-center">
+                                {this.state.errorForgotPassword}
+                            </p>
+                            <ForgotPasswordForm
+                                emailValue={this.state.emailValue}
                                 forgotPassword={this.forgotPassword}
                                 setDefaultEmailValue={this.setDefaultEmailValue}
-                                forgotPassword_EmailRef={this.forgotPassword_EmailRef}
-                                forgotPassword_TokenRef={this.forgotPassword_TokenRef}
-                                forgotPassword_PasswordRef={this.forgotPassword_PasswordRef}
-                                forgotPassword_rePasswordRef={this.forgotPassword_rePasswordRef}/>
+                                forgotPassword_EmailRef={
+                                    this.forgotPassword_EmailRef
+                                }
+                                forgotPassword_TokenRef={
+                                    this.forgotPassword_TokenRef
+                                }
+                                forgotPassword_PasswordRef={
+                                    this.forgotPassword_PasswordRef
+                                }
+                                forgotPassword_rePasswordRef={
+                                    this.forgotPassword_rePasswordRef
+                                }
+                            />
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button onClick={this.forgotPassword}>{this.state.confirmForgotPasswordValue}</Button>
+                            <Button onClick={this.forgotPassword}>
+                                {this.state.confirmForgotPasswordValue}
+                            </Button>
                         </Modal.Footer>
                     </Modal>
                 </div>
-            )
-        } else if (this.state.sign === 'up'){
+            );
+        } else if (this.state.sign === "up") {
             return (
-                <Form id='signUpForm' onSubmit={this.signUpSubmit}>
-                    <div className={'feedback ' + this.state.feedback}>{this.state.feedbackContent}</div>
+                <Form id="signUpForm" onSubmit={this.signUpSubmit}>
+                    <div className={"feedback " + this.state.feedback}>
+                        {this.state.feedbackContent}
+                    </div>
                     <div className="dropdown-user-body-content sign-up">
                         <Form.Control
                             type="text"
                             name="firstname"
                             placeholder="Tên"
-                            className={'field-filter-form-input-search ' + this.state.checkFirstname}
+                            className={
+                                "field-filter-form-input-search " +
+                                this.state.checkFirstname
+                            }
                             required
                             onBlur={this.validateInput}
                         />
@@ -261,7 +333,10 @@ class SignForm extends Component {
                             type="text"
                             name="lastname"
                             placeholder="Họ"
-                            className={'field-filter-form-input-search ' + this.state.checkLastname}
+                            className={
+                                "field-filter-form-input-search " +
+                                this.state.checkLastname
+                            }
                             required
                             onBlur={this.validateInput}
                         />
@@ -273,7 +348,10 @@ class SignForm extends Component {
                             type="email"
                             name="email"
                             placeholder="Email"
-                            className={'field-filter-form-input-search ' + this.state.checkEmail}
+                            className={
+                                "field-filter-form-input-search " +
+                                this.state.checkEmail
+                            }
                             required
                             onBlur={this.validateInput}
                         />
@@ -283,7 +361,10 @@ class SignForm extends Component {
                             type="phone"
                             name="phone"
                             placeholder="Số điện thoại"
-                            className={'field-filter-form-input-search ' + this.state.checkPhone}
+                            className={
+                                "field-filter-form-input-search " +
+                                this.state.checkPhone
+                            }
                             minLength="10"
                             maxLength="10"
                             required
@@ -295,7 +376,10 @@ class SignForm extends Component {
                             type="password"
                             name="password"
                             placeholder="Mật khẩu"
-                            className={'field-filter-form-input-search ' + this.state.checkPassword}
+                            className={
+                                "field-filter-form-input-search " +
+                                this.state.checkPassword
+                            }
                             required
                             onBlur={this.validateInput}
                         />
@@ -305,7 +389,10 @@ class SignForm extends Component {
                             type="password"
                             name="password_confirm"
                             placeholder="Nhập lại mật khẩu"
-                            className={'field-filter-form-input-search ' + this.state.checkPasswordConfirm}
+                            className={
+                                "field-filter-form-input-search " +
+                                this.state.checkPasswordConfirm
+                            }
                             required
                             onBlur={this.validateInput}
                         />
@@ -316,11 +403,9 @@ class SignForm extends Component {
                         </Button>
                     </div>
                 </Form>
-            )
+            );
         } else {
-            return (
-                <div></div>
-            )
+            return <div></div>;
         }
     }
 }
@@ -330,15 +415,15 @@ export default class DropdownUser extends Component {
         super();
         this.state = {
             isLogged: false,
-            sign: '',
-            emailValue: ''
-        }
+            sign: "",
+            emailValue: ""
+        };
         this.onClicked = this.onClicked.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signUp = this.signUp.bind(this);
         this.loginHandler = this.loginHandler.bind(this);
         this.logoutHandler = this.logoutHandler.bind(this);
-        this.wrapperRef = React.createRef()
+        this.wrapperRef = React.createRef();
     }
 
     onClicked() {
@@ -351,54 +436,52 @@ export default class DropdownUser extends Component {
     }
 
     signIn() {
-        document.querySelector('body').style.overflowY = 'hidden';
+        document.querySelector("body").style.overflowY = "hidden";
         this.setState({
-            sign: 'in'
-        })
+            sign: "in"
+        });
     }
 
     signUp() {
         this.setState({
-            sign: 'up'
-        })
+            sign: "up"
+        });
     }
 
     UNSAFE_componentWillMount() {
-         // Check user logged in
-        fetch('/api/login')
-        .then(res => {
-            return res.json();
-        })
-        .then(result => {
-            this.setState({
-                isLogged: result.isLogged,
-                user: result.user,
-                sign: ''
-            });
-            this.props.logInToggle(result.isLogged);
-        })
-        .catch(err => console.log(err))
+        // Check user logged in
+        fetch("/api/login")
+            .then(res => {
+                return res.json();
+            })
+            .then(result => {
+                this.setState({
+                    isLogged: result.isLogged,
+                    user: result.user,
+                    sign: ""
+                });
+                this.props.logInToggle(result.isLogged);
+            })
+            .catch(err => console.log(err));
     }
 
     componentDidMount() {
-        document.addEventListener('click', this.handleClick)
+        document.addEventListener("click", this.handleClick);
     }
-      
+
     componentWillUnmount() {
         // important
-        document.removeEventListener('click', this.handleClick)
+        document.removeEventListener("click", this.handleClick);
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps) {
-
-    }
+    UNSAFE_componentWillReceiveProps(nextProps) {}
 
     // Logged in successfully
     loginHandler(user) {
         this.setState({
             isLogged: true,
             user: user,
-            sign: ''
+            sign: ""
         });
         document.getElementById("dropdown-user-body").style.display = "none";
         this.props.logInToggle(true);
@@ -407,13 +490,14 @@ export default class DropdownUser extends Component {
     logoutHandler() {
         LogOutService(this);
     }
-      
-    handleClick = (event) => {
-       const { target } = event
-       if (!this.wrapperRef.current.contains(target)) {
-            document.getElementById("dropdown-user-body").style.display = "none";
-       }
-    }
+
+    handleClick = event => {
+        const { target } = event;
+        if (!this.wrapperRef.current.contains(target)) {
+            document.getElementById("dropdown-user-body").style.display =
+                "none";
+        }
+    };
 
     render() {
         if (this.state.isLogged === true) {
@@ -430,33 +514,44 @@ export default class DropdownUser extends Component {
                     <div className="dropdown-user-body" id="dropdown-user-body">
                         <div className="dropdown-user-body-sub"></div>
                         <div className="dropdown-user-body-main">
-                            <a href="/admin/user-profile" className="dropdown-user-body-content-link">
+                            <a
+                                href="/user/user-profile"
+                                className="dropdown-user-body-content-link"
+                            >
                                 <div className="dropdown-user-body-content">
-                                        <img
-                                            className="dropdown-user-body-content-imgage"
-                                            alt=""
-                                            src="./resources/icons/user.svg"
-                                        ></img>
-                                        <span className="dropdown-user-body-content-title">
-                                            {this.state.user.fullname.firstname +" "+ this.state.user.fullname.lastname}
-                                        </span>
+                                    <img
+                                        className="dropdown-user-body-content-imgage"
+                                        alt=""
+                                        src="./resources/icons/user.svg"
+                                    ></img>
+                                    <span className="dropdown-user-body-content-title">
+                                        {this.state.user.fullname.firstname +
+                                            " " +
+                                            this.state.user.fullname.lastname}
+                                    </span>
                                 </div>
                             </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <a href="/admin/stores-manage" className="dropdown-user-body-content-link">
+                            <a
+                                href="/user/stores-manage"
+                                className="dropdown-user-body-content-link"
+                            >
                                 <div className="dropdown-user-body-content">
-                                        <img
-                                            className="dropdown-user-body-content-imgage"
-                                            alt=""
-                                            src="./resources/icons/list.svg"
-                                        ></img>
-                                        <span className="dropdown-user-body-content-title">
-                                            Quản lý cửa hàng
-                                        </span>
+                                    <img
+                                        className="dropdown-user-body-content-imgage"
+                                        alt=""
+                                        src="./resources/icons/list.svg"
+                                    ></img>
+                                    <span className="dropdown-user-body-content-title">
+                                        Quản lý cửa hàng
+                                    </span>
                                 </div>
                             </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <div className="dropdown-user-body-content dropdown-user-body-content-logout" onClick={this.logoutHandler}>
+                            <div
+                                className="dropdown-user-body-content dropdown-user-body-content-logout"
+                                onClick={this.logoutHandler}
+                            >
                                 <img
                                     className="dropdown-user-body-content-imgage"
                                     alt=""
@@ -469,7 +564,7 @@ export default class DropdownUser extends Component {
                         </div>
                     </div>
                 </div>
-            )
+            );
         } else {
             return (
                 <div className="dropdown-user" ref={this.wrapperRef}>
@@ -486,16 +581,34 @@ export default class DropdownUser extends Component {
                         <div className="dropdown-user-body-main">
                             <div className="dropdown-user-body-content">
                                 <div className="ui buttons">
-                                    <button className="ui button btn-success" onClick={this.signIn}>Đăng nhập</button>
+                                    <button
+                                        className="ui button btn-success"
+                                        onClick={this.signIn}
+                                    >
+                                        Đăng nhập
+                                    </button>
                                     <div className="or"></div>
-                                    <button className="ui button btn-primary" onClick={this.signUp}>Đăng ký</button>
+                                    <button
+                                        className="ui button btn-primary"
+                                        onClick={this.signUp}
+                                    >
+                                        Đăng ký
+                                    </button>
                                 </div>
                             </div>
-                            <SignForm sign={this.state.sign} loginHandler={(loginSign) => this.loginHandler(loginSign)} successSignUpHandler={this.props.successSignUpHandler}/>
+                            <SignForm
+                                sign={this.state.sign}
+                                loginHandler={loginSign =>
+                                    this.loginHandler(loginSign)
+                                }
+                                successSignUpHandler={
+                                    this.props.successSignUpHandler
+                                }
+                            />
                         </div>
                     </div>
                 </div>
-            )
+            );
         }
     }
 }

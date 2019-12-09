@@ -16,8 +16,8 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path="/" component={HomeIndex} />
                     <Route path="/store/:template/:id" component={StoreIndex} />
-                    <Route exact path="/admin" component={AdminLogin} />
-                    <Route path="/admin" component={AdminIndex} />
+                    <Route exact path="/user" component={AdminLogin} />
+                    <Route path="/user" component={AdminIndex} />
                     <Route path="/auth" component={AdminIndex} />
                     <Route path="/verify" component={VerifyIndex} />
                 </Switch>

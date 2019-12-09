@@ -246,7 +246,7 @@ class Profile extends React.Component {
                                                 <div>
                                                     <span className="heading">{this.state.stores && this.state.stores.length}</span>
                                                     <span className="description">
-                                                        <Link to="/admin/stores-manage">Cửa hàng</Link>
+                                                        <Link to="/user/stores-manage">Cửa hàng</Link>
                                                     </span>
                                                 </div>
                                                 <div>

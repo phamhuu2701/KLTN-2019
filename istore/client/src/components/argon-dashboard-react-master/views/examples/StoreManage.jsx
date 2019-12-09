@@ -514,7 +514,7 @@ class StoreManage extends React.Component {
                                                                         Chi tiết
                                                                     </DropdownItem>
                                                                 </Link>
-                                                                <Link to={"/admin/stores-manage-update-product"}>
+                                                                <Link to={"/user/stores-manage-update-product"}>
                                                                     <DropdownItem
                                                                     // href="#pablo"
                                                                     // onClick={e => e.preventDefault()}

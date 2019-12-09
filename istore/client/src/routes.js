@@ -26,7 +26,7 @@ import StoreManage from "components/argon-dashboard-react-master/views/examples/
 // import ChangeEmail from "./components/argon-dashboard-react-master/views/examples/ChangeEmail";
 // import ChangePhone from "./components/argon-dashboard-react-master/views/examples/ChangePhone";
 // import ChangePassword from "./components/argon-dashboard-react-master/views/examples/ChangePassword";
-import Statistical from "./components/argon-dashboard-react-master/views/examples/Statistical";
+// import Statistical from "./components/argon-dashboard-react-master/views/examples/Statistical";
 import StoreManageUpdateProduct from "./components/argon-dashboard-react-master/views/examples/StoreManageUpdateProduct";
 
 var routes = [
@@ -35,35 +35,35 @@ var routes = [
         name: "Trang chủ",
         icon: "ni ni-shop text-primary",
         component: Index,
-        layout: "/admin"
+        layout: "/user"
     },
     {
         path: "/user-profile",
         name: "Thông tin cá nhân",
         icon: "ni ni-single-02 text-yellow",
         component: Profile,
-        layout: "/admin"
+        layout: "/user"
     },
     // {
     //     path: "/messages",
     //     name: "Tin nhắn",
     //     icon: "ni ni-chat-round text-blue",
     //     component: Messages,
-    //     layout: "/admin"
+    //     layout: "/user"
     // },
     {
         path: "/stores-manage",
         name: "Quản lý cửa hàng",
         icon: "ni ni-bullet-list-67 text-red",
         component: StoreManage,
-        layout: "/admin"
+        layout: "/user"
     },
     {
         path: "/stores-manage-update-product",
         name: "Cập nhập cửa hàng, sản phẩm",
         icon: "ni ni-ruler-pencil",
         component: StoreManageUpdateProduct,
-        layout: "/admin"
+        layout: "/user"
     },
     // {
     //     path: "/change-email",
@@ -91,42 +91,42 @@ var routes = [
         name: "Thống kê",
         icon: "ni ni-chart-pie-35 text-orange",
         component: Index,
-        layout: "/admin"
+        layout: "/user"
     },
     // {
     //     path: "/index",
     //     name: "Dashboard",
     //     icon: "ni ni-tv-2 text-primary",
     //     component: Index,
-    //     layout: "/admin"
+    //     layout: "/user"
     // },
     // {
     //     path: "/icons",
     //     name: "Icons",
     //     icon: "ni ni-planet text-blue",
     //     component: Icons,
-    //     layout: "/admin"
+    //     layout: "/user"
     // },
     // {
     //     path: "/maps",
     //     name: "Maps",
     //     icon: "ni ni-pin-3 text-orange",
     //     component: Maps,
-    //     layout: "/admin"
+    //     layout: "/user"
     // },
     // {
     //     path: "/user-profile",
     //     name: "User Profile",
     //     icon: "ni ni-single-02 text-yellow",
     //     component: Profile,
-    //     layout: "/admin"
+    //     layout: "/user"
     // },
     // {
     //     path: "/tables",
     //     name: "Tables",
     //     icon: "ni ni-bullet-list-67 text-red",
     //     component: StoreManage,
-    //     layout: "/admin"
+    //     layout: "/user"
     // },
     // {
     //     path: "/login",
