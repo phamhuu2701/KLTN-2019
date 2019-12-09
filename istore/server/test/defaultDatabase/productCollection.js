@@ -36,14 +36,7 @@ const products = [
             * Công suất: 7W - 9W - 15W - 18W - 28W:
                     * 7W ánh sáng vàng ấm áp: phù hợp làm đèn cầu thang, thay bóng đèn bàn học, bóng đèn âm trần.
                     * 9W - 15W: là loại bóng đèn thông dụng nhất trong nhà, phù hợp thay thế bóng đèn compact đang dùng trong bếp nấu, phòng khách, hành lang, phòng ngủ, nhà vệ sinh,...vv
-                    * 18W - 28W: bóng đèn siêu sáng dùng cho buôn bán ngoài trời, quán ăn lề đường, chiếu sáng vĩa hè, nhà xưởng sản xuất
-            -----------------------------
-            DNTN MY TRẦN là đại lý bán buôn, bán lẻ các sản phẩm điện dân dụng và thiết bị chiếu sáng công nghệ LED.
-            Nguồn hàng Cty phân phối được nhập trực tiếp từ chính hãng sản xuất với gía cạnh tranh nhất.
-            Chúng tôi cam kết kiểm tra kỹ từng sản phẩm trước khi gữi hàng và chịu trách nhiệm bảo hành 1 đổi 1 trong thời hạn 12 tháng.
-            Quý khách hoàn toàn yên tâm khi mua hàng tại shop.
-            Cty xuất hóa đơn cho khách mua hàng số lượng.
-            ----------------------------`,
+                    * 18W - 28W: bóng đèn siêu sáng dùng cho buôn bán ngoài trời, quán ăn lề đường, chiếu sáng vĩa hè, nhà xưởng sản xuất`,
         price: 85000,
         saleoff: 10,
         images: [],
@@ -101,20 +94,7 @@ const products = [
             ✔ Đèn có khả năng điều chỉnh được nhiệt độ màu từ 1700K-6500K từ tone màu ấm sang tone màu lạnh tùy theo nhu cầu người dùng và nhiệt độ môi trường xung quanh
             ✔ Độ bền lên tới 11 năm (25.000 tiếng)
             ✔ Điều khiển tắt mở, thay đổi độ sáng, màu sắc từ xa trên smartphone và tương thích với đầu đui E27 khá phổ biến
-            ✔ Đặc biệt có thể làm việc với Amazon Alexa, Google Assistant (Google Home) qua điều khiển giọng nói của bạn đặt hàng.
-            -------------------------------------------
-            Thông số chi tiết:
-            ✔ Model: YLDP06YL
-            ✔ Giao diện: E27
-            ✔ Quang thông: 800 lumens
-            ✔ Nhiệt độ màu: 1700K-6500K
-            ✔ Tuổi thọ: 25000 giờ
-            ✔ Kết nối không dây: Wi-Fi IEEE 802.11 b/g/n 2.4GHz
-            ✔ Đầu vào: 220V-240V~50/60Hz 0.05A
-            ✔ Công suất định mức: 10W
-
-            BẢO HÀNH DO LỖI NSX QUA TEM BẢO HÀNH DÁN TRÊN SẢN PHẨM
-            #sale #978store #phukienxiaomi #giamgia #xiaomi #phukien #giare #re #denthongminh #bongdenthongminh #denngu #denled #led #den #denxiaomi #denthongminh xiaomi`,
+            ✔ Đặc biệt có thể làm việc với Amazon Alexa, Google Assistant (Google Home) qua điều khiển giọng nói của bạn đặt hàng.`,
         price: 329900,
         saleoff: 28,
         images: [],
@@ -145,21 +125,7 @@ const products = [
             +Đèn LED POSSON là giải pháp tiết kiệm điện tuyệt vời cho mọi gia đình. Tiết kiệm đến 80% so với bóng đèn thông thường
             #Tuổi thọ, độ bền:
             +Led có tuổi thọ cao từ 15000 đến 25000 giờ, sử dụng đến vài năm sau mới có thể hỏng. 
-            +Chất liệu bóng đèn bằng nhựa kỹ thuật giúp cho bóng đèn không sợ va chạm hay rơi vỡ.
-            #Êm dịu mắt:
-            +Ánh sáng giống như ánh sáng tự nhiên nên không hại mắt, không tỏa nhiệt nóng
-            #Hướng dẫn chọn công suất bóng đèn phù hợp:
-            +3-5W: Sử dụng làm đèn trang trí, đèn tường, đèn góc, đèn gương, đèn ở khu vực nhỏ cần sáng ít.
-            #Nếu quý khách nhỡ mua công suất nhỏ mà cần độ sáng cao hơn thì liên hệ với shop để đổi công suất bóng lớn hơn. #Thông tin kỹ thuật:
-            *Điện áp: 220V (175-245V)
-            *Công suất: 3W
-            *Chip Led: 6 Led Heli.os siêu sáng
-            *Driver: IC (có đế nhôm tản nhiệt)
-            *Ánh sáng: Trắng mát 6500K /Vàng nắng 3500K
-            *Flux: 500lm /85lx
-            *Góc chiếu sáng: 180 độ
-            *Chống nước: Có
-            *Đuôi đèn: E27: đuôi xoáy 27mm`,
+            +Chất liệu bóng đèn bằng nhựa kỹ thuật giúp cho bóng đèn không sợ va chạm hay rơi vỡ.`,
         price: 10000,
         saleoff: 50,
         images: [],
@@ -302,26 +268,7 @@ const products = [
             - Độ sáng:
             Công suất 7W tương đương bóng 40W sợi đốt
             Công suất 11W tương đương bóng 60W sợi đốt
-            Công suất 14W tương đương bóng 75W sợi đốt
-            ....
-            Công suất 30W tương đương bóng 150W sợi đốt
-            - Sử dụng bột huỳnh quang 3 phổ
-            - Hiệu suất sáng cao
-            - Có thể hoạt động từ 170V - 240V
-            - Bầu nhựa chống cháy PBT
-            - Không dùng với công tắc điều chỉnh độ sáng
-            - Tuổi thọ trung bình: 5000 - 8000 giờ
-            💡💡Thông tin sản phẩm:
-            Sản phẩm gồm: 1 bóng đèn compact 
-            7W - ruột gà 3 xoắn - giá 30k
-            14W - ruột gà 4 xoắn - giá 36k
-            30W - ruột gà 5 xoắn - giá 60k
-            11W - 2 U - giá 30k
-            15W - 3 U - giá 35k
-            20W - 3 U - giá 38k
-            25W - 3 U - giá 45k
-            Bao bì: hộp giấy
-            #rangdong #compact #bóng #chinhhang #baohanh`,
+            Công suất 14W tương đương bóng 75W sợi đốt`,
         price: 45000,
         saleoff: 0,
         images: [],
@@ -344,7 +291,6 @@ const products = [
     {
         name: `Bóng đèn năng lượng mặt trời 5 chế độ sáng chất lượng cao`,
         description: `Thời gian giao hàng dự kiến cho sản phẩm này là từ 7-9 ngày
-
             Thông tin chi tiết:
             Model: BLS-60-20D
             Chất liệu nhựa ABS + PC
@@ -353,19 +299,7 @@ const products = [
             Tổng Khối lượng tịnh: 190g
             Nguồn sáng:
             20 Bóng 2835 LED 7W
-            25 Bóng 2835 LED 9W
-            Điện áp đầu vào: USB DC / 5-6V
-            Thông lượng phát sáng: 150-200LM
-            Pin: 18650 pin lithium 3,7V / 1200mAh
-            Thời gian chiếu sáng: ≥8 giờ
-            5 Chức năng, ba chức năng đầu tiên là chức năng làm mờ (cao, trung bình và thấp), chức năng thứ 4 là nhấp nháy, chức năng thứ 5 là SOS trong trường hợp khẩn cấp.
-            Kèm tấm pin mặt trời 6V * 1.2W (khung nhựa của tấm pin mặt trời có kích thước 130 * 84 * 10 mm / 5,12 * 3,31 * 0,39, Khối lượng tịnh: 90g)
-            Thời gian sạc là 6 giờ, trong điều kiện nhiều ánh nắng mặt trời.
-            Tấm pin mặt trời có dây dài 3 mét chất lượng cao, giao diện USB Micro 5P
-            Phụ kiện: Móc
-            Kiểu: Điều khiển từ xa 9W
-            Gói hàng bao gồm:
-            1 Bóng đèn năng lượng mặt trời`,
+            25 Bóng 2835 LED 9W`,
         price: 140000,
         saleoff: 12,
         images: [],
@@ -388,15 +322,10 @@ const products = [
     {
         name: `Bóng đèn Edison Vintage ST64 40W E27`,
         description: `Thiết kế: Bóng Đèn Edison Vintage SGB35ST64 40W E27
-
             Đuôi đèn: E27
-
             Quy cách: W62 x H140
-
             Công suất: 40W 
-
             Có thể tăng giàm độ sáng tùy thích (dùng với dimmer).
-
             Bảo hành: 6 tháng
             Loại bóng đèn  Bóng đèn sợi đốt
             Công suất(W)  40
@@ -404,8 +333,7 @@ const products = [
             Kiểu đuôi đèn  Đuôi E27
             Nguồn điện sử dụng  220V
             Màu sáng  Màu ấm
-            Chiều dài bóng đèn (mm)  62
-            Xuất xứ  Trung Quốc`,
+            Chiều dài bóng đèn (mm)  62`,
         price: 31000,
         saleoff: 10,
         images: [],
@@ -433,22 +361,6 @@ const products = [
             - Giao hàng toàn quốc, #Freeship cho đơn hàng >99.000đ
             - #Bansi toàn quốc, cam kết #giare nhất
             - Mua sỉ: :Liên hệ trực tiếp hoặc inbox
-
-            ❌  MÔ TẢ SẢN PHẨM:  Bóng đèn bắt muỗi Mosquito killer Lamp AC175-260V (Trắng)
-
-            Côn trùng đặc biệt là muỗi là trung gian truyền nhiễm các bệnh nguy hiểm như: Bệnh sốt xuất huyết,virus ZIKA, … Để chủ động phòng tránh dịch do muỗi và côn trùng truyền bệnh. không còn phải ngửi những mùi hương khó chịu do khói của các loại nhang muỗi hay mỏi tay cầm vợt bắt muỗi, các chất hóa học không an toàn từ bình xịt muỗi... hãy bảo vệ sức khỏe gia đình bạn với Đèn LED bắt muỗi hiệu quả cao VegaVN  của chúng tôi.
-            Nguyên lý hoạt động: Đèn LED bắt muỗi hiệu quả cao VegaVN đèn bắt muỗi có dạng hình ống, trụ tròn, bên trong lồng quạt có gắn bóng đèn UV có nhiệm vụ phát ra ánh sáng thu hút muỗi. Khi muỗi bay vào trong phía đèn sẽ bị không khí khô nóng ở đây đốt cháy, và rơi xuống phần đáy của chiếc đèn.
-            Đặc Điểm Nổi Bật
-            Sản phẩm không gây độc hại, Thân thiện với môi trường, an toàn sang trọng và tiện lợi
-            Thu hút và tiêu diệt muỗi, côn trùng và các loại sâu bọ bay khác
-            Không gây tiếng ồn khi hoạt và không yêu cầu người dùng tương tác.
-            Để sử dụng trong nhà và ngoài trời đều hiệu quả .
-            Tiết kiệm với công suất tiêu thụ tối đa là: 12W
-            Không có mùi xác muỗi chết khó chịu như những loại dùng điện cao áp hay vợt muỗi.
-            Không chất hóa học - Không khí ga
-            Lắp đặt đơn giản, sử dụng dễ dàng
-            Hiệu suất cao hơn đèn thủy ngân
-            Không thải khí độc.
             THÔNG TIN CHI TIẾT:
             Sản phẩm 2 tác dụng trong 1: đèn và máy bắt muỗi
             Số lượng đèn led: 6 Led
@@ -509,7 +421,7 @@ const products = [
     },
     {
         name: `Bóng đèn bắp ngô tiết kiệm năng lượng 3000k 12w`,
-        description: `Bóng đèn bắp ngô   tiết kiệm năng lượng 3000k 12w
+        description: `Bóng đèn bắp ngô tiết kiệm năng lượng 3000k 12w
             12W LED light bulb, high energy conversion. Corn shape bulb with mini size, creative and stylish. Flick-free, durable with long service life. Item Name: LED Light Bulb Power: 12W Lamp Body Material: Plastic/Aluminum Light Color: White Light/Warm Light/Tree Color Changing Light Lamp Head: E14 Features: Corn Shape, Easy to Use, Portable, Energy Saving, Decorative Lamp 12W Size: 3cm x 9.8cm/1.18 x 3.86  Notes: Due to the light and screen setting difference, the item's color may be slightly different from the pictures. Please allow slight dimension difference due to different manual measurement. Package Includes: 1 x LED Light Bulb `,
         price: 24000,
         saleoff: 48,
@@ -547,25 +459,7 @@ const products = [
             Góc tỏa của chùm sáng là 360o
             Tuổi thọ đèn lên đến 15.000h
             Warm White (2700-3500K)
-            Bảo hành: 12 tháng
-            Bóng Led Edison là bóng giả bóng sợi tóc hồi xưa bên trong sử dụng chip Led để điều khiển ánh sáng
-            Liên hệ ngay: Đèn Toàn Lợi – Ánh sáng toàn mỹ
-            Hotlien Đèn Trang Trí Toàn Lợi
-
-            Hotline: 0988 414 762
-            Email: dentoanloi@gmail.com
-            Fanpage: Đèn Toàn Lợi – Ánh sáng toàn mỹ
-            Website: Đèn Toàn Lợi
-            Ứng dụng của: Bóng LED Edison T64 4W đuôi E27 là gì?
-            Được ứng dụng nhiều ở các quán cafe, shop thời trang, trà sữa, quán ăn….
-
-            Đèn thả Mẫu đèn thả chao màu đen hình cây dù trang trí nhà khách
-            Bóng đèn: Bóng LED Edison T64 4W đuôi E27 – Đèn Toàn Lợi
-            Đèn thả Mẫu đèn thả lồng sắt nhẹ nhàng cho quán cafe
-            Bóng đèn: Bóng LED Edison T64 4W đuôi E27 – Đèn Toàn Lợi
-            
-
-            Nếu mẫu bóng  LED Edison T64 4W của Toàn Lợi không đáp ứng được yêu cầu thiết kế của bạn. Bạn có thể xem thêm các sản phẩm đèn khác trong cùng danh mục Bóng Đèn của chúng tôi. Hoặc liên hệ với nhân viên chúng tôi. Chúng tôi sẽ tìm cho bạn nhé!`,
+            Bảo hành: 12 tháng`,
         price: 25000,
         saleoff: 49,
         images: [],
@@ -588,10 +482,7 @@ const products = [
     {
         name: `Bóng đèn E27 220V 150W 5500k chụp ảnh ban ngày cho studio`,
         description: `🎉Hi~Click hashtag #MSSTORE📷 to Explore More Nice Items🎉
-
-            E27 220V 150W 5500K Photo Studio Bulb Video Light Photography Daylight Lamp
-
-            
+            E27 220V 150W 5500K Photo Studio Bulb Video Light Photography Daylight Lamp            
             Features: 
             Provide bright environment for taking product photo. 
             Compact and easy set up. 
@@ -724,10 +615,7 @@ const products = [
             Power: 5W
             Luminous flux: ＜500lm
             Special function: Sound sensor, auto PIR motion detection
-            Product size: 10*6*6cm
-
-            Package list:
-            1*LED bulb`,
+            Product size: 10*6*6cm`,
         price: 27000,
         saleoff: 10,
         images: [],
@@ -777,6 +665,122 @@ const products = [
                 stars: 5
             }
         ]
+    },
+    {
+        name: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W - bong den led`,
+        description: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W(Sáng Vàng)
+        Đèn Compact Điện Quang 09727AW sẽ giúp bạn tăng thêm sự lựa chọn với bóng đèn công suất lớn tiết kiệm điện, phù hợp khi chiếu sáng ngõ xóm, nhà xưởng, khuôn viên, gian hàng thương mại,...
+        Sử dụng bột huỳnh quang 3 màu và ballast điện tử
+        Là sản phẩm lý tưởng trong việc thay thế cho bóng đèn dây tóc
+        Hiệu suất phát quang cao hơn và tiết kiệm điện năng hữu hiệu`,
+        price: 70000,
+        saleoff: 0,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ],
+        url:
+            "https://www.lazada.vn/products/den-led-compact-dien-quang-dq-ledcp01-09727aw-sang-vang-9w-bong-den-led-i223532629-s281719031.html?spm=a2o4n.searchlist.list.1.29704015A63EDK&search=1"
+    },
+    {
+        name: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W - bong den led`,
+        description: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W(Sáng Vàng)
+        Đèn Compact Điện Quang 09727AW sẽ giúp bạn tăng thêm sự lựa chọn với bóng đèn công suất lớn tiết kiệm điện, phù hợp khi chiếu sáng ngõ xóm, nhà xưởng, khuôn viên, gian hàng thương mại,...
+        Sử dụng bột huỳnh quang 3 màu và ballast điện tử
+        Là sản phẩm lý tưởng trong việc thay thế cho bóng đèn dây tóc
+        Hiệu suất phát quang cao hơn và tiết kiệm điện năng hữu hiệu`,
+        price: 70000,
+        saleoff: 0,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ],
+        url:
+            "https://www.lazada.vn/products/den-led-compact-dien-quang-dq-ledcp01-09727aw-sang-vang-9w-bong-den-led-i223532629-s281719031.html?spm=a2o4n.searchlist.list.1.29704015A63EDK&search=1"
+    },
+    {
+        name: `Bóng đèn led Hồng Ngoại Sưởi ấm`,
+        description: `Đèn Led Hồng Ngoại Sưởi ấm LEDCP01 09727AW Sáng vàng 9W(Sáng Vàng)
+        Đèn Led Hồng Ngoại Sưởi ấm 09727AW sẽ giúp bạn tăng thêm sự lựa chọn với bóng đèn công suất lớn tiết kiệm điện, phù hợp khi chiếu sáng ngõ xóm, nhà xưởng, khuôn viên, gian hàng thương mại,...
+        Sử dụng bột huỳnh quang 3 màu và ballast điện tử
+        Là sản phẩm lý tưởng trong việc thay thế cho bóng đèn dây tóc
+        Hiệu suất phát quang cao hơn và tiết kiệm điện năng hữu hiệu`,
+        price: 145000,
+        saleoff: 73,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ],
+        url:
+            "https://tiki.vn/bong-den-hong-ngoai-suoi-am-p15089394.html?_v=new_disable_fbt&src=search&2hi=1&keyword=bong+den&utm_expid=.VuO9Tv3VTQyjx6MLutmThw.3&utm_referrer=https%3A%2F%2Ftiki.vn%2Fsearch%3Fq%3Dbong%2520den"
+    },
+    {
+        name: `Bóng đèn trụ LED 50W siêu sáng tiết kiệm điện bảo hành 1 năm`,
+        description: `Ngày nay xu hướng sử dụng đèn Led càng ngày càng phổ biến trong đời sống khi giá của công nghệ này càng ngày càng rẻ đi và chúng đã được người dùng kiểm nghiệm thực tế là có công dụng tuyệt vời, có nhiều ưu điểm vượt trội so với các loại đèn cũ như: 
+        - Tiết kiệm điện đến 90% so với bóng đèn sợi đốt.
+        - Không tạo tia bức xạ, tia hồng ngoại, tia cực tím. Nhiệt độ của bóng thấp, cho ánh sáng dễ chịu, không chói mắt và hiệu suất chiếu sáng cao 
+        - Bóng bầu kín chống nước có thể thắp sáng ngoài trời. 
+        - Sản phẩm sử dụng chíp cao cấp SMD. Đèn led có tuổi thọ bền bỉ, lên đến 40 nghìn giờ thắp sáng. Đèn Led khi bật công tắc không có thời gian trễ, bật là sáng luôn không nhấp nháy. 
+        Thuộc Tính Sản Phẩm :
+        + Ánh sáng: trắng 
+        + Chất liệu:  nhôm nhựa 
+        + Điện áp : 220V/5`,
+        price: 55000,
+        saleoff: 7,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 4
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Cho 5 sao!",
+                stars: 5
+            }
+        ],
+        url:
+            "https://shopee.vn/B%C3%B3ng-%C4%91%C3%A8n-tr%E1%BB%A5-LED-50W-si%C3%AAu-s%C3%A1ng-ti%E1%BA%BFt-ki%E1%BB%87m-%C4%91i%E1%BB%87n-b%E1%BA%A3o-h%C3%A0nh-1-n%C4%83m-i.116832373.2446585129"
     }
 ];
 
@@ -816,21 +820,24 @@ module.exports.createDefaultCollection = async () => {
         // console.log(productCategory);
 
         if (productCategory != null) {
-            products.map(async (product, i) => {
+            for (let i = 0; i < products.length * 2; i++) {
 
-                const nameRemoveAccents = removeAccents(product.name);
+                let key = i % products.length;
+
+                const nameRemoveAccents = removeAccents(products[key].name);
 
                 let productNew = new Product({
                     productCategory: productCategory,
-                    name: product.name,
+                    name: products[key].name,
                     nameRemoveAccents: nameRemoveAccents,
-                    description: product.description,
-                    price: product.price,
-                    saleoff: product.saleoff,
-                    rates: product.rates
+                    description: products[key].description,
+                    price: products[key].price,
+                    saleoff: products[key].saleoff,
+                    rates: products[key].rates,
+                    url: products[key].url ? products[key].url : ""
                 });
 
-                productNew.images.push(imageUrls[i]);
+                productNew.images.push(imageUrls[i % 20]);
                 productNew.images.push(imageUrls[(i + 1) % 20]);
                 productNew.images.push(imageUrls[(i + 2) % 20]);
                 productNew.images.push(imageUrls[(i + 3) % 20]);
@@ -839,11 +846,15 @@ module.exports.createDefaultCollection = async () => {
                 // console.log(productNew);
                 const productSave = await ProductDao.save(productNew);
                 // console.log("product index: ", i, ": ", (productSave != null) ? "OK" : "Fail" );
-            });
+            }
             console.log("Default Product collection created.");
         }
-
     } else {
-        console.log("Product collection existed: ", productsArray.length, "/20");
+        console.log(
+            "Product collection existed: ",
+            productsArray.length,
+            "/",
+            products.length * 2
+        );
     }
 };

@@ -448,8 +448,8 @@ class StoreManage extends React.Component {
                                             <th scope="col" className="th-custom">Cửa hàng</th>
                                             <th scope="col" className="th-custom">Phân loại</th>
                                             <th scope="col" className="th-custom">Địa chỉ</th>
-                                            <th scope="col" className="th-custom">Trạng thái</th>
-                                            <th scope="col" />
+                                            <th scope="col" className="th-custom" style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Trạng thái</th>
+                                            <th scope="col" style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}><i className="fas fa-ellipsis-v" /></th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-body">
@@ -458,7 +458,12 @@ class StoreManage extends React.Component {
                                             this.state.stores.map((store, key) => (
                                                 <tr key={key}>
                                                     <th scope="row">
-                                                        <Link to={"/store/" + store.template + "/" + store._id} target="_blank">
+                                                        <a href={
+                                                            store.website.hasWebsite ?
+                                                            store.website.url :
+                                                            "/store/" + store.template + "/" + store._id
+                                                            } target="_blank" rel="noopener noreferrer">
+                                                            <span>
                                                             <Media className="align-items-center">
                                                                 <span
                                                                     className="avatar rounded-circle mr-3"
@@ -472,15 +477,16 @@ class StoreManage extends React.Component {
                                                                 </span>
                                                                 <Media>
                                                                     <span className="mb-0 text-sm">
-                                                                        {store.name}
+                                                                        {store.name.substring(0, 20)}
                                                                     </span>
                                                                 </Media>
                                                             </Media>
-                                                        </Link>
+                                                            </span>
+                                                        </a>
                                                     </th>
                                                     <td className="td-custom">{store.storeCategory.name}</td>
                                                     <td className="td-custom">{getFullAddress(store)}</td>
-                                                    <td className="td-custom">
+                                                    <td className="td-custom" style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>
                                                         <Badge color="" className="badge-dot mr-4">
                                                             {store.isActive ?
                                                                 (<span className="is-active-true"><i className="bg-success" />Đang hoạt động</span>) :

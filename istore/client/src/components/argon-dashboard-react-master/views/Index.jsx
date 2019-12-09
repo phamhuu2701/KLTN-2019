@@ -21,7 +21,7 @@ import classnames from "classnames";
 // javascipt plugin for creating charts
 import Chart from "chart.js";
 // react plugin used to create charts
-import { Line, Bar } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 // reactstrap components
 import {
     Button,
@@ -42,26 +42,36 @@ import {
     chartOptions,
     parseOptions,
     chartExample1,
-    chartExample2
+    getChart1Data
 } from "components/argon-dashboard-react-master/variables/charts.jsx";
 
 import "./Index.css";
 import Header from "components/argon-dashboard-react-master/components/Headers/Header.jsx";
+import { getStoresByIdUser2, getProductsAllStoresByUser } from "../../../services/user.service";
+import { getStoreViewsCount2, getAvgRatesStore } from "../../../services/store.service";
+import { sortDescreaseProductsByViewsCount } from "../../../utils/productUtils";
+import getAvgRatesProduct, { getViewsCountByTime } from "../../../services/product.service";
 
 class Index extends React.Component {
     state = {
         activeNav: 1,
-        chartExample1Data: "data1"
+        chartExample1Data: "data1",
+        top10ProductsViewsCout: [],
+        top10Stores: []
     };
     toggleNavs = (e, index) => {
-        e.preventDefault();
+        try {
+            e.preventDefault();
+        } catch (error) {
+            // console.log(error);
+        }
         this.setState({
             activeNav: index,
             chartExample1Data: "data" + index
-                // this.state.chartExample1Data === "data1" ? "data2" : "data1"
+            // this.state.chartExample1Data === "data1" ? "data2" : "data1"
         });
         let wow = () => {
-            console.log(this.state);
+            // console.log(this.state);
         };
         wow.bind(this);
         setTimeout(() => wow(), 1000);
@@ -71,6 +81,72 @@ class Index extends React.Component {
         if (window.Chart) {
             parseOptions(Chart, chartOptions());
         }
+    }
+    componentDidMount() {
+        getProductsAllStoresByUser(this.props.user._id, products => {
+            // console.log(products);
+
+            // sắp xếp giảm dần lượt xem
+            sortDescreaseProductsByViewsCount(products);
+
+            // chọn top 10
+            if (products.length > 10) {
+                let top10ProductsViewsCout = [];
+                for (let i = 0; i < 10; i++) {
+                    top10ProductsViewsCout.push(products[i]);
+                }
+
+                this.setState({
+                    top10ProductsViewsCout: top10ProductsViewsCout
+                })
+            }
+        })
+
+        getStoresByIdUser2(this.props.user._id, stores => {
+            let top10Stores = [];
+            if (stores.length > 0) {
+                for (let i = 0; i < 10; i++) {
+                    top10Stores.push(stores[i]);
+                }
+            }
+            this.setState({
+                top10Stores: top10Stores
+            })
+        })
+
+        getProductsAllStoresByUser(this.props.user._id, products => {
+            let data1 = [];
+            let data2 = [];
+            let data3 = [];
+
+            let currentDate = new Date();
+            // console.log(currentDate);
+
+            for(let i=1; i<=12; i++){
+                let viewsCountByMonth = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i, 31);
+                console.log(viewsCountByMonth);
+                data1.push(viewsCountByMonth);
+            }
+            for(let i=1; i<=12; i+=3){
+                let viewsCountByQuater = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i+2, 31);
+                data2.push(viewsCountByQuater);
+            }
+            for(let i=currentDate.getFullYear() - 3; i<=currentDate.getFullYear(); i++){
+                let viewsCountByYear = getViewsCountByTime(products, i, 1, 0, i, 12, 31);
+                data3.push(viewsCountByYear);
+            }
+
+
+            getChart1Data(
+                {
+                    data1: data1,
+                    data2: data2,
+                    data3: data3
+                }
+            );
+
+            this.toggleNavs(this, 1);
+        })
     }
     render() {
         return (
@@ -147,8 +223,7 @@ class Index extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    <Row className="mt-5">
-                        {/* <Col xl="4"> */}
+                    {/* <Row className="mt-5">
                         <Col>
                             <Card className="shadow">
                                 <CardHeader className="bg-transparent">
@@ -162,7 +237,6 @@ class Index extends React.Component {
                                     </Row>
                                 </CardHeader>
                                 <CardBody>
-                                    {/* Chart */}
                                     <div className="chart">
                                         <Bar
                                             data={chartExample2.data}
@@ -172,7 +246,7 @@ class Index extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                    </Row>
+                    </Row> */}
                     <Row className="mt-5">
                         <Col className="mb-5 mb-xl-0" xl="7">
                             <Card className="shadow">
@@ -196,19 +270,26 @@ class Index extends React.Component {
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col">Tên sản phẩm</th>
-                                            <th scope="col">Lượt xem</th>
-                                            <th scope="col">Lượt đặt hàng</th>
-                                            <th scope="col">Đánh giá</th>
+                                            <th>#</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Hình ảnh</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Tên sản phẩm</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Lượt xem</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Đánh giá</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">Bóng đén led DN6218</th>
-                                            <td>4,569</td>
-                                            <td>340</td>
-                                            <td>3.8</td>
-                                        </tr>
+                                        {
+                                            this.state.top10ProductsViewsCout.length > 0 &&
+                                            this.state.top10ProductsViewsCout.map((product, key) => (
+                                                <tr key={key}>
+                                                    <td style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>{key + 1}</td>
+                                                    <td style={{ "padding": "0", "textAlign": "center" }}><img style={{ "height": "30px", "width": "auto" }} alt="" src={product.images[0]}></img></td>
+                                                    <th>{product.name.substring(0, 30)}..</th>
+                                                    <td>{product.viewsCount.length}</td>
+                                                    <td>{getAvgRatesProduct(product)}</td>
+                                                </tr>
+                                            ))
+                                        }
                                     </tbody>
                                 </Table>
                             </Card>
@@ -236,20 +317,23 @@ class Index extends React.Component {
                                     <thead className="thead-light">
                                         <tr>
                                             <th scope="col">Tên cửa hàng</th>
-                                            <th scope="col">Lượt xem</th>
-                                            <th scope="col">Đánh giá</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Lượt xem</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Đánh giá</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row">Tanasa</th>
-                                            <td>1,480</td>
-                                            <td>
-                                                <div className="d-flex align-items-center">
-                                                    <span className="mr-2">3.5</span>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {
+                                            this.state.top10Stores.length > 0 &&
+                                            this.state.top10Stores.map((store, key) => (
+                                                <tr key={key}>
+                                                    <th scope="row">{store.name.substring(0, 25)}</th>
+                                                    <td style={{ "textAlign": "center" }}>{getStoreViewsCount2(store)}</td>
+                                                    <td style={{ "textAlign": "center" }}>
+                                                        {Math.round(getAvgRatesStore(store) * 100) / 100}
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
                                     </tbody>
                                 </Table>
                             </Card>

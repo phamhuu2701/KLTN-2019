@@ -99,8 +99,7 @@ export function onSearchProductService(search, distance, thisMap, thisStoreWindo
                             [new latLng(lat, lng)],
                             latlngAllStores,
                             async response => {
-                                const elements = await response.rows[0]
-                                    .elements;
+                                const elements = await response.rows[0].elements;
                                 elements.forEach((e, index) => {
                                     lastResult.push({
                                         ...result[index],

@@ -135,3 +135,19 @@ export function getStarsReviewNewest(product, n) {
     }
     return starsArray;
 }
+
+// sắp xếp products theo lượt xem tăng dần
+export function sortIncreaseProductsByViewsCount(products) {
+    products.sort((first, second) => {
+        return first.viewsCount.length - second.viewsCount.length;
+    });
+    return products;
+}
+
+// sắp xếp products theo lượt xem giảm dần
+export function sortDescreaseProductsByViewsCount(products) {
+    products.sort((first, second) => {
+        return second.viewsCount.length - first.viewsCount.length;
+    });
+    return products;
+}

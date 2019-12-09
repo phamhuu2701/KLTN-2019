@@ -440,3 +440,28 @@ export function getAvgRatesStoresByUser(user, callback) {
         }
     });
 }
+
+export function getProductsAllStoresByUser(idUser, callback) {
+    let products = [];
+    fetch("/api/users/" + idUser + "/stores")
+        .then(res => res.json())
+        .then(stores => {
+            
+            if(stores.length > 0){
+                stores.map((store, key) => {                    
+                    if(store.products.length > 0){
+                        store.products.map((product, key) => {
+                            products.push(product);
+
+                            return null;
+                        })
+                    }
+
+                    return null;
+                })
+            }
+
+            callback(products);
+        })
+        .catch(err => console.log(err));
+}

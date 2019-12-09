@@ -7,6 +7,7 @@ import {
 import { showProductDetail } from "../components/istore/ProductDetail";
 import { onZoomSearchField } from "../components/HomeIndex";
 import getAvgRatesProduct from "./product.service";
+import { sortIncreaseProductsByViewsCount, sortDescreaseProductsByViewsCount } from "../utils/productUtils";
 
 export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
     //const storeInfo = document.querySelector(".store-info");
@@ -160,5 +161,34 @@ export function getStoreViewsCount(store, callback) {
         callback(storeViewsCount);
     } else {
         callback(0);
+    }
+}
+
+export function getStoreViewsCount2(store) {
+    if (store.products.length > 0) {
+        let storeViewsCount = 0;
+        store.products.map((product, key) => {
+            storeViewsCount += product.viewsCount.length;
+
+            return null;
+        });
+
+        return storeViewsCount;
+    } else {
+        return 0;
+    }
+}
+
+export function getTopProductsViewsCount(store, isIncrease, callback) {
+    if (store.products.length > 0) {
+        
+        // sắp xếp tăng dần
+        if (isIncrease) {
+            callback(sortIncreaseProductsByViewsCount(store.products));
+        } else {
+            callback(sortDescreaseProductsByViewsCount(store.products));
+        }
+    } else {
+        callback([]);
     }
 }

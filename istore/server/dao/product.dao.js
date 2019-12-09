@@ -41,7 +41,10 @@ module.exports = {
     save: model => {
         return new Promise((resolve, reject) => {
             model.save((err, result) => {
-                if (err) return reject(null);
+                if (err) {
+                    console.log(err);
+                    return reject(null);
+                };
                 return resolve(result);
             });
         }).catch(() => null);
@@ -51,7 +54,8 @@ module.exports = {
             Model.findByIdAndUpdate(
                 model._id,
                 {
-                    rates: model.rates
+                    rates: model.rates,
+                    viewsCount: model.viewsCount
                 },
                 { new: true },
                 (err, result) => {

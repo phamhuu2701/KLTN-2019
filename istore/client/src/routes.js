@@ -90,7 +90,7 @@ var routes = [
         path: "/statistical",
         name: "Thống kê",
         icon: "ni ni-chart-pie-35 text-orange",
-        component: Statistical,
+        component: Index,
         layout: "/admin"
     },
     // {

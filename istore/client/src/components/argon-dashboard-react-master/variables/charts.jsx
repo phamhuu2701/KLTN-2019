@@ -339,13 +339,14 @@ let chartExample1 = {
             }
         }
     },
-    data1: canvas => {
+    data1: canvas => {  
         return {
             labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
             datasets: [
                 {
                     label: "Performance",
-                    data: [12, 15, 21, 13, 31, 24, 32, 13, 18, 22, 21, 16]
+                    // data: [12, 15, 21, 13, 31, 24, 32, 13, 18, 22, 21, 16]
+                    data: chart1Data.data1
                 }
             ]
         };
@@ -356,7 +357,8 @@ let chartExample1 = {
             datasets: [
                 {
                     label: "Performance",
-                    data: [48, 68, 63, 59]
+                    // data: [48, 68, 63, 59]
+                    data: chart1Data.data2
                 }
             ]
         };
@@ -367,7 +369,8 @@ let chartExample1 = {
             datasets: [
                 {
                     label: "Performance",
-                    data: [200, 196, 244, 224]
+                    // data: [200, 196, 244, 224]
+                    data: chart1Data.data3
                 }
             ]
         };
@@ -417,9 +420,21 @@ let chartExample2 = {
     }
 };
 
+
+var chart1Data = {
+    data1: [],
+    data2: [],
+    data3: []
+}
+function getChart1Data(c1Data){
+    chart1Data = c1Data;
+    console.log(chart1Data);
+}
+
 module.exports = {
     chartOptions, // used inside src/views/Index.jsx
     parseOptions, // used inside src/views/Index.jsx
     chartExample1, // used inside src/views/Index.jsx
-    chartExample2 // used inside src/views/Index.jsx
+    chartExample2, // used inside src/views/Index.jsx
+    getChart1Data
 };
