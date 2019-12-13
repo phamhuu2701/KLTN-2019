@@ -6,3 +6,12 @@ export default function getEmployees(callback) {
         })
         .catch(err => console.log(err));
 }
+
+export function getEmployeeByUser(idUser, callback) {
+    fetch("/api/employees/users/" + idUser)
+        .then(res => res.json())
+        .then(result => {
+            callback(result);
+        })
+        .catch(err => console.log(err));
+}

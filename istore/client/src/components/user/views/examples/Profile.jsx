@@ -207,13 +207,9 @@ class Profile extends React.Component {
                                                 <img
                                                     alt="..."
                                                     className="rounded-circle"
-                                                    //   src={require("components/user/assets/img/theme/team-4-800x800.jpg")}
                                                     src={this.state.user.avatars[0]}
                                                 />
                                             </a>
-                                        </div>
-                                        <div className="card-profile-image-change">
-                                            <i className="fa fa-camera" aria-hidden="true"></i>
                                         </div>
                                     </Col>
                                 </Row>
@@ -230,7 +226,7 @@ class Profile extends React.Component {
                                         </Button>
                                         <Button
                                             className="float-right"
-                                            color="default"
+                                            color="success"
                                             href="#pablo"
                                             onClick={e => e.preventDefault()}
                                             size="sm"
@@ -261,25 +257,22 @@ class Profile extends React.Component {
                                         </div>
                                     </Row>
                                     <div className="text-center">
-                                        <h3>
+                                        <h3 style={{ "textTransform": "uppercase" }}>
                                             {(this.state.user.fullname.lastname + " " + this.state.user.fullname.firstname)}
                                         </h3>
                                         <div className="h5 font-weight-300">
-                                            <i className="ni location_pin mr-2" />
+                                            <i className="fa fa-phone text-gray"></i>{" "}
+                                            {this.state.user.phone}
+                                        </div>
+                                        <div className="h5 font-weight-300">
+                                            <i className="fa fa-envelope text-gray"></i>{" "}
+                                            {this.state.user.email}
+                                        </div>
+                                        <div className="h5 font-weight-300">
+                                            <i className="fa fa-map-marker text-gray"></i>{" "}
                                             {this.state.user.address}
                                         </div>
-                                        <div className="h5 mt-4">
-                                            <i className="ni business_briefcase-24 mr-2" />
-                                            Công việc: ...
-                                        </div>
-                                        <div>
-                                            <i className="ni education_hat mr-2" />
-                                            Chức vụ: ...
-                                        </div>
                                         <hr className="my-4" />
-                                        <p>
-                                            Hãy giới thiệu về bạn..
-                                        </p>
                                         <a href="#pablo" onClick={e => e.preventDefault()}>
                                             Xem thêm
                                         </a>
@@ -429,6 +422,7 @@ class Profile extends React.Component {
                                                             Nữ
                                                         </Label>
                                                     </FormGroup>
+                                                    <br />
                                                 </Col>
                                                 <Col lg="6">
                                                     <FormGroup>

@@ -36,7 +36,7 @@ import {
 import { Link } from "react-router-dom";
 // core components
 import Header from "components/admin/components/Headers/Header.jsx";
-import { getUsers } from "../../../../services/user.service";
+import { getUserModels } from "../../../../services/user.service";
 import formatDate from "../../../../utils/dateUtils";
 
 class UsersManage extends React.Component {
@@ -44,35 +44,23 @@ class UsersManage extends React.Component {
         super();
 
         this.state = {
-            users: []
+            userModels: []
         }
     }
 
     componentDidMount() {
-        // getUserByAuthorizationUser(users => {
-        //     if(users.length >= 10){
-        //         this.setState({
-        //             users: users.slice(0, 10)
-        //         })
-        //     }
-        //     else{
-        //         this.setState({
-        //             users: users
-        //         })
-        //     }
-        // });
-        getUsers(users => {
-            if(users.length >= 10){
+        getUserModels(userModels => {
+            if(userModels.length > 10){
                 this.setState({
-                    users: users.slice(0, 10)
+                    userModels: userModels.slice(0, 10)
                 })
             }
             else{
                 this.setState({
-                    users: users
+                    userModels: userModels
                 })
             }
-        })
+        });
     }
 
     render() {
@@ -80,7 +68,7 @@ class UsersManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7-custom" fluid={true}>
+                <Container style={{ "marginTop": "2rem" }} fluid={true}>
                     {/* Table */}
                     <Row>
                         <div className="col">
@@ -102,20 +90,20 @@ class UsersManage extends React.Component {
                                     </thead>
                                     <tbody className="table-body">
                                         {
-                                            this.state.users.length > 0 &&
-                                            this.state.users.map((user, key) => (
+                                            this.state.userModels.length > 0 &&
+                                            this.state.userModels.map((userModel, key) => (
                                                 <tr key={key}>
                                                     <td>{key + 1}</td>
                                                     <th style={{ "textTransform": "uppercase" }}>
                                                         <a href="#pablo">
-                                                            {user.fullname.firstname + " " + user.fullname.lastname}
+                                                            {userModel.user.fullname.firstname + " " + userModel.user.fullname.lastname}
                                                         </a>
                                                     </th>
-                                                    <td>{user.phone}</td>
-                                                    <td>{user.email}</td>
-                                                    <td>{formatDate(user.timeRegister)}</td>
+                                                    <td>{userModel.user.phone}</td>
+                                                    <td>{userModel.user.email}</td>
+                                                    <td>{formatDate(userModel.user.timeRegister)}</td>
                                                     <td>
-                                                        
+                                                        {userModel.stores.length}
                                                     </td>
                                                     <td style={{"textAlign": "center"}}>
                                                         <UncontrolledDropdown>

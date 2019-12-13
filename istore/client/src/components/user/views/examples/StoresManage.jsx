@@ -26,8 +26,6 @@ import {
     DropdownItem,
     UncontrolledDropdown,
     DropdownToggle,
-
-    Media,
     Pagination,
     PaginationItem,
     PaginationLink,
@@ -47,7 +45,7 @@ import { Link } from "react-router-dom";
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
-import "./StoreManage.css";
+import "./StoresManage.css";
 // import PhoneActivate from "./PhoneActivate";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
@@ -61,7 +59,7 @@ import getLatLngFromAddress from "../../../../services/map2.service";
 import PhoneAdd from "./PhoneAdd";
 
 
-class StoreManage extends React.Component {
+class StoresManage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -152,9 +150,9 @@ class StoreManage extends React.Component {
         }
     }
 
-    handeResultPhoneAdd(phone){
+    handeResultPhoneAdd(phone) {
         // console.log(result);
-        if(phone){
+        if (phone) {
             this.setState({
                 showPhoneAddModal: false,
                 isShowTemplateSelect: true,
@@ -163,7 +161,7 @@ class StoreManage extends React.Component {
             });
             this.props.user.phone = phone;
         }
-        else{
+        else {
             this.setState({
                 showPhoneAddModal: false
             })
@@ -305,7 +303,7 @@ class StoreManage extends React.Component {
         }
     }
 
-    onCancelButtonClick(){
+    onCancelButtonClick() {
         window.location.reload();
     }
 
@@ -428,7 +426,7 @@ class StoreManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7 mt--7-custom stores-manage" fluid={true}>
+                <Container className="stores-manage" fluid={true} style={{ "marginTop": "2rem" }}>
                     {/* Button Add Store */}
                     <Row>
                         <Col className="container-button-add-store">
@@ -445,11 +443,12 @@ class StoreManage extends React.Component {
                                 <Table className="align-items-center table-flush table-flush-custom" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col" className="th-custom">Cửa hàng</th>
-                                            <th scope="col" className="th-custom">Phân loại</th>
-                                            <th scope="col" className="th-custom">Địa chỉ</th>
-                                            <th scope="col" className="th-custom" style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Trạng thái</th>
-                                            <th scope="col" style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}><i className="fas fa-ellipsis-v" /></th>
+                                            <th scope="col" style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>#</th>
+                                            <th scope="col">Cửa hàng</th>
+                                            <th scope="col">Phân loại</th>
+                                            <th scope="col">Địa chỉ</th>
+                                            <th scope="col" style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>Trạng thái</th>
+                                            <th scope="col" style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}><i className="fas fa-ellipsis-v" /></th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-body">
@@ -457,43 +456,26 @@ class StoreManage extends React.Component {
                                             this.state.stores &&
                                             this.state.stores.map((store, key) => (
                                                 <tr key={key}>
-                                                    <th scope="row">
+                                                    <td style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>{key + 1}</td>
+                                                    <th style={{ "textTransform": "uppercase" }}>
                                                         <a href={
                                                             store.website.hasWebsite ?
-                                                            store.website.url :
-                                                            "/store/" + store.template + "/" + store._id
-                                                            } target="_blank" rel="noopener noreferrer">
-                                                            <span>
-                                                            <Media className="align-items-center">
-                                                                <span
-                                                                    className="avatar rounded-circle mr-3"
-                                                                // onClick={e => e.preventDefault()}
-                                                                >
-                                                                    <img
-                                                                        alt="..."
-                                                                        // src={require("components/user/assets/img/theme/bootstrap.jpg")}
-                                                                        src={store.logo}
-                                                                    />
-                                                                </span>
-                                                                <Media>
-                                                                    <span className="mb-0 text-sm">
-                                                                        {store.name.substring(0, 20)}
-                                                                    </span>
-                                                                </Media>
-                                                            </Media>
-                                                            </span>
+                                                                store.website.url :
+                                                                "/store/" + store.template + "/" + store._id
+                                                        } target="_blank" rel="noopener noreferrer">
+                                                            {store.name.substring(0, 20)}
                                                         </a>
                                                     </th>
-                                                    <td className="td-custom">{store.storeCategory.name}</td>
-                                                    <td className="td-custom">{getFullAddress(store)}</td>
-                                                    <td className="td-custom" style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>
+                                                    <td>{store.storeCategory.name}</td>
+                                                    <td>{getFullAddress(store)}</td>
+                                                    <td style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>
                                                         <Badge color="" className="badge-dot mr-4">
                                                             {store.isActive ?
                                                                 (<span className="is-active-true"><i className="bg-success" />Đang hoạt động</span>) :
                                                                 (<span className="is-active-false"><i className="bg-warning" />Ngừng hoạt động</span>)}
                                                         </Badge>
                                                     </td>
-                                                    <td className="text-right td-custom">
+                                                    <td className="text-right" style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>
                                                         <UncontrolledDropdown>
                                                             <DropdownToggle
                                                                 className="btn-icon-only text-light"
@@ -506,32 +488,21 @@ class StoreManage extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to={"/store/" + store.template +"/" + store._id} target="_blank">
-                                                                    <DropdownItem
-                                                                    // href="#pablo"
-                                                                    // onClick={e => e.preventDefault()}
-                                                                    >
+                                                                <Link to="#pablo">
+                                                                    <DropdownItem>
                                                                         Chi tiết
                                                                     </DropdownItem>
                                                                 </Link>
-                                                                <Link to={"/user/stores-manage-update-product"}>
+                                                                <Link to={"/user/stores-products-manage"}>
                                                                     <DropdownItem
-                                                                    // href="#pablo"
-                                                                    // onClick={e => e.preventDefault()}
                                                                     >
                                                                         Cập nhập sản phẩm
                                                                     </DropdownItem>
                                                                 </Link>
-                                                                <DropdownItem
-                                                                    href="#pablo"
-                                                                    onClick={e => e.preventDefault()}
-                                                                >
+                                                                <DropdownItem>
                                                                     Chỉnh sửa
                                                                 </DropdownItem>
-                                                                <DropdownItem
-                                                                    href="#pablo"
-                                                                    onClick={e => e.preventDefault()}
-                                                                >
+                                                                <DropdownItem>
                                                                     Xóa
                                                                 </DropdownItem>
                                                             </DropdownMenu>
@@ -598,7 +569,7 @@ class StoreManage extends React.Component {
                         </div>
                     </Row>
                     {/* <PhoneActivate show={this.state.showPhoneAddModal} phone={this.props.user.phone} /> */}
-                    <PhoneAdd show={this.state.showPhoneAddModal} user={this.props.user} handeResultPhoneAdd={this.handeResultPhoneAdd}/>
+                    <PhoneAdd show={this.state.showPhoneAddModal} user={this.props.user} handeResultPhoneAdd={this.handeResultPhoneAdd} />
                     <hr />
                     {/* Add store */}
                     <div className={"store-template-select " + (this.state.isShowTemplateSelect ? "show" : "hide")}>
@@ -660,7 +631,7 @@ class StoreManage extends React.Component {
                                 <Col sm={10}>
                                     <Input type="select" name="storeCategory" id="storeCategory"
                                         onChange={this.onStoreCategoryChange}>
-                                            <option value={null}>Phân loại</option>
+                                        <option value={null}>Phân loại</option>
                                         {
                                             this.state.storeCategories &&
                                             this.state.storeCategories.map((storeCategory, key) => (
@@ -863,4 +834,4 @@ class StoreManage extends React.Component {
     }
 }
 
-export default StoreManage;
+export default StoresManage;

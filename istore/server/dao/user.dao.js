@@ -42,10 +42,12 @@ module.exports = {
         }).catch(() => null);
     },
     findOneByEmailAndPassword: (email, password) => {
-        return Model.findOne({email: email, password: password}).populate("authorization")
+        return Model.findOne({ email: email, password: password }).populate(
+            "authorization"
+        );
     },
-    findOrCreate: (user) => {
-        return Model.findOrCreate({email: user.email}, user)
+    findOrCreate: user => {
+        return Model.findOrCreate({ email: user.email }, user);
     },
     findOneByPhone: phone => {
         return new Promise((resolve, reject) => {
@@ -65,10 +67,14 @@ module.exports = {
                 }
                 return resolve(result);
             });
-        }).catch((err) => err);
+        }).catch(err => err);
     },
     verify: (id, mailVerifyToken) => {
-        return Model.findOneAndUpdate({_id: id, mailVerifyToken: mailVerifyToken}, {isEmailActivated: true}, {useFindAndModify: false})
+        return Model.findOneAndUpdate(
+            { _id: id, mailVerifyToken: mailVerifyToken },
+            { isEmailActivated: true },
+            { useFindAndModify: false }
+        );
     },
     update: model => {
         return new Promise((resolve, reject) => {
@@ -96,16 +102,20 @@ module.exports = {
     },
     updateForgetPasswordToken: (email, token) => {
         return Model.findOneAndUpdate(
-            {email: email}, 
+            { email: email },
             {
                 forgetPasswordToken: token,
                 forgetPasswordTokenExpire: Date.now() + 900000
             },
-            {useFindAndModify: false}
-        )
+            { useFindAndModify: false }
+        );
     },
     updateNewPassword: (email, password) => {
-        return Model.findOneAndUpdate({email: email}, {password: password}, {useFindAndModify: false});
+        return Model.findOneAndUpdate(
+            { email: email },
+            { password: password },
+            { useFindAndModify: false }
+        );
     },
     delete: model => {
         return new Promise((resolve, reject) => {

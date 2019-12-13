@@ -88,7 +88,7 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Tổng lượt xem
+                                                        Lượt xem
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
                                                         {this.state.storeViewsCount}
@@ -112,7 +112,7 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Tất cả cửa hàng
+                                                        Cửa hàng
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
                                                         {this.state.storesCount}
@@ -136,7 +136,7 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Tất cả sản phẩm
+                                                        Sản phẩm
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
                                                         {this.state.productsCount}
@@ -160,7 +160,7 @@ class Header extends React.Component {
                                                         tag="h5"
                                                         className="text-uppercase text-muted mb-0"
                                                     >
-                                                        Trung bình đánh giá
+                                                        Đánh giá
                                                     </CardTitle>
                                                     <span className="h2 font-weight-bold mb-0">
                                                         {Math.round(this.state.avgRateStoresCount * 100) / 100}

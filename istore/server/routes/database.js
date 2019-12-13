@@ -14,6 +14,7 @@ const updateStoreCollection = require("../test/defaultDatabase/updateStoreCollec
 const updateProductsView = require("../test/defaultDatabase/updateProductsView");
 const departmentCollection = require("../test/defaultDatabase/departmentCollection");
 const employeeCollection = require("../test/defaultDatabase/employeeCollection");
+const searchKeyCollection = require("../test/defaultDatabase/searchKeyCollection");
 
 const cityDao = require("../dao/city.dao");
 const districtDao = require("../dao/district.dao");
@@ -26,6 +27,7 @@ const productCategotyDao = require("../dao/productCategory.dao");
 const productDao = require("../dao/product.dao");
 const departmentDao = require("../dao/department.dao");
 const employeeDao = require("../dao/employee.dao");
+const searchKeyDao = require("../dao/searchKey.dao");
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -43,6 +45,7 @@ router.get("/", function(req, res, next) {
     updateProductsView.updateProductsView();
     departmentCollection.createDefaultCollection();
     employeeCollection.createDefaultCollection();
+    searchKeyCollection.createDefaultCollection();
 
     var myVar = setInterval(() => {
         console.log("Database is creating..");
@@ -63,6 +66,7 @@ router.get("/", function(req, res, next) {
         let products = await productDao.find();
         let departments = await departmentDao.find();
         let employees = await employeeDao.find();
+        let searchKeys = await searchKeyDao.find();
 
         if (
             cities.length > 0 &&
@@ -75,7 +79,8 @@ router.get("/", function(req, res, next) {
             productCategories.length > 0 &&
             products.length > 0 &&
             departments.length > 0 &&
-            employees.length > 0
+            employees.length > 0 &&
+            searchKeys.length > 0
         ) {
             console.log("================================");
             console.log("Database created!");

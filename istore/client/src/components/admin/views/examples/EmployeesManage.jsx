@@ -38,6 +38,7 @@ import { Link } from "react-router-dom";
 import Header from "components/admin/components/Headers/Header.jsx";
 import getEmployees from "../../../../services/employee.service";
 import formatDate from "../../../../utils/dateUtils";
+import priceFormatUtil from "../../../../utils/priceFormat";
 
 class EmployeesManage extends React.Component {
     constructor() {
@@ -49,8 +50,8 @@ class EmployeesManage extends React.Component {
     }
 
     componentDidMount() {
-        getEmployees(employees => {            
-            if(employees.length >= 10){
+        getEmployees(employees => {          
+            if(employees.length > 10){
                 this.setState({
                     employees: employees.slice(0, 10)
                 })
@@ -68,7 +69,7 @@ class EmployeesManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7-custom" fluid={true}>
+                <Container style={{ "marginTop": "2rem" }} fluid={true}>
                     {/* Table */}
                     <Row>
                         <div className="col">
@@ -99,7 +100,7 @@ class EmployeesManage extends React.Component {
                                                         </a>
                                                     </th>
                                                     <td>{employee.department.name}</td>
-                                                    <td>{employee.salary}</td>
+                                                    <td>{priceFormatUtil(employee.salary)}</td>
                                                     <td>
                                                         {formatDate(employee.timeStart)}
                                                     </td>

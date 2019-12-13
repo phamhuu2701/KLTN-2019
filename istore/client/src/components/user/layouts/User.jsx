@@ -23,8 +23,9 @@ import { Container } from "reactstrap";
 import UserNavbar from "components/user/components/Navbars/UserNavbar.jsx";
 import UserFooter from "components/user/components/Footers/UserFooter.jsx";
 import Sidebar from "components/user/components/Sidebar/Sidebar.jsx";
+import Index from "components/user/views/Index.jsx";
 
-import routes from "routes.js";
+import routes from "userRoutes.js";
 
 class User extends React.Component {
     componentDidUpdate(e) {
@@ -60,29 +61,56 @@ class User extends React.Component {
         return "Brand";
     };
     render() {
-        return (
-            <>
-                <Sidebar
-                    {...this.props}
-                    routes={routes}
-                    logo={{
-                        innerLink: "/user/index",
-                        imgSrc: require("components/user/assets/img/brand/argon-react.png"),
-                        imgAlt: "..."
-                    }}
-                />
-                <div className="main-content" ref="mainContent">
-                    <UserNavbar
+        if (this.props.location.pathname === "/user") {
+            return (
+                <>
+                    <Sidebar
                         {...this.props}
-                        brandText={this.getBrandText(this.props.location.pathname)}
+                        routes={routes}
+                        logo={{
+                            innerLink: "/user/index",
+                            imgSrc: require("components/user/assets/img/brand/argon-react.png"),
+                            imgAlt: "..."
+                        }}
                     />
-                    <Switch>{this.getRoutes(routes)}</Switch>
-                    <Container fluid={true}>
-                        <UserFooter />
-                    </Container>
-                </div>
-            </>
-        );
+                    <div className="main-content" ref="mainContent">
+                        <UserNavbar
+                            {...this.props}
+                            brandText={this.getBrandText(this.props.location.pathname)}
+                        />
+                        <Index user={this.props.user}/>
+                        <Container fluid={true}>
+                            <UserFooter />
+                        </Container>
+                    </div>
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <Sidebar
+                        {...this.props}
+                        routes={routes}
+                        logo={{
+                            innerLink: "/user/index",
+                            imgSrc: require("components/user/assets/img/brand/argon-react.png"),
+                            imgAlt: "..."
+                        }}
+                    />
+                    <div className="main-content" ref="mainContent">
+                        <UserNavbar
+                            {...this.props}
+                            brandText={this.getBrandText(this.props.location.pathname)}
+                        />
+                        <Switch>{this.getRoutes(routes)}</Switch>
+                        <Container fluid={true}>
+                            <UserFooter />
+                        </Container>
+                    </div>
+                </>
+            );
+        }
     }
 }
 

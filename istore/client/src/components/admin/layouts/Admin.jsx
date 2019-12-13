@@ -23,6 +23,7 @@ import { Container } from "reactstrap";
 import AdminNavbar from "components/admin/components/Navbars/AdminNavbar.jsx";
 import AdminFooter from "components/admin/components/Footers/AdminFooter.jsx";
 import Sidebar from "components/admin/components/Sidebar/Sidebar.jsx";
+import Index from "components/admin/views/Index.jsx";
 
 import routes from "adminRoutes.js";
 
@@ -57,31 +58,59 @@ class Admin extends React.Component {
                 return routes[i].name;
             }
         }
+        return "Brand";
     };
     render() {
-        return (
-            <>
-                <Sidebar
-                    {...this.props}
-                    routes={routes}
-                    logo={{
-                        innerLink: "/admin/index",
-                        imgSrc: require("components/admin/assets/img/brand/argon-react.png"),
-                        imgAlt: "..."
-                    }}
-                />
-                <div className="main-content" ref="mainContent">
-                    <AdminNavbar
+        if (this.props.location.pathname === "/admin") {
+            return (
+                <>
+                    <Sidebar
                         {...this.props}
-                        brandText={this.getBrandText(this.props.location.pathname)}
+                        routes={routes}
+                        logo={{
+                            innerLink: "/admin/index",
+                            imgSrc: require("components/admin/assets/img/brand/argon-react.png"),
+                            imgAlt: "..."
+                        }}
                     />
-                    <Switch>{this.getRoutes(routes)}</Switch>
-                    <Container fluid={true}>
-                        <AdminFooter />
-                    </Container>
-                </div>
-            </>
-        );
+                    <div className="main-content" ref="mainContent">
+                        <AdminNavbar
+                            {...this.props}
+                            brandText={this.getBrandText(this.props.location.pathname)}
+                        />
+                        <Index />
+                        <Container fluid={true}>
+                            <AdminFooter />
+                        </Container>
+                    </div>
+                </>
+            );
+        }
+        else {
+            return (
+                <>
+                    <Sidebar
+                        {...this.props}
+                        routes={routes}
+                        logo={{
+                            innerLink: "/admin/index",
+                            imgSrc: require("components/admin/assets/img/brand/argon-react.png"),
+                            imgAlt: "..."
+                        }}
+                    />
+                    <div className="main-content" ref="mainContent">
+                        <AdminNavbar
+                            {...this.props}
+                            brandText={this.getBrandText(this.props.location.pathname)}
+                        />
+                        <Switch>{this.getRoutes(routes)}</Switch>
+                        <Container fluid={true}>
+                            <AdminFooter />
+                        </Container>
+                    </div>
+                </>
+            );
+        }
     }
 }
 

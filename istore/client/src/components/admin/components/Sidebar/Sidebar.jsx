@@ -219,9 +219,9 @@ class Sidebar extends React.Component {
                         {/* Navigation */}
                         <Nav className="mb-md-3" navbar>
                             <NavItem>
-                                <NavLink onClick={logout}>
+                                <NavLink className="sildebar-logout" onClick={logout}>
                                     <i className="ni ni-user-run text-pink" />
-                                    Thoát
+                                    <span>Thoát</span>
                                 </NavLink>
                             </NavItem>
                         </Nav>

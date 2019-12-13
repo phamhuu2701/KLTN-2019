@@ -49,7 +49,6 @@ export default class UserIndex extends Component {
                                 />
                             )}
                         />
-                        {/* <Redirect from="/" to="/user/index" /> */}
                     </Switch>
                 </BrowserRouter>
             );

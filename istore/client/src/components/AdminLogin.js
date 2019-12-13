@@ -61,7 +61,7 @@ export default class AdminLogin extends Component {
 
     render() {
         if (this.state.adminIsLoggedIn) {
-            return <AdminIndex user={this.state.user} />;
+            return <AdminIndex user={this.state.user} pathname={this.props.location.pathname} />;
         } else
             return (
                 <div className="limiter">

@@ -50,7 +50,7 @@ class StoresManage extends React.Component {
 
     componentDidMount() {
         getStores(stores => {
-            if(stores.length >= 10){
+            if(stores.length > 10){
                 this.setState({
                     stores: stores.slice(0, 10)
                 })
@@ -68,7 +68,7 @@ class StoresManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7-custom" fluid={true}>
+                <Container style={{ "marginTop": "2rem" }} fluid={true}>
                     {/* Table */}
                     <Row>
                         <div className="col">

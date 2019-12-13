@@ -26,6 +26,7 @@ const storesRouter = require("./server/api/stores.api");
 const viewRouter = require("./server/api/view.api");
 const departmentsRouter = require("./server/api/departments.api");
 const employeesRouter = require("./server/api/employees.api");
+const searchKeysRouter = require("./server/api/searchKeys.api");
 
 var app = express();
 const port = process.env.PORT || 5000;
@@ -91,6 +92,7 @@ app.use("/api/stores", storesRouter);
 app.use("/api/view", viewRouter);
 app.use("/api/departments", departmentsRouter);
 app.use("/api/employees", employeesRouter);
+app.use("/api/search-keys", searchKeysRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -22,6 +22,7 @@ import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
 import { getUsers } from "../../../../services/user.service";
 import { getStores } from "../../../../services/store.service";
 import { getProducts } from "../../../../services/product.service";
+import { getSearchKeysCount } from "../../../../services/searchKey.service";
 
 class Header extends React.Component {
     constructor() {
@@ -36,6 +37,11 @@ class Header extends React.Component {
     }
 
     componentDidMount(){
+        getSearchKeysCount(count => {
+            this.setState({
+                searchCount: count
+            })
+        });
         getUsers(users => {
             this.setState({
                 usersCount: users.length
