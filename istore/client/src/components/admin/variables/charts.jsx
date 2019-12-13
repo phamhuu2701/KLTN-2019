@@ -339,12 +339,12 @@ let chartExample1 = {
             }
         }
     },
-    data1: canvas => {  
+    data1: canvas => {
         return {
             labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
             datasets: [
                 {
-                    label: "Performance",
+                    label: "search count",
                     // data: [12, 15, 21, 13, 31, 24, 32, 13, 18, 22, 21, 16]
                     data: chart1Data.data1
                 }
@@ -356,7 +356,7 @@ let chartExample1 = {
             labels: ["Quý 1", "Quý 2", "Quý 3", "Quý 4"],
             datasets: [
                 {
-                    label: "Performance",
+                    label: "search count",
                     // data: [48, 68, 63, 59]
                     data: chart1Data.data2
                 }
@@ -368,55 +368,12 @@ let chartExample1 = {
             labels: ["2016", "2017", "2018", "2019"],
             datasets: [
                 {
-                    label: "Performance",
+                    label: "search count",
                     // data: [200, 196, 244, 224]
                     data: chart1Data.data3
                 }
             ]
         };
-    }
-};
-
-// Example 2 of Chart inside src/views/Index.jsx (Total orders - Card)
-let chartExample2 = {
-    options: {
-        scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        callback: function (value) {
-                            if (!(value % 10)) {
-                                //return '$' + value + 'k'
-                                return value;
-                            }
-                        }
-                    }
-                }
-            ]
-        },
-        tooltips: {
-            callbacks: {
-                label: function (item, data) {
-                    var label = data.datasets[item.datasetIndex].label || "";
-                    var yLabel = item.yLabel;
-                    var content = "";
-                    if (data.datasets.length > 1) {
-                        content += label;
-                    }
-                    content += yLabel;
-                    return content;
-                }
-            }
-        }
-    },
-    data: {
-        labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [
-            {
-                label: "Sales",
-                data: [25, 20, 30, 22, 17, 29]
-            }
-        ]
     }
 };
 
@@ -426,7 +383,7 @@ var chart1Data = {
     data2: [],
     data3: []
 }
-function getChart1Data(c1Data){
+function getChart1Data(c1Data) {
     chart1Data = c1Data;
     // console.log(chart1Data);
 }
@@ -435,6 +392,5 @@ module.exports = {
     chartOptions, // used inside src/views/Index.jsx
     parseOptions, // used inside src/views/Index.jsx
     chartExample1, // used inside src/views/Index.jsx
-    chartExample2, // used inside src/views/Index.jsx
     getChart1Data
 };

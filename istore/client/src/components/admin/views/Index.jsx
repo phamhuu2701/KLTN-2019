@@ -55,7 +55,7 @@ class Index extends React.Component {
         activeNav: 1,
         chartExample1Data: "data1",
         top10Users: [],
-        top10Stores: []
+        top10Stores: [],
     };
     toggleNavs = (e, index) => {
         try {
@@ -66,14 +66,7 @@ class Index extends React.Component {
         this.setState({
             activeNav: index,
             chartExample1Data: "data" + index
-            // this.state.chartExample1Data === "data1" ? "data2" : "data1"
         });
-        let wow = () => {
-            // console.log(this.state);
-        };
-        wow.bind(this);
-        setTimeout(() => wow(), 1000);
-        // this.chartReference.update();
     };
     componentWillMount() {
         if (window.Chart) {
@@ -138,7 +131,7 @@ class Index extends React.Component {
                     top10Stores: stores
                 })
             }
-        })
+        });
     }
     render() {
         return (
@@ -147,7 +140,6 @@ class Index extends React.Component {
                 {/* Page content */}
                 <Container style={{ "marginTop": "2rem" }} fluid={true} >
                     <Row>
-                        {/* <Col className="mb-5 mb-xl-0" xl="8"> */}
                         <Col>
                             <Card className="bg-gradient-default shadow">
                                 <CardHeader className="bg-transparent">
@@ -215,30 +207,6 @@ class Index extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    {/* <Row className="mt-5">
-                        <Col>
-                            <Card className="shadow">
-                                <CardHeader className="bg-transparent">
-                                    <Row className="align-items-center">
-                                        <div className="col">
-                                            <h6 className="text-uppercase text-muted ls-1 mb-1">
-                                                Thống kê
-                                            </h6>
-                                            <h2 className="mb-0">Total orders</h2>
-                                        </div>
-                                    </Row>
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="chart">
-                                        <Bar
-                                            data={chartExample2.data}
-                                            options={chartExample2.options}
-                                        />
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row> */}
                     <Row className="mt-5">
                         <Col className="mb-5 mb-xl-0" xl="6">
                             <Card className="shadow">
@@ -310,7 +278,7 @@ class Index extends React.Component {
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th style={{"paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center"}}>#</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>#</th>
                                             <th>Tên cửa hàng</th>
                                             <th style={{ "textAlign": "center" }}>Sản phẩm</th>
                                             <th style={{ "textAlign": "center" }}>Lượt xem</th>
@@ -321,10 +289,10 @@ class Index extends React.Component {
                                             this.state.top10Stores.length > 0 &&
                                             this.state.top10Stores.map((storeModel, key) => (
                                                 <tr key={key}>
-                                                    <td style={{"paddingLeft": 0, "paddingRight": 0, "textAlign": "center"}}>{key + 1}</td>
+                                                    <td style={{ "paddingLeft": 0, "paddingRight": 0, "textAlign": "center" }}>{key + 1}</td>
                                                     <th style={{ "textTransform": "uppercase" }}>
-                                                        <a href={storeModel.store.website.hasWebsite ? storeModel.store.website.url : ("/store/" + storeModel.store.template + "/" + storeModel.store._id)} 
-                                                        target="_blank" rel="noopener noreferrer">
+                                                        <a href={storeModel.store.website.hasWebsite ? storeModel.store.website.url : ("/store/" + storeModel.store.template + "/" + storeModel.store._id)}
+                                                            target="_blank" rel="noopener noreferrer">
                                                             {storeModel.store.name}
                                                         </a>
                                                     </th>

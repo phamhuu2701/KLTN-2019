@@ -68,7 +68,7 @@ class User extends React.Component {
                         {...this.props}
                         routes={routes}
                         logo={{
-                            innerLink: "/user/index",
+                            innerLink: "/",
                             imgSrc: require("components/user/assets/img/brand/argon-react.png"),
                             imgAlt: "..."
                         }}
@@ -93,7 +93,7 @@ class User extends React.Component {
                         {...this.props}
                         routes={routes}
                         logo={{
-                            innerLink: "/user/index",
+                            innerLink: "/",
                             imgSrc: require("components/user/assets/img/brand/argon-react.png"),
                             imgAlt: "..."
                         }}
