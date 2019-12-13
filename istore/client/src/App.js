@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import HomeIndex from "./components/HomeIndex";
 import StoreIndex from "./components/StoreIndex";
+import UserIndex from "./components/UserIndex";
 import AdminLogin from "./components/AdminLogin";
-import AdminIndex from "./components/AdminIndex";
 import VerifyIndex from "./components/VerifyIndex";
 
 //import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,10 +16,9 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path="/" component={HomeIndex} />
                     <Route path="/store/:template/:id" component={StoreIndex} />
-                    <Route exact path="/user" component={AdminLogin} />
-                    <Route path="/user" component={AdminIndex} />
-                    <Route path="/auth" component={AdminIndex} />
+                    <Route path="/user" component={UserIndex} />
                     <Route path="/verify" component={VerifyIndex} />
+                    <Route path="/admin" component={AdminLogin} />
                 </Switch>
             </Router>
         );

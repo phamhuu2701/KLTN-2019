@@ -12,6 +12,8 @@ const storeCategoryCollection = require("../test/defaultDatabase/storeCategoryCo
 const storeCollection = require("../test/defaultDatabase/storeCollection");
 const updateStoreCollection = require("../test/defaultDatabase/updateStoreCollection");
 const updateProductsView = require("../test/defaultDatabase/updateProductsView");
+const departmentCollection = require("../test/defaultDatabase/departmentCollection");
+const employeeCollection = require("../test/defaultDatabase/employeeCollection");
 
 const cityDao = require("../dao/city.dao");
 const districtDao = require("../dao/district.dao");
@@ -22,6 +24,8 @@ const storeCategoryDao = require("../dao/storeCategory.dao");
 const storeDao = require("../dao/store.dao");
 const productCategotyDao = require("../dao/productCategory.dao");
 const productDao = require("../dao/product.dao");
+const departmentDao = require("../dao/department.dao");
+const employeeDao = require("../dao/employee.dao");
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -37,6 +41,8 @@ router.get("/", function(req, res, next) {
     storeCollection.createDefaultCollection();
     updateStoreCollection.updateCollection();
     updateProductsView.updateProductsView();
+    departmentCollection.createDefaultCollection();
+    employeeCollection.createDefaultCollection();
 
     var myVar = setInterval(() => {
         console.log("Database is creating..");
@@ -55,17 +61,21 @@ router.get("/", function(req, res, next) {
         let stores = await storeDao.find();
         let productCategories = await productCategotyDao.find();
         let products = await productDao.find();
+        let departments = await departmentDao.find();
+        let employees = await employeeDao.find();
 
         if (
-            cities.length === 63 &&
-            districts.length === 24 &&
-            streets.length === 46 &&
-            authorizations.length === 4 &&
-            users.length === 20 &&
-            storeCategories.length === 13 &&
-            stores.length === 13 &&
-            productCategories.length === 12 &&
-            products.length === 48
+            cities.length > 0 &&
+            districts.length > 0 &&
+            streets.length > 0 &&
+            authorizations.length > 0 &&
+            users.length > 0 &&
+            storeCategories.length > 0 &&
+            stores.length > 0 &&
+            productCategories.length > 0 &&
+            products.length > 0 &&
+            departments.length > 0 &&
+            employees.length > 0
         ) {
             console.log("================================");
             console.log("Database created!");

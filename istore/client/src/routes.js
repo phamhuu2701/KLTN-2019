@@ -15,19 +15,19 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "components/argon-dashboard-react-master/views/Index.jsx";
-import Profile from "components/argon-dashboard-react-master/views/examples/Profile.jsx";
-// import Maps from "components/argon-dashboard-react-master/views/examples/Maps.jsx";
-// import Register from "components/argon-dashboard-react-master/views/examples/Register.jsx";
-// import Login from "components/argon-dashboard-react-master/views/examples/Login.jsx";
-import StoreManage from "components/argon-dashboard-react-master/views/examples/StoreManage.jsx";
-// import Icons from "components/argon-dashboard-react-master/views/examples/Icons.jsx";
-// import Messages from "./components/argon-dashboard-react-master/views/examples/Messages";
-// import ChangeEmail from "./components/argon-dashboard-react-master/views/examples/ChangeEmail";
-// import ChangePhone from "./components/argon-dashboard-react-master/views/examples/ChangePhone";
-// import ChangePassword from "./components/argon-dashboard-react-master/views/examples/ChangePassword";
-// import Statistical from "./components/argon-dashboard-react-master/views/examples/Statistical";
-import StoreManageUpdateProduct from "./components/argon-dashboard-react-master/views/examples/StoreManageUpdateProduct";
+import Index from "components/user/views/Index.jsx";
+import Profile from "components/user/views/examples/Profile.jsx";
+// import Maps from "components/user/views/examples/Maps.jsx";
+// import Register from "components/user/views/examples/Register.jsx";
+// import Login from "components/user/views/examples/Login.jsx";
+import StoreManage from "components/user/views/examples/StoreManage.jsx";
+// import Icons from "components/user/views/examples/Icons.jsx";
+// import Messages from "./components/user/views/examples/Messages";
+// import ChangeEmail from "./components/user/views/examples/ChangeEmail";
+// import ChangePhone from "./components/user/views/examples/ChangePhone";
+// import ChangePassword from "./components/user/views/examples/ChangePassword";
+// import Statistical from "./components/user/views/examples/Statistical";
+import StoreManageUpdateProduct from "./components/user/views/examples/StoreManageUpdateProduct";
 
 var routes = [
     {
@@ -44,13 +44,6 @@ var routes = [
         component: Profile,
         layout: "/user"
     },
-    // {
-    //     path: "/messages",
-    //     name: "Tin nhắn",
-    //     icon: "ni ni-chat-round text-blue",
-    //     component: Messages,
-    //     layout: "/user"
-    // },
     {
         path: "/stores-manage",
         name: "Quản lý cửa hàng",
@@ -60,9 +53,30 @@ var routes = [
     },
     {
         path: "/stores-manage-update-product",
-        name: "Cập nhập cửa hàng, sản phẩm",
-        icon: "ni ni-ruler-pencil",
+        name: "Cập nhập sản phẩm",
+        icon: "ni ni-ruler-pencil text-blue",
         component: StoreManageUpdateProduct,
+        layout: "/user"
+    },
+    {
+        path: "/index",
+        name: "Đổi email",
+        icon: "ni ni-email-83 text-info",
+        component: Index,
+        layout: "/user"
+    },
+    {
+        path: "/index",
+        name: "Đổi số điện thoại",
+        icon: "ni ni-mobile-button text-success",
+        component: Index,
+        layout: "/user"
+    },
+    {
+        path: "/index",
+        name: "Đổi mật khẩu",
+        icon: "ni ni-key-25",
+        component: Index,
         layout: "/user"
     },
     // {

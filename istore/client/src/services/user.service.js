@@ -376,22 +376,11 @@ export function updateUserPhone(id, phone, callback) {
         });
 }
 
-export function logoutAdmin() {
+export function logout() {
     fetch("/api/logout", {
         method: "GET"
     })
         .then(result => {
-            // if (result.status === 200) {
-            //     that.setState({
-            //         isLogged: false,
-            //         sign: ""
-            //     });
-            //     that.propslogInToggle(false);
-            //     document.getElementById("dropdown-user-body").style.display =
-            //         "none";
-            // } else {
-            //     alert("Đã có lỗi!!!");
-            // }
             window.location.href = "/";
         })
         .catch(err => console.log(err));
@@ -446,22 +435,65 @@ export function getProductsAllStoresByUser(idUser, callback) {
     fetch("/api/users/" + idUser + "/stores")
         .then(res => res.json())
         .then(stores => {
-            
-            if(stores.length > 0){
-                stores.map((store, key) => {                    
-                    if(store.products.length > 0){
+            if (stores.length > 0) {
+                stores.map((store, key) => {
+                    if (store.products.length > 0) {
                         store.products.map((product, key) => {
                             products.push(product);
 
                             return null;
-                        })
+                        });
                     }
 
                     return null;
-                })
+                });
             }
 
             callback(products);
         })
         .catch(err => console.log(err));
+}
+
+export function checkUserLogin(username, password, callback) {
+    fetch("/api/login/", {
+        method: "POST",
+        body: JSON.stringify({
+            email: username,
+            password: password
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(result => {
+            callback(result);
+        });
+}
+
+export function getUsers(callback) {
+    fetch("/api/users/")
+        .then(res => res.json())
+        .then(results => {
+            callback(results);
+        })
+        .catch(err => console.log(err));
+}
+
+export function getUserByAuthorizationUser(callback) {
+    let usersMain = [];
+    getUsers(users => {
+        if (users.length > 0) {
+            for(let i=0; i<users.length; i++){
+                if (
+                    users[i].authorization &&
+                    users[i].authorization.name !== "Admin" &&
+                    users[i].authorization.name !== "Employee"
+                ) {
+                    usersMain.push(users[i]);
+                }
+            }
+        }
+    });
+    callback(usersMain);
 }

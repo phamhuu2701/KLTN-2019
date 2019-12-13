@@ -4,10 +4,6 @@
     "private": true,
     "description": "React App",
     "main": "index.js",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/creativetimofficial/argon-dashboard-react.git"
-    },
     "keywords": [
         "react",
         "reactjs",
@@ -20,10 +16,6 @@
     ],
     "author": "My team",
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/creativetimofficial/argon-dashboard-react/issues"
-    },
-    "homepage": "https://demos.creative-tim.com/argon-dashboard-react/",
     "scripts": {
         "start": "set HTTPS=true&&react-scripts start",
         "build": "react-scripts build",
@@ -52,6 +44,7 @@
     "dependencies": {
         "bootstrap": "^4.3.1",
         "chart.js": "2.7.3",
+        "chartist": "^0.10.1",
         "classnames": "2.2.6",
         "google-maps-react": "^2.0.2",
         "js-cookie": "^2.2.1",
@@ -60,6 +53,7 @@
         "nouislider": "13.1.1",
         "react": "16.8.4",
         "react-bootstrap": "^1.0.0-beta.12",
+        "react-chartist": "^0.14.2",
         "react-chartjs-2": "2.7.4",
         "react-copy-to-clipboard": "5.0.1",
         "react-datetime": "2.16.3",
@@ -70,8 +64,10 @@
         "react-google-login": "^5.0.7",
         "react-google-maps": "9.4.5",
         "react-load-script": "0.0.6",
+        "react-notification-system": "0.2.17",
         "react-router-dom": "4.3.1",
         "react-scripts": "2.1.8",
+        "react-toggle": "4.0.2",
         "reactstrap": "7.1.0"
     },
     "devDependencies": {

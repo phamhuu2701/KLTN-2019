@@ -93,3 +93,12 @@ export function getViewsCountByTime(
         return 0;
     }
 }
+
+export function getProducts(callback) {
+    fetch("/api/products/")
+        .then(res => res.json())
+        .then(results => {
+            callback(results);
+        })
+        .catch(err => console.log(err));
+}

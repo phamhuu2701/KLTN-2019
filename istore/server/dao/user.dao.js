@@ -42,7 +42,7 @@ module.exports = {
         }).catch(() => null);
     },
     findOneByEmailAndPassword: (email, password) => {
-        return Model.findOne({email: email, password: password})
+        return Model.findOne({email: email, password: password}).populate("authorization")
     },
     findOrCreate: (user) => {
         return Model.findOrCreate({email: user.email}, user)

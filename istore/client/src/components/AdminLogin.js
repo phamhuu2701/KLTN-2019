@@ -1,22 +1,34 @@
 import React, { Component } from "react";
 
 import "./AdminLogin.css";
+import AdminIndex from "./AdminIndex";
+import { checkUserLogin, getUserLogged } from "../services/user.service";
 
 export default class AdminLogin extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            adminIsLoggedIn: false
+            adminIsLoggedIn: false,
+            user: null,
+            logginErrorMessagse: ""
         };
         this.adminLoginHandler = this.adminLoginHandler.bind(this);
     }
 
     UNSAFE_componentWillMount() {
-        if (window.location.pathname === "/user/") {
-            window.location.pathname = "/user";
-        } else {
-            // Check admin logged in
-        }
+        getUserLogged(result => {
+            if (
+                result.user &&
+                result.isLogged &&
+                result.user.authorization.name === "Admin"
+            ) {
+                this.setState({
+                    adminIsLoggedIn: true,
+                    user: result.user,
+                    logginErrorMessagse: ""
+                });
+            }
+        });
     }
 
     adminLoginHandler(e) {
@@ -24,26 +36,42 @@ export default class AdminLogin extends Component {
         const username = e.target.childNodes[0].childNodes[0].value;
         const password = e.target.childNodes[1].childNodes[0].value;
         // Login handler
-        if (username === "admin" && password === "123") {
-            this.setState({
-                adminIsLoggedIn: true
-            });
-        }
+        checkUserLogin(username, password, result => {
+            // console.log(result);
+            if (
+                result.user &&
+                result.isLogged &&
+                result.user.authorization.name === "Admin"
+            ) {
+                this.setState({
+                    adminIsLoggedIn: true,
+                    user: result.user,
+                    logginErrorMessagse: ""
+                });
+            } else {
+                this.setState({
+                    adminIsLoggedIn: false,
+                    user: {},
+                    logginErrorMessagse:
+                        "Tài khoản hoặc mật khẩu chưa chính xác."
+                });
+            }
+        });
     }
 
     render() {
         if (this.state.adminIsLoggedIn) {
-            return <div>Đã đăng nhập</div>;
+            return <AdminIndex user={this.state.user} />;
         } else
             return (
                 <div className="limiter">
                     <div
                         className="container-login100"
-                        style={{ backgroundImage: 'url("./admin-bg.jpg")' }}
+                        style={{ backgroundImage: 'url("./../admin-bg.jpg")' }}
                     >
                         <div className="wrap-login100 p-t-30 p-b-50">
                             <span className="login100-form-title p-b-41">
-                                Admin Login
+                                Admin - đăng nhập
                             </span>
                             <form
                                 action="admin"
@@ -60,6 +88,7 @@ export default class AdminLogin extends Component {
                                         type="text"
                                         name="username"
                                         placeholder="Username"
+                                        defaultValue="admin1@gmail.com"
                                     />
                                     <span
                                         className="focus-input100"
@@ -75,6 +104,7 @@ export default class AdminLogin extends Component {
                                         type="password"
                                         name="password"
                                         placeholder="Password"
+                                        defaultValue="123456"
                                     />
                                     <span
                                         className="focus-input100"
@@ -82,8 +112,16 @@ export default class AdminLogin extends Component {
                                     />
                                 </div>
                                 <div className="container-login100-form-btn m-t-32">
+                                    <p
+                                        style={{
+                                            color: "red",
+                                            textAlign: "center"
+                                        }}
+                                    >
+                                        {this.state.logginErrorMessagse}
+                                    </p>
                                     <button className="login100-form-btn">
-                                        Login
+                                        Đăng nhập
                                     </button>
                                 </div>
                             </form>

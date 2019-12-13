@@ -8,6 +8,7 @@ const options = {
 const employeeSchema = new Schema(
     {
         user: { type: Schema.Types.ObjectId, ref: "User" },
+        department: { type: Schema.Types.ObjectId, ref: "Department" },
         salary: { type: Number, required: true, min: 0, default: 0 },
         timeStart: { type: Date, required: true, default: Date.now }
     },

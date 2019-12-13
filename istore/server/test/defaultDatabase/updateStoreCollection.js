@@ -6,7 +6,7 @@ module.exports.updateCollection = async () => {
     const stores = await StoreDao.find(); //3
     if (stores.length > 0) {
         if (stores[0].products.length > 0) {
-            console.log("Store.products document existed");
+            // console.log("Store.products document existed");
         } else {
             const products = await ProductDao.find();
             if (products.length > 0) {

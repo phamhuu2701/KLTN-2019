@@ -31,7 +31,7 @@ class Products extends Component {
     switch (event.target.value) {
       // mới nhất
       case "0":
-        //   console.log("Sắp xếp tất cả (mới nhất)");
+        // console.log("Sắp xếp tất cả (mới nhất)");
         array = sortDescreaseProductsByTimestamp(this.props.store.products);
         break;
 

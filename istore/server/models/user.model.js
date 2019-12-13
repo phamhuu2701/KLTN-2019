@@ -13,7 +13,7 @@ const userSchema = new Schema(
             firstname: {
                 type: String,
                 required: true,
-                maxlength: 20,
+                maxlength: 30,
                 trim: true
             },
             lastname: {
@@ -40,7 +40,8 @@ const userSchema = new Schema(
         avatars: { 
             type: Array,
             default: ["https://img.icons8.com/bubbles/2x/user.png"]
-        }
+        },
+        about: { type: String, maxlength: 2500 }
     },
     options
 );

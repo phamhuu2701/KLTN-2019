@@ -44,7 +44,7 @@ export default class HomeIndex extends Component {
     }
 
     UNSAFE_componentReceiveProps(nextProps) {
-        console.log(nextProps);
+        // console.log(nextProps);
     }
 
     successSignUpHandler(message) {

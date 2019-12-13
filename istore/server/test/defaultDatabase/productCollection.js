@@ -5,23 +5,23 @@ const StoreDao = require("./../../dao/store.dao");
 
 const imageUrls = [
     "https://nvc-lighting.com.vn/wp-content/uploads/2017/09/bong-den-led-bulb-a60g-350x350.png",
-    "http://360.thuvienvatly.com/images/2014/02/light-bulb-02.jpg",
+    "https://chunoidep.com/wp-content/uploads/2018/08/chu-noi-nguoc-led-bong-tron-800x551.jpg",
     "https://banbuonsieure.com/wp-content/uploads/2018/11/Day-den-led-trang-tri-bong-tron-12-bong-1.jpg",
     "https://imgaz.staticbg.com/thumb/large/2014/chenyongfu/09/SKU128358/SKU122314180(23).jpg",
     "https://nvc-lighting.com.vn/wp-content/uploads/2017/04/bong-den-led-nvc-a60f-d-min.jpg",
     "https://ae01.alicdn.com/kf/HTB18uS5tRyWBuNkSmFPq6xguVXaM/3-c-i-E14-nhi-t-cao-b-ng-n-500-25-w-t-Halogen-bong.jpg_640x640.jpg",
     "https://7aothuat.com/wp-content/uploads/2015/07/bong-den-tu-sang-3-mau-4.jpg",
-    "http://icon.com.vn/Portals/0/userfiles/bongdenkday_1.jpg",
+    "https://givasolar.com/wp-content/uploads/2018/10/bong-den-led-quang-hop-6w-1.jpg",
     "https://photo-2-baomoi.zadn.vn/w1000_r1/2017_07_31_83_22890892/0458d6c9f5881cd64599.jpg",
     "https://ledoto.vn/wp-content/uploads/2018/08/bong-led-c6.jpg",
     "https://nvc-lighting.com.vn/wp-content/uploads/2017/09/bong-den-led-bulb-a60g-350x350.png",
-    "http://360.thuvienvatly.com/images/2014/02/light-bulb-02.jpg",
+    "https://img.staticbg.com/images/oaupload/banggood/images/98/92/7e090ecd-4262-46f3-a88e-44dcac0b50bb.jpg",
     "https://banbuonsieure.com/wp-content/uploads/2018/11/Day-den-led-trang-tri-bong-tron-12-bong-1.jpg",
     "https://imgaz.staticbg.com/thumb/large/2014/chenyongfu/09/SKU128358/SKU122314180(23).jpg",
     "https://nvc-lighting.com.vn/wp-content/uploads/2017/04/bong-den-led-nvc-a60f-d-min.jpg",
     "https://ae01.alicdn.com/kf/HTB18uS5tRyWBuNkSmFPq6xguVXaM/3-c-i-E14-nhi-t-cao-b-ng-n-500-25-w-t-Halogen-bong.jpg_640x640.jpg",
     "https://7aothuat.com/wp-content/uploads/2015/07/bong-den-tu-sang-3-mau-4.jpg",
-    "http://icon.com.vn/Portals/0/userfiles/bongdenkday_1.jpg",
+    "https://cameraipgiasi.com/wp-content/uploads/2019/01/514c3a5b94d5768b2fc4.jpg",
     "https://photo-2-baomoi.zadn.vn/w1000_r1/2017_07_31_83_22890892/0458d6c9f5881cd64599.jpg",
     "https://ledoto.vn/wp-content/uploads/2018/08/bong-led-c6.jpg"
 ];

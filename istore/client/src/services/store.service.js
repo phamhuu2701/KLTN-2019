@@ -192,3 +192,12 @@ export function getTopProductsViewsCount(store, isIncrease, callback) {
         callback([]);
     }
 }
+
+export function getStores(callback) {
+    fetch("/api/stores/")
+        .then(res => res.json())
+        .then(results => {
+            callback(results);
+        })
+        .catch(err => console.log(err));
+}
