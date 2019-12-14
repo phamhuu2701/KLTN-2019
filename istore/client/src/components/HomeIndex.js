@@ -63,7 +63,7 @@ export default class HomeIndex extends Component {
             this.onZoom('normal')
         } else if (this.state.zoom_icon === 'zoom-icon') {
             this.onZoom('in')
-        } else this.onZoom('out');
+        } else this.onZoom('normal');
     }
 
     onZoom(zoom) {
@@ -88,7 +88,7 @@ export default class HomeIndex extends Component {
                 leftBody: '',
                 rigthBody: '',
                 zoomIcon: '/resources/icons/zoom-in.svg',
-                zoomTitle: 'Phóng to nhất',
+                zoomTitle: 'Phóng to',
                 zoom_icon: 'zoom-icon'
             })
         } else {

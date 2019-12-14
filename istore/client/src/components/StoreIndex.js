@@ -46,6 +46,7 @@ class StoreIndex extends Component {
                 .then(res => res.json())
                 .then(store => {
                     if (store) {
+                        console.log(store);
                         this.setState({
                             store: store
                         });

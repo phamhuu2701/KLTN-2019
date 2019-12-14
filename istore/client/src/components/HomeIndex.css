@@ -71,7 +71,7 @@ img.zoom-icon.right {
 
 .dropdown-user {
     position: absolute;
-    z-index: 102;
+    z-index: 121;
     top: 10px;
     right: 60px;
 }
