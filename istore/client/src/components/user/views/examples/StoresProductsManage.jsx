@@ -201,9 +201,9 @@ class StoresProductsManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="stores-manage" fluid={true} style={{ "marginTop": "2rem" }}>
+                <Container className="stores-manage" fluid={true}>
                     {/* Table */}
-                    <Row>
+                    <Row className="mt-5">
                         <Col>
                             <Form>
                                 <FormGroup>

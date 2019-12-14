@@ -27,40 +27,79 @@ import {
     Table,
     Container,
     Row,
+    Col,
     Card,
+    CardBody,
     UncontrolledDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem
+    DropdownItem,
+    Button,
+    FormGroup,
+    Form,
+    Input,
+    Label
 } from "reactstrap";
 // import { Link } from "react-router-dom";
 // core components
 import Header from "components/admin/components/Headers/Header.jsx";
-import getEmployees from "../../../../services/employee.service";
+import getEmployees, { getEmployeeById } from "../../../../services/employee.service";
+import getDepartments from "../../../../services/department.service";
 import formatDate from "../../../../utils/dateUtils";
 import priceFormatUtil from "../../../../utils/priceFormat";
+
+import "components/admin/assets/css/custom.css";
 
 class EmployeesManage extends React.Component {
     constructor() {
         super();
 
         this.state = {
-            employees: []
+            employees: [],
+            employeeSelected: null,
+            departments: [],
+            isShowEmployeeInfo: "hide"
         }
+
+        this.showEmployeeInfo = this.showEmployeeInfo.bind(this);
+        this.onSubmitClick = this.onSubmitClick.bind(this);
     }
 
     componentDidMount() {
-        getEmployees(employees => {          
-            if(employees.length > 10){
+        getEmployees(employees => {
+            if (employees.length > 10) {
                 this.setState({
                     employees: employees.slice(0, 10)
                 })
             }
-            else{
+            else {
                 this.setState({
                     employees: employees
                 })
             }
+        });
+
+        getDepartments(departments => {
+            this.setState({
+                departments: departments
+            })
+        })
+    }
+
+    showEmployeeInfo(id) {
+        // console.log(id);
+        getEmployeeById(id, employee => {
+            this.setState({
+                employeeSelected: employee,
+                isShowEmployeeInfo: "open"
+            })
+        })
+    }
+
+    onSubmitClick() {
+        this.setState({
+            employeeSelected: null,
+            isShowEmployeeInfo: "hide"
         })
     }
 
@@ -69,9 +108,9 @@ class EmployeesManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container style={{ "marginTop": "2rem" }} fluid={true}>
+                <Container className="AdminManageEmployees" fluid={true}>
                     {/* Table */}
-                    <Row>
+                    <Row className="mt-5">
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
@@ -85,7 +124,7 @@ class EmployeesManage extends React.Component {
                                             <th scope="col">Phòng ban</th>
                                             <th scope="col">Lương (VND)</th>
                                             <th scope="col">Ngày bắt đầu</th>
-                                            <th scope="col" style={{"textAlign": "center"}}><i className="fas fa-ellipsis-v" /></th>
+                                            <th scope="col" style={{ "textAlign": "center" }}><i className="fas fa-ellipsis-v" /></th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-body">
@@ -94,17 +133,18 @@ class EmployeesManage extends React.Component {
                                             this.state.employees.map((employee, key) => (
                                                 <tr key={key}>
                                                     <td>{key + 1}</td>
-                                                    <th style={{"textTransform": "uppercase"}}>
-                                                        <a href="#pablo" onClick={e => e.preventDefault()}>
+                                                    <th style={{ "textTransform": "uppercase" }}>
+                                                        <span style={{ "color": "blue", "cursor": "pointer" }}
+                                                            onClick={e => this.showEmployeeInfo(employee._id)}>
                                                             {employee.user.fullname.firstname + " " + employee.user.fullname.lastname}
-                                                        </a>
+                                                        </span>
                                                     </th>
                                                     <td>{employee.department.name}</td>
                                                     <td>{priceFormatUtil(employee.salary)}</td>
                                                     <td>
                                                         {formatDate(employee.timeStart)}
                                                     </td>
-                                                    <td style={{"textAlign": "center"}}>
+                                                    <td style={{ "textAlign": "center" }}>
                                                         <UncontrolledDropdown>
                                                             <DropdownToggle
                                                                 className="btn-icon-only text-light"
@@ -188,6 +228,298 @@ class EmployeesManage extends React.Component {
                                 </CardFooter>
                             </Card>
                         </div>
+                    </Row>
+                    {/* Table */}
+                    <Row className={"mt-5 " + this.state.isShowEmployeeInfo}>
+                        <Col>
+                            <Card className="bg-secondary shadow">
+                                <CardHeader className="bg-white border-0">
+                                    <Row className="align-items-center">
+                                        <Col xs="8">
+                                            <h3 id="user-info" className="mb-0">Thông tin nhân viên</h3>
+                                        </Col>
+                                    </Row>
+                                </CardHeader>
+                                <CardBody>
+                                    <Form>
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Thông tin cá nhân
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-first-name"
+                                                        >
+                                                            Tên
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected.user.fullname.firstname}
+                                                            id="input-first-name"
+                                                            placeholder="Tên"
+                                                            type="text"
+                                                            maxLength={30}
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-last-name"
+                                                        >
+                                                            Họ
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected.user.fullname.lastname}
+                                                            id="input-last-name"
+                                                            placeholder="Họ"
+                                                            type="text"
+                                                            maxLength={30}
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-phone"
+                                                        >
+                                                            Số điện thoại
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected.user.phone}
+                                                            id="input-phone"
+                                                            placeholder="Số điện thoại"
+                                                            type="tel"
+                                                            maxLength={10}
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-email"
+                                                        >
+                                                            Email
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected.user.email}
+                                                            id="input-email"
+                                                            placeholder="istore@gmail.com"
+                                                            type="email"
+                                                            maxLength={30}
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <label
+                                                        className="form-control-label"
+                                                    >
+                                                        Giới tính
+                                                    </label>
+                                                    <FormGroup check>
+                                                        <Label check>
+                                                            <Input type="radio" name="radio2"
+                                                                defaultValue={true}
+                                                                readOnly={true}
+                                                                defaultChecked={this.state.employeeSelected && this.state.employeeSelected.user.gender ? true : false} />{' '}
+                                                            Nam
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <FormGroup check>
+                                                        <Label check>
+                                                            <Input type="radio" name="radio2"
+                                                                defaultValue={false}
+                                                                readOnly={true}
+                                                                defaultChecked={this.state.employeeSelected && this.state.employeeSelected.user.gender ? false : true} />{' '}
+                                                            Nữ
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <br />
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-birthday"
+                                                        >
+                                                            Ngày sinh
+                                                        </label>
+                                                        <Input
+                                                            type="date"
+                                                            id="input-birthday"
+                                                            placeholder="Ngày sinh"
+                                                            readOnly={true}
+                                                            defaultValue={formatDate(this.state.employeeSelected && this.state.employeeSelected.user.birthday)}
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Address */}
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Chức vụ công việc
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="id-employee"
+                                                        >
+                                                            ID nhân viên
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected._id}
+                                                            id="id-employee"
+                                                            placeholder="ID nhân viên"
+                                                            type="text"
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-department"
+                                                        >
+                                                            Phòng ban
+                                                        </label>
+                                                        <Input type="select" name="department" id="input-department">
+                                                            <option value={(this.state.employeeSelected && this.state.employeeSelected.department._id) || null}>
+                                                                {(this.state.employeeSelected && this.state.employeeSelected.department.name) || "Phòng ban"}
+                                                            </option>
+                                                            {
+                                                                this.state.departments &&
+                                                                this.state.departments.map((department, key) => (
+                                                                    <option key={key} value={department._id}>{department.name}</option>
+                                                                ))
+                                                            }
+                                                        </Input>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-salary"
+                                                        >
+                                                            Lương (VND)
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected.salary}
+                                                            id="input-salary"
+                                                            placeholder="Lương (VND)"
+                                                            type="number"
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-timeStart"
+                                                        >
+                                                            Ngày bắt đầu
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={formatDate(this.state.employeeSelected && this.state.employeeSelected.timeStart)}
+                                                            id="input-timeStart"
+                                                            placeholder="Ngày bắt đầu"
+                                                            type="date"
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Address */}
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Thông tin liên lạc
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col md="12">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-address"
+                                                        >
+                                                            Địa chỉ
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employeeSelected && this.state.employeeSelected.user.address}
+                                                            id="input-address"
+                                                            placeholder="Địa chỉ"
+                                                            type="text"
+                                                            maxLength={100}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Description */}
+                                        <h6 className="heading-small text-muted mb-4">Giới thiệu</h6>
+                                        <div className="pl-lg-4">
+                                            <FormGroup>
+                                                <label>Giới thiệu</label>
+                                                <Input
+                                                    className="form-control-alternative"
+                                                    placeholder="Hãy viết gì đó về bạn"
+                                                    rows="4"
+                                                    type="textarea"
+                                                    id="input-about"
+                                                    defaultValue={this.state.employeeSelected && this.state.employeeSelected.user.about}
+                                                    readOnly={true}
+                                                />
+                                            </FormGroup>
+                                        </div>
+                                        <div className="pl-lg-4">
+                                            <Button type="button" className="btn" style={{ float: "right" }} color="primary"
+                                                onClick={this.onSubmitClick}
+                                            >
+                                                CẬP NHẬT</Button>
+                                        </div>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+                        </Col>
                     </Row>
                 </Container>
             </>

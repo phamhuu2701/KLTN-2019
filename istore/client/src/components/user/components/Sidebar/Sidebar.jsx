@@ -240,7 +240,7 @@ class Sidebar extends React.Component {
                         {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
                         {/* Navigation */}
                         <Nav className="mb-md-3" navbar>
-                            <NavLink onClick={logout}>
+                            <NavLink onClick={logout} style={{"cursor": "pointer"}}>
                                 <i className="ni ni-user-run text-pink" />
                                 Thoát
                             </NavLink>

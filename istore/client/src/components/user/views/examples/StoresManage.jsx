@@ -413,9 +413,9 @@ class StoresManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="stores-manage" fluid={true} style={{ "marginTop": "2rem" }}>
+                <Container className="stores-manage" fluid={true}>
                     {/* Button Add Store */}
-                    <Row>
+                    <Row className="mt-5">
                         <Col className="container-button-add-store">
                             <Button onClick={this.onAddStoreClick} className="btn btn-success">Thêm cửa hàng</Button>
                         </Col>

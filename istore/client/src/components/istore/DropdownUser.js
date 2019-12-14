@@ -548,19 +548,22 @@ export default class DropdownUser extends Component {
                                 </div>
                             </a>
                             <hr className="dropdown-user-body-content-divide" />
-                            <div
-                                className="dropdown-user-body-content dropdown-user-body-content-logout"
+                            <a
+                                href="/"
+                                className="dropdown-user-body-content-link"
                                 onClick={this.logoutHandler}
                             >
-                                <img
-                                    className="dropdown-user-body-content-imgage"
-                                    alt=""
-                                    src="./resources/icons/logout.svg"
-                                ></img>
-                                <span className="dropdown-user-body-content-title">
-                                    Thoát
-                                </span>
-                            </div>
+                                <div className="dropdown-user-body-content">
+                                    <img
+                                        className="dropdown-user-body-content-imgage"
+                                        alt=""
+                                        src="./resources/icons/logout.svg"
+                                    ></img>
+                                    <span className="dropdown-user-body-content-title">
+                                        Thoát
+                                    </span>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -571,8 +574,8 @@ export default class DropdownUser extends Component {
                     <Image
                         className="dropdown-user-image"
                         src="./resources/icons/user.svg"
-                        width={50}
-                        height={50}
+                        width={40}
+                        height={40}
                         roundedCircle
                         onClick={this.onClicked}
                     />
