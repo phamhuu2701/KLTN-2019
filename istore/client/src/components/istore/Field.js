@@ -30,7 +30,7 @@ class SearchBar extends Component {
             effectOnSearchProduct(search, distance, result => {
                 if (result.length > 0) {
                     this.props.onZoom('in');
-                } else this.props.onZoom('out');
+                } else this.props.onZoom('normal');
                 this.props.findProductHandler(result);
             });
         } else {
@@ -48,7 +48,7 @@ class SearchBar extends Component {
         effectOnSearchProduct(search, distance, result => {
             if (result.length > 0) {
                 this.props.onZoom('in');
-            } else this.props.onZoom('out');
+            } else this.props.onZoom('normal');
             this.props.findProductHandler(result);
         });
     }
@@ -173,7 +173,7 @@ export default class Fields extends Component {
         effectOnSearchProduct(search, distance, result => {
             if (result.length > 0) {
                 this.props.onZoom('in');
-            } else this.props.onZoom('out');
+            } else this.props.onZoom('normal');
             this.findProductHandler(result);
         });
     }

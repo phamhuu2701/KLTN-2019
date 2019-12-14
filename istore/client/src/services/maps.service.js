@@ -262,6 +262,9 @@ export function distanceMatrixService(origin, destinations, thisMap, cb) {
     const maps = google.maps;
     const service = new maps.DistanceMatrixService();
 
+    if (destinations.length > 25) {
+        destinations = destinations.splice(0, 25);
+    }
     service.getDistanceMatrix(
         {
             origins: origin,
