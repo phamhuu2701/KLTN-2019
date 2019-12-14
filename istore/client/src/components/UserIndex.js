@@ -6,6 +6,7 @@ import "components/user/assets/vendor/@fortawesome/fontawesome-free/css/all.min.
 import "components/user/assets/scss/argon-dashboard-react.scss";
 
 import UserLayout from "components/user/layouts/User.jsx";
+import AuthLayout from "components/user/layouts/Auth.jsx";
 
 export default class UserIndex extends Component {
     constructor() {
@@ -49,7 +50,10 @@ export default class UserIndex extends Component {
                                 />
                             )}
                         />
-                        {/* <Redirect from="/" to="/user/index" /> */}
+                        <Route
+                            path="/user-auth"
+                            render={props => <AuthLayout {...props} />}
+                        />
                     </Switch>
                 </BrowserRouter>
             );

@@ -52,8 +52,8 @@ import {
     Col
 } from "reactstrap";
 import { logout } from "../../../../services/user.service";
-import "./Sidebar.css";
 
+import routes from "userRoutes.js";
 var ps;
 
 class Sidebar extends React.Component {
@@ -170,34 +170,14 @@ class Sidebar extends React.Component {
                                 <DropdownItem className="noti-title" header tag="div">
                                     <h6 className="text-overflow m-0">Welcome!</h6>
                                 </DropdownItem>
-                                <DropdownItem to="/user/user-profile" tag={Link}>
-                                    <i className="ni ni-single-02" />
-                                    <span>Thông tin cá nhân</span>
-                                </DropdownItem>
-                                <DropdownItem to="/user/messages" tag={Link}>
-                                    <i className="ni ni-chat-round" />
-                                    <span>Tin nhắn</span>
-                                </DropdownItem>
-                                <DropdownItem to="/user/stores-manage" tag={Link}>
-                                    <i className="ni ni-bullet-list-67" />
-                                    <span>Quản lý cửa hàng</span>
-                                </DropdownItem>
-                                <DropdownItem to="/user/change-email" tag={Link}>
-                                    <i className="ni ni-email-83" />
-                                    <span>Đổi email</span>
-                                </DropdownItem>
-                                <DropdownItem to="/user/change-phone" tag={Link}>
-                                    <i className="ni ni-mobile-button" />
-                                    <span>Đổi số điện thoại</span>
-                                </DropdownItem>
-                                <DropdownItem to="/user/change-pasword" tag={Link}>
-                                    <i className="ni ni-key-25" />
-                                    <span>Đổi mật khẩu</span>
-                                </DropdownItem>
-                                <DropdownItem to="/user/index" tag={Link}>
-                                    <i className="ni ni-support-16" />
-                                    <span>Liên hệ hỗ trợ</span>
-                                </DropdownItem>
+                                {
+                                    routes.map((route, key) => (
+                                        <DropdownItem key={key} to={route.layout + route.path} tag={Link}>
+                                            <i className={route.icon} />
+                                            <span>{route.name}</span>
+                                        </DropdownItem>
+                                    ))
+                                }
                                 <DropdownItem divider />
                                 <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
                                     <i className="ni ni-user-run" />
@@ -260,24 +240,10 @@ class Sidebar extends React.Component {
                         {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
                         {/* Navigation */}
                         <Nav className="mb-md-3" navbar>
-                            <NavItem>
-                                <NavLink className="sildebar-logout" onClick={logout}>
-                                    <i className="ni ni-user-run text-pink" />
-                                    Thoát
-                                </NavLink>
-                            </NavItem>
-                            {/* <NavItem>
-                                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/colors?ref=adr-admin-sidebar">
-                                    <i className="ni ni-palette" />
-                                    Foundation
-                                </NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="https://demos.creative-tim.com/argon-dashboard-react/documentation/alerts?ref=adr-admin-sidebar">
-                                    <i className="ni ni-ui-04" />
-                                    Components
-                                </NavLink>
-                            </NavItem> */}
+                            <NavLink onClick={logout}>
+                                <i className="ni ni-user-run text-pink" />
+                                Thoát
+                            </NavLink>
                         </Nav>
                     </Collapse>
                 </Container>

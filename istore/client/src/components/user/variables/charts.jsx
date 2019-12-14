@@ -428,7 +428,7 @@ var chart1Data = {
 }
 function getChart1Data(c1Data){
     chart1Data = c1Data;
-    console.log(chart1Data);
+    // console.log(chart1Data);
 }
 
 module.exports = {

@@ -26,7 +26,7 @@ export default class Users extends Component {
         this.setState({
             radioOption: event.target.value.localeCompare("true") ? true : false
         });
-        console.log(this.state.radioOption);
+        // console.log(this.state.radioOption);
     }
 
     onAddButtonClick() {

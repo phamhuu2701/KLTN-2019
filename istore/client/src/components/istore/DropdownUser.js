@@ -515,7 +515,7 @@ export default class DropdownUser extends Component {
                         <div className="dropdown-user-body-sub"></div>
                         <div className="dropdown-user-body-main">
                             <a
-                                href="/user/user-profile"
+                                href="/user/profile"
                                 className="dropdown-user-body-content-link"
                             >
                                 <div className="dropdown-user-body-content">
@@ -524,10 +524,10 @@ export default class DropdownUser extends Component {
                                         alt=""
                                         src="./resources/icons/user.svg"
                                     ></img>
-                                    <span className="dropdown-user-body-content-title">
-                                        {this.state.user.fullname.firstname +
+                                    <span className="dropdown-user-body-content-title" style={{"textTransform": "uppercase"}}>
+                                        <b>{this.state.user.fullname.firstname +
                                             " " +
-                                            this.state.user.fullname.lastname}
+                                            this.state.user.fullname.lastname}</b>
                                     </span>
                                 </div>
                             </a>

@@ -54,17 +54,21 @@ class Profile extends React.Component {
                 errorMessage: "",
                 value: props.user.fullname.lastname
             },
-            inputAddress: {
+            inputGender: {
                 errorMessage: "",
-                value: props.user.address
+                value: props.user.gender
             },
             inputBirthday: {
                 errorMessage: "",
                 value: props.user.birthday
             },
-            inputGender: {
+            inputAddress: {
                 errorMessage: "",
-                value: props.user.gender
+                value: props.user.address
+            },
+            inputAbout: {
+                errorMessage: "",
+                value: props.user.about
             },
             updateResultMessage: null
         }
@@ -81,9 +85,6 @@ class Profile extends React.Component {
     }
 
     onInputChange(e) {
-        // console.log(e.target.id);
-        // console.log(e.target.value);
-
         if (e.target.id === "input-first-name") {
             if (e.target.value.trim() === "") {
                 this.setState({
@@ -136,6 +137,14 @@ class Profile extends React.Component {
                 }
             })
         }
+        if (e.target.id === "input-about") {
+            this.setState({
+                inputAbout: {
+                    errorMessage: "",
+                    value: e.target.value
+                }
+            })
+        }
     }
 
     onRadioGenderChange(e) {
@@ -148,12 +157,6 @@ class Profile extends React.Component {
     }
 
     onUpdateSubmitClick() {
-        // console.log(this.state.inputFirstname);
-        // console.log(this.state.inputLastname);
-        // console.log(this.state.inputAddress);
-        // console.log(this.state.inputBirthday);
-        // console.log(this.state.inputGender);
-
         fetch("/api/users/" + this.props.user._id,
             {
                 method: "PUT",
@@ -164,7 +167,8 @@ class Profile extends React.Component {
                     },
                     gender: this.state.inputGender.value,
                     birthday: this.state.inputBirthday.value,
-                    address: this.state.inputAddress.value
+                    address: this.state.inputAddress.value,
+                    about: this.state.inputAbout.value,
                 }),
                 headers: {
                     "Content-Type": "application/json"
@@ -190,8 +194,6 @@ class Profile extends React.Component {
     }
 
     render() {
-        // console.log(this.props);
-        //console.log(this.props.user);
         return (
             <>
                 <UserHeader user={this.state.user} />
@@ -203,17 +205,13 @@ class Profile extends React.Component {
                                 <Row className="justify-content-center">
                                     <Col className="order-lg-2" lg="3">
                                         <div className="card-profile-image">
-                                            <a href="#pablo" onClick={e => e.preventDefault()}>
+                                            <a href="#pablo">
                                                 <img
                                                     alt="..."
                                                     className="rounded-circle"
-                                                    //   src={require("components/user/assets/img/theme/team-4-800x800.jpg")}
                                                     src={this.state.user.avatars[0]}
                                                 />
                                             </a>
-                                        </div>
-                                        <div className="card-profile-image-change">
-                                            <i className="fa fa-camera" aria-hidden="true"></i>
                                         </div>
                                     </Col>
                                 </Row>
@@ -223,16 +221,14 @@ class Profile extends React.Component {
                                             className="mr-4"
                                             color="info"
                                             href="#pablo"
-                                            onClick={e => e.preventDefault()}
                                             size="sm"
                                         >
                                             Kết nối
                                         </Button>
                                         <Button
                                             className="float-right"
-                                            color="default"
+                                            color="success"
                                             href="#pablo"
-                                            onClick={e => e.preventDefault()}
                                             size="sm"
                                         >
                                             Tin nhắn
@@ -261,26 +257,23 @@ class Profile extends React.Component {
                                         </div>
                                     </Row>
                                     <div className="text-center">
-                                        <h3>
+                                        <h3 style={{ "textTransform": "uppercase" }}>
                                             {(this.state.user.fullname.lastname + " " + this.state.user.fullname.firstname)}
                                         </h3>
                                         <div className="h5 font-weight-300">
-                                            <i className="ni location_pin mr-2" />
+                                            <i className="fa fa-phone text-gray"></i>{" "}
+                                            {this.state.user.phone}
+                                        </div>
+                                        <div className="h5 font-weight-300">
+                                            <i className="fa fa-envelope text-gray"></i>{" "}
+                                            {this.state.user.email}
+                                        </div>
+                                        <div className="h5 font-weight-300">
+                                            <i className="fa fa-map-marker text-gray"></i>{" "}
                                             {this.state.user.address}
                                         </div>
-                                        <div className="h5 mt-4">
-                                            <i className="ni business_briefcase-24 mr-2" />
-                                            Công việc: ...
-                                        </div>
-                                        <div>
-                                            <i className="ni education_hat mr-2" />
-                                            Chức vụ: ...
-                                        </div>
                                         <hr className="my-4" />
-                                        <p>
-                                            Hãy giới thiệu về bạn..
-                                        </p>
-                                        <a href="#pablo" onClick={e => e.preventDefault()}>
+                                        <a href="#pablo">
                                             Xem thêm
                                         </a>
                                     </div>
@@ -298,7 +291,6 @@ class Profile extends React.Component {
                                             <Button
                                                 color="primary"
                                                 href="#pablo"
-                                                onClick={e => e.preventDefault()}
                                                 size="sm"
                                             >
                                                 Cập nhật
@@ -327,8 +319,7 @@ class Profile extends React.Component {
                                                             id="input-first-name"
                                                             placeholder="Tên"
                                                             type="text"
-                                                            minLength={1}
-                                                            maxLength={20}
+                                                            maxLength={30}
                                                             required={true}
                                                             onChange={this.onInputChange}
                                                         />
@@ -351,7 +342,6 @@ class Profile extends React.Component {
                                                             id="input-last-name"
                                                             placeholder="Họ"
                                                             type="text"
-                                                            minLength={1}
                                                             maxLength={30}
                                                             required={true}
                                                             onChange={this.onInputChange}
@@ -377,8 +367,6 @@ class Profile extends React.Component {
                                                             id="input-phone"
                                                             placeholder="Số điện thoại"
                                                             type="tel"
-                                                            minLength={1}
-                                                            maxLength={10}
                                                             readOnly={true}
                                                         />
                                                     </FormGroup>
@@ -395,10 +383,8 @@ class Profile extends React.Component {
                                                             className="form-control-alternative"
                                                             defaultValue={this.state.user.email}
                                                             id="input-email"
-                                                            placeholder="istore@gmail.com"
+                                                            placeholder="user@gmail.com"
                                                             type="email"
-                                                            minLength={1}
-                                                            maxLength={30}
                                                             readOnly={true}
                                                         />
                                                     </FormGroup>
@@ -429,6 +415,7 @@ class Profile extends React.Component {
                                                             Nữ
                                                         </Label>
                                                     </FormGroup>
+                                                    <br />
                                                 </Col>
                                                 <Col lg="6">
                                                     <FormGroup>
@@ -470,65 +457,12 @@ class Profile extends React.Component {
                                                             id="input-address"
                                                             placeholder="Địa chỉ"
                                                             type="text"
-                                                            minLength={1}
                                                             maxLength={100}
                                                             onChange={this.onInputChange}
                                                         />
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
-                                            {/* <Row>
-                                            <Col lg="4">
-                                            <FormGroup>
-                                                <label
-                                                className="form-control-label"
-                                                htmlFor="input-city"
-                                                >
-                                                City
-                                                </label>
-                                                <Input
-                                                className="form-control-alternative"
-                                                defaultValue="New York"
-                                                id="input-city"
-                                                placeholder="City"
-                                                type="text"
-                                                />
-                                            </FormGroup>
-                                            </Col>
-                                            <Col lg="4">
-                                            <FormGroup>
-                                                <label
-                                                className="form-control-label"
-                                                htmlFor="input-country"
-                                                >
-                                                Country
-                                                </label>
-                                                <Input
-                                                className="form-control-alternative"
-                                                defaultValue="United States"
-                                                id="input-country"
-                                                placeholder="Country"
-                                                type="text"
-                                                />
-                                            </FormGroup>
-                                            </Col>
-                                            <Col lg="4">
-                                            <FormGroup>
-                                                <label
-                                                className="form-control-label"
-                                                htmlFor="input-country"
-                                                >
-                                                Postal code
-                                                </label>
-                                                <Input
-                                                className="form-control-alternative"
-                                                id="input-postal-code"
-                                                placeholder="Postal code"
-                                                type="number"
-                                                />
-                                            </FormGroup>
-                                            </Col>
-                                        </Row> */}
                                         </div>
                                         <hr className="my-4" />
                                         {/* Description */}
@@ -539,13 +473,16 @@ class Profile extends React.Component {
                                                 <Input
                                                     className="form-control-alternative"
                                                     placeholder="Hãy viết gì đó về bạn"
+                                                    id="input-about"
                                                     rows="4"
                                                     type="textarea"
+                                                    defaultValue={this.state.user.about}
                                                 />
                                             </FormGroup>
                                         </div>
                                         <div className="pl-lg-4">
-                                            <Button onClick={this.onUpdateSubmitClick} type="button" className="btn" style={{ float: "right" }} color="primary">CẬP NHẬT</Button>
+                                            <Button onClick={this.onUpdateSubmitClick} type="button"
+                                                className="btn" style={{ float: "right" }} color="primary">CẬP NHẬT</Button>
                                         </div>
                                     </Form>
                                 </CardBody>

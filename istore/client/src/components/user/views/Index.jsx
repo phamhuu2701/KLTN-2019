@@ -45,12 +45,12 @@ import {
     getChart1Data
 } from "components/user/variables/charts.jsx";
 
-import "./Index.css";
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresByIdUser2, getProductsAllStoresByUser } from "../../../services/user.service";
-import { getStoreViewsCount2, getAvgRatesStore } from "../../../services/store.service";
+import { getStoreViewsCount2 } from "../../../services/store.service";
 import { sortDescreaseProductsByViewsCount } from "../../../utils/productUtils";
-import getAvgRatesProduct, { getViewsCountByTime } from "../../../services/product.service";
+import { getViewsCountByTime } from "../../../services/product.service";
+import priceFormatUtil from "../../../utils/priceFormat";
 
 class Index extends React.Component {
     state = {
@@ -103,15 +103,16 @@ class Index extends React.Component {
         })
 
         getStoresByIdUser2(this.props.user._id, stores => {
-            let top10Stores = [];
-            if (stores.length > 0) {
-                for (let i = 0; i < 10; i++) {
-                    top10Stores.push(stores[i]);
-                }
+            if (stores.length > 10) {
+                this.setState({
+                    top10Stores: stores.splice(0, 10)
+                })
             }
-            this.setState({
-                top10Stores: top10Stores
-            })
+            else {
+                this.setState({
+                    top10Stores: stores
+                })
+            }
         })
 
         getProductsAllStoresByUser(this.props.user._id, products => {
@@ -120,18 +121,16 @@ class Index extends React.Component {
             let data3 = [];
 
             let currentDate = new Date();
-            // console.log(currentDate);
 
-            for(let i=1; i<=12; i++){
+            for (let i = 1; i <= 12; i++) {
                 let viewsCountByMonth = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i, 31);
-                // console.log(viewsCountByMonth);
                 data1.push(viewsCountByMonth);
             }
-            for(let i=1; i<=12; i+=3){
-                let viewsCountByQuater = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i+2, 31);
+            for (let i = 1; i <= 12; i += 3) {
+                let viewsCountByQuater = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i + 2, 31);
                 data2.push(viewsCountByQuater);
             }
-            for(let i=currentDate.getFullYear() - 3; i<=currentDate.getFullYear(); i++){
+            for (let i = currentDate.getFullYear() - 3; i <= currentDate.getFullYear(); i++) {
                 let viewsCountByYear = getViewsCountByTime(products, i, 1, 0, i, 12, 31);
                 data3.push(viewsCountByYear);
             }
@@ -149,13 +148,13 @@ class Index extends React.Component {
         })
     }
     render() {
+        // console.log(this.state.top10Stores);
         return (
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7 mt--7-custom" fluid={true}>
+                <Container fluid={true} style={{ "marginTop": "2rem" }}>
                     <Row>
-                        {/* <Col className="mb-5 mb-xl-0" xl="8"> */}
                         <Col>
                             <Card className="bg-gradient-default shadow">
                                 <CardHeader className="bg-transparent">
@@ -248,53 +247,7 @@ class Index extends React.Component {
                         </Col>
                     </Row> */}
                     <Row className="mt-5">
-                        <Col className="mb-5 mb-xl-0" xl="7">
-                            <Card className="shadow">
-                                <CardHeader className="border-0">
-                                    <Row className="align-items-center">
-                                        <div className="col">
-                                            <h3 className="mb-0">Top sản phẩm</h3>
-                                        </div>
-                                        <div className="col text-right">
-                                            <Button
-                                                color="primary"
-                                                href="#pablo"
-                                                onClick={e => e.preventDefault()}
-                                                size="sm"
-                                            >
-                                                Xem tất cả
-                                            </Button>
-                                        </div>
-                                    </Row>
-                                </CardHeader>
-                                <Table className="align-items-center table-flush" responsive>
-                                    <thead className="thead-light">
-                                        <tr>
-                                            <th>#</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Hình ảnh</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Tên sản phẩm</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Lượt xem</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Đánh giá</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            this.state.top10ProductsViewsCout.length > 0 &&
-                                            this.state.top10ProductsViewsCout.map((product, key) => (
-                                                <tr key={key}>
-                                                    <td style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>{key + 1}</td>
-                                                    <td style={{ "padding": "0", "textAlign": "center" }}><img style={{ "height": "30px", "width": "auto" }} alt="" src={product.images[0]}></img></td>
-                                                    <th>{product.name.substring(0, 30)}..</th>
-                                                    <td>{product.viewsCount.length}</td>
-                                                    <td>{getAvgRatesProduct(product)}</td>
-                                                </tr>
-                                            ))
-                                        }
-                                    </tbody>
-                                </Table>
-                            </Card>
-                        </Col>
-                        <Col xl="5">
+                        <Col className="mb-5 mb-xl-0" xl="6">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
@@ -316,9 +269,10 @@ class Index extends React.Component {
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col">Tên cửa hàng</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Lượt xem</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Đánh giá</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>#</th>
+                                            <th>Tên cửa hàng</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>Sản phẩm</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>Lượt xem</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -326,11 +280,66 @@ class Index extends React.Component {
                                             this.state.top10Stores.length > 0 &&
                                             this.state.top10Stores.map((store, key) => (
                                                 <tr key={key}>
-                                                    <th scope="row">{store.name.substring(0, 25)}</th>
+                                                    <td style={{ "textAlign": "center" }}>{key + 1}</td>
+                                                    <th style={{ "textTransform": "uppercase" }}>
+                                                        <a href={
+                                                            store.website.hasWebsite ?
+                                                                store.website.url :
+                                                                "/store/" + store.template + "/" + store._id
+                                                        } target="_blank" rel="noopener noreferrer">
+                                                            {store.name.substring(0, 25)}
+                                                        </a>
+                                                    </th>
+                                                    <td style={{ "textAlign": "center" }}>{store.products.length}</td>
                                                     <td style={{ "textAlign": "center" }}>{getStoreViewsCount2(store)}</td>
-                                                    <td style={{ "textAlign": "center" }}>
-                                                        {Math.round(getAvgRatesStore(store) * 100) / 100}
-                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+                                    </tbody>
+                                </Table>
+                            </Card>
+                        </Col>
+                        <Col className="mb-5 mb-xl-0" xl="6">
+                            <Card className="shadow">
+                                <CardHeader className="border-0">
+                                    <Row className="align-items-center">
+                                        <div className="col">
+                                            <h3 className="mb-0">Top sản phẩm</h3>
+                                        </div>
+                                        <div className="col text-right">
+                                            <Button
+                                                color="primary"
+                                                href="#pablo"
+                                                onClick={e => e.preventDefault()}
+                                                size="sm"
+                                            >
+                                                Xem tất cả
+                                            </Button>
+                                        </div>
+                                    </Row>
+                                </CardHeader>
+                                <Table className="align-items-center table-flush" responsive>
+                                    <thead className="thead-light">
+                                        <tr>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>#</th>
+                                            <th style={{ "paddingLeft": "0", "paddingRight": "0" }}>Sản phẩm</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>Giá tiền</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>Lượt xem</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            this.state.top10ProductsViewsCout.length > 0 &&
+                                            this.state.top10ProductsViewsCout.map((product, key) => (
+                                                <tr key={key}>
+                                                    <td style={{ "textAlign": "center" }}>{key + 1}</td>
+                                                    <th style={{ "paddingLeft": "0", "paddingRight": "0", "textTransform": "uppercase" }}>
+                                                        <a href="#pablo">
+                                                            {product.name.substring(0, 20)}..
+                                                        </a>
+                                                    </th>
+                                                    <td style={{ "textAlign": "right" }}>{priceFormatUtil(product.price * (100 - product.saleoff))}</td>
+                                                    <td style={{ "textAlign": "center" }}>{product.viewsCount.length}</td>
                                                 </tr>
                                             ))
                                         }

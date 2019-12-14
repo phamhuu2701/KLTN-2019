@@ -69,7 +69,7 @@ class AdminNavbar extends React.Component {
                             </div>
                             <Nav className="ml-auto" navbar>
                                 <NavItem>
-                                    <NavLink className="nav-link-icon" to="/" tag={Link}>
+                                    <NavLink className="nav-link-icon" to="/admin/index" tag={Link}>
                                         <i className="ni ni-planet" />
                                         <span className="nav-link-inner--text">Trang chủ</span>
                                     </NavLink>
@@ -77,27 +77,7 @@ class AdminNavbar extends React.Component {
                                 <NavItem>
                                     <NavLink
                                         className="nav-link-icon"
-                                        to="/auth/register"
-                                        tag={Link}
-                                    >
-                                        <i className="ni ni-circle-08" />
-                                        <span className="nav-link-inner--text">Đăng ký</span>
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className="nav-link-icon"
-                                        to="/auth/login"
-                                        tag={Link}
-                                    >
-                                        <i className="ni ni-key-25" />
-                                        <span className="nav-link-inner--text">Đăng nhập</span>
-                                    </NavLink>
-                                </NavItem>
-                                <NavItem>
-                                    <NavLink
-                                        className="nav-link-icon"
-                                        to="/user/user-profile"
+                                        to="/admin/profile"
                                         tag={Link}
                                     >
                                         <i className="ni ni-single-02" />

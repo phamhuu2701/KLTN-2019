@@ -33,11 +33,12 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // core components
 import Header from "components/admin/components/Headers/Header.jsx";
 import getEmployees from "../../../../services/employee.service";
 import formatDate from "../../../../utils/dateUtils";
+import priceFormatUtil from "../../../../utils/priceFormat";
 
 class EmployeesManage extends React.Component {
     constructor() {
@@ -49,8 +50,8 @@ class EmployeesManage extends React.Component {
     }
 
     componentDidMount() {
-        getEmployees(employees => {            
-            if(employees.length >= 10){
+        getEmployees(employees => {          
+            if(employees.length > 10){
                 this.setState({
                     employees: employees.slice(0, 10)
                 })
@@ -68,7 +69,7 @@ class EmployeesManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7-custom" fluid={true}>
+                <Container style={{ "marginTop": "2rem" }} fluid={true}>
                     {/* Table */}
                     <Row>
                         <div className="col">
@@ -94,12 +95,12 @@ class EmployeesManage extends React.Component {
                                                 <tr key={key}>
                                                     <td>{key + 1}</td>
                                                     <th style={{"textTransform": "uppercase"}}>
-                                                        <a href="#pablo">
+                                                        <a href="#pablo" onClick={e => e.preventDefault()}>
                                                             {employee.user.fullname.firstname + " " + employee.user.fullname.lastname}
                                                         </a>
                                                     </th>
                                                     <td>{employee.department.name}</td>
-                                                    <td>{employee.salary}</td>
+                                                    <td>{priceFormatUtil(employee.salary)}</td>
                                                     <td>
                                                         {formatDate(employee.timeStart)}
                                                     </td>
@@ -116,17 +117,13 @@ class EmployeesManage extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to="#pablo">
-                                                                    <DropdownItem>
-                                                                        Chi tiết
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <Link to="#pablo">
-                                                                    <DropdownItem>
-                                                                        Cập nhập thông tin
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Chi tiết
+                                                                </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Cập nhập thông tin
+                                                                </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
                                                                     Xóa
                                                                 </DropdownItem>
                                                             </DropdownMenu>

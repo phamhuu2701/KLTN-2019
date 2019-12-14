@@ -7,7 +7,10 @@ import {
 import { showProductDetail } from "../components/istore/ProductDetail";
 import { onZoomSearchField } from "../components/HomeIndex";
 import getAvgRatesProduct from "./product.service";
-import { sortIncreaseProductsByViewsCount, sortDescreaseProductsByViewsCount } from "../utils/productUtils";
+import {
+    sortIncreaseProductsByViewsCount,
+    sortDescreaseProductsByViewsCount
+} from "../utils/productUtils";
 
 export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
     //const storeInfo = document.querySelector(".store-info");
@@ -83,7 +86,7 @@ export function onSortStoreListService(stores, priority, cb) {
                 sortDescreseProductByPrice(stores);
                 break;
             default:
-                console.log("0");
+                // console.log("0");
                 break;
         }
     }
@@ -181,7 +184,6 @@ export function getStoreViewsCount2(store) {
 
 export function getTopProductsViewsCount(store, isIncrease, callback) {
     if (store.products.length > 0) {
-        
         // sắp xếp tăng dần
         if (isIncrease) {
             callback(sortIncreaseProductsByViewsCount(store.products));
@@ -198,6 +200,38 @@ export function getStores(callback) {
         .then(res => res.json())
         .then(results => {
             callback(results);
+        })
+        .catch(err => console.log(err));
+}
+
+/**
+ * storeModel = {store: store, viewCount: Number}
+ * @param {*} callback
+ */
+export function getStoreModels(callback) {
+    fetch("/api/stores/")
+        .then(res => res.json())
+        .then(stores => {
+            if (stores.length > 0) {
+                let storeModels = [];
+                for (let i = 0; i < stores.length; i++) {
+                    let viewsCount = 0;
+                    if (stores[i].products.length > 0) {
+                        for (let j = 0; j < stores[i].products.length; j++) {
+                            viewsCount +=
+                                stores[i].products[j].viewsCount.length;
+                        }
+                    }
+                    storeModels.push({
+                        store: stores[i],
+                        viewsCount: viewsCount
+                    });
+
+                    if (storeModels.length === stores.length) {
+                        callback(storeModels);
+                    }
+                }
+            }
         })
         .catch(err => console.log(err));
 }

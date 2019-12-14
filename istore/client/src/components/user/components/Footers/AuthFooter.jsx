@@ -30,13 +30,12 @@ class Login extends React.Component {
                         <Row className="align-items-center justify-content-xl-between">
                             <Col xl="6">
                                 <div className="copyright text-center text-xl-left text-muted">
-                                    © 2019{" "}
+                                    © 2019
                                     <a
                                         className="font-weight-bold ml-1"
-                                        href="/"
-                                        target="_blank"
+                                        href="#pablo"
                                     >
-                                        Creative Tim - iStore
+                                        - iStore
                                     </a>
                                 </div>
                             </Col>
@@ -44,32 +43,28 @@ class Login extends React.Component {
                                 <Nav className="nav-footer justify-content-center justify-content-xl-end">
                                     <NavItem>
                                         <NavLink
-                                            href="/"
-                                            target="_blank"
+                                            href="#pablo"
                                         >
                                             iStore
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
                                         <NavLink
-                                            href="/"
-                                            target="_blank"
+                                            href="#pablo"
                                         >
                                             Về chúng tôi
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
                                         <NavLink
-                                            href="/"
-                                            target="_blank"
+                                            href="#pablo"
                                         >
                                             Bản tin
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
                                         <NavLink
-                                            href="/"
-                                            target="_blank"
+                                            href="#pablo"
                                         >
                                             Chính sách người dùng
                                         </NavLink>

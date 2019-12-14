@@ -35,14 +35,24 @@ import {
 import UserHeader from "components/admin/components/Headers/UserHeader.jsx";
 import formatDate from "../../../../utils/dateUtils";
 import MessageNotify from "../../../istore/MessageNotify";
+import { getEmployeeByUser } from "../../../../services/employee.service";
 
 class Profile extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            user: this.props.user
+            user: this.props.user,
+            employee: null
         }
+    }
+
+    componentDidMount(){
+        getEmployeeByUser(this.props.user._id, employee => {
+            this.setState({
+                employee: employee
+            })
+        })
     }
 
     render() {
@@ -250,6 +260,7 @@ class Profile extends React.Component {
                                                             Nữ
                                                         </Label>
                                                     </FormGroup>
+                                                    <br />
                                                 </Col>
                                                 <Col lg="6">
                                                     <FormGroup>
@@ -265,6 +276,74 @@ class Profile extends React.Component {
                                                             placeholder="Ngày sinh"
                                                             defaultValue={formatDate(this.state.user.birthday)}
                                                             required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Address */}
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Chức vụ công việc
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-department"
+                                                        >
+                                                            Phòng ban
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employee && this.state.employee.department.name}
+                                                            id="input-department"
+                                                            placeholder="Phòng ban"
+                                                            type="text"
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-salary"
+                                                        >
+                                                            Lương (VND)
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employee && this.state.employee.salary}
+                                                            id="input-salary"
+                                                            placeholder="Lương (VND)"
+                                                            type="number"
+                                                            required={true}
+                                                            readOnly={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-timeStart"
+                                                        >
+                                                            Ngày bắt đầu
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={this.state.employee && this.state.employee.timeStart}
+                                                            id="input-timeStart"
+                                                            placeholder="Ngày bắt đầu"
+                                                            type="date"
+                                                            required={true}
+                                                            readOnly={true}
                                                         />
                                                     </FormGroup>
                                                 </Col>

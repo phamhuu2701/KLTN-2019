@@ -33,7 +33,7 @@ import {
     DropdownMenu,
     DropdownItem
 } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // core components
 import Header from "components/admin/components/Headers/Header.jsx";
 import formatDate from "../../../../utils/dateUtils";
@@ -50,7 +50,7 @@ class StoresManage extends React.Component {
 
     componentDidMount() {
         getStores(stores => {
-            if(stores.length >= 10){
+            if(stores.length > 10){
                 this.setState({
                     stores: stores.slice(0, 10)
                 })
@@ -68,7 +68,7 @@ class StoresManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7-custom" fluid={true}>
+                <Container style={{ "marginTop": "2rem" }} fluid={true}>
                     {/* Table */}
                     <Row>
                         <div className="col">
@@ -117,19 +117,15 @@ class StoresManage extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to="#pablo">
-                                                                    <DropdownItem>
-                                                                        Chi tiết
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <Link to="#pablo">
-                                                                    <DropdownItem>
-                                                                        Cập nhập thông tin
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <DropdownItem>
-                                                                    Xóa
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Chi tiết
                                                                 </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Cập nhập thông tin
+                                                                </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Xóa
+                                                                </DropdownItem>>
                                                             </DropdownMenu>
                                                         </UncontrolledDropdown>
                                                     </td>

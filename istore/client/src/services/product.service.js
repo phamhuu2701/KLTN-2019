@@ -87,7 +87,7 @@ export function getViewsCountByTime(
             return null;
         });
 
-        console.log(viewsCount);
+        // console.log(viewsCount);
         return viewsCount;
     } else {
         return 0;

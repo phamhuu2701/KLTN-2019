@@ -3,11 +3,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import HomeIndex from "./components/HomeIndex";
 import StoreIndex from "./components/StoreIndex";
-import UserIndex from "./components/UserIndex";
 import AdminLogin from "./components/AdminLogin";
 import VerifyIndex from "./components/VerifyIndex";
-
-//import "bootstrap/dist/css/bootstrap.min.css";
+import UserIndex from "./components/UserIndex";
 
 export default class App extends Component {
     render() {
@@ -16,9 +14,11 @@ export default class App extends Component {
                 <Switch>
                     <Route exact path="/" component={HomeIndex} />
                     <Route path="/store/:template/:id" component={StoreIndex} />
-                    <Route path="/user" component={UserIndex} />
                     <Route path="/verify" component={VerifyIndex} />
+                    <Route path="/user" component={UserIndex} />
                     <Route path="/admin" component={AdminLogin} />
+                    <Route path="/user-auth" component={UserIndex} />
+                    <Route path="/admin-auth" component={AdminLogin} />
                 </Switch>
             </Router>
         );

@@ -484,7 +484,7 @@ export function getUserByAuthorizationUser(callback) {
     let usersMain = [];
     getUsers(users => {
         if (users.length > 0) {
-            for(let i=0; i<users.length; i++){
+            for (let i = 0; i < users.length; i++) {
                 if (
                     users[i].authorization &&
                     users[i].authorization.name !== "Admin" &&
@@ -492,8 +492,66 @@ export function getUserByAuthorizationUser(callback) {
                 ) {
                     usersMain.push(users[i]);
                 }
+
+                if (i === users.length - 1) {
+                    callback(usersMain);
+                }
             }
         }
     });
-    callback(usersMain);
+}
+
+/**
+ * userModel {user: user, stores: []}
+ * @param {*} callback
+ */
+export function getUserModels(callback) {
+    let userModels = [];
+    getUserByAuthorizationUser(users => {
+        if (users.length > 0) {
+            for (let i = 0; i < users.length; i++) {
+                getStoresByIdUser2(users[i]._id, stores => {
+                    userModels.push({
+                        user: users[i],
+                        stores: stores
+                    });
+
+                    if (userModels.length === users.length) {
+                        callback(userModels);
+                    }
+                });
+            }
+        } else {
+            callback([]);
+        }
+    });
+}
+
+/**
+ * userModel2 {user: user, stores: [], products: []}
+ * @param {*} callback
+ */
+export function getUserModel2s(callback) {
+    let userModel2s = [];
+    getUserByAuthorizationUser(users => {
+        if (users.length > 0) {
+            for (let i = 0; i < users.length; i++) {
+                getStoresByIdUser2(users[i]._id, stores => {
+                    getProductsAllStoresByUser(users[i]._id, products => {
+                        userModel2s.push({
+                            user: users[i],
+                            stores: stores,
+                            products: products
+                        });
+
+                        if (userModel2s.length === users.length) {
+                            callback(userModel2s);
+                        }
+                    });
+                });
+            }
+        } else {
+            callback([]);
+        }
+    });
 }

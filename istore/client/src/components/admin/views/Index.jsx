@@ -46,17 +46,16 @@ import {
 } from "components/admin/variables/charts.jsx";
 
 import Header from "components/admin/components/Headers/Header.jsx";
-import { getStoresByIdUser2, getProductsAllStoresByUser } from "../../../services/user.service";
-import { getStoreViewsCount2, getAvgRatesStore } from "../../../services/store.service";
-import { sortDescreaseProductsByViewsCount } from "../../../utils/productUtils";
-import getAvgRatesProduct, { getViewsCountByTime } from "../../../services/product.service";
+import getSearchKeys, { getSearchCountByTime } from "../../../services/searchKey.service";
+import { getUserModel2s } from "../../../services/user.service";
+import { getStoreModels } from "../../../services/store.service";
 
 class Index extends React.Component {
     state = {
         activeNav: 1,
         chartExample1Data: "data1",
-        top10ProductsViewsCout: [],
-        top10Stores: []
+        top10Users: [],
+        top10Stores: [],
     };
     toggleNavs = (e, index) => {
         try {
@@ -67,14 +66,7 @@ class Index extends React.Component {
         this.setState({
             activeNav: index,
             chartExample1Data: "data" + index
-            // this.state.chartExample1Data === "data1" ? "data2" : "data1"
         });
-        let wow = () => {
-            // console.log(this.state);
-        };
-        wow.bind(this);
-        setTimeout(() => wow(), 1000);
-        // this.chartReference.update();
     };
     componentWillMount() {
         if (window.Chart) {
@@ -82,59 +74,25 @@ class Index extends React.Component {
         }
     }
     componentDidMount() {
-        getProductsAllStoresByUser(this.props.user._id, products => {
-            // console.log(products);
-
-            // sắp xếp giảm dần lượt xem
-            sortDescreaseProductsByViewsCount(products);
-
-            // chọn top 10
-            if (products.length > 10) {
-                let top10ProductsViewsCout = [];
-                for (let i = 0; i < 10; i++) {
-                    top10ProductsViewsCout.push(products[i]);
-                }
-
-                this.setState({
-                    top10ProductsViewsCout: top10ProductsViewsCout
-                })
-            }
-        })
-
-        getStoresByIdUser2(this.props.user._id, stores => {
-            let top10Stores = [];
-            if (stores.length > 0) {
-                for (let i = 0; i < 10; i++) {
-                    top10Stores.push(stores[i]);
-                }
-            }
-            this.setState({
-                top10Stores: top10Stores
-            })
-        })
-
-        getProductsAllStoresByUser(this.props.user._id, products => {
+        getSearchKeys(searchKeys => {
             let data1 = [];
             let data2 = [];
             let data3 = [];
 
             let currentDate = new Date();
-            // console.log(currentDate);
 
             for (let i = 1; i <= 12; i++) {
-                let viewsCountByMonth = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i, 31);
-                // console.log(viewsCountByMonth);
-                data1.push(viewsCountByMonth);
+                let searchCountByMonth = getSearchCountByTime(searchKeys, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i, 31);
+                data1.push(searchCountByMonth);
             }
             for (let i = 1; i <= 12; i += 3) {
-                let viewsCountByQuater = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i + 2, 31);
-                data2.push(viewsCountByQuater);
+                let searchCountByQuater = getSearchCountByTime(searchKeys, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i + 2, 31);
+                data2.push(searchCountByQuater);
             }
             for (let i = currentDate.getFullYear() - 3; i <= currentDate.getFullYear(); i++) {
-                let viewsCountByYear = getViewsCountByTime(products, i, 1, 0, i, 12, 31);
-                data3.push(viewsCountByYear);
+                let searchCountByYear = getSearchCountByTime(searchKeys, i, 1, 0, i, 12, 31);
+                data3.push(searchCountByYear);
             }
-
 
             getChart1Data(
                 {
@@ -145,16 +103,43 @@ class Index extends React.Component {
             );
 
             this.toggleNavs(this, 1);
-        })
+        });
+
+        getUserModel2s(users => {
+            // console.log(users);
+            if (users.length > 10) {
+                this.setState({
+                    top10Users: users.slice(0, 10)
+                })
+            }
+            else {
+                this.setState({
+                    top10Users: users
+                })
+            }
+        });
+
+        getStoreModels(stores => {
+            // console.log(stores);
+            if (stores.length > 10) {
+                this.setState({
+                    top10Stores: stores.slice(0, 10)
+                })
+            }
+            else {
+                this.setState({
+                    top10Stores: stores
+                })
+            }
+        });
     }
     render() {
         return (
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7-custom" fluid={true} style={{"marginTop": "2rem"}}>
+                <Container style={{ "marginTop": "2rem" }} fluid={true} >
                     <Row>
-                        {/* <Col className="mb-5 mb-xl-0" xl="8"> */}
                         <Col>
                             <Card className="bg-gradient-default shadow">
                                 <CardHeader className="bg-transparent">
@@ -163,7 +148,7 @@ class Index extends React.Component {
                                             <h6 className="text-uppercase text-light ls-1 mb-1">
                                                 Thống kê
                                             </h6>
-                                            <h2 className="text-white mb-0">Lượt xem cửa hàng</h2>
+                                            <h2 className="text-white mb-0">Lượt tìm kiếm</h2>
                                         </div>
                                         <div className="col">
                                             <Nav className="justify-content-end" pills>
@@ -222,37 +207,13 @@ class Index extends React.Component {
                             </Card>
                         </Col>
                     </Row>
-                    {/* <Row className="mt-5">
-                        <Col>
-                            <Card className="shadow">
-                                <CardHeader className="bg-transparent">
-                                    <Row className="align-items-center">
-                                        <div className="col">
-                                            <h6 className="text-uppercase text-muted ls-1 mb-1">
-                                                Thống kê
-                                            </h6>
-                                            <h2 className="mb-0">Total orders</h2>
-                                        </div>
-                                    </Row>
-                                </CardHeader>
-                                <CardBody>
-                                    <div className="chart">
-                                        <Bar
-                                            data={chartExample2.data}
-                                            options={chartExample2.options}
-                                        />
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        </Col>
-                    </Row> */}
                     <Row className="mt-5">
-                        <Col className="mb-5 mb-xl-0" xl="7">
+                        <Col className="mb-5 mb-xl-0" xl="6">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
                                         <div className="col">
-                                            <h3 className="mb-0">Top sản phẩm</h3>
+                                            <h3 className="mb-0">Top người dùng</h3>
                                         </div>
                                         <div className="col text-right">
                                             <Button
@@ -270,22 +231,24 @@ class Index extends React.Component {
                                     <thead className="thead-light">
                                         <tr>
                                             <th>#</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Hình ảnh</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Tên sản phẩm</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Lượt xem</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Đánh giá</th>
+                                            <th>Họ tên</th>
+                                            <th style={{ "textAlign": "center" }}>Cửa hàng</th>
+                                            <th style={{ "textAlign": "center" }}>Sản phẩm</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
-                                            this.state.top10ProductsViewsCout.length > 0 &&
-                                            this.state.top10ProductsViewsCout.map((product, key) => (
+                                            this.state.top10Users.length > 0 &&
+                                            this.state.top10Users.map((userModel, key) => (
                                                 <tr key={key}>
-                                                    <td style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>{key + 1}</td>
-                                                    <td style={{ "padding": "0", "textAlign": "center" }}><img style={{ "height": "30px", "width": "auto" }} alt="" src={product.images[0]}></img></td>
-                                                    <th>{product.name.substring(0, 30)}..</th>
-                                                    <td>{product.viewsCount.length}</td>
-                                                    <td>{getAvgRatesProduct(product)}</td>
+                                                    <td>{key + 1}</td>
+                                                    <th style={{ "textTransform": "uppercase" }}>
+                                                        <a href="#pablo" onClick={e => e.preventDefault()}>
+                                                            {userModel.user.fullname.firstname + " " + userModel.user.fullname.lastname}
+                                                        </a>
+                                                    </th>
+                                                    <td style={{ "textAlign": "center" }}>{userModel.stores.length}</td>
+                                                    <td style={{ "textAlign": "center" }}>{userModel.products.length}</td>
                                                 </tr>
                                             ))
                                         }
@@ -293,7 +256,7 @@ class Index extends React.Component {
                                 </Table>
                             </Card>
                         </Col>
-                        <Col xl="5">
+                        <Col className="mb-5 mb-xl-0" xl="6">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
                                     <Row className="align-items-center">
@@ -315,21 +278,26 @@ class Index extends React.Component {
                                 <Table className="align-items-center table-flush" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col">Tên cửa hàng</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Lượt xem</th>
-                                            <th style={{ "paddingLeft": "0", "paddingRight": "0", "textAlign": "center" }}>Đánh giá</th>
+                                            <th style={{ "paddingLeft": "20px", "paddingRight": "20px", "textAlign": "center" }}>#</th>
+                                            <th>Tên cửa hàng</th>
+                                            <th style={{ "textAlign": "center" }}>Sản phẩm</th>
+                                            <th style={{ "textAlign": "center" }}>Lượt xem</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {
                                             this.state.top10Stores.length > 0 &&
-                                            this.state.top10Stores.map((store, key) => (
+                                            this.state.top10Stores.map((storeModel, key) => (
                                                 <tr key={key}>
-                                                    <th scope="row">{store.name.substring(0, 25)}</th>
-                                                    <td style={{ "textAlign": "center" }}>{getStoreViewsCount2(store)}</td>
-                                                    <td style={{ "textAlign": "center" }}>
-                                                        {Math.round(getAvgRatesStore(store) * 100) / 100}
-                                                    </td>
+                                                    <td style={{ "paddingLeft": 0, "paddingRight": 0, "textAlign": "center" }}>{key + 1}</td>
+                                                    <th style={{ "textTransform": "uppercase" }}>
+                                                        <a href={storeModel.store.website.hasWebsite ? storeModel.store.website.url : ("/store/" + storeModel.store.template + "/" + storeModel.store._id)}
+                                                            target="_blank" rel="noopener noreferrer">
+                                                            {storeModel.store.name}
+                                                        </a>
+                                                    </th>
+                                                    <td style={{ "textAlign": "center" }}>{storeModel.store.products.length}</td>
+                                                    <td style={{ "textAlign": "center" }}>{storeModel.viewsCount}</td>
                                                 </tr>
                                             ))
                                         }

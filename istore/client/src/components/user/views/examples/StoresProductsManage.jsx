@@ -26,8 +26,6 @@ import {
     DropdownItem,
     UncontrolledDropdown,
     DropdownToggle,
-
-    Media,
     Pagination,
     PaginationItem,
     PaginationLink,
@@ -43,19 +41,20 @@ import {
     Input,
     FormText
 } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
-import "./StoreManageUpdateProduct.css";
+import "./StoresProductsManage.css";
 
 import MessageNotify from "../../../istore/MessageNotify";
 import { getStoreById } from "../../../../services/store.service";
 import { sortDescreaseProductsByTimestamp } from "../../../../utils/productUtils";
 import { getProductCategories } from "../../../../services/productCategory.service";
 import removeAccents from "../../../../utils/stringUtils";
+import priceFormatUtil from "../../../../utils/priceFormat";
 
-class StoreManageUpdateProduct extends React.Component {
+class StoresProductsManage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -117,7 +116,7 @@ class StoreManageUpdateProduct extends React.Component {
         }
     }
 
-    onSelectProductCategoriesChange(e){
+    onSelectProductCategoriesChange(e) {
         const key = e.target.value;
         // console.log(this.state.productCategories[key]);
 
@@ -127,7 +126,7 @@ class StoreManageUpdateProduct extends React.Component {
         })
     }
 
-    onInputProductInfoChange(e){
+    onInputProductInfoChange(e) {
         // console.log(e.target.id + " - " + e.target.value);
         if (e.target.id === "name") {
             this.setState({
@@ -153,14 +152,14 @@ class StoreManageUpdateProduct extends React.Component {
                 productSaleoffErrorMessage: ""
             })
         }
-        
+
     }
 
-    onCancelButtonClick(){
+    onCancelButtonClick() {
         window.location.reload();
     }
 
-    onSubmitButtonClick(){
+    onSubmitButtonClick() {
         if (!this.state.productCategory) {
             this.setState({
                 productCategoryErrorMessage: "Phân loại sản phẩm không được để trống."
@@ -176,6 +175,11 @@ class StoreManageUpdateProduct extends React.Component {
                 productPriceErrorMessage: "Giá sản phẩm không được để trống."
             })
         }
+        if (!this.state.productDescriptionInput) {
+            this.setState({
+                productDescriptionErrorMessage: "Mô tả sản phẩm không được để trống."
+            })
+        }
 
         const product = {
             store: this.state.storeMain,
@@ -188,39 +192,38 @@ class StoreManageUpdateProduct extends React.Component {
         }
 
         console.log(product);
+        // save product
 
     }
 
     render() {
-        // console.log(this.state.stores);
-        // console.log(this.state.storeMain);
         return (
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="mt--7 mt--7-custom stores-manage" fluid={true}>
+                <Container className="stores-manage" fluid={true} style={{ "marginTop": "2rem" }}>
                     {/* Table */}
                     <Row>
                         <Col>
-                        <Form>
-                            <FormGroup>
-                                <Label for="stores">Chọn cửa hàng</Label>
-                                <Input type="select" name="stores" id="stores" onChange={this.onStoresSelectChange}>
-                                    <option value={null}>Cửa hàng</option>
-                                    {
-                                        this.state.stores && this.state.stores.map((store, key) => (
-                                            <option key={key} value={store._id}>{store.name}</option>
-                                        ))
-                                    }
-                                </Input>
-                            </FormGroup>
-                        </Form>
+                            <Form>
+                                <FormGroup>
+                                    <Label for="stores">Chọn cửa hàng</Label>
+                                    <Input type="select" name="stores" id="stores" onChange={this.onStoresSelectChange}>
+                                        <option value={null}>Cửa hàng</option>
+                                        {
+                                            this.state.stores && this.state.stores.map((store, key) => (
+                                                <option key={key} value={store._id}>{store.name}</option>
+                                            ))
+                                        }
+                                    </Input>
+                                </FormGroup>
+                            </Form>
                         </Col>
                     </Row>
                     {/* Button Add Store */}
                     <Row>
                         <Col className="container-button-add-store">
-                        <Button onClick={this.onButtonAddProductClick} className="btn btn-success">Thêm sản phẩrm</Button>
+                            <Button onClick={this.onButtonAddProductClick} className="btn btn-success">Thêm sản phẩrm</Button>
                         </Col>
                     </Row>
                     {/* Table */}
@@ -233,12 +236,13 @@ class StoreManageUpdateProduct extends React.Component {
                                 <Table className="align-items-center table-flush table-flush-custom" responsive>
                                     <thead className="thead-light">
                                         <tr>
-                                            <th scope="col" className="th-custom">Sản phẩm</th>
-                                            <th scope="col" className="th-custom">Mô tả</th>
-                                            <th scope="col" className="th-custom">Giá gốc (VND)</th>
-                                            <th scope="col" className="th-custom">Khuyến mãi (%)</th>
-                                            <th scope="col" className="th-custom">Còn hàng</th>
-                                            <th scope="col" />
+                                            <th scope="col">#</th>
+                                            <th scope="col">Sản phẩm</th>
+                                            <th scope="col">Giá gốc (VND)</th>
+                                            <th scope="col">Khuyến mãi (%)</th>
+                                            <th scope="col">Lượt xem</th>
+                                            <th scope="col">Còn hàng</th>
+                                            <th scope="col" style={{"textAlign": "center"}}><i className="fas fa-ellipsis-v" /></th>
                                         </tr>
                                     </thead>
                                     <tbody className="table-body">
@@ -246,37 +250,21 @@ class StoreManageUpdateProduct extends React.Component {
                                             this.state.products &&
                                             this.state.products.map((product, key) => (
                                                 <tr key={key}>
-                                                    <th scope="row">
-                                                        <Link to={"/store/" + this.state.storeMain.template + "/" + this.state.storeMain._id + "/products/" + product._id} target="_blank">
-                                                            <Media className="align-items-center">
-                                                                <span
-                                                                    className="avatar rounded-circle mr-3"
-                                                                >
-                                                                    <img
-                                                                        alt="..."
-                                                                        src={product.images[0]}
-                                                                    />
-                                                                </span>
-                                                                <Media>
-                                                                    <span className="mb-0 text-sm product-title">
-                                                                        {product.name}
-                                                                    </span>
-                                                                </Media>
-                                                            </Media>
-                                                        </Link>
+                                                    <td>{key + 1}</td>
+                                                    <th scope="row" style={{ "textTransform": "uppercase" }}>
+                                                        <a href="#pablo">
+                                                            {product.name.substring(0, 25)}..
+                                                        </a>
                                                     </th>
-                                                    <td className="td-custom">...</td>
-                                                    <td className="td-custom">{product.price}</td>
-                                                    <td className="td-custom">{product.saleoff}%</td>
-                                                    <td className="td-custom">
+                                                    <td>{priceFormatUtil(product.price)}</td>
+                                                    <td>{product.saleoff}%</td>
+                                                    <td>{product.viewsCount.length}</td>
+                                                    <td>
                                                         <Badge color="" className="badge-dot mr-4">
                                                             <span className="is-active-true"><i className="bg-success" />Còn hàng</span>
-                                                            {/* {store.isActive ?
-                                                                (<span className="is-active-true"><i className="bg-success" />Đang hoạt động</span>) :
-                                                                (<span className="is-active-false"><i className="bg-warning" />Ngừng hoạt động</span>)} */}
                                                         </Badge>
                                                     </td>
-                                                    <td className="text-right td-custom">
+                                                    <td style={{"textAlign": "center"}}>
                                                         <UncontrolledDropdown>
                                                             <DropdownToggle
                                                                 className="btn-icon-only text-light"
@@ -289,24 +277,13 @@ class StoreManageUpdateProduct extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to={"/store/" + this.state.storeMain.template + "/" + this.state.storeMain._id + "/products/" + product._id} target="_blank">
-                                                                    <DropdownItem
-                                                                    // href="#pablo"
-                                                                    // onClick={e => e.preventDefault()}
-                                                                    >
-                                                                        Chi tiết
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <DropdownItem
-                                                                    href="#pablo"
-                                                                    onClick={e => e.preventDefault()}
-                                                                >
-                                                                    Chỉnh sửa
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Chi tiết
                                                                 </DropdownItem>
-                                                                <DropdownItem
-                                                                    href="#pablo"
-                                                                    onClick={e => e.preventDefault()}
-                                                                >
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Cập nhập thông tin
+                                                                </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
                                                                     Xóa
                                                                 </DropdownItem>
                                                             </DropdownMenu>
@@ -424,7 +401,11 @@ class StoreManageUpdateProduct extends React.Component {
                                 <Col sm={10}>
                                     <Input type="textarea" name="description" id="description"
                                         placeholder="Hãy giới thiệu về sản phẩm.."
-                                        onChange={this.onInputProductInfoChange} />
+                                        onChange={this.onInputProductInfoChange} 
+                                        required={true} />
+                                    <span className={"error-message " + (this.state.productDescriptionErrorMessage ? "show" : "")}>
+                                        {this.state.productDescriptionErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
@@ -433,7 +414,7 @@ class StoreManageUpdateProduct extends React.Component {
                                     <Input type="number" name="price"
                                         id="price" placeholder="Giá gốc"
                                         onChange={this.onInputProductInfoChange}
-                                        required={true}/>
+                                        required={true} />
                                     <span className={"error-message " + (this.state.productPriceErrorMessage ? "show" : "")}>
                                         {this.state.productPriceErrorMessage}
                                     </span>
@@ -480,4 +461,4 @@ class StoreManageUpdateProduct extends React.Component {
     }
 }
 
-export default StoreManageUpdateProduct;
+export default StoresProductsManage;
