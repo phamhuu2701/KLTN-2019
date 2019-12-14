@@ -6,6 +6,7 @@ import "components/admin/assets/vendor/@fortawesome/fontawesome-free/css/all.min
 import "components/admin/assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "components/admin/layouts/Admin.jsx";
+import AuthLayout from "components/admin/layouts/Auth.jsx";
 
 export default class AdminIndex extends Component {
     render() {
@@ -21,6 +22,10 @@ export default class AdminIndex extends Component {
                                     user={this.props.user}
                                 />
                             )}
+                        />
+                        <Route
+                            path="/admin-auth"
+                            render={props => <AuthLayout {...props} />}
                         />
                     </Switch>
                 </BrowserRouter>

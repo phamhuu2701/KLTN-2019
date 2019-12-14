@@ -86,7 +86,7 @@ export function onSortStoreListService(stores, priority, cb) {
                 sortDescreseProductByPrice(stores);
                 break;
             default:
-                console.log("0");
+                // console.log("0");
                 break;
         }
     }

@@ -17,6 +17,8 @@ export default class App extends Component {
                     <Route path="/verify" component={VerifyIndex} />
                     <Route path="/user" component={UserIndex} />
                     <Route path="/admin" component={AdminLogin} />
+                    <Route path="/user-auth" component={UserIndex} />
+                    <Route path="/admin-auth" component={AdminLogin} />
                 </Switch>
             </Router>
         );

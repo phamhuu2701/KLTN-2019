@@ -18,10 +18,9 @@
 import Index from "components/user/views/Index.jsx";
 import Profile from "components/user/views/examples/Profile.jsx";
 import StoresManage from "components/user/views/examples/StoresManage.jsx";
-// import ChangeEmail from "./components/user/views/examples/ChangeEmail";
-// import ChangePhone from "./components/user/views/examples/ChangePhone";
-// import ChangePassword from "./components/user/views/examples/ChangePassword";
-// import Statistical from "./components/user/views/examples/Statistical";
+import ChangeEmail from "./components/user/views/examples/ChangeEmail";
+import ChangePhone from "./components/user/views/examples/ChangePhone";
+import ChangePassword from "./components/user/views/examples/ChangePassword";
 import StoresProductsManage from "./components/user/views/examples/StoresProductsManage";
 
 var routes = [
@@ -54,32 +53,32 @@ var routes = [
         layout: "/user"
     },
     {
-        path: "/change-email",
-        name: "Đổi email",
-        icon: "ni ni-email-83 text-info",
-        component: Index,
-        layout: "/user"
-    },
-    {
-        path: "/change-phone",
-        name: "Đổi số điện thoại",
-        icon: "ni ni-mobile-button text-success",
-        component: Index,
-        layout: "/user"
-    },
-    {
-        path: "/change-password",
-        name: "Đổi mật khẩu",
-        icon: "ni ni-key-25",
-        component: Index,
-        layout: "/user"
-    },
-    {
         path: "/analytics",
         name: "Thống kê",
         icon: "ni ni-chart-pie-35 text-orange",
         component: Index,
         layout: "/user"
+    },
+    {
+        path: "/change-email",
+        name: "Đổi email",
+        icon: "ni ni-email-83 text-info",
+        component: ChangeEmail,
+        layout: "/user-auth"
+    },
+    {
+        path: "/change-phone",
+        name: "Đổi số điện thoại",
+        icon: "ni ni-mobile-button text-success",
+        component: ChangePhone,
+        layout: "/user-auth"
+    },
+    {
+        path: "/change-password",
+        name: "Đổi mật khẩu",
+        icon: "ni ni-key-25",
+        component: ChangePassword,
+        layout: "/user-auth"
     }
 ];
 export default routes;

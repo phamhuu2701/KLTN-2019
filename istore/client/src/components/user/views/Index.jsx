@@ -103,15 +103,16 @@ class Index extends React.Component {
         })
 
         getStoresByIdUser2(this.props.user._id, stores => {
-            let top10Stores = [];
-            if (stores.length > 0) {
-                for (let i = 0; i < 10; i++) {
-                    top10Stores.push(stores[i]);
-                }
+            if (stores.length > 10) {
+                this.setState({
+                    top10Stores: stores.splice(0, 10)
+                })
             }
-            this.setState({
-                top10Stores: top10Stores
-            })
+            else {
+                this.setState({
+                    top10Stores: stores
+                })
+            }
         })
 
         getProductsAllStoresByUser(this.props.user._id, products => {
@@ -121,15 +122,15 @@ class Index extends React.Component {
 
             let currentDate = new Date();
 
-            for(let i=1; i<=12; i++){
+            for (let i = 1; i <= 12; i++) {
                 let viewsCountByMonth = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i, 31);
                 data1.push(viewsCountByMonth);
             }
-            for(let i=1; i<=12; i+=3){
-                let viewsCountByQuater = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i+2, 31);
+            for (let i = 1; i <= 12; i += 3) {
+                let viewsCountByQuater = getViewsCountByTime(products, currentDate.getFullYear(), i, 0, currentDate.getFullYear(), i + 2, 31);
                 data2.push(viewsCountByQuater);
             }
-            for(let i=currentDate.getFullYear() - 3; i<=currentDate.getFullYear(); i++){
+            for (let i = currentDate.getFullYear() - 3; i <= currentDate.getFullYear(); i++) {
                 let viewsCountByYear = getViewsCountByTime(products, i, 1, 0, i, 12, 31);
                 data3.push(viewsCountByYear);
             }
@@ -147,6 +148,7 @@ class Index extends React.Component {
         })
     }
     render() {
+        // console.log(this.state.top10Stores);
         return (
             <>
                 <Header />
@@ -278,13 +280,13 @@ class Index extends React.Component {
                                             this.state.top10Stores.length > 0 &&
                                             this.state.top10Stores.map((store, key) => (
                                                 <tr key={key}>
-                                                    <td style={{"textAlign": "center" }}>{key + 1}</td>
-                                                    <th style={{"textTransform": "uppercase"}}>
+                                                    <td style={{ "textAlign": "center" }}>{key + 1}</td>
+                                                    <th style={{ "textTransform": "uppercase" }}>
                                                         <a href={
                                                             store.website.hasWebsite ?
-                                                            store.website.url :
-                                                            "/store/" + store.template + "/" + store._id
-                                                            } target="_blank" rel="noopener noreferrer">
+                                                                store.website.url :
+                                                                "/store/" + store.template + "/" + store._id
+                                                        } target="_blank" rel="noopener noreferrer">
                                                             {store.name.substring(0, 25)}
                                                         </a>
                                                     </th>
@@ -331,12 +333,12 @@ class Index extends React.Component {
                                             this.state.top10ProductsViewsCout.map((product, key) => (
                                                 <tr key={key}>
                                                     <td style={{ "textAlign": "center" }}>{key + 1}</td>
-                                                    <th style={{"paddingLeft": "0", "paddingRight": "0", "textTransform": "uppercase"}}>
+                                                    <th style={{ "paddingLeft": "0", "paddingRight": "0", "textTransform": "uppercase" }}>
                                                         <a href="#pablo">
-                                                        {product.name.substring(0, 20)}..
+                                                            {product.name.substring(0, 20)}..
                                                         </a>
                                                     </th>
-                                                    <td style={{ "textAlign": "right" }}>{priceFormatUtil(product.price * (100-product.saleoff))}</td>
+                                                    <td style={{ "textAlign": "right" }}>{priceFormatUtil(product.price * (100 - product.saleoff))}</td>
                                                     <td style={{ "textAlign": "center" }}>{product.viewsCount.length}</td>
                                                 </tr>
                                             ))

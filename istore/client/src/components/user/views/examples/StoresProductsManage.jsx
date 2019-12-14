@@ -41,7 +41,7 @@ import {
     Input,
     FormText
 } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
@@ -175,6 +175,11 @@ class StoresProductsManage extends React.Component {
                 productPriceErrorMessage: "Giá sản phẩm không được để trống."
             })
         }
+        if (!this.state.productDescriptionInput) {
+            this.setState({
+                productDescriptionErrorMessage: "Mô tả sản phẩm không được để trống."
+            })
+        }
 
         const product = {
             store: this.state.storeMain,
@@ -187,6 +192,7 @@ class StoresProductsManage extends React.Component {
         }
 
         console.log(product);
+        // save product
 
     }
 
@@ -271,15 +277,13 @@ class StoresProductsManage extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to="#pablo">
-                                                                    <DropdownItem>
-                                                                        Chi tiết
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <DropdownItem>
-                                                                    Chỉnh sửa
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Chi tiết
                                                                 </DropdownItem>
-                                                                <DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Cập nhập thông tin
+                                                                </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
                                                                     Xóa
                                                                 </DropdownItem>
                                                             </DropdownMenu>
@@ -397,7 +401,11 @@ class StoresProductsManage extends React.Component {
                                 <Col sm={10}>
                                     <Input type="textarea" name="description" id="description"
                                         placeholder="Hãy giới thiệu về sản phẩm.."
-                                        onChange={this.onInputProductInfoChange} />
+                                        onChange={this.onInputProductInfoChange} 
+                                        required={true} />
+                                    <span className={"error-message " + (this.state.productDescriptionErrorMessage ? "show" : "")}>
+                                        {this.state.productDescriptionErrorMessage}
+                                    </span>
                                 </Col>
                             </FormGroup>
                             <FormGroup row>

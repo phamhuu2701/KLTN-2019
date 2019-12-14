@@ -52,7 +52,6 @@ import {
     Col
 } from "reactstrap";
 import { logout } from "../../../../services/user.service";
-import "./Sidebar.css";
 
 import routes from "userRoutes.js";
 var ps;
@@ -241,12 +240,10 @@ class Sidebar extends React.Component {
                         {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
                         {/* Navigation */}
                         <Nav className="mb-md-3" navbar>
-                            <NavItem>
-                                <NavLink className="sildebar-logout" onClick={logout}>
-                                    <i className="ni ni-user-run text-pink" />
-                                    <span>Thoát</span>
-                                </NavLink>
-                            </NavItem>
+                            <NavLink onClick={logout}>
+                                <i className="ni ni-user-run text-pink" />
+                                Thoát
+                            </NavLink>
                         </Nav>
                     </Collapse>
                 </Container>

@@ -176,7 +176,7 @@ export function geocodingService(address, thisMap, cb) {
         if (status === maps.GeocoderStatus.OK) {
             // Get Lat and Lng from entered location
             const { lat, lng } = results[0].geometry.location;
-            console.log(lat(), lng());
+            // console.log(lat(), lng());
 
             thisMap.cleanMapAndClientPosition();
 

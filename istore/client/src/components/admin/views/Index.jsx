@@ -243,7 +243,7 @@ class Index extends React.Component {
                                                 <tr key={key}>
                                                     <td>{key + 1}</td>
                                                     <th style={{ "textTransform": "uppercase" }}>
-                                                        <a href="#pablo">
+                                                        <a href="#pablo" onClick={e => e.preventDefault()}>
                                                             {userModel.user.fullname.firstname + " " + userModel.user.fullname.lastname}
                                                         </a>
                                                     </th>

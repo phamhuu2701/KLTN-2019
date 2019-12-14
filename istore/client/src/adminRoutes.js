@@ -20,10 +20,9 @@ import Profile from "components/admin/views/examples/Profile.jsx";
 import EmployeesManage from "./components/admin/views/examples/EmployeesManage";
 import UsersManage from "./components/admin/views/examples/UsersManage";
 import StoresManage from "./components/admin/views/examples/StoresManage";
-// import Analytics from "./components/admin/views/examples/Analytics";
-// import ChangeEmail from "./components/admin/views/examples/ChangeEmail";
-// import ChangePhone from "./components/admin/views/examples/ChangePhone";
-// import ChangePassword from "./components/admin/views/examples/ChangePassword";
+import ChangeEmail from "./components/admin/views/examples/ChangeEmail";
+import ChangePhone from "./components/admin/views/examples/ChangePhone";
+import ChangePassword from "./components/admin/views/examples/ChangePassword";
 
 var routes = [
     {
@@ -61,34 +60,6 @@ var routes = [
         component: StoresManage,
         layout: "/admin"
     },
-    // {
-    //     path: "/analytics",
-    //     name: "Thống kê",
-    //     icon: "ni ni-chart-pie-35 text-orange",
-    //     component: Analytics,
-    //     layout: "/admin"
-    // },
-    // {
-    //     path: "/change-email",
-    //     name: "Đổi email",
-    //     icon: "ni ni-email-83 text-info",
-    //     component: ChangeEmail,
-    //     layout: "/auth"
-    // },
-    // {
-    //     path: "/change-phone",
-    //     name: "Đổi số điện thoại",
-    //     icon: "ni ni-mobile-button text-success",
-    //     component: ChangePhone,
-    //     layout: "/auth"
-    // },
-    // {
-    //     path: "/change-pasword",
-    //     name: "Đổi mật khẩu",
-    //     icon: "ni ni-key-25",
-    //     component: ChangePassword,
-    //     layout: "/auth"
-    // }
     {
         path: "/analytics",
         name: "Thống kê",
@@ -100,22 +71,22 @@ var routes = [
         path: "/change-email",
         name: "Đổi email",
         icon: "ni ni-email-83 text-info",
-        component: Index,
-        layout: "/admin"
+        component: ChangeEmail,
+        layout: "/admin-auth"
     },
     {
         path: "/change-phone",
         name: "Đổi số điện thoại",
         icon: "ni ni-mobile-button text-success",
-        component: Index,
-        layout: "/admin"
+        component: ChangePhone,
+        layout: "/admin-auth"
     },
     {
         path: "/change-pasword",
         name: "Đổi mật khẩu",
         icon: "ni ni-key-25",
-        component: Index,
-        layout: "/admin"
+        component: ChangePassword,
+        layout: "/admin-auth"
     }
 ];
 export default routes;

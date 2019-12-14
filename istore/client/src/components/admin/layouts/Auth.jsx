@@ -24,7 +24,7 @@ import { Container, Row, Col } from "reactstrap";
 import AuthNavbar from "components/admin/components/Navbars/AuthNavbar.jsx";
 import AuthFooter from "components/admin/components/Footers/AuthFooter.jsx";
 
-import routes from "routes.js";
+import routes from "adminRoutes.js";
 
 class Auth extends React.Component {
     componentDidMount() {
@@ -35,7 +35,7 @@ class Auth extends React.Component {
     }
     getRoutes = routes => {
         return routes.map((prop, key) => {
-            if (prop.layout === "/auth") {
+            if (prop.layout === "/admin-auth") {
                 return (
                     <Route
                         path={prop.layout + prop.path}
@@ -60,7 +60,7 @@ class Auth extends React.Component {
                                     <Col lg="5" md="6">
                                         <h1 className="text-white">Welcome!</h1>
                                         <p className="text-lead text-light">
-                                            Chào mừng bạn tham gia vào đại gia đình <b>iStore</b>.
+                                            Chào mừng bạn đến với  <b>iStore</b>.
                                         </p>
                                     </Col>
                                 </Row>

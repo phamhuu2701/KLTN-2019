@@ -28,6 +28,13 @@ export default class AdminLogin extends Component {
                     logginErrorMessagse: ""
                 });
             }
+            else {
+                this.setState({
+                    adminIsLoggedIn: false,
+                    user: null,
+                    logginErrorMessagse: ""
+                });
+            }
         });
     }
 

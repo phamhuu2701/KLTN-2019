@@ -161,7 +161,7 @@ class Sidebar extends React.Component {
                                 <DropdownItem divider />
                                 <DropdownItem onClick={logout}>
                                     <i className="ni ni-user-run" />
-                                    <span>Thoát</span>
+                                    <a>Thoát</a>
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
@@ -218,12 +218,10 @@ class Sidebar extends React.Component {
                         <hr className="my-3" />
                         {/* Navigation */}
                         <Nav className="mb-md-3" navbar>
-                            <NavItem>
-                                <NavLink className="sildebar-logout" onClick={logout}>
-                                    <i className="ni ni-user-run text-pink" />
-                                    <span>Thoát</span>
-                                </NavLink>
-                            </NavItem>
+                            <NavLink onClick={logout}>
+                                <i className="ni ni-user-run text-pink" />
+                                Thoát
+                            </NavLink>
                         </Nav>
                     </Collapse>
                 </Container>

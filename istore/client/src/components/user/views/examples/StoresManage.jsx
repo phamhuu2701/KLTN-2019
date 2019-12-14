@@ -41,7 +41,7 @@ import {
     Input,
     FormText
 } from "reactstrap";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser } from "../../../../services/user.service";
@@ -69,7 +69,6 @@ class StoresManage extends React.Component {
             isTemplateItem1Clicked: false,
             isTemplateItem2Clicked: false,
             templateNumber: null,
-            isShowStoresTable: true,
             isShowTemplateSelect: false,
             isShowStoreInfoInput: false,
             storeCategories: [],
@@ -135,19 +134,9 @@ class StoresManage extends React.Component {
     }
 
     onAddStoreClick() {
-        if (!this.props.user.phone) {
-            this.setState({
-                showPhoneAddModal: true,
-                // isShowTemplateSelect: true,
-                // isShowStoresTable: false
-            })
-        }
-        else {
-            this.setState({
-                isShowTemplateSelect: true,
-                isShowStoresTable: false
-            })
-        }
+        this.setState({
+            isShowTemplateSelect: true
+        })
     }
 
     handeResultPhoneAdd(phone) {
@@ -156,7 +145,6 @@ class StoresManage extends React.Component {
             this.setState({
                 showPhoneAddModal: false,
                 isShowTemplateSelect: true,
-                isShowStoresTable: false,
                 inputStorePhone: phone
             });
             this.props.user.phone = phone;
@@ -402,7 +390,6 @@ class StoresManage extends React.Component {
                         // hide add store form
                         this.setState({
                             stores: getStoresBySizeByIdUser(this, this.props.user._id, 0, 10),
-                            isShowStoresTable: true,
                             isShowTemplateSelect: false,
                             isShowStoreInfoInput: false,
                             addStoreErrorMessage: "",
@@ -434,7 +421,7 @@ class StoresManage extends React.Component {
                         </Col>
                     </Row>
                     {/* Table */}
-                    <Row className={this.state.isShowStoresTable ? "" : "hide"}>
+                    <Row>
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
@@ -488,21 +475,13 @@ class StoresManage extends React.Component {
                                                                 <i className="fas fa-ellipsis-v" />
                                                             </DropdownToggle>
                                                             <DropdownMenu className="dropdown-menu-arrow" right>
-                                                                <Link to="#pablo">
-                                                                    <DropdownItem>
-                                                                        Chi tiết
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <Link to={"/user/stores-products-manage"}>
-                                                                    <DropdownItem
-                                                                    >
-                                                                        Cập nhập sản phẩm
-                                                                    </DropdownItem>
-                                                                </Link>
-                                                                <DropdownItem>
-                                                                    Chỉnh sửa
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Chi tiết
                                                                 </DropdownItem>
-                                                                <DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
+                                                                    Cập nhập thông tin
+                                                                </DropdownItem>
+                                                                <DropdownItem onClick={e => e.preventDefault()}>
                                                                     Xóa
                                                                 </DropdownItem>
                                                             </DropdownMenu>
