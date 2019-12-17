@@ -12,6 +12,7 @@
     /* overflow-y: auto; */
     position: relative;
     transition: 0.3s;
+    background-color: #ffffff;
 }
 .app-body-left.small {
     width: 30%;
@@ -29,9 +30,9 @@
 
 img.zoom-icon {
     position: absolute;
-    left: 40.2% !important;
-    top: 3.3em !important;
-    height: 2.4em !important;
+    left: 40.6% !important;
+    top: 60px !important;
+    height: 40px !important;
     z-index: 99;
     transition: 0.3s;
 }
@@ -42,7 +43,7 @@ img.zoom-icon.left {
     left: 30.2% !important;
 }
 img.zoom-icon.right {
-    left: 60.2% !important;
+    left: 60.6% !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -65,8 +66,9 @@ img.zoom-icon.right {
     width: 100%;
 }
 
-.app > .footer {    
+.app > .footer {
     display: none;
+    background-color: #ffffff;
 }
 
 .dropdown-user {

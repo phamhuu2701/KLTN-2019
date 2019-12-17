@@ -12884,7 +12884,8 @@ a.btn-icon-only {
     border-radius: 0.4375rem;
 }
 .footer {
-    background: #f7fafc;
+    background: #ffffff;
+    /* background: #ffffff; */
     /* padding: 2.5rem 0; */
 }
 .footer .col-footer .heading {
@@ -12939,7 +12940,7 @@ a.btn-icon-only {
     right: 0;
     top: 600px;
     height: 2000px;
-    background: #f7fafc;
+    background: #ffffff;
     transform: skew(0, -8deg);
 }
 .footer.has-cards .container {
