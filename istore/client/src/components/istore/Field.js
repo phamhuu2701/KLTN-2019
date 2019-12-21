@@ -70,7 +70,7 @@ class SearchBar extends Component {
             if (result.length > 0) {
                 this.props.onZoom('in');
             } else this.props.onZoom('normal');
-            this.props.findProductHandler(result);
+            this.props.findProductHandler(result, false);
         });
     }
 
@@ -130,16 +130,6 @@ export class ResultArea extends Component {
         };
     }
 
-    findStore() {
-        this.setState({
-            result:
-                this.props.result.length > 10
-                    ? this.props.result.splice(0, 10)
-                    : this.props.result,
-            message: 'Không tìm thấy sản phẩm!'
-        });
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.isFound === true) {
             const products = [];
@@ -153,6 +143,11 @@ export class ResultArea extends Component {
             this.setState({
                 result: products,
                 message: 'Không tìm thấy sản phẩm!'
+            });
+        } else {
+            this.setState({
+                result: nextProps.result,
+                message: 'Chưa có sản phẩm được xem!'
             });
         }
     }
@@ -219,10 +214,10 @@ export default class Fields extends Component {
         });
     }
 
-    findProductHandler(result) {
+    findProductHandler(result, isFound = true) {
         this.setState({
             result: result,
-            isFound: true
+            isFound: isFound
         });
     }
 

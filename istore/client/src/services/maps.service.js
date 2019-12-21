@@ -209,6 +209,7 @@ export function findRecentProductsService(ids, thisMap, cb) {
             })
             .catch(err => console.log(err));
     } else {
+        document.querySelector('.loading').style.display = 'none';
         cb([]);
     }
 }
