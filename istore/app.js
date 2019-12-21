@@ -112,7 +112,7 @@ app.use(function(err, req, res, next) {
 
 // Connect to MongoDB
 //
-mongoose.connect(config.get('localMongoDBUri'), {
+mongoose.connect(config.get('mongoDBUri'), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
