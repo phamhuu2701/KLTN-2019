@@ -68,9 +68,9 @@ class StoresManage extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container style={{ "marginTop": "2rem" }} fluid={true}>
+                <Container fluid={true}>
                     {/* Table */}
-                    <Row>
+                    <Row className="mt-5">
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">

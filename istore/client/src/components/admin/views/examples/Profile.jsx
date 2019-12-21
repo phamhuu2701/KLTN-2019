@@ -338,7 +338,7 @@ class Profile extends React.Component {
                                                         </label>
                                                         <Input
                                                             className="form-control-alternative"
-                                                            defaultValue={this.state.employee && this.state.employee.timeStart}
+                                                            defaultValue={formatDate(this.state.employee && this.state.employee.timeStart)}
                                                             id="input-timeStart"
                                                             placeholder="Ngày bắt đầu"
                                                             type="date"

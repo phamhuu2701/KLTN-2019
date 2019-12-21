@@ -15,3 +15,12 @@ export function getEmployeeByUser(idUser, callback) {
         })
         .catch(err => console.log(err));
 }
+
+export function getEmployeeById(id, callback) {
+    fetch("/api/employees/" + id)
+        .then(res => res.json())
+        .then(result => {
+            callback(result);
+        })
+        .catch(err => console.log(err));
+}

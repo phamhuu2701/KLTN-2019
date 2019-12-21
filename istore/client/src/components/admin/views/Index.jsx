@@ -138,8 +138,8 @@ class Index extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container style={{ "marginTop": "2rem" }} fluid={true} >
-                    <Row>
+                <Container fluid={true} >
+                    <Row className="mt-5">
                         <Col>
                             <Card className="bg-gradient-default shadow">
                                 <CardHeader className="bg-transparent">
