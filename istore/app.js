@@ -1,43 +1,43 @@
-const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
 //const csrf      = require('csurf');
 //const cors      = require('cors');
-const session = require("express-session");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
-const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const config = require('config');
 
-const indexRouter = require("./server/routes/index");
-const databaseRouter = require("./server/routes/database");
-const loginRouter = require("./server/api/login");
-const logoutRouter = require("./server/api/logout");
-const citiesRouter = require("./server/api/cities.api");
-const districtsRouter = require("./server/api/districts.api");
-const streetsRouter = require("./server/api/streets.api");
-const authorizationsRouter = require("./server/api/authorizations.api");
-const usersRouter = require("./server/api/users.api");
-const productCategoriesRouter = require("./server/api/productCategories.api");
-const productsRouter = require("./server/api/products.api");
-const storeCategoriesRouter = require("./server/api/storeCategories.api");
-const storesRouter = require("./server/api/stores.api");
-const viewRouter = require("./server/api/view.api");
-const departmentsRouter = require("./server/api/departments.api");
-const employeesRouter = require("./server/api/employees.api");
-const searchKeysRouter = require("./server/api/searchKeys.api");
+const indexRouter = require('./server/routes/index');
+const databaseRouter = require('./server/routes/database');
+const loginRouter = require('./server/api/login');
+const logoutRouter = require('./server/api/logout');
+const citiesRouter = require('./server/api/cities.api');
+const districtsRouter = require('./server/api/districts.api');
+const streetsRouter = require('./server/api/streets.api');
+const authorizationsRouter = require('./server/api/authorizations.api');
+const usersRouter = require('./server/api/users.api');
+const productCategoriesRouter = require('./server/api/productCategories.api');
+const productsRouter = require('./server/api/products.api');
+const storeCategoriesRouter = require('./server/api/storeCategories.api');
+const storesRouter = require('./server/api/stores.api');
+const viewRouter = require('./server/api/view.api');
+const departmentsRouter = require('./server/api/departments.api');
+const employeesRouter = require('./server/api/employees.api');
+const searchKeysRouter = require('./server/api/searchKeys.api');
 
 var app = express();
 const port = process.env.PORT || 5000;
 
 // Write logger by morgan module
-const fs = require("fs");
+const fs = require('fs');
 const accessLogStream = fs.createWriteStream(
-    path.join(__dirname, "access.log"),
-    {
-        flags: "a"
-    }
+  path.join(__dirname, 'access.log'),
+  {
+    flags: 'a'
+  }
 );
 
 // view engine setup
@@ -51,11 +51,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, "public")));
 app.use(
-    session({
-        secret: "my secret",
-        resave: false,
-        saveUninitialized: true
-    })
+  session({
+    secret: 'my secret',
+    resave: false,
+    saveUninitialized: true
+  })
 );
 
 //app.use(cors());
@@ -76,46 +76,46 @@ app.use(
     next();
 })*/
 
-app.use("/", indexRouter);
-app.use("/create-database", databaseRouter);
-app.use("/api/login", loginRouter);
-app.use("/api/logout", logoutRouter);
-app.use("/api/cities", citiesRouter);
-app.use("/api/districts", districtsRouter);
-app.use("/api/streets", streetsRouter);
-app.use("/api/authorizations", authorizationsRouter);
-app.use("/api/users", usersRouter);
-app.use("/api/product-categories", productCategoriesRouter);
-app.use("/api/products", productsRouter);
-app.use("/api/store-categories", storeCategoriesRouter);
-app.use("/api/stores", storesRouter);
-app.use("/api/view", viewRouter);
-app.use("/api/departments", departmentsRouter);
-app.use("/api/employees", employeesRouter);
-app.use("/api/search-keys", searchKeysRouter);
+app.use('/', indexRouter);
+app.use('/create-database', databaseRouter);
+app.use('/api/login', loginRouter);
+app.use('/api/logout', logoutRouter);
+app.use('/api/cities', citiesRouter);
+app.use('/api/districts', districtsRouter);
+app.use('/api/streets', streetsRouter);
+app.use('/api/authorizations', authorizationsRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/product-categories', productCategoriesRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/store-categories', storeCategoriesRouter);
+app.use('/api/stores', storesRouter);
+app.use('/api/view', viewRouter);
+app.use('/api/departments', departmentsRouter);
+app.use('/api/employees', employeesRouter);
+app.use('/api/search-keys', searchKeysRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-    next(createError(404));
+  next(createError(404));
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-    // set locals, only providing error in development
-    res.locals.message = err.message;
-    res.locals.error = req.app.get("env") === "development" ? err : {};
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-    // render the error page
-    res.status(err.status || 500);
-    res.send("Server Error!");
+  // render the error page
+  res.status(err.status || 500);
+  res.send('Server Error!');
 });
 
 // Connect to MongoDB
-// 
+//
 mongoose.connect(config.get('localMongoDBUri'), {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 /*if (process.env.NODE_ENV === 'production') {
@@ -127,12 +127,12 @@ mongoose.connect(config.get('localMongoDBUri'), {
 }*/
 
 var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
-    // we're connected!
-    console.log("Database connected");
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  // we're connected!
+  console.log('Database connected');
 
-    app.listen(port, () => {
-        console.log("Server starting..");
-    });
+  app.listen(port, () => {
+    console.log('Server starting..');
+  });
 });

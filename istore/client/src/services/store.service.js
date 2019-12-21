@@ -3,32 +3,39 @@ import {
     sortIncreseProductByPrice,
     sortDescreseProductByPrice,
     sortProductByRating
-} from "../utils/sortModel";
-import { showProductDetail } from "../components/istore/ProductDetail";
-import { onZoomSearchField } from "../components/HomeIndex";
-import getAvgRatesProduct from "./product.service";
+} from '../utils/sortModel';
+import { showProductDetail } from '../components/istore/ProductDetail';
+import { onZoomSearchField } from '../components/HomeIndex';
+import getAvgRatesProduct from './product.service';
 import {
     sortIncreaseProductsByViewsCount,
     sortDescreaseProductsByViewsCount
-} from "../utils/productUtils";
+} from '../utils/productUtils';
 
-export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
+import Cookies from 'js-cookie';
+
+export function showHideStoreInfoService(
+    index,
+    info,
+    thisMap,
+    thisStoreWindow
+) {
     //const storeInfo = document.querySelector(".store-info");
-    const items = document.querySelectorAll(".field-results-item");
+    const items = document.querySelectorAll('.field-results-item');
     if (
-        items[id].style.backgroundColor === "" ||
+        items[index].style.backgroundColor === '' ||
         //storeInfo.style.right === "-100%"
-        thisStoreWindow.state.effect === ""
+        thisStoreWindow.state.effect === ''
     ) {
-        onZoomSearchField("out");
-        if (items[id].style.backgroundColor !== "") {
+        onZoomSearchField('out');
+        if (items[index].style.backgroundColor !== '') {
             //storeInfo.style.right = "0px";
             thisStoreWindow.setState({
-                effect: "show"
+                effect: 'show'
             });
         } else {
             for (let i = 0; i < items.length; i++) {
-                items[i].style.backgroundColor = "";
+                items[i].style.backgroundColor = '';
             }
 
             showProductDetail(info);
@@ -37,17 +44,40 @@ export function showHideStoreInfoService(id, info, thisMap, thisStoreWindow) {
 
             //storeInfo.style.right = "0px";
             thisStoreWindow.setState({
-                effect: "show"
+                effect: 'show'
             });
-            items[id].style.backgroundColor = "#C7F0AA";
+            items[index].style.backgroundColor = '#C7F0AA';
+
+            // Insert product into client's cookie
+            let recentProducts = Cookies.get('recentProducts');
+            const id = info._doc._id;
+            if (recentProducts) {
+                // Convert to array from string
+                recentProducts = JSON.parse(recentProducts);
+                if (recentProducts.includes(id)) {
+                    // Remove old element
+                    recentProducts.splice(recentProducts.indexOf(id), 1);
+                }
+
+                // Remove element if = 10 elements
+                if (recentProducts.length === 10) {
+                    recentProducts.pop();
+                }
+                // Push to top array
+                recentProducts.unshift(id);
+                recentProducts = JSON.stringify(recentProducts);
+            } else {
+                recentProducts = JSON.stringify([id]);
+            }
+            Cookies.set('recentProducts', recentProducts);
         }
     } else {
         //storeInfo.style.right = "-100%";
         thisStoreWindow.setState({
-            effect: ""
+            effect: ''
         });
-        onZoomSearchField("in");
-        items[id].style.backgroundColor = "";
+        onZoomSearchField('in');
+        items[index].style.backgroundColor = '';
     }
 
     // Address
@@ -70,7 +100,7 @@ export function onZoomSearchFieldService(that, zoom) {
 }
 
 export function onSortStoreListService(stores, priority, cb) {
-    document.querySelector(".loading").style.display = "block";
+    document.querySelector('.loading').style.display = 'block';
     if (stores.length > 1) {
         switch (+priority) {
             case 0:
@@ -94,11 +124,11 @@ export function onSortStoreListService(stores, priority, cb) {
 }
 
 export function addStore(store, callback) {
-    fetch("/api/stores", {
-        method: "POST",
+    fetch('/api/stores', {
+        method: 'POST',
         headers: {
-            Accept: "application",
-            "Content-Type": "application/json"
+            Accept: 'application',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(store)
     })
@@ -107,16 +137,16 @@ export function addStore(store, callback) {
             // return stores;
 
             if (store) {
-                callback("Thêm cửa hàng thành công!");
+                callback('Thêm cửa hàng thành công!');
             } else {
-                callback("Thêm cửa hàng thất bại.");
+                callback('Thêm cửa hàng thất bại.');
             }
         })
         .catch(err => console.log(err));
 }
 
 export function getStoreById(id, callback) {
-    fetch("/api/stores/" + id)
+    fetch('/api/stores/' + id)
         .then(res => res.json())
         .then(store => {
             if (store) {
@@ -196,7 +226,7 @@ export function getTopProductsViewsCount(store, isIncrease, callback) {
 }
 
 export function getStores(callback) {
-    fetch("/api/stores/")
+    fetch('/api/stores/')
         .then(res => res.json())
         .then(results => {
             callback(results);
@@ -209,7 +239,7 @@ export function getStores(callback) {
  * @param {*} callback
  */
 export function getStoreModels(callback) {
-    fetch("/api/stores/")
+    fetch('/api/stores/')
         .then(res => res.json())
         .then(stores => {
             if (stores.length > 0) {
