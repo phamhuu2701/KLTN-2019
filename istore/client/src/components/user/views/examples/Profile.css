@@ -27,3 +27,7 @@ img.preview {
     width: 95px;
     opacity: 0;
 }
+
+.hidden {
+    display: none !important;
+}

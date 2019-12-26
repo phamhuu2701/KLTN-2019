@@ -60,7 +60,7 @@ export function SignUpByLocalService(e, that) {
         fetch(`/api/users`, {
             method: 'POST',
             headers: {
-                Accept: 'application',
+                Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(userInfo)

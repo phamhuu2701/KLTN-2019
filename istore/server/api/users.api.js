@@ -83,16 +83,45 @@ router
         }
     });
 
-router.route('/updateAvatar').post((req, res) => {
+router.route('/updateAvatar').put((req, res) => {
     upload(req, res, err => {
         if (err) {
             console.log(err);
             res.status(200).json('ok');
         } else {
-            console.log(req.file.path);
-            res.status(200).json('ok');
+            const p = req.file.path;
+            const index = p.indexOf('img');
+            const path = '/' + p.slice(index);
+            console.log(path);
+            UserDao.updateAvatar(req.session.user._id, path)
+                .then(result => {
+                    req.session.user.avatars[0] = path;
+                    res.status(200).json(path);
+                })
+                .catch(err => res.status(201).json(err));
         }
     });
+});
+
+router.route('/updatePassword').put((req, res) => {
+    const { password, newPassword } = req.body;
+    UserDao.comparePassword(req.session.user._id, md5(password))
+        .then(match => {
+            if (match) {
+                // Update new password
+                return UserDao.updateNewPassword(
+                    req.session.user.email,
+                    md5(newPassword)
+                );
+            } else {
+                // Fail
+                return res.status(201).json('Mật khẩu cũ không chính xác!');
+            }
+        })
+        .then(result => {
+            return res.status(200).json('Đã cập nhật mật khẩu!');
+        })
+        .catch(err => res.status(201).json('Đã xảy ra lỗi!'));
 });
 
 router
