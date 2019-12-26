@@ -522,10 +522,7 @@ export default class DropdownUser extends Component {
                                         alt=''
                                         src='./resources/icons/user.svg'
                                     ></img>
-                                    <span
-                                        className='dropdown-user-body-content-title'
-                                        style={{ textTransform: 'uppercase' }}
-                                    >
+                                    <span className='dropdown-user-body-content-title'>
                                         <b>
                                             {this.state.user.fullname
                                                 .firstname +

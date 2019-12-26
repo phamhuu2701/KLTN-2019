@@ -137,6 +137,8 @@ class StoresManage extends React.Component {
         this.setState({
             isShowTemplateSelect: true
         })
+
+        console.log(this.props.user);
     }
 
     handeResultPhoneAdd(phone) {

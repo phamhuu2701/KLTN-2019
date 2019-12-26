@@ -24,7 +24,9 @@
     z-index: 104;
     background-color: #fff;
     border-radius: 4px;
-    box-shadow: 5px 5px 5px grey;
+    box-shadow: 5px 5px 5px grey;    
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .dropdown-user-body-content {
