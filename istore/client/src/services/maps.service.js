@@ -180,6 +180,7 @@ export function findRecentProductsService(ids, thisMap, cb) {
                 const latLng = thisMap.props.google.maps.LatLng;
                 const { lat, lng } = thisMap.state.currentLocation;
                 // Stores's location --- destinations
+                console.log(products);
                 const allStoreLocation = products.map(product => {
                     return [
                         product.store.location.coordinates[1],

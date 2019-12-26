@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const options = {
@@ -9,7 +9,7 @@ const productSchema = new Schema(
     {
         productCategory: {
             type: Schema.Types.ObjectId,
-            ref: "ProductCategory"
+            ref: 'ProductCategory'
         },
         name: { type: String, required: true, maxlength: 100, trim: true },
         nameRemoveAccents: {
@@ -33,14 +33,12 @@ const productSchema = new Schema(
                 fullname: {
                     type: String,
                     maxlength: 50,
-                    trim: true,
-                    unique: true
+                    trim: true
                 },
                 email: {
                     type: String,
                     maxlength: 30,
-                    trim: true,
-                    unique: true
+                    trim: true
                 },
                 content: {
                     type: String,
@@ -66,4 +64,4 @@ const productSchema = new Schema(
     options
 );
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model('Product', productSchema);

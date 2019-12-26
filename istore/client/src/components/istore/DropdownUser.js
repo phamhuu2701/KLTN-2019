@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Form, Button, Image, Modal, Spinner } from "react-bootstrap";
-import Cookies from "js-cookie";
+import React, { Component } from 'react';
+import { Form, Button, Image, Modal, Spinner } from 'react-bootstrap';
+import Cookies from 'js-cookie';
 
-import Facebook from "./Facebook";
-import Google from "./Google";
+import Facebook from './Facebook';
+import Google from './Google';
 
 import {
     LoginByLocalService,
@@ -11,9 +11,9 @@ import {
     LogOutService,
     ValidateInputService,
     ForgotPasswordService
-} from "../../services/user.service";
+} from '../../services/user.service';
 
-import "./DropdownUser.css";
+import './DropdownUser.css';
 
 export class ForgotPasswordForm extends Component {
     constructor(props) {
@@ -47,48 +47,48 @@ export class ForgotPasswordForm extends Component {
         if (this.state.emailValue) {
             return (
                 <div>
-                    <h5 className="text-success">
-                        Email:{" "}
+                    <h5 className='text-success'>
+                        Email:{' '}
                         <a
-                            href="https://mail.google.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href='https://mail.google.com'
+                            target='_blank'
+                            rel='noopener noreferrer'
                         >
                             {this.state.emailValue}
-                        </a>{" "}
+                        </a>{' '}
                         <span
-                            className="cancelForgotPassword"
+                            className='cancelForgotPassword'
                             onClick={this.changeEmailForgotPassword}
                         >
                             Thay đổi
                         </span>
                     </h5>
-                    <div className="dropdown-user-body-content">
+                    <div className='dropdown-user-body-content'>
                         <Form.Control
-                            type="text"
-                            name="token"
-                            placeholder="Nhập Token"
-                            className="field-filter-form-input-search"
+                            type='text'
+                            name='token'
+                            placeholder='Nhập Token'
+                            className='field-filter-form-input-search'
                             ref={this.props.forgotPassword_TokenRef}
                             required
                         />
                     </div>
-                    <div className="dropdown-user-body-content">
+                    <div className='dropdown-user-body-content'>
                         <Form.Control
-                            type="password"
-                            name="password"
-                            placeholder="Nhập mật khẩu mới"
-                            className="field-filter-form-input-search"
+                            type='password'
+                            name='password'
+                            placeholder='Nhập mật khẩu mới'
+                            className='field-filter-form-input-search'
                             ref={this.props.forgotPassword_PasswordRef}
                             required
                         />
                     </div>
-                    <div className="dropdown-user-body-content">
+                    <div className='dropdown-user-body-content'>
                         <Form.Control
-                            type="password"
-                            name="passwordConfirm"
-                            placeholder="Nhập lại mật khẩu mới"
-                            className="field-filter-form-input-search"
+                            type='password'
+                            name='passwordConfirm'
+                            placeholder='Nhập lại mật khẩu mới'
+                            className='field-filter-form-input-search'
                             ref={this.props.forgotPassword_rePasswordRef}
                             required
                         />
@@ -98,10 +98,10 @@ export class ForgotPasswordForm extends Component {
         } else {
             return (
                 <Form.Control
-                    type="email"
-                    name="email"
-                    placeholder="Nhập Email"
-                    className="field-filter-form-input-search"
+                    type='email'
+                    name='email'
+                    placeholder='Nhập Email'
+                    className='field-filter-form-input-search'
                     ref={this.props.forgotPassword_EmailRef}
                     required
                     onKeyPress={this.onEnterForgotPassword}
@@ -116,20 +116,20 @@ class SignForm extends Component {
         super(props);
         this.state = {
             sign: props.sign,
-            feedback: "",
-            feedbackContent: "",
-            checkFirstname: "",
-            checkLastname: "",
-            checkEmail: "",
-            checkPhone: "",
-            checkPassword: "",
-            checkPasswordConfirm: "",
-            showLoading: "",
+            feedback: '',
+            feedbackContent: '',
+            checkFirstname: '',
+            checkLastname: '',
+            checkEmail: '',
+            checkPhone: '',
+            checkPassword: '',
+            checkPasswordConfirm: '',
+            showLoading: '',
             showModal: false,
-            emailValue: "",
-            forgotPasswordNotify: "Vui lòng nhập Email để lấy lại mật khẩu!!",
-            confirmForgotPasswordValue: "Xác nhận",
-            errorForgotPassword: ""
+            emailValue: '',
+            forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
+            confirmForgotPasswordValue: 'Xác nhận',
+            errorForgotPassword: ''
         };
         this.forgotPassword_EmailRef = React.createRef();
         this.forgotPassword_TokenRef = React.createRef();
@@ -146,7 +146,7 @@ class SignForm extends Component {
     }
 
     UNSAFE_componentWillMount() {
-        Cookies.set("1P_JAR", "Strick", { sameSite: "none", secure: true });
+        Cookies.set('1P_JAR', 'Strick', { sameSite: 'none', secure: true });
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -177,9 +177,9 @@ class SignForm extends Component {
 
     setDefaultEmailValue(show = true) {
         this.setState({
-            forgotPasswordNotify: "Vui lòng nhập Email để lấy lại mật khẩu!!",
-            confirmForgotPasswordValue: "Xác nhận",
-            emailValue: "",
+            forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
+            confirmForgotPasswordValue: 'Xác nhận',
+            emailValue: '',
             showModal: show
         });
     }
@@ -189,52 +189,50 @@ class SignForm extends Component {
     }
 
     render() {
-        if (this.state.sign === "in") {
+        if (this.state.sign === 'in') {
             return (
                 <div>
-                    <Form id="signInForm" onSubmit={this.signInSubmit}>
-                        <div className="dropdown-user-body-content sign-in">
+                    <Form id='signInForm' onSubmit={this.signInSubmit}>
+                        <div className='dropdown-user-body-content sign-in'>
                             <Form.Control
-                                type="text"
-                                name="email"
-                                placeholder="Email"
-                                className="field-filter-form-input-search"
+                                type='text'
+                                name='email'
+                                placeholder='Email'
+                                className='field-filter-form-input-search'
                                 required
-                                defaultValue="user10@gmail.com"
                             />
                         </div>
-                        <div className="dropdown-user-body-content sign-in">
+                        <div className='dropdown-user-body-content sign-in'>
                             <Form.Control
-                                type="password"
-                                name="password"
-                                placeholder="Mật khẩu"
-                                className="field-filter-form-input-search"
+                                type='password'
+                                name='password'
+                                placeholder='Mật khẩu'
+                                className='field-filter-form-input-search'
                                 required
-                                defaultValue="123456"
                             />
                         </div>
-                        <div className="dropdown-user-body-content text-center">
-                            <Button variant="success" type="submit">
+                        <div className='dropdown-user-body-content text-center'>
+                            <Button variant='success' type='submit'>
                                 Đăng nhập
                             </Button>
                         </div>
                         <center>
                             <span
-                                className="forgot-password"
+                                className='forgot-password'
                                 onClick={this.open}
                             >
                                 Quên mật khẩu
                             </span>
                         </center>
-                        <hr className="dropdown-user-body-content-divide" />
-                        <div className="dropdown-user-body-content sign-in text-center">
-                            <div className="ui buttons">
+                        <hr className='dropdown-user-body-content-divide' />
+                        <div className='dropdown-user-body-content sign-in text-center'>
+                            <div className='ui buttons'>
                                 <Facebook
                                     loginHandler={user =>
                                         this.props.loginHandler(user)
                                     }
                                 />
-                                <div className="or"></div>
+                                <div className='or'></div>
                                 <Google
                                     loginHandler={user =>
                                         this.props.loginHandler(user)
@@ -248,8 +246,8 @@ class SignForm extends Component {
                     <Modal
                         show={this.state.showModal}
                         onHide={this.close}
-                        size="sm"
-                        aria-labelledby="contained-modal-title-vcenter"
+                        size='sm'
+                        aria-labelledby='contained-modal-title-vcenter'
                         centered
                     >
                         <Modal.Header closeButton>
@@ -259,26 +257,26 @@ class SignForm extends Component {
                         </Modal.Header>
                         <Modal.Body>
                             <div
-                                className={"loading " + this.state.showLoading}
+                                className={'loading ' + this.state.showLoading}
                             >
                                 Đang kiểm tra email
                                 <Spinner
-                                    animation="grow"
-                                    variant="success"
-                                    size="sm"
+                                    animation='grow'
+                                    variant='success'
+                                    size='sm'
                                 />
                                 <Spinner
-                                    animation="grow"
-                                    variant="warning"
-                                    size="sm"
+                                    animation='grow'
+                                    variant='warning'
+                                    size='sm'
                                 />
                                 <Spinner
-                                    animation="grow"
-                                    variant="success"
-                                    size="sm"
+                                    animation='grow'
+                                    variant='success'
+                                    size='sm'
                                 />
                             </div>
-                            <p className="text-danger text-center">
+                            <p className='text-danger text-center'>
                                 {this.state.errorForgotPassword}
                             </p>
                             <ForgotPasswordForm
@@ -307,98 +305,98 @@ class SignForm extends Component {
                     </Modal>
                 </div>
             );
-        } else if (this.state.sign === "up") {
+        } else if (this.state.sign === 'up') {
             return (
-                <Form id="signUpForm" onSubmit={this.signUpSubmit}>
-                    <div className={"feedback " + this.state.feedback}>
+                <Form id='signUpForm' onSubmit={this.signUpSubmit}>
+                    <div className={'feedback ' + this.state.feedback}>
                         {this.state.feedbackContent}
                     </div>
-                    <div className="dropdown-user-body-content sign-up">
+                    <div className='dropdown-user-body-content sign-up'>
                         <Form.Control
-                            type="text"
-                            name="firstname"
-                            placeholder="Tên"
+                            type='text'
+                            name='firstname'
+                            placeholder='Tên'
                             className={
-                                "field-filter-form-input-search " +
+                                'field-filter-form-input-search ' +
                                 this.state.checkFirstname
                             }
                             required
                             onBlur={this.validateInput}
                         />
-                        <div className="valid-feedback">Good</div>
-                        <div className="invalid-feedback">Fail</div>
+                        <div className='valid-feedback'>Good</div>
+                        <div className='invalid-feedback'>Fail</div>
                     </div>
-                    <div className="dropdown-user-body-content sign-up">
+                    <div className='dropdown-user-body-content sign-up'>
                         <Form.Control
-                            type="text"
-                            name="lastname"
-                            placeholder="Họ"
+                            type='text'
+                            name='lastname'
+                            placeholder='Họ'
                             className={
-                                "field-filter-form-input-search " +
+                                'field-filter-form-input-search ' +
                                 this.state.checkLastname
                             }
                             required
                             onBlur={this.validateInput}
                         />
-                        <div className="valid-feedback">Good</div>
-                        <div className="invalid-feedback">Fail</div>
+                        <div className='valid-feedback'>Good</div>
+                        <div className='invalid-feedback'>Fail</div>
                     </div>
-                    <div className="dropdown-user-body-content sign-up">
+                    <div className='dropdown-user-body-content sign-up'>
                         <Form.Control
-                            type="email"
-                            name="email"
-                            placeholder="Email"
+                            type='email'
+                            name='email'
+                            placeholder='Email'
                             className={
-                                "field-filter-form-input-search " +
+                                'field-filter-form-input-search ' +
                                 this.state.checkEmail
                             }
                             required
                             onBlur={this.validateInput}
                         />
                     </div>
-                    <div className="dropdown-user-body-content sign-up">
+                    <div className='dropdown-user-body-content sign-up'>
                         <Form.Control
-                            type="phone"
-                            name="phone"
-                            placeholder="Số điện thoại"
+                            type='phone'
+                            name='phone'
+                            placeholder='Số điện thoại'
                             className={
-                                "field-filter-form-input-search " +
+                                'field-filter-form-input-search ' +
                                 this.state.checkPhone
                             }
-                            minLength="10"
-                            maxLength="10"
+                            minLength='10'
+                            maxLength='10'
                             required
                             onBlur={this.validateInput}
                         />
                     </div>
-                    <div className="dropdown-user-body-content sign-up">
+                    <div className='dropdown-user-body-content sign-up'>
                         <Form.Control
-                            type="password"
-                            name="password"
-                            placeholder="Mật khẩu"
+                            type='password'
+                            name='password'
+                            placeholder='Mật khẩu'
                             className={
-                                "field-filter-form-input-search " +
+                                'field-filter-form-input-search ' +
                                 this.state.checkPassword
                             }
                             required
                             onBlur={this.validateInput}
                         />
                     </div>
-                    <div className="dropdown-user-body-content sign-up">
+                    <div className='dropdown-user-body-content sign-up'>
                         <Form.Control
-                            type="password"
-                            name="password_confirm"
-                            placeholder="Nhập lại mật khẩu"
+                            type='password'
+                            name='password_confirm'
+                            placeholder='Nhập lại mật khẩu'
                             className={
-                                "field-filter-form-input-search " +
+                                'field-filter-form-input-search ' +
                                 this.state.checkPasswordConfirm
                             }
                             required
                             onBlur={this.validateInput}
                         />
                     </div>
-                    <div className="dropdown-user-body-content text-center">
-                        <Button variant="primary" type="submit">
+                    <div className='dropdown-user-body-content text-center'>
+                        <Button variant='primary' type='submit'>
                             Đăng ký
                         </Button>
                     </div>
@@ -415,8 +413,8 @@ export default class DropdownUser extends Component {
         super();
         this.state = {
             isLogged: false,
-            sign: "",
-            emailValue: ""
+            sign: '',
+            emailValue: ''
         };
         this.onClicked = this.onClicked.bind(this);
         this.signIn = this.signIn.bind(this);
@@ -427,30 +425,30 @@ export default class DropdownUser extends Component {
     }
 
     onClicked() {
-        let x = document.getElementById("dropdown-user-body");
-        if (x.style.display === "block") {
-            x.style.display = "none";
+        let x = document.getElementById('dropdown-user-body');
+        if (x.style.display === 'block') {
+            x.style.display = 'none';
         } else {
-            x.style.display = "block";
+            x.style.display = 'block';
         }
     }
 
     signIn() {
-        document.querySelector("body").style.overflowY = "hidden";
+        document.querySelector('body').style.overflowY = 'hidden';
         this.setState({
-            sign: "in"
+            sign: 'in'
         });
     }
 
     signUp() {
         this.setState({
-            sign: "up"
+            sign: 'up'
         });
     }
 
     UNSAFE_componentWillMount() {
         // Check user logged in
-        fetch("/api/login")
+        fetch('/api/login')
             .then(res => {
                 return res.json();
             })
@@ -458,7 +456,7 @@ export default class DropdownUser extends Component {
                 this.setState({
                     isLogged: result.isLogged,
                     user: result.user,
-                    sign: ""
+                    sign: ''
                 });
                 this.props.logInToggle(result.isLogged);
             })
@@ -466,12 +464,12 @@ export default class DropdownUser extends Component {
     }
 
     componentDidMount() {
-        document.addEventListener("click", this.handleClick);
+        document.addEventListener('click', this.handleClick);
     }
 
     componentWillUnmount() {
         // important
-        document.removeEventListener("click", this.handleClick);
+        document.removeEventListener('click', this.handleClick);
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {}
@@ -481,9 +479,9 @@ export default class DropdownUser extends Component {
         this.setState({
             isLogged: true,
             user: user,
-            sign: ""
+            sign: ''
         });
-        document.getElementById("dropdown-user-body").style.display = "none";
+        document.getElementById('dropdown-user-body').style.display = 'none';
         this.props.logInToggle(true);
     }
 
@@ -494,105 +492,111 @@ export default class DropdownUser extends Component {
     handleClick = event => {
         const { target } = event;
         if (!this.wrapperRef.current.contains(target)) {
-            document.getElementById("dropdown-user-body").style.display =
-                "none";
+            document.getElementById('dropdown-user-body').style.display =
+                'none';
         }
     };
 
     render() {
         if (this.state.isLogged === true) {
             return (
-                <div className="dropdown-user" ref={this.wrapperRef}>
+                <div className='dropdown-user' ref={this.wrapperRef}>
                     <Image
-                        className="dropdown-user-image"
+                        className='dropdown-user-image'
                         src={this.state.user.avatars[0]}
                         width={50}
                         height={50}
                         roundedCircle
                         onClick={this.onClicked}
                     />
-                    <div className="dropdown-user-body" id="dropdown-user-body">
-                        <div className="dropdown-user-body-sub"></div>
-                        <div className="dropdown-user-body-main">
+                    <div className='dropdown-user-body' id='dropdown-user-body'>
+                        <div className='dropdown-user-body-sub'></div>
+                        <div className='dropdown-user-body-main'>
                             <a
-                                href="/user/profile"
-                                className="dropdown-user-body-content-link"
+                                href='/user/profile'
+                                className='dropdown-user-body-content-link'
                             >
-                                <div className="dropdown-user-body-content">
+                                <div className='dropdown-user-body-content'>
                                     <img
-                                        className="dropdown-user-body-content-imgage"
-                                        alt=""
-                                        src="./resources/icons/user.svg"
+                                        className='dropdown-user-body-content-imgage'
+                                        alt=''
+                                        src='./resources/icons/user.svg'
                                     ></img>
-                                    <span className="dropdown-user-body-content-title" style={{"textTransform": "uppercase"}}>
-                                        <b>{this.state.user.fullname.firstname +
-                                            " " +
-                                            this.state.user.fullname.lastname}</b>
+                                    <span
+                                        className='dropdown-user-body-content-title'
+                                        style={{ textTransform: 'uppercase' }}
+                                    >
+                                        <b>
+                                            {this.state.user.fullname
+                                                .firstname +
+                                                ' ' +
+                                                this.state.user.fullname
+                                                    .lastname}
+                                        </b>
                                     </span>
                                 </div>
                             </a>
-                            <hr className="dropdown-user-body-content-divide" />
+                            <hr className='dropdown-user-body-content-divide' />
                             <a
-                                href="/user/stores-manage"
-                                className="dropdown-user-body-content-link"
+                                href='/user/stores-manage'
+                                className='dropdown-user-body-content-link'
                             >
-                                <div className="dropdown-user-body-content">
+                                <div className='dropdown-user-body-content'>
                                     <img
-                                        className="dropdown-user-body-content-imgage"
-                                        alt=""
-                                        src="./resources/icons/list.svg"
+                                        className='dropdown-user-body-content-imgage'
+                                        alt=''
+                                        src='./resources/icons/list.svg'
                                     ></img>
-                                    <span className="dropdown-user-body-content-title">
+                                    <span className='dropdown-user-body-content-title'>
                                         Quản lý cửa hàng
                                     </span>
                                 </div>
                             </a>
-                            <hr className="dropdown-user-body-content-divide" />
-                            <a
-                                href="/"
-                                className="dropdown-user-body-content-link"
+                            <hr className='dropdown-user-body-content-divide' />
+                            <div
+                                className='dropdown-user-body-content-link'
                                 onClick={this.logoutHandler}
                             >
-                                <div className="dropdown-user-body-content">
+                                <div className='dropdown-user-body-content'>
                                     <img
-                                        className="dropdown-user-body-content-imgage"
-                                        alt=""
-                                        src="./resources/icons/logout.svg"
+                                        className='dropdown-user-body-content-imgage'
+                                        alt=''
+                                        src='./resources/icons/logout.svg'
                                     ></img>
-                                    <span className="dropdown-user-body-content-title">
+                                    <span className='dropdown-user-body-content-title'>
                                         Thoát
                                     </span>
                                 </div>
-                            </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             );
         } else {
             return (
-                <div className="dropdown-user" ref={this.wrapperRef}>
+                <div className='dropdown-user' ref={this.wrapperRef}>
                     <Image
-                        className="dropdown-user-image"
-                        src="./resources/icons/user.svg"
+                        className='dropdown-user-image'
+                        src='./resources/icons/user.svg'
                         width={40}
                         height={40}
                         roundedCircle
                         onClick={this.onClicked}
                     />
-                    <div className="dropdown-user-body" id="dropdown-user-body">
-                        <div className="dropdown-user-body-sub"></div>
-                        <div className="dropdown-user-body-main">
-                            <div className="dropdown-user-body-content">
-                                <div className="ui buttons">
+                    <div className='dropdown-user-body' id='dropdown-user-body'>
+                        <div className='dropdown-user-body-sub'></div>
+                        <div className='dropdown-user-body-main'>
+                            <div className='dropdown-user-body-content'>
+                                <div className='ui buttons'>
                                     <button
-                                        className="ui button btn-success"
+                                        className='ui button btn-success'
                                         onClick={this.signIn}
                                     >
                                         Đăng nhập
                                     </button>
-                                    <div className="or"></div>
+                                    <div className='or'></div>
                                     <button
-                                        className="ui button btn-primary"
+                                        className='ui button btn-primary'
                                         onClick={this.signUp}
                                     >
                                         Đăng ký

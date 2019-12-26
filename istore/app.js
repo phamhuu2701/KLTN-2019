@@ -7,6 +7,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const mongoose = require('mongoose');
+const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const config = require('config');
 
@@ -50,11 +51,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 //app.use(express.static(path.join(__dirname, "public")));
+
+// Connect to MongoDB
+mongoose.connect(config.get('localMongoDBUri'), {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+});
+
 app.use(
     session({
         secret: 'my secret',
-        resave: false,
-        saveUninitialized: true
+        resave: true,
+        saveUninitialized: false,
+        cookie: {
+            sameSite: true,
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production'
+        },
+        store: new MongoStore({ mongooseConnection: mongoose.connection })
     })
 );
 
@@ -75,6 +90,15 @@ app.use(
     res.setHeader('Access-Control-Allow-Headers', 'Accept, Content-Type, X-Access-Token, X-Requested-With');
     next();
 })*/
+
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 app.use('/', indexRouter);
 app.use('/create-database', databaseRouter);
@@ -109,22 +133,6 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500);
     res.send('Server Error!');
 });
-
-// Connect to MongoDB
-//
-mongoose.connect(config.get('mongoDBUri'), {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-});
-
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-    });
-}
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

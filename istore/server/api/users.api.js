@@ -1,17 +1,18 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const md5 = require("md5");
-const uid = require("uid");
-const config = require("config");
+const md5 = require('md5');
+const uid = require('uid');
+const config = require('config');
 
-const User = require("../models/user.model");
-const UserDao = require("../dao/user.dao");
-const StoreDao = require("../dao/store.dao");
+const User = require('../models/user.model');
+const UserDao = require('../dao/user.dao');
+const StoreDao = require('../dao/store.dao');
 
-const mailer = require("../util/mailer");
+const mailer = require('../util/mailer');
+const upload = require('../util/multer');
 
 router
-    .route("/")
+    .route('/')
     .get(async (req, res, next) => {
         const email = req.query.email;
         const phone = req.query.phone;
@@ -53,39 +54,49 @@ router
 
             // Send verify mail to user
             const mailOption = {
-                from: config.get("domainName"),
+                from: config.get('domainName'),
                 to: userSave.email,
-                subject: `Xác thực tài khoản trên ${config.get("domainName")}`,
+                subject: `Xác thực tài khoản trên ${config.get('domainName')}`,
                 html: `Bạn vừa tạo thành công tài khoản trên ${config.get(
-                    "domainName"
+                    'domainName'
                 )}. Vui lòng click vào <a href="${config.get(
-                    "localhost"
+                    'localhost'
                 )}/verify?id=${userSave._id}&mailVerifyToken=${
                     userSave.mailVerifyToken
                 }">đây</a> để xác thực tài khoản và sử dụng trên ${config.get(
-                    "domainName"
+                    'domainName'
                 )}!`
             };
             mailer
                 .sendMail(mailOption)
                 .then(result => {
                     // Return result for user
-                    return res
-                        .status(200)
-                        .json({
-                            message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com" target="_blank">${result.accepted[0]}</a>!`
-                        });
+                    return res.status(200).json({
+                        message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com" target="_blank">${result.accepted[0]}</a>!`
+                    });
                 })
                 .catch(err => console.log(err));
         } else {
             return res
                 .status(201)
-                .json({ err: "Email hoặc số điện thoại đã tồn tại!" });
+                .json({ err: 'Email hoặc số điện thoại đã tồn tại!' });
         }
     });
 
+router.route('/updateAvatar').post((req, res) => {
+    upload(req, res, err => {
+        if (err) {
+            console.log(err);
+            res.status(200).json('ok');
+        } else {
+            console.log(req.file.path);
+            res.status(200).json('ok');
+        }
+    });
+});
+
 router
-    .route("/forgotpassword-:email")
+    .route('/forgotpassword-:email')
     .get(async (req, res) => {
         // Check email existing
         const email = req.params.email;
@@ -97,13 +108,13 @@ router
                 .then(result => {
                     // Send token to email
                     const mailOption = {
-                        from: config.get("domainName"),
+                        from: config.get('domainName'),
                         to: email,
                         subject: `Lấy lại mật khẩu - ${config.get(
-                            "domainName"
+                            'domainName'
                         )}`,
                         html: `Bạn vừa yêu cầu cấp lại mật khẩu trên ${config.get(
-                            "domainName"
+                            'domainName'
                         )}. Vui lòng nhập token dể cập nhật lại mật khẩu!
                 Token: ${token}`
                     };
@@ -116,27 +127,23 @@ router
                                 .json({ isMatch: true, err: null });
                         })
                         .catch(err =>
-                            res
-                                .status(202)
-                                .json({
-                                    isMatch: false,
-                                    err: "Xảy ra lỗi. Vui lòng thử lại!"
-                                })
+                            res.status(202).json({
+                                isMatch: false,
+                                err: 'Xảy ra lỗi. Vui lòng thử lại!'
+                            })
                         );
                     //return res.status(200).json({isMatch: true, err: null});
                 })
                 .catch(err => {
-                    return res
-                        .status(202)
-                        .json({
-                            isMatch: false,
-                            err: "Xảy ra lỗi. Vui lòng thử lại!"
-                        });
+                    return res.status(202).json({
+                        isMatch: false,
+                        err: 'Xảy ra lỗi. Vui lòng thử lại!'
+                    });
                 });
         } else {
             return res
                 .status(201)
-                .json({ isMatch: false, err: "*Email không trùng khớp!" });
+                .json({ isMatch: false, err: '*Email không trùng khớp!' });
         }
     })
     .put(async (req, res) => {
@@ -147,26 +154,26 @@ router
         if (user.forgetPasswordToken === token) {
             if (user.forgetPasswordTokenExpire - Date.now() <= 0) {
                 // Expire
-                return res.status(201).json({ err: "Token đã hết hạn!" });
+                return res.status(201).json({ err: 'Token đã hết hạn!' });
             } else {
                 // Success
                 UserDao.updateNewPassword(email, md5(password))
                     .then(result => {
-                        return res.status(200).json({ err: "" });
+                        return res.status(200).json({ err: '' });
                     })
                     .catch(err => {
                         return res
                             .status(201)
-                            .json({ err: "Xảy ra lỗi. Vui lòng thử lại!" });
+                            .json({ err: 'Xảy ra lỗi. Vui lòng thử lại!' });
                     });
             }
         } else {
             // Don't same token
-            return res.status(201).json({ err: "Token không trùng khớp!" });
+            return res.status(201).json({ err: 'Token không trùng khớp!' });
         }
     });
 
-router.route("/verify").put((req, res) => {
+router.route('/verify').put((req, res) => {
     const { id, mailVerifyToken } = req.query;
     UserDao.findById(id)
         .then(result => {
@@ -176,24 +183,24 @@ router.route("/verify").put((req, res) => {
                     if (verified) {
                         return res
                             .status(200)
-                            .json(verified.email + " đã xác thực thành công!");
+                            .json(verified.email + ' đã xác thực thành công!');
                     } else
                         return res
                             .status(202)
-                            .json("Mã xác thực không chính xác!");
+                            .json('Mã xác thực không chính xác!');
                 });
             } else {
                 // Email is actived on IStore
                 return res
                     .status(201)
-                    .json("Tài khoản của bạn đã được xác thực!");
+                    .json('Tài khoản của bạn đã được xác thực!');
             }
         })
         .catch(err => console.log(err));
 });
 
 router
-    .route("/:id")
+    .route('/:id')
     .get(async (req, res, next) => {
         let id = req.params.id;
         let user = await UserDao.findById(id);
@@ -250,7 +257,7 @@ router
 //     res.json({ message: b });
 // });
 
-router.route("/:id/stores").get(async (req, res, next) => {
+router.route('/:id/stores').get(async (req, res, next) => {
     let id = req.params.id;
     let user = await UserDao.findById(id);
     let stores = await StoreDao.findByUser(user);

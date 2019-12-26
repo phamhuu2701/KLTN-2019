@@ -10,3 +10,20 @@
 .user-profile .error {
     color: rgb(255, 119, 119);
 }
+
+img.preview {
+    width: 96px;
+    height: 96px;
+}
+
+.change-avatar {
+    cursor: inherit;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    bottom: -67px;
+    right: -20px;
+    height: 95px;
+    width: 95px;
+    opacity: 0;
+}

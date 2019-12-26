@@ -76,6 +76,8 @@ class Profile extends React.Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onRadioGenderChange = this.onRadioGenderChange.bind(this);
         this.onUpdateSubmitClick = this.onUpdateSubmitClick.bind(this);
+        this.previewFile = this.previewFile.bind(this);
+        this.updateAvatar = this.updateAvatar.bind(this);
     }
 
     componentDidMount() {
@@ -193,6 +195,39 @@ class Profile extends React.Component {
             });
     }
 
+    previewFile(e, cancle = false) {
+        var preview = document.querySelector('img.preview'); //selects the query named img
+        if (cancle) {
+            preview.src = this.state.user.avatars[0];
+        } else {
+            var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+            var reader  = new FileReader();
+            reader.onloadend = function () {
+            preview.src = reader.result;
+            }
+            if (file) {
+            reader.readAsDataURL(file); //reads the data as a URL
+            } else {
+            //preview.src = "";
+            }
+        }
+    }
+
+    updateAvatar(e) {
+        e.preventDefault();
+        const file = document.querySelector('input[type=file]').files[0];
+        const formData = new FormData();
+        formData.append('file', file)
+        fetch('/api/users/updateAvatar', {
+            method: 'POST',
+            body: formData
+        })
+        .then(result => {
+            console.log(result);
+        })
+        .catch(err => console.log(err))
+    }
+
     render() {
         return (
             <>
@@ -202,39 +237,41 @@ class Profile extends React.Component {
                     <Row>
                         <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
                             <Card className="card-profile shadow">
-                                <Row className="justify-content-center">
-                                    <Col className="order-lg-2" lg="3">
-                                        <div className="card-profile-image">
-                                            <a href="#pablo">
+                                <Form onSubmit={this.updateAvatar}>
+                                    <Row className="justify-content-center">
+                                        <Col className="order-lg-2" lg="3">
+                                            <div className="card-profile-image">
                                                 <img
                                                     alt="..."
-                                                    className="rounded-circle"
+                                                    className="rounded-circle preview"
                                                     src={this.state.user.avatars[0]}
                                                 />
-                                            </a>
+                                                <input className="change-avatar" type="file" onChange={this.previewFile} accept="image/*" alt="Change avatar"/>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                    <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                                        <div className="d-flex justify-content-between">
+                                            <Button
+                                                type="reset"
+                                                onClick={() => {this.previewFile(this, true)}}
+                                                className="mr-4"
+                                                color="info"
+                                                size="sm"
+                                            >
+                                                Hủy
+                                            </Button>
+                                            <Button
+                                                type="submit"
+                                                className="float-right"
+                                                color="success"
+                                                size="sm"
+                                            >
+                                                Cập nhật
+                                            </Button>
                                         </div>
-                                    </Col>
-                                </Row>
-                                <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                                    <div className="d-flex justify-content-between">
-                                        <Button
-                                            className="mr-4"
-                                            color="info"
-                                            href="#pablo"
-                                            size="sm"
-                                        >
-                                            Kết nối
-                                        </Button>
-                                        <Button
-                                            className="float-right"
-                                            color="success"
-                                            href="#pablo"
-                                            size="sm"
-                                        >
-                                            Tin nhắn
-                                        </Button>
-                                    </div>
-                                </CardHeader>
+                                    </CardHeader>
+                                </Form>
                                 <CardBody className="pt-0 pt-md-4">
                                     <Row>
                                         <div className="col">
