@@ -1,22 +1,28 @@
-import React, { Component } from "react";
-import { Form, Row, Col, Spinner } from "react-bootstrap";
+import React, { Component } from 'react';
+import { Form, Row, Col, Spinner } from 'react-bootstrap';
 
-import "./Field.css";
-import FieldResultsItem from "./Field_Results_Item";
-import Footer from "./Footer";
-import { effectOnSearchProduct } from "./ProductInformation";
-import { onSortStoreListService } from "../../services/store.service";
+import Cookies from 'js-cookie';
+
+import './Field.css';
+import FieldResultsItem from './Field_Results_Item';
+import Footer from './Footer';
+import { effectOnSearchProduct } from './ProductInformation';
+import { findRecentProducts } from './Maps';
+import { onSortStoreListService } from '../../services/store.service';
 
 class SearchBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            city: "",
-            query: ""
+            city: '',
+            query: ''
         };
         this.autocompleteInput = React.createRef();
         this.onEnterProduct = this.onEnterProduct.bind(this);
         this.onClickSearchProduct = this.onClickSearchProduct.bind(this);
+        this.findRecentProductHandler = this.findRecentProductHandler.bind(
+            this
+        );
     }
 
     onEnterProduct(e) {
@@ -24,15 +30,19 @@ class SearchBar extends Component {
         if (e.which === 13 || e.which === 10) {
             // Find product
             const search = e.target.value;
-            const distance = document.querySelector(
-                'select[class="form-control"]'
-            ).value;
-            effectOnSearchProduct(search, distance, result => {
-                if (result.length > 0) {
-                    this.props.onZoom('in');
-                } else this.props.onZoom('normal');
-                this.props.findProductHandler(result);
-            });
+            if (search !== '') {
+                const distance = document.querySelector(
+                    'select[class="form-control"]'
+                ).value;
+                effectOnSearchProduct(search, distance, result => {
+                    if (result.length > 0) {
+                        this.props.onZoom('in');
+                    } else this.props.onZoom('normal');
+                    this.props.findProductHandler(result);
+                });
+            } else {
+                this.findRecentProductHandler();
+            }
         } else {
             //this.handleScriptLoad();
             //onPlaceAutocomplete(this.autocompleteInput.current)
@@ -42,9 +52,8 @@ class SearchBar extends Component {
     onClickSearchProduct() {
         // Find product
         const search = this.autocompleteInput.current.value;
-        const distance = document.querySelector(
-            'select[class="form-control"]'
-        ).value;
+        const distance = document.querySelector('select[class="form-control"]')
+            .value;
         effectOnSearchProduct(search, distance, result => {
             if (result.length > 0) {
                 this.props.onZoom('in');
@@ -53,14 +62,24 @@ class SearchBar extends Component {
         });
     }
 
+    findRecentProductHandler() {
+        // Show recent products if existing
+        const recentProducts = Cookies.get('recentProducts');
+        document.querySelector('.loading').style.display = 'block';
+        findRecentProducts(recentProducts, result => {
+            if (result.length > 0) {
+                this.props.onZoom('in');
+            } else this.props.onZoom('normal');
+            this.props.findProductHandler(result, false);
+        });
+    }
+
     componentDidMount() {
-        
         /*setTimeout(()=>{
             onSearchProduct("bóng đèn", 10000, result => {
                 this.props.findProductHandler(result);
             });
         }, 2000);*/
-
         // setTimeout(() => {
         //     onPlaceAutocomplete(this.autocompleteInput.current, (addressObject) => {
         //         //this.props.onPlaceLoaded(addressObject);
@@ -73,24 +92,27 @@ class SearchBar extends Component {
         //         }
         //     })
         // }, 2000);
+        setTimeout(() => {
+            this.findRecentProductHandler();
+        }, 1000);
     }
 
     render() {
         return (
-            <Form.Group className="field-filter-form-group-search field-filter-form-group-search-custom">
+            <Form.Group className='field-filter-form-group-search field-filter-form-group-search-custom'>
                 <img
-                    alt="Tìm cửa hàng"
-                    src="./resources/icons/search.svg"
+                    alt='Tìm cửa hàng'
+                    src='./resources/icons/search.svg'
                     onClick={this.onClickSearchProduct}
                 ></img>
                 <div>
                     <Form.Control
                         ref={this.autocompleteInput}
-                        id="autocomplete"
+                        id='autocomplete'
                         onKeyPress={this.onEnterProduct}
-                        type="text"
-                        placeholder="Nhập tên sản phẩm..."
-                        className="field-filter-form-input-search"
+                        type='text'
+                        placeholder='Nhập tên sản phẩm...'
+                        className='field-filter-form-input-search'
                         defaultValue={this.state.query}
                     />
                 </div>
@@ -104,22 +126,28 @@ export class ResultArea extends Component {
         super(props);
         this.state = {
             result: [],
-            message: ""
+            message: ''
         };
-    }
-
-    findStore() {
-        this.setState({
-            result: (this.props.result.length > 10) ? this.props.result.splice(0, 10) : this.props.result,
-            message: "Không tìm thấy sản phẩm!"
-        });
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.isFound === true) {
+            const products = [];
+            if (nextProps.result.length > 10) {
+                for (let i = 0; i < 10; i++) {
+                    products.push(nextProps.result[i]);
+                }
+            } else {
+                products.push(...nextProps.result);
+            }
             this.setState({
-                result: (nextProps.result.length > 10) ? nextProps.result.splice(0, 10) : nextProps.result,
-                message: "Không tìm thấy sản phẩm!"
+                result: products,
+                message: 'Không tìm thấy sản phẩm!'
+            });
+        } else {
+            this.setState({
+                result: nextProps.result,
+                message: 'Chưa có sản phẩm được xem!'
             });
         }
     }
@@ -127,7 +155,7 @@ export class ResultArea extends Component {
     render() {
         if (this.state.result.length > 0) {
             return (
-                <div className="field-results-list">
+                <div className='field-results-list'>
                     {this.state.result.map((res, index) => {
                         return (
                             <FieldResultsItem
@@ -148,7 +176,7 @@ export class ResultArea extends Component {
             );
         } else {
             return (
-                <div className="field-results-list">{this.state.message}</div>
+                <div className='field-results-list'>{this.state.message}</div>
             );
         }
     }
@@ -168,7 +196,7 @@ export default class Fields extends Component {
     }
 
     onDistanceSelectChange(e) {
-        const search = document.querySelector("#autocomplete").value;
+        const search = document.querySelector('#autocomplete').value;
         const distance = e.target.value;
         effectOnSearchProduct(search, distance, result => {
             if (result.length > 0) {
@@ -186,37 +214,35 @@ export default class Fields extends Component {
         });
     }
 
-    findProductHandler(result) {
+    findProductHandler(result, isFound = true) {
         this.setState({
             result: result,
-            isFound: true
+            isFound: isFound
         });
     }
 
     render() {
         return (
-            <div className="field scroll square scrollbar-dusty-grass square thin">
-                <div className="field-filter">
+            <div className='field scroll square scrollbar-dusty-grass square thin'>
+                <div className='field-filter'>
                     <Row>
                         <Col>
                             <SearchBar
-                                findProductHandler={
-                                    this.findProductHandler
-                                }
-                                onZoom={this.props.onZoom} 
+                                findProductHandler={this.findProductHandler}
+                                onZoom={this.props.onZoom}
                             />
                         </Col>
                     </Row>
                     <Row>
                         <Col sm={4}>
-                            <label className="field-filter-form-label">
+                            <label className='field-filter-form-label'>
                                 Bán kính
                             </label>
                         </Col>
                         <Col sm={8}>
                             <Form.Group>
                                 <Form.Control
-                                    as="select"
+                                    as='select'
                                     onChange={this.onDistanceSelectChange}
                                     defaultValue={10000}
                                 >
@@ -232,18 +258,18 @@ export default class Fields extends Component {
                         </Col>
                     </Row>
                 </div>
-                <hr className="field-hr" />
-                <div className="field-results">
+                <hr className='field-hr' />
+                <div className='field-results'>
                     <Row>
-                        <Col className="field-results-title">
-                            <span className="field-results-number">
-                                Kết quả
+                        <Col className='field-results-title'>
+                            <span className='field-results-number'>
+                                Đã xem gần đây
                             </span>
                         </Col>
-                        <Col className="field-results-filter">
+                        <Col className='field-results-filter'>
                             <Form.Group>
                                 <Form.Control
-                                    as="select"
+                                    as='select'
                                     onChange={this.onPrioritySelectChange}
                                 >
                                     <option value={0}>Phổ biến nhất</option>
@@ -254,11 +280,11 @@ export default class Fields extends Component {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <hr className="field-hr" />
-                    <div className="loading">
-                        <Spinner animation="grow" variant="success" size="sm" />
-                        <Spinner animation="grow" variant="success" size="sm" />
-                        <Spinner animation="grow" variant="success" size="sm" />
+                    <hr className='field-hr' />
+                    <div className='loading'>
+                        <Spinner animation='grow' variant='success' size='sm' />
+                        <Spinner animation='grow' variant='success' size='sm' />
+                        <Spinner animation='grow' variant='success' size='sm' />
                     </div>
                     <ResultArea
                         ref={this.findProductRef}
@@ -267,7 +293,7 @@ export default class Fields extends Component {
                         onZoom={this.props.onZoom}
                     />
                 </div>
-                <hr className="field-hr" />
+                <hr className='field-hr' />
                 <Footer />
             </div>
         );

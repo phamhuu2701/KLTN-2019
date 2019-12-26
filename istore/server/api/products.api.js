@@ -1,16 +1,16 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 
-const ProductDao = require("../dao/product.dao");
-const StoreDao = require("../dao/store.dao");
+const ProductDao = require('../dao/product.dao');
+const StoreDao = require('../dao/store.dao');
 
-const slug = require("../util/slug");
+const slug = require('../util/slug');
 
-router.route("/").get(async (req, res, next) => {
+router.route('/').get(async (req, res, next) => {
     if (req.query.search) {
         const { lat, lng, distance } = req.query;
 
-        const search = slug(req.query.search, ".*");
+        const search = slug(req.query.search, '.*');
 
         // Find product by product name
         ProductDao.searchByName(search)
@@ -29,7 +29,7 @@ router.route("/").get(async (req, res, next) => {
                                 return res.status(200).json(results);
                             } else {
                                 return res.status(201).json({
-                                    mesage: "Không tìm thấy sản phẩm mong muốn!"
+                                    mesage: 'Không tìm thấy sản phẩm mong muốn!'
                                 });
                             }
                         }
@@ -37,7 +37,7 @@ router.route("/").get(async (req, res, next) => {
                 } else {
                     return res
                         .status(201)
-                        .json({ mesage: "Không tìm thấy sản phẩm mong muốn!" });
+                        .json({ mesage: 'Không tìm thấy sản phẩm mong muốn!' });
                 }
             })
             .catch(err => console.log(err));
@@ -50,8 +50,32 @@ router.route("/").get(async (req, res, next) => {
     }
 });
 
+router.route('/findRecentProducts').get((req, res) => {
+    const ids = JSON.parse(req.query.ids);
+    ProductDao.findByIds(ids)
+        .then(products => {
+            addStoreIntoRecentProduct(products, async results => {
+                if (results.length > 0) {
+                    const productArr = await ids.map(id => {
+                        return results[
+                            results.findIndex(result => {
+                                return result._doc._id == id;
+                            })
+                        ];
+                    });
+                    return res.status(200).json(productArr);
+                } else {
+                    return res.status(201).json({
+                        mesage: 'Chưa có sản phẩm được xem gần đây!'
+                    });
+                }
+            });
+        })
+        .catch(err => console.log(err));
+});
+
 router
-    .route("/:id")
+    .route('/:id')
     .get(async (req, res, next) => {
         let id = req.params.id;
         let product = await ProductDao.findById(id);
@@ -92,7 +116,18 @@ const addStoreIntoProduct = async (products, latlng, distance, cb) => {
     }
 
     results = products.map((product, index) => {
-        return { ...product, store: stores[index], distance: "" };
+        return { ...product, store: stores[index], distance: '' };
+    });
+    cb(results);
+};
+
+const addStoreIntoRecentProduct = async (products, cb) => {
+    let stores = [],
+        results = [];
+    stores = await StoreDao.findByProducts(products);
+
+    results = products.map((product, index) => {
+        return { ...product, store: stores[index], distance: '' };
     });
     cb(results);
 };
