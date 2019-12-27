@@ -15,17 +15,17 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import { Route, Switch } from "react-router-dom";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 // reactstrap components
-import { Container } from "reactstrap";
+import { Container } from 'reactstrap';
 // core components
-import UserNavbar from "components/user/components/Navbars/UserNavbar.jsx";
-import UserFooter from "components/user/components/Footers/UserFooter.jsx";
-import Sidebar from "components/user/components/Sidebar/Sidebar.jsx";
-import Index from "components/user/views/Index.jsx";
+import UserNavbar from 'components/user/components/Navbars/UserNavbar.jsx';
+import UserFooter from 'components/user/components/Footers/UserFooter.jsx';
+import Sidebar from 'components/user/components/Sidebar/Sidebar.jsx';
+import Index from 'components/user/views/Index.jsx';
 
-import routes from "userRoutes.js";
+import routes from 'userRoutes.js';
 
 class User extends React.Component {
     componentDidUpdate(e) {
@@ -33,9 +33,9 @@ class User extends React.Component {
         document.scrollingElement.scrollTop = 0;
         this.refs.mainContent.scrollTop = 0;
     }
-    getRoutes = (routes) => {
+    getRoutes = routes => {
         return routes.map((prop, key) => {
-            if (prop.layout === "/user") {
+            if (prop.layout === '/user') {
                 return (
                     <Route
                         path={prop.layout + prop.path}
@@ -58,50 +58,53 @@ class User extends React.Component {
                 return routes[i].name;
             }
         }
-        return "Brand";
+        return 'Brand';
     };
     render() {
-        if (this.props.location.pathname === "/user") {
+        if (this.props.location.pathname === '/user') {
             return (
                 <>
                     <Sidebar
                         {...this.props}
                         routes={routes}
                         logo={{
-                            innerLink: "/",
-                            imgSrc: require("components/user/assets/img/brand/argon-react.png"),
-                            imgAlt: "..."
+                            outterLink: '/',
+                            imgSrc: require('components/user/assets/img/brand/argon-react.png'),
+                            imgAlt: '...'
                         }}
                     />
-                    <div className="main-content" ref="mainContent">
+                    <div className='main-content' ref='mainContent'>
                         <UserNavbar
                             {...this.props}
-                            brandText={this.getBrandText(this.props.location.pathname)}
+                            brandText={this.getBrandText(
+                                this.props.location.pathname
+                            )}
                         />
-                        <Index user={this.props.user}/>
+                        <Index user={this.props.user} />
                         <Container fluid={true}>
                             <UserFooter />
                         </Container>
                     </div>
                 </>
             );
-        }
-        else {
+        } else {
             return (
                 <>
                     <Sidebar
                         {...this.props}
                         routes={routes}
                         logo={{
-                            innerLink: "/",
-                            imgSrc: require("components/user/assets/img/brand/argon-react.png"),
-                            imgAlt: "..."
+                            outterLink: '/',
+                            imgSrc: require('components/user/assets/img/brand/argon-react.png'),
+                            imgAlt: '...'
                         }}
                     />
-                    <div className="main-content" ref="mainContent">
+                    <div className='main-content' ref='mainContent'>
                         <UserNavbar
                             {...this.props}
-                            brandText={this.getBrandText(this.props.location.pathname)}
+                            brandText={this.getBrandText(
+                                this.props.location.pathname
+                            )}
                         />
                         <Switch>{this.getRoutes(routes)}</Switch>
                         <Container fluid={true}>

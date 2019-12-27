@@ -16,10 +16,10 @@
 
 */
 /*eslint-disable*/
-import React from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import React from 'react';
+import { NavLink as NavLinkRRD, Link } from 'react-router-dom';
 // nodejs library to set properties for components
-import { PropTypes } from "prop-types";
+import { PropTypes } from 'prop-types';
 
 // reactstrap components
 import {
@@ -50,10 +50,10 @@ import {
     Container,
     Row,
     Col
-} from "reactstrap";
-import { logout } from "../../../../services/user.service";
+} from 'reactstrap';
+import { logout } from '../../../../services/user.service';
 
-import routes from "userRoutes.js";
+import routes from 'userRoutes.js';
 var ps;
 
 class Sidebar extends React.Component {
@@ -66,7 +66,9 @@ class Sidebar extends React.Component {
     }
     // verifies if routeName is the one active (in browser input)
     activeRoute(routeName) {
-        return this.props.location.pathname.indexOf(routeName) > -1 ? "active" : "";
+        return this.props.location.pathname.indexOf(routeName) > -1
+            ? 'active'
+            : '';
     }
     // toggles collapse between opened and closed (true/false)
     toggleCollapse = () => {
@@ -89,7 +91,7 @@ class Sidebar extends React.Component {
                         to={prop.layout + prop.path}
                         tag={NavLinkRRD}
                         onClick={this.closeCollapse}
-                        activeClassName="active"
+                        activeClassName='active'
                     >
                         <i className={prop.icon} />
                         {prop.name}
@@ -109,39 +111,39 @@ class Sidebar extends React.Component {
         } else if (logo && logo.outterLink) {
             navbarBrandProps = {
                 href: logo.outterLink,
-                target: "_blank"
+                target: '_blank'
             };
         }
         return (
             <Navbar
-                className="navbar-vertical fixed-left navbar-light bg-white"
-                expand="md"
-                id="sidenav-main"
+                className='navbar-vertical fixed-left navbar-light bg-white'
+                expand='md'
+                id='sidenav-main'
             >
                 <Container fluid={true}>
                     {/* Toggler */}
                     <button
-                        className="navbar-toggler"
-                        type="button"
+                        className='navbar-toggler'
+                        type='button'
                         onClick={this.toggleCollapse}
                     >
-                        <span className="navbar-toggler-icon" />
+                        <span className='navbar-toggler-icon' />
                     </button>
                     {/* Brand */}
                     {logo ? (
-                        <NavbarBrand className="pt-0" {...navbarBrandProps}>
+                        <NavbarBrand className='pt-0' {...navbarBrandProps}>
                             <img
                                 alt={logo.imgAlt}
-                                className="navbar-brand-img"
+                                className='navbar-brand-img'
                                 src={logo.imgSrc}
                             />
                         </NavbarBrand>
                     ) : null}
                     {/* User */}
-                    <Nav className="align-items-center d-md-none">
+                    <Nav className='align-items-center d-md-none'>
                         <UncontrolledDropdown nav>
-                            <DropdownToggle nav className="nav-link-icon">
-                                <i className="ni ni-bell-55" />
+                            <DropdownToggle nav className='nav-link-icon'>
+                                <i className='ni ni-bell-55' />
                             </DropdownToggle>
                             {/* <DropdownMenu
                                 aria-labelledby="navbar-default_dropdown_1"
@@ -156,31 +158,45 @@ class Sidebar extends React.Component {
                         </UncontrolledDropdown>
                         <UncontrolledDropdown nav>
                             <DropdownToggle nav>
-                                <Media className="align-items-center">
-                                    <span className="avatar avatar-sm rounded-circle">
+                                <Media className='align-items-center'>
+                                    <span className='avatar avatar-sm rounded-circle'>
                                         <img
-                                            alt="..."
+                                            alt='...'
                                             // src={require("components/user/assets/img/theme/team-1-800x800.jpg")}
-                                            src={this.props.user && this.props.user.avatars[0]}
+                                            src={
+                                                this.props.user &&
+                                                this.props.user.avatars[0]
+                                            }
                                         />
                                     </span>
                                 </Media>
                             </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-arrow" right>
-                                <DropdownItem className="noti-title" header tag="div">
-                                    <h6 className="text-overflow m-0">Welcome!</h6>
+                            <DropdownMenu className='dropdown-menu-arrow' right>
+                                <DropdownItem
+                                    className='noti-title'
+                                    header
+                                    tag='div'
+                                >
+                                    <h6 className='text-overflow m-0'>
+                                        Welcome!
+                                    </h6>
                                 </DropdownItem>
-                                {
-                                    routes.map((route, key) => (
-                                        <DropdownItem key={key} to={route.layout + route.path} tag={Link}>
-                                            <i className={route.icon} />
-                                            <span>{route.name}</span>
-                                        </DropdownItem>
-                                    ))
-                                }
+                                {routes.map((route, key) => (
+                                    <DropdownItem
+                                        key={key}
+                                        to={route.layout + route.path}
+                                        tag={Link}
+                                    >
+                                        <i className={route.icon} />
+                                        <span>{route.name}</span>
+                                    </DropdownItem>
+                                ))}
                                 <DropdownItem divider />
-                                <DropdownItem href="#pablo" onClick={e => e.preventDefault()}>
-                                    <i className="ni ni-user-run" />
+                                <DropdownItem
+                                    href='#pablo'
+                                    onClick={e => e.preventDefault()}
+                                >
+                                    <i className='ni ni-user-run' />
                                     <span>Thoát</span>
                                 </DropdownItem>
                             </DropdownMenu>
@@ -189,25 +205,31 @@ class Sidebar extends React.Component {
                     {/* Collapse */}
                     <Collapse navbar isOpen={this.state.collapseOpen}>
                         {/* Collapse header */}
-                        <div className="navbar-collapse-header d-md-none">
+                        <div className='navbar-collapse-header d-md-none'>
                             <Row>
                                 {logo ? (
-                                    <Col className="collapse-brand" xs="6">
+                                    <Col className='collapse-brand' xs='6'>
                                         {logo.innerLink ? (
                                             <Link to={logo.innerLink}>
-                                                <img alt={logo.imgAlt} src={logo.imgSrc} />
+                                                <img
+                                                    alt={logo.imgAlt}
+                                                    src={logo.imgSrc}
+                                                />
                                             </Link>
                                         ) : (
-                                                <a href={logo.outterLink}>
-                                                    <img alt={logo.imgAlt} src={logo.imgSrc} />
-                                                </a>
-                                            )}
+                                            <a href={logo.outterLink}>
+                                                <img
+                                                    alt={logo.imgAlt}
+                                                    src={logo.imgSrc}
+                                                />
+                                            </a>
+                                        )}
                                     </Col>
                                 ) : null}
-                                <Col className="collapse-close" xs="6">
+                                <Col className='collapse-close' xs='6'>
                                     <button
-                                        className="navbar-toggler"
-                                        type="button"
+                                        className='navbar-toggler'
+                                        type='button'
                                         onClick={this.toggleCollapse}
                                     >
                                         <span />
@@ -217,17 +239,17 @@ class Sidebar extends React.Component {
                             </Row>
                         </div>
                         {/* Form */}
-                        <Form className="mt-4 mb-3 d-md-none">
-                            <InputGroup className="input-group-rounded input-group-merge">
+                        <Form className='mt-4 mb-3 d-md-none'>
+                            <InputGroup className='input-group-rounded input-group-merge'>
                                 <Input
-                                    aria-label="Search"
-                                    className="form-control-rounded form-control-prepended"
-                                    placeholder="Search"
-                                    type="search"
+                                    aria-label='Search'
+                                    className='form-control-rounded form-control-prepended'
+                                    placeholder='Search'
+                                    type='search'
                                 />
-                                <InputGroupAddon addonType="prepend">
+                                <InputGroupAddon addonType='prepend'>
                                     <InputGroupText>
-                                        <span className="fa fa-search" />
+                                        <span className='fa fa-search' />
                                     </InputGroupText>
                                 </InputGroupAddon>
                             </InputGroup>
@@ -235,13 +257,16 @@ class Sidebar extends React.Component {
                         {/* Navigation */}
                         <Nav navbar>{this.createLinks(routes)}</Nav>
                         {/* Divider */}
-                        <hr className="my-3" />
+                        <hr className='my-3' />
                         {/* Heading */}
                         {/* <h6 className="navbar-heading text-muted">Documentation</h6> */}
                         {/* Navigation */}
-                        <Nav className="mb-md-3" navbar>
-                            <NavLink onClick={logout} style={{"cursor": "pointer"}}>
-                                <i className="ni ni-user-run text-pink" />
+                        <Nav className='mb-md-3' navbar>
+                            <NavLink
+                                onClick={logout}
+                                style={{ cursor: 'pointer' }}
+                            >
+                                <i className='ni ni-user-run text-pink' />
                                 Thoát
                             </NavLink>
                         </Nav>

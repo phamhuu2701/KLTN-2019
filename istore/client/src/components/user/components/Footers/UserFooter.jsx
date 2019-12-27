@@ -16,58 +16,41 @@
 
 */
 /*eslint-disable*/
-import React from "react";
+import React from 'react';
 
 // reactstrap components
-import { Container, Row, Col, Nav, NavItem, NavLink } from "reactstrap";
+import { Container, Row, Col, Nav, NavItem, NavLink } from 'reactstrap';
 
 class Footer extends React.Component {
     render() {
         return (
-            <footer className="footer">
-                <Row className="align-items-center justify-content-xl-between">
-                    <Col xl="6">
-                        <div className="copyright text-center text-xl-left text-muted">
+            <footer className='footer'>
+                <Row className='align-items-center justify-content-xl-between'>
+                    <Col xl='6'>
+                        <div className='copyright text-center text-xl-left text-muted'>
                             © 2019
-                            <a
-                                className="font-weight-bold ml-1"
-                                href="#pablo"
-                            >
+                            <a className='font-weight-bold ml-1' href='#pablo'>
                                 - iStore
                             </a>
                         </div>
                     </Col>
 
-                    <Col xl="6">
-                        <Nav className="nav-footer justify-content-center justify-content-xl-end">
+                    <Col xl='6'>
+                        <Nav className='nav-footer justify-content-center justify-content-xl-end'>
                             <NavItem>
-                                <NavLink
-                                    href="#pablo"
-                                >
-                                    iStore
-                                </NavLink>
+                                <NavLink href='/'>iStore</NavLink>
                             </NavItem>
 
                             <NavItem>
-                                <NavLink
-                                    href="#pablo"
-                                >
-                                    Về chúng tôi
-                                </NavLink>
+                                <NavLink href='#pablo'>Về chúng tôi</NavLink>
                             </NavItem>
 
                             <NavItem>
-                                <NavLink
-                                    href="#pablo"
-                                >
-                                    Bản tin
-                                </NavLink>
+                                <NavLink href='#pablo'>Bản tin</NavLink>
                             </NavItem>
 
                             <NavItem>
-                                <NavLink
-                                    href="#pablo"
-                                >
+                                <NavLink href='#pablo'>
                                     Chính sách người dùng
                                 </NavLink>
                             </NavItem>

@@ -243,17 +243,22 @@ router
 
         const phone = req.body.phone;
         const email = req.body.email;
-
-        if (phone && !email) {
+        if (phone && phone !== req.session.user.phone) {
             // update phone
             user.phone = phone;
 
-            // console.log(user);
-
+            if (
+                req.body.password &&
+                user.mailVerifyToken &&
+                md5(req.body.password) !== user.password
+            ) {
+                return res.status(202).json('Mật khẩu không đúng!');
+            }
             let userUpdate = await UserDao.update(user);
-            // console.log(userUpdate);
-            res.json(userUpdate);
-        } else if (email & !phone) {
+            req.session.user.phone = phone;
+            userUpdate.password = null;
+            return res.status(200).json(userUpdate);
+        } else if (email) {
             // update email
             user.email = email;
 

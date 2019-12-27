@@ -164,6 +164,7 @@ class Profile extends React.Component {
             {
                 method: "PUT",
                 body: JSON.stringify({
+                    phone: document.querySelector('#input-phone').value,
                     fullname: {
                         firstname: this.state.inputFirstname.value,
                         lastname: this.state.inputLastname.value
@@ -422,7 +423,7 @@ class Profile extends React.Component {
                                                             id="input-phone"
                                                             placeholder="Số điện thoại"
                                                             type="tel"
-                                                            readOnly={true}
+                                                            readOnly={typeof this.state.user.phone === 'string'}
                                                         />
                                                     </FormGroup>
                                                 </Col>
