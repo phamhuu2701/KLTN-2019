@@ -42,7 +42,7 @@ const userSchema = new Schema(
             default: ["https://img.icons8.com/bubbles/2x/user.png"]
         },
         about: { type: String, maxlength: 2500 },
-        maxStoreCountCreated: {
+        maxStoresCountCreated: {
             count: { type: Number, default: 1},
             timeLimited: {type: Date}
         }

@@ -44,9 +44,9 @@ import {
 // import { Link } from "react-router-dom";
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
-import { getStoresBySizeByIdUser } from "../../../../services/user.service";
+import { getStoresBySizeByIdUser, checkStoresCountCreated } from "../../../../services/user.service";
 import "./StoresManage.css";
-// import PhoneActivate from "./PhoneActivate";
+import AlertConfirm from "./AlertConfirm";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
 import getStoreCategories, { getStoreCategoryById } from "../../../../services/storeCategory.service";
@@ -109,7 +109,9 @@ class StoresManage extends React.Component {
             storeWebsiteErrorMessage: "",
 
             addStoreErrorMessage: "",
-            addStoreResultMessage: ""
+            addStoreResultMessage: "",
+
+            showAlertConfirm: false
         }
 
         this.onAddStoreClick = this.onAddStoreClick.bind(this);
@@ -134,11 +136,22 @@ class StoresManage extends React.Component {
     }
 
     onAddStoreClick() {
-        this.setState({
-            isShowTemplateSelect: true
-        })
+        // this.setState({
+        //     isShowTemplateSelect: true
+        // })
 
-        console.log(this.props.user);
+        checkStoresCountCreated(this.props.user).then(
+            result => {
+                this.setState({
+                    isShowTemplateSelect: true
+                })
+            },
+            err => {
+                this.setState({
+                    showAlertConfirm: true
+                })
+            }
+        )
     }
 
     handeResultPhoneAdd(phone) {
@@ -809,6 +822,7 @@ class StoresManage extends React.Component {
                         </Form>
                     </div>
                     <MessageNotify message={this.state.addStoreResultMessage} />
+                    <AlertConfirm show={this.state.showAlertConfirm} />
                 </Container>
             </>
         );

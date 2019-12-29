@@ -22,6 +22,7 @@ import ChangeEmail from "./components/user/views/examples/ChangeEmail";
 import ChangePhone from "./components/user/views/examples/ChangePhone";
 import ChangePassword from "./components/user/views/examples/ChangePassword";
 import StoresProductsManage from "./components/user/views/examples/StoresProductsManage";
+import BuyStoresMore from "./components/user/views/examples/BuyStoresMore";
 
 var routes = [
     {
@@ -57,6 +58,13 @@ var routes = [
         name: "Thống kê",
         icon: "ni ni-chart-pie-35 text-orange",
         component: Index,
+        layout: "/user"
+    },
+    {
+        path: "/stores-more",
+        name: "Mua gói cửa hàng",
+        icon: "ni ni-cart text-orange",
+        component: BuyStoresMore,
         layout: "/user"
     },
     {

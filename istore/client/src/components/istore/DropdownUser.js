@@ -523,13 +523,7 @@ export default class DropdownUser extends Component {
                                         src='./resources/icons/user.svg'
                                     ></img>
                                     <span className='dropdown-user-body-content-title'>
-                                        <b>
-                                            {this.state.user.fullname
-                                                .firstname +
-                                                ' ' +
-                                                this.state.user.fullname
-                                                    .lastname}
-                                        </b>
+                                        {this.state.user.fullname.firstname + ' ' + this.state.user.fullname.lastname}
                                     </span>
                                 </div>
                             </a>
@@ -550,7 +544,8 @@ export default class DropdownUser extends Component {
                                 </div>
                             </a>
                             <hr className='dropdown-user-body-content-divide' />
-                            <div
+                            <a
+                                href='/#'
                                 className='dropdown-user-body-content-link'
                                 onClick={this.logoutHandler}
                             >
@@ -564,7 +559,7 @@ export default class DropdownUser extends Component {
                                         Thoát
                                     </span>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>

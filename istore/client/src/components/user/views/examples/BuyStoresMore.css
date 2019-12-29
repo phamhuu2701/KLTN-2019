@@ -1,0 +1,22 @@
+.buy-stores-more .card-span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.buy-stores-more table {
+    border-collapse: collapse;
+    width: 100%;
+    color: #555555;
+}
+
+.buy-stores-more table,
+th,
+td {
+    border: 1px solid #dddddd;
+    padding: 5px;
+}
+
+.buy-stores-more table th,
+.buy-stores-more table td {
+    width: 50%;
+}

@@ -1,5 +1,5 @@
-import { getNewArrayBySize } from '../utils/arrayUtils';
-import { getAvgRatesStore } from './store.service';
+import { getNewArrayBySize } from "../utils/arrayUtils";
+import { getAvgRatesStore } from "./store.service";
 
 export function LoginByLocalService(e, loginHandler) {
     e.preventDefault();
@@ -7,14 +7,14 @@ export function LoginByLocalService(e, loginHandler) {
     const passwordInput = e.target.childNodes[1].childNodes[0];
     const email = emailInput.value;
     const password = passwordInput.value;
-    emailInput.style.borderColor = '#ced4da';
-    passwordInput.style.borderColor = '#ced4da';
+    emailInput.style.borderColor = "#ced4da";
+    passwordInput.style.borderColor = "#ced4da";
 
-    fetch('/api/login', {
-        method: 'POST',
+    fetch("/api/login", {
+        method: "POST",
         headers: {
-            Accept: 'application',
-            'Content-Type': 'application/json'
+            Accept: "application",
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             email: email,
@@ -30,8 +30,8 @@ export function LoginByLocalService(e, loginHandler) {
             if (res && res.isLogged === true) {
                 loginHandler(res.user);
             } else {
-                emailInput.style.borderColor = 'red';
-                passwordInput.style.borderColor = 'red';
+                emailInput.style.borderColor = "red";
+                passwordInput.style.borderColor = "red";
             }
         })
         .catch(err => console.log(err));
@@ -58,10 +58,10 @@ export function SignUpByLocalService(e, that) {
         };
 
         fetch(`/api/users`, {
-            method: 'POST',
+            method: "POST",
             headers: {
-                Accept: 'application',
-                'Content-Type': 'application/json'
+                Accept: "application",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(userInfo)
         })
@@ -72,17 +72,17 @@ export function SignUpByLocalService(e, that) {
                 if (res.err) {
                     // Error
                     that.setState({
-                        feedback: 'error',
+                        feedback: "error",
                         feedbackContent: res.err,
-                        checkEmail: 'invalid',
-                        checkPhone: 'invalid'
+                        checkEmail: "invalid",
+                        checkPhone: "invalid"
                     });
                 } else {
                     // Success
                     that.setState({
-                        sign: 'in',
-                        feedback: '',
-                        feedbackContent: ''
+                        sign: "in",
+                        feedback: "",
+                        feedbackContent: ""
                     });
                     that.props.successSignUpHandler(res.message);
                 }
@@ -92,39 +92,39 @@ export function SignUpByLocalService(e, that) {
         that.setState({
             checkFirstname: that.state.checkFirstname
                 ? that.state.checkFirstname
-                : 'invalid',
+                : "invalid",
             checkEmail: that.state.checkEmail
                 ? that.state.checkEmail
-                : 'invalid',
+                : "invalid",
             checkPhone: that.state.checkPhone
                 ? that.state.checkPhone
-                : 'invalid',
+                : "invalid",
             checkPassword: that.state.checkPassword
                 ? that.state.checkPassword
-                : 'invalid',
+                : "invalid",
             checkPasswordConfirm: that.state.checkPasswordConfirm
                 ? that.state.checkPasswordConfirm
-                : 'invalid'
+                : "invalid"
         });
     }
 }
 
 export function LogOutService(that) {
-    fetch('/api/logout', {
-        method: 'GET'
+    fetch("/api/logout", {
+        method: "GET"
     })
         .then(result => {
             if (result.status === 200) {
                 that.setState({
                     isLogged: false,
                     user: null,
-                    sign: ''
+                    sign: ""
                 });
                 that.props.logInToggle(false);
-                document.getElementById('dropdown-user-body').style.display =
-                    'none';
+                document.getElementById("dropdown-user-body").style.display =
+                    "none";
             } else {
-                alert('Đã có lỗi!!!');
+                alert("Đã có lỗi!!!");
             }
         })
         .catch(err => console.log(err));
@@ -133,26 +133,26 @@ export function LogOutService(that) {
 export async function ForgotPasswordService(that) {
     if (that.state.emailValue) {
         that.setState({
-            showLoading: 'show'
+            showLoading: "show"
         });
         // Update new password
         const token = that.forgotPassword_TokenRef.current.value;
         const password = that.forgotPassword_PasswordRef.current.value;
         const repassword = that.forgotPassword_rePasswordRef.current.value;
         if (password !== repassword) {
-            alert('Mật khẩu nhập lại không chính xác!');
+            alert("Mật khẩu nhập lại không chính xác!");
         } else {
-            fetch('/api/users/forgotpassword-' + that.state.emailValue, {
-                method: 'PUT',
+            fetch("/api/users/forgotpassword-" + that.state.emailValue, {
+                method: "PUT",
                 headers: {
-                    Accept: 'application',
-                    'Content-Type': 'application/json'
+                    Accept: "application",
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify({ token: token, password: password })
             })
                 .then(result => {
                     that.setState({
-                        showLoading: ''
+                        showLoading: ""
                     });
                     if (result.status === 200) {
                         // Update new password successfully
@@ -172,7 +172,7 @@ export async function ForgotPasswordService(that) {
                         // Show massage
                         //alert()
                         that.props.successSignUpHandler(
-                            'Lấy lại mật khẩu thành công!'
+                            "Lấy lại mật khẩu thành công!"
                         );
                     }
                 })
@@ -181,23 +181,23 @@ export async function ForgotPasswordService(that) {
     } else {
         const email = that.forgotPassword_EmailRef.current.value;
         that.setState({
-            showLoading: 'show'
+            showLoading: "show"
         });
-        await ValidateInputService('email', email, that);
-        if (that.state.checkEmail === 'valid') {
+        await ValidateInputService("email", email, that);
+        if (that.state.checkEmail === "valid") {
             // Check email in database
-            fetch('/api/users/forgotpassword-' + email, {
-                method: 'GET'
+            fetch("/api/users/forgotpassword-" + email, {
+                method: "GET"
             })
                 .then(result => {
                     that.setState({
-                        showLoading: ''
+                        showLoading: ""
                     });
                     if (result.status === 200) {
                         return result.json();
                     } else if (result.status === 201) {
                         that.setState({
-                            errorForgotPassword: '*Email không trùng khớp!'
+                            errorForgotPassword: "*Email không trùng khớp!"
                         });
                     } else {
                         return result.json();
@@ -208,9 +208,9 @@ export async function ForgotPasswordService(that) {
                         // Show new password and token input
                         that.setState({
                             forgotPasswordNotify:
-                                'Hãy kiểm tra email để lấy Token!',
-                            errorForgotPassword: '',
-                            confirmForgotPasswordValue: 'Cập nhật',
+                                "Hãy kiểm tra email để lấy Token!",
+                            errorForgotPassword: "",
+                            confirmForgotPasswordValue: "Cập nhật",
                             emailValue: email
                         });
                     } else {
@@ -221,7 +221,7 @@ export async function ForgotPasswordService(that) {
                 });
         } else {
             that.setState({
-                errorForgotPassword: 'Vui lòng nhập đúng định dạng email!'
+                errorForgotPassword: "Vui lòng nhập đúng định dạng email!"
             });
         }
     }
@@ -230,79 +230,79 @@ export async function ForgotPasswordService(that) {
 export function ValidateInputService(key, value, that) {
     // Check something
     switch (key) {
-        case 'firstname':
+        case "firstname":
             // Check length
             if (value.length < 3) {
                 that.setState({
-                    checkFirstname: 'invalid'
+                    checkFirstname: "invalid"
                 });
             } else {
                 that.setState({
-                    checkFirstname: 'valid'
+                    checkFirstname: "valid"
                 });
             }
             break;
-        case 'lastname':
+        case "lastname":
             // Check length
             if (value.length < 3) {
                 that.setState({
-                    checkLastname: 'invalid'
+                    checkLastname: "invalid"
                 });
             } else {
                 that.setState({
-                    checkLastname: 'valid'
+                    checkLastname: "valid"
                 });
             }
             break;
-        case 'email':
+        case "email":
             // Check contain @
-            if (value.includes('@') && value.length > 12) {
+            if (value.includes("@") && value.length > 12) {
                 that.setState({
-                    checkEmail: 'valid'
+                    checkEmail: "valid"
                 });
             } else {
                 that.setState({
-                    checkEmail: 'invalid'
+                    checkEmail: "invalid"
                 });
             }
             break;
-        case 'phone':
+        case "phone":
             // Check length and start with 0xxx
-            if (value.length < 10 || !value.startsWith('0')) {
+            if (value.length < 10 || !value.startsWith("0")) {
                 that.setState({
-                    checkPhone: 'invalid'
+                    checkPhone: "invalid"
                 });
             } else {
                 that.setState({
-                    checkPhone: 'valid'
+                    checkPhone: "valid"
                 });
             }
             break;
-        case 'password':
+        case "password":
             // Check length
             if (value.length < 3) {
                 that.setState({
-                    checkPassword: 'invalid'
+                    checkPassword: "invalid"
                 });
             }
             // Check contain a character
             else if (!value.match(/[a-z]/m)) {
                 that.setState({
-                    checkPassword: 'invalid'
+                    checkPassword: "invalid"
                 });
             } else {
                 const passwordConfirm = document.querySelector(
                     'input[name="password_confirm"]'
                 ).value;
-                if (passwordConfirm !== '' && value !== passwordConfirm) {
+                if (passwordConfirm !== "" && value !== passwordConfirm) {
                     that.setState({
-                        checkPassword: 'invalid',
-                        checkPasswordConfirm: 'invalid'
+                        checkPassword: "invalid",
+                        checkPasswordConfirm: "invalid"
                     });
                 } else {
                     that.setState({
-                        checkPassword: 'valid',
-                        checkPasswordConfirm: 'valid'
+                        checkPassword: "valid",
+                        checkPasswordConfirm: "valid"
                     });
                 }
             }
@@ -311,7 +311,7 @@ export function ValidateInputService(key, value, that) {
             // Check the password equal password_confirm
             if (value.length < 3) {
                 that.setState({
-                    checkPasswordConfirm: 'invalid'
+                    checkPasswordConfirm: "invalid"
                 });
             }
             // Compare with password
@@ -319,13 +319,13 @@ export function ValidateInputService(key, value, that) {
                 value !== document.querySelector('input[name="password"]').value
             ) {
                 that.setState({
-                    checkPassword: 'invalid',
-                    checkPasswordConfirm: 'invalid'
+                    checkPassword: "invalid",
+                    checkPasswordConfirm: "invalid"
                 });
             } else {
                 that.setState({
-                    checkPassword: 'valid',
-                    checkPasswordConfirm: 'valid'
+                    checkPassword: "valid",
+                    checkPasswordConfirm: "valid"
                 });
             }
             break;
@@ -333,7 +333,7 @@ export function ValidateInputService(key, value, that) {
 }
 
 export function getStoresByIdUser(e, idUser) {
-    fetch('/api/users/' + idUser + '/stores')
+    fetch("/api/users/" + idUser + "/stores")
         .then(res => res.json())
         .then(stores => {
             // return stores;
@@ -345,7 +345,7 @@ export function getStoresByIdUser(e, idUser) {
 }
 
 export function getStoresBySizeByIdUser(e, idUser, firstIndex, size) {
-    fetch('/api/users/' + idUser + '/stores')
+    fetch("/api/users/" + idUser + "/stores")
         .then(res => res.json())
         .then(stores => {
             // return stores;
@@ -357,13 +357,13 @@ export function getStoresBySizeByIdUser(e, idUser, firstIndex, size) {
 }
 
 export function updateUserPhone(id, phone, callback) {
-    fetch('/api/users/' + id, {
-        method: 'PUT',
+    fetch("/api/users/" + id, {
+        method: "PUT",
         body: JSON.stringify({
             phone: phone
         }),
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         }
     })
         .then(res => res.json())
@@ -378,17 +378,17 @@ export function updateUserPhone(id, phone, callback) {
 }
 
 export function logout() {
-    fetch('/api/logout', {
-        method: 'GET'
+    fetch("/api/logout", {
+        method: "GET"
     })
         .then(result => {
-            window.location.href = '/';
+            window.location.href = "/";
         })
         .catch(err => console.log(err));
 }
 
 export function getUserLogged(callback) {
-    fetch('/api/login')
+    fetch("/api/login")
         .then(res => res.json())
         .then(results => {
             callback(results);
@@ -397,7 +397,7 @@ export function getUserLogged(callback) {
 }
 
 export function getStoresByIdUser2(idUser, callback) {
-    fetch('/api/users/' + idUser + '/stores')
+    fetch("/api/users/" + idUser + "/stores")
         .then(res => res.json())
         .then(results => {
             callback(results);
@@ -433,7 +433,7 @@ export function getAvgRatesStoresByUser(user, callback) {
 
 export function getProductsAllStoresByUser(idUser, callback) {
     let products = [];
-    fetch('/api/users/' + idUser + '/stores')
+    fetch("/api/users/" + idUser + "/stores")
         .then(res => res.json())
         .then(stores => {
             if (stores.length > 0) {
@@ -456,14 +456,14 @@ export function getProductsAllStoresByUser(idUser, callback) {
 }
 
 export function checkUserLogin(username, password, callback) {
-    fetch('/api/login/', {
-        method: 'POST',
+    fetch("/api/login/", {
+        method: "POST",
         body: JSON.stringify({
             email: username,
             password: password
         }),
         headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
         }
     })
         .then(res => res.json())
@@ -473,7 +473,7 @@ export function checkUserLogin(username, password, callback) {
 }
 
 export function getUsers(callback) {
-    fetch('/api/users/')
+    fetch("/api/users/")
         .then(res => res.json())
         .then(results => {
             callback(results);
@@ -488,8 +488,8 @@ export function getUserByAuthorizationUser(callback) {
             for (let i = 0; i < users.length; i++) {
                 if (
                     users[i].authorization &&
-                    users[i].authorization.name !== 'Admin' &&
-                    users[i].authorization.name !== 'Employee'
+                    users[i].authorization.name !== "Admin" &&
+                    users[i].authorization.name !== "Employee"
                 ) {
                     usersMain.push(users[i]);
                 }
@@ -554,5 +554,26 @@ export function getUserModel2s(callback) {
         } else {
             callback([]);
         }
+    });
+}
+
+export function checkStoresCountCreated(user, callback) {
+    const currentDate = new Date();
+    return new Promise((resolve, reject) => {
+        getStoresByIdUser2(user._id, stores => {
+
+            console.log(user.maxStoresCountCreated.count);
+            console.log(user.maxStoresCountCreated.timeLimited);
+            
+            if (
+                stores.length <= user.maxStoresCountCreated.count &&
+                (!user.maxStoresCountCreated.timeLimited || 
+                    currentDate <= user.maxStoresCountCreated.timeLimited)
+            ) {
+                return resolve(true);
+            } else {
+                return reject(false);
+            }
+        });
     });
 }
