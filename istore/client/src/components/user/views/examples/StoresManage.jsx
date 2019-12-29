@@ -41,7 +41,6 @@ import {
     Input,
     FormText
 } from "reactstrap";
-// import { Link } from "react-router-dom";
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser, checkStoresCountCreated } from "../../../../services/user.service";
@@ -111,7 +110,13 @@ class StoresManage extends React.Component {
             addStoreErrorMessage: "",
             addStoreResultMessage: "",
 
-            showAlertConfirm: false
+            showAlertConfirm: false,
+
+            paginationClassName: {
+                pagination1: "active",
+                pagination2: "",
+                pagination3: "",
+            }
         }
 
         this.onAddStoreClick = this.onAddStoreClick.bind(this);
@@ -124,6 +129,7 @@ class StoresManage extends React.Component {
         this.onSelectStreetsChange = this.onSelectStreetsChange.bind(this);
         this.onInputStoreInfoChange = this.onInputStoreInfoChange.bind(this);
         this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
+        this.getStoresBySize = this.getStoresBySize.bind(this);
     }
 
     componentDidMount() {
@@ -135,13 +141,56 @@ class StoresManage extends React.Component {
         getCities(this);
     }
 
-    onAddStoreClick() {
-        // this.setState({
-        //     isShowTemplateSelect: true
-        // })
+    getStoresBySize(value) {
+        this.setState({
+            stores: getStoresBySizeByIdUser(this, this.props.user._id, (value - 1) * 10, value * 10)
+        })
 
+        switch (value) {
+            case 1:
+                this.setState({
+                    paginationClassName: {
+                        pagination1: "active",
+                        pagination2: "",
+                        pagination3: "",
+                    }
+                })
+                break;
+            case 2:                
+                this.setState({
+                    paginationClassName: {
+                        pagination1: "",
+                        pagination2: "active",
+                        pagination3: "",
+                    }
+                })
+                break;
+            case 3:
+                this.setState({
+                    paginationClassName: {
+                        pagination1: "",
+                        pagination2: "",
+                        pagination3: "active",
+                    }
+                })
+                break;
+        
+            default:
+                this.setState({
+                    paginationClassName: {
+                        pagination1: "active",
+                        pagination2: "",
+                        pagination3: "",
+                    }
+                })
+                break;
+        }
+    }
+
+    onAddStoreClick() {
+        console.log(this.props.user);
         checkStoresCountCreated(this.props.user).then(
-            result => {
+            result => {                
                 this.setState({
                     isShowTemplateSelect: true
                 })
@@ -155,7 +204,6 @@ class StoresManage extends React.Component {
     }
 
     handeResultPhoneAdd(phone) {
-        // console.log(result);
         if (phone) {
             this.setState({
                 showPhoneAddModal: false,
@@ -172,8 +220,6 @@ class StoresManage extends React.Component {
     }
 
     onTemplatesItemClick(e) {
-        // console.log(e.target.id);
-
         if (e.target.id === "item-1") {
             this.setState({
                 isTemplateItem1Clicked: true,
@@ -227,7 +273,6 @@ class StoresManage extends React.Component {
 
     onSelectCityChange(e) {
         let id = e.target.value;
-        // console.log(id);
 
         this.setState({
             inputStoreCityId: id,
@@ -240,7 +285,6 @@ class StoresManage extends React.Component {
 
     onSelectDistrictChange(e) {
         let id = e.target.value;
-        // console.log(id);
 
         this.setState({
             inputStoreDistrictId: id,
@@ -253,7 +297,6 @@ class StoresManage extends React.Component {
 
     onSelectStreetsChange(e) {
         let id = e.target.value;
-        // console.log(id);
 
         this.setState({
             inputStoreStreetId: id,
@@ -264,7 +307,6 @@ class StoresManage extends React.Component {
     }
 
     onInputStoreInfoChange(e) {
-        // console.log(e.target.id + " - " + e.target.value);
         if (e.target.id === "name") {
             this.setState({
                 inputStoreName: e.target.value,
@@ -515,7 +557,6 @@ class StoresManage extends React.Component {
                                         >
                                             <PaginationItem className="disabled">
                                                 <PaginationLink
-                                                    href="#pablo"
                                                     onClick={e => e.preventDefault()}
                                                     tabIndex="-1"
                                                 >
@@ -523,33 +564,29 @@ class StoresManage extends React.Component {
                                                     <span className="sr-only">Previous</span>
                                                 </PaginationLink>
                                             </PaginationItem>
-                                            <PaginationItem className="active">
+                                            <PaginationItem className={this.state.paginationClassName.pagination1}>
                                                 <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
+                                                    onClick={e => this.getStoresBySize(1)}
                                                 >
                                                     1
                                                 </PaginationLink>
                                             </PaginationItem>
-                                            <PaginationItem>
+                                            <PaginationItem className={this.state.paginationClassName.pagination2}>
                                                 <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
+                                                    onClick={e => this.getStoresBySize(2)}
                                                 >
                                                     2 <span className="sr-only">(current)</span>
                                                 </PaginationLink>
                                             </PaginationItem>
-                                            <PaginationItem>
+                                            <PaginationItem className={this.state.paginationClassName.pagination3}>
                                                 <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
+                                                    onClick={e => this.getStoresBySize(3)}
                                                 >
                                                     3
                                                 </PaginationLink>
                                             </PaginationItem>
                                             <PaginationItem>
                                                 <PaginationLink
-                                                    href="#pablo"
                                                     onClick={e => e.preventDefault()}
                                                 >
                                                     <i className="fas fa-angle-right" />

@@ -21,8 +21,16 @@ class AlertConfirm extends Component {
         })
     }
 
-    onBuyStoresMoreClick() {
+    UNSAFE_componentWillReceiveProps(nextProps) {
+        if (nextProps.show) {
+            this.setState({
+                show: true
+            })
+        }
+    }
 
+    onBuyStoresMoreClick() {
+        window.location = "more-stores";
     }
 
     render() {

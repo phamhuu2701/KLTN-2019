@@ -242,7 +242,15 @@ router
 
         const phone = req.body.phone;
         const email = req.body.email;
-        if (phone && phone !== req.session.user.phone) {
+        const maxStoresCountCreated = req.body.maxStoresCountCreated;
+        if(maxStoresCountCreated){
+            user.maxStoresCountCreated = req.body.maxStoresCountCreated;
+
+            let userUpdate = await UserDao.update(user);
+            req.session.user = userUpdate;
+            res.json(userUpdate);
+        }
+        else if (phone && phone !== req.session.user.phone) {
             // update phone
             user.phone = phone;
 
@@ -261,24 +269,17 @@ router
             // update email
             user.email = email;
 
-            // console.log(user);
-
             let userUpdate = await UserDao.update(user);
-            // console.log(userUpdate);
+            req.session.user = userUpdate;
             res.json(userUpdate);
         } else {
-            // update basic info
-
             // update basic info
             user.fullname = req.body.fullname;
             user.gender = req.body.gender;
             user.birthday = req.body.birthday;
             user.address = req.body.address;
 
-            // console.log(user);
-
             let userUpdate = await UserDao.update(user);
-            //console.log(userUpdate);
             req.session.user = userUpdate;
             res.json(userUpdate);
         }

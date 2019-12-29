@@ -557,18 +557,14 @@ export function getUserModel2s(callback) {
     });
 }
 
-export function checkStoresCountCreated(user, callback) {
+export function checkStoresCountCreated(user) {
     const currentDate = new Date();
     return new Promise((resolve, reject) => {
-        getStoresByIdUser2(user._id, stores => {
-
-            console.log(user.maxStoresCountCreated.count);
-            console.log(user.maxStoresCountCreated.timeLimited);
-            
+        getStoresByIdUser2(user._id, stores => {            
             if (
-                stores.length <= user.maxStoresCountCreated.count &&
+                stores.length < user.maxStoresCountCreated.count &&
                 (!user.maxStoresCountCreated.timeLimited || 
-                    currentDate <= user.maxStoresCountCreated.timeLimited)
+                    currentDate <= new Date(user.maxStoresCountCreated.timeLimited))
             ) {
                 return resolve(true);
             } else {

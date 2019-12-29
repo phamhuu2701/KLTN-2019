@@ -257,8 +257,7 @@ class Index extends React.Component {
                                         <div className="col text-right">
                                             <Button
                                                 color="primary"
-                                                href="#pablo"
-                                                onClick={e => e.preventDefault()}
+                                                href="stores-manage"
                                                 size="sm"
                                             >
                                                 Xem tất cả
@@ -309,8 +308,7 @@ class Index extends React.Component {
                                         <div className="col text-right">
                                             <Button
                                                 color="primary"
-                                                href="#pablo"
-                                                onClick={e => e.preventDefault()}
+                                                href="stores-products-manage"
                                                 size="sm"
                                             >
                                                 Xem tất cả

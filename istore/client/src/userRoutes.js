@@ -61,7 +61,7 @@ var routes = [
         layout: '/user'
     },
     {
-        path: "/stores-more",
+        path: "/more-stores",
         name: "Mua gói cửa hàng",
         icon: "ni ni-cart text-orange",
         component: BuyStoresMore,
