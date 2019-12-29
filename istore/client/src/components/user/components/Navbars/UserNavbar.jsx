@@ -81,6 +81,7 @@ class UserNavbar extends React.Component {
                                     <Media className='align-items-center'>
                                         <span className='avatar avatar-sm rounded-circle'>
                                             <img
+                                                className='avatarHeader'
                                                 alt='...'
                                                 // src={require("components/user/assets/img/theme/team-4-800x800.jpg")}
                                                 src={

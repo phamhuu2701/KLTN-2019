@@ -83,16 +83,44 @@ router
         }
     });
 
-router.route('/updateAvatar').post((req, res) => {
+router.route('/updateAvatar').put((req, res) => {
     upload(req, res, err => {
         if (err) {
             console.log(err);
             res.status(200).json('ok');
         } else {
-            console.log(req.file.path);
-            res.status(200).json('ok');
+            const p = req.file.path;
+            const index = p.indexOf('img');
+            const path = '/' + p.slice(index);
+            UserDao.updateAvatar(req.session.user._id, path)
+                .then(result => {
+                    req.session.user.avatars[0] = path;
+                    res.status(200).json(path);
+                })
+                .catch(err => res.status(201).json(err));
         }
     });
+});
+
+router.route('/updatePassword').put((req, res) => {
+    const { password, newPassword } = req.body;
+    UserDao.comparePassword(req.session.user._id, md5(password))
+        .then(match => {
+            if (match) {
+                // Update new password
+                return UserDao.updateNewPassword(
+                    req.session.user.email,
+                    md5(newPassword)
+                );
+            } else {
+                // Fail
+                return res.status(201).json('Mật khẩu cũ không chính xác!');
+            }
+        })
+        .then(result => {
+            return res.status(200).json('Đã cập nhật mật khẩu!');
+        })
+        .catch(err => res.status(201).json('Đã xảy ra lỗi!'));
 });
 
 router
@@ -214,17 +242,22 @@ router
 
         const phone = req.body.phone;
         const email = req.body.email;
-
-        if (phone && !email) {
+        if (phone && phone !== req.session.user.phone) {
             // update phone
             user.phone = phone;
 
-            // console.log(user);
-
+            if (
+                req.body.password &&
+                user.mailVerifyToken &&
+                md5(req.body.password) !== user.password
+            ) {
+                return res.status(202).json('Mật khẩu không đúng!');
+            }
             let userUpdate = await UserDao.update(user);
-            // console.log(userUpdate);
-            res.json(userUpdate);
-        } else if (email & !phone) {
+            req.session.user.phone = phone;
+            userUpdate.password = null;
+            return res.status(200).json(userUpdate);
+        } else if (email) {
             // update email
             user.email = email;
 

@@ -1,10 +1,10 @@
-const Model = require("../models/user.model");
+const Model = require('../models/user.model');
 
 module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
             Model.find({})
-                .populate("authorization")
+                .populate('authorization')
                 .exec((err, results) => {
                     if (err) return reject(null);
                     return resolve(results);
@@ -14,7 +14,7 @@ module.exports = {
     findById: id => {
         return new Promise((resolve, reject) => {
             Model.findById(id)
-                .populate("authorization")
+                .populate('authorization')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -24,7 +24,7 @@ module.exports = {
     findByName: name => {
         return new Promise((resolve, reject) => {
             Model.find({ name: name })
-                .populate("authorization")
+                .populate('authorization')
                 .exec((err, results) => {
                     if (err) return reject(null);
                     return resolve(results);
@@ -34,7 +34,7 @@ module.exports = {
     findOneByEmail: email => {
         return new Promise((resolve, reject) => {
             Model.findOne({ email: email })
-                .populate("authorization")
+                .populate('authorization')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -43,7 +43,7 @@ module.exports = {
     },
     findOneByEmailAndPassword: (email, password) => {
         return Model.findOne({ email: email, password: password }).populate(
-            "authorization"
+            'authorization'
         );
     },
     findOrCreate: user => {
@@ -52,7 +52,7 @@ module.exports = {
     findOneByPhone: phone => {
         return new Promise((resolve, reject) => {
             Model.findOne({ phone: phone })
-                .populate("authorization")
+                .populate('authorization')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -101,6 +101,13 @@ module.exports = {
             );
         });
     },
+    updateAvatar: (id, path) => {
+        return Model.findByIdAndUpdate(
+            id,
+            { avatars: [path] },
+            { useFindAndModify: false }
+        );
+    },
     updateForgetPasswordToken: (email, token) => {
         return Model.findOneAndUpdate(
             { email: email },
@@ -110,6 +117,9 @@ module.exports = {
             },
             { useFindAndModify: false }
         );
+    },
+    comparePassword: (id, password) => {
+        return Model.findOne({ _id: id, password: password });
     },
     updateNewPassword: (email, password) => {
         return Model.findOneAndUpdate(

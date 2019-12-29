@@ -164,7 +164,7 @@ class SignForm extends Component {
     }
 
     validateInput(e) {
-        ValidateInputService(e.target.key, e.target.value, this);
+        ValidateInputService(e.target.name, e.target.value, this);
     }
 
     close() {

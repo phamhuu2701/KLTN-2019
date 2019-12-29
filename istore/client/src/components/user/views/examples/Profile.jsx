@@ -70,6 +70,7 @@ class Profile extends React.Component {
                 errorMessage: "",
                 value: props.user.about
             },
+            display: 'hidden',
             updateResultMessage: null
         }
 
@@ -163,6 +164,7 @@ class Profile extends React.Component {
             {
                 method: "PUT",
                 body: JSON.stringify({
+                    phone: document.querySelector('#input-phone').value,
                     fullname: {
                         firstname: this.state.inputFirstname.value,
                         lastname: this.state.inputLastname.value
@@ -199,6 +201,9 @@ class Profile extends React.Component {
         var preview = document.querySelector('img.preview'); //selects the query named img
         if (cancle) {
             preview.src = this.state.user.avatars[0];
+            this.setState({
+                display: 'hidden'
+            })
         } else {
             var file    = document.querySelector('input[type=file]').files[0]; //sames as here
             var reader  = new FileReader();
@@ -206,7 +211,10 @@ class Profile extends React.Component {
             preview.src = reader.result;
             }
             if (file) {
-            reader.readAsDataURL(file); //reads the data as a URL
+                this.setState({
+                    display: ''
+                })
+                reader.readAsDataURL(file); //reads the data as a URL
             } else {
             //preview.src = "";
             }
@@ -217,13 +225,27 @@ class Profile extends React.Component {
         e.preventDefault();
         const file = document.querySelector('input[type=file]').files[0];
         const formData = new FormData();
-        formData.append('file', file)
+        formData.append('file', file);
         fetch('/api/users/updateAvatar', {
-            method: 'POST',
+            method: 'PUT',
             body: formData
         })
         .then(result => {
-            console.log(result);
+            return result.json()
+        })
+        .then(path => {
+            const user = this.state.user;
+            user.avatars[0] = path;
+            this.setState({
+                user: user
+            })
+            this.setState({
+                display: 'hidden'
+            })
+            document.querySelector('.avatarHeader').src = path;
+            alert('Đã cập nhật avatar!');
+
+            // 
         })
         .catch(err => console.log(err))
     }
@@ -251,7 +273,7 @@ class Profile extends React.Component {
                                         </Col>
                                     </Row>
                                     <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
-                                        <div className="d-flex justify-content-between">
+                                        <div className={"d-flex justify-content-between " + this.state.display}>
                                             <Button
                                                 type="reset"
                                                 onClick={() => {this.previewFile(this, true)}}
@@ -404,7 +426,7 @@ class Profile extends React.Component {
                                                             id="input-phone"
                                                             placeholder="Số điện thoại"
                                                             type="tel"
-                                                            readOnly={true}
+                                                            readOnly={typeof this.state.user.phone === 'string'}
                                                         />
                                                     </FormGroup>
                                                 </Col>

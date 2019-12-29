@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React from 'react';
 
 // reactstrap components
 import {
@@ -28,61 +28,153 @@ import {
     InputGroupAddon,
     InputGroupText,
     InputGroup,
-    Row,
     Col
-} from "reactstrap";
+} from 'reactstrap';
 
 class ChangePhone extends React.Component {
+    constructor(props) {
+        super(props);
+        this.phoneRef = React.createRef();
+        this.passwordRef = React.createRef();
+        this.state = {
+            user: {
+                id: '',
+                phone: ''
+            }
+        };
+        this.updatePhone = this.updatePhone.bind(this);
+    }
+
+    UNSAFE_componentWillMount() {
+        fetch('/api/login', {
+            method: 'GET'
+        })
+            .then(result => {
+                if (result.status === 200) {
+                    return result.json();
+                }
+            })
+            .then(res => {
+                this.setState({
+                    id: res.user._id,
+                    phone: res.user.phone,
+                    social: !++res.user.mailVerifyToken
+                });
+                if (res.user.phone) {
+                    alert('Bạn không có quyền thực hiện chức năng này!');
+                    document.location.href = '/user/profile';
+                } else {
+                    // Render enter the new number phone
+                }
+            })
+            .catch(err => console.log(err));
+    }
+
+    updatePhone(e) {
+        e.preventDefault();
+        const user = {
+            phone: this.phoneRef.current.value,
+            password: this.passwordRef.current.value
+        };
+        if (user.phone.length !== 10 || !user.phone.startsWith('0')) {
+            alert('Số điện thoại không hợp lệ!');
+            return;
+        }
+        fetch('/api/users/' + this.state.id, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(result => {
+                if (result.status === 200) {
+                    alert('Đã cập nhật số điện thoại');
+                    document.location.href = '/user/profile';
+                } else {
+                    return alert('Mật khẩu không đúng!');
+                }
+            })
+            .catch(err => console.log(err));
+    }
+
     render() {
         return (
             <>
-                <Col lg="5" md="7">
-                    <Card className="bg-secondary shadow border-0">
-                        <CardBody className="px-lg-5 py-lg-5">
-                            <div className="text-center text-muted mb-4">
-                                <h1 style={{ "color": "#777" }}>Đổi số điện thoại</h1>
+                <Col lg='5' md='7'>
+                    <Card className='bg-secondary shadow border-0'>
+                        <CardBody className='px-lg-5 py-lg-5'>
+                            <div className='text-center text-muted mb-4'>
+                                <h1 style={{ color: '#777' }}>
+                                    Bổ sung số điện thoại
+                                </h1>
                             </div>
                             <hr />
-                            <Form role="form">
-                                <FormGroup className="mb-3">
-                                    <InputGroup className="input-group-alternative">
-                                        <InputGroupAddon addonType="prepend">
+                            <Form role='form' onSubmit={this.updatePhone}>
+                                <FormGroup className='mb-3'>
+                                    <InputGroup className='input-group-alternative'>
+                                        <InputGroupAddon addonType='prepend'>
                                             <InputGroupText>
-                                                <i className="ni ni-mobile-button" />
+                                                <i className='ni ni-mobile-button' />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="Số điện thoại hiện tại" type="tel" required={true} />
+                                        <Input
+                                            innerRef={this.phoneRef}
+                                            placeholder='Nhập số điện thoại'
+                                            defaultValue={this.state.phone}
+                                            type='tel'
+                                            required={true}
+                                        />
                                     </InputGroup>
                                 </FormGroup>
-                                <FormGroup className="mb-3">
-                                    <InputGroup className="input-group-alternative">
-                                        <InputGroupAddon addonType="prepend">
+                                {/* <FormGroup className='mb-3'>
+                                    <InputGroup className='input-group-alternative'>
+                                        <InputGroupAddon addonType='prepend'>
                                             <InputGroupText>
-                                                <i className="ni ni-mobile-button" />
+                                                <i className='ni ni-mobile-button' />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="Số điện thoại mới" type="tel" required={true} />
+                                        <Input
+                                            placeholder='Số điện thoại mới'
+                                            type='tel'
+                                            required={true}
+                                        />
                                     </InputGroup>
-                                </FormGroup>
+                                </FormGroup> */}
                                 <FormGroup>
-                                    <InputGroup className="input-group-alternative">
-                                        <InputGroupAddon addonType="prepend">
+                                    <InputGroup className='input-group-alternative'>
+                                        <InputGroupAddon addonType='prepend'>
                                             <InputGroupText>
-                                                <i className="ni ni-lock-circle-open" />
+                                                <i className='ni ni-lock-circle-open' />
                                             </InputGroupText>
                                         </InputGroupAddon>
-                                        <Input placeholder="Nhập lại mật khẩu" type="password" required={true} />
+                                        <Input
+                                            innerRef={this.passwordRef}
+                                            placeholder='Nhập mật khẩu'
+                                            type='password'
+                                            required={true}
+                                            defaultValue={
+                                                this.state.social
+                                                    ? 'social'
+                                                    : ''
+                                            }
+                                            readOnly={this.state.social}
+                                        />
                                     </InputGroup>
                                 </FormGroup>
-                                <div className="text-center">
-                                    <Button className="my-4" color="primary" type="button">
+                                <div className='text-center'>
+                                    <Button
+                                        className='my-4'
+                                        color='primary'
+                                        type='submit'
+                                    >
                                         Xác nhận
                                     </Button>
                                 </div>
                             </Form>
                         </CardBody>
                     </Card>
-                    <Row className="mt-3">
+                    {/* <Row className="mt-3">
                         <Col xs="6">
                             <a
                                 className="text-light"
@@ -101,7 +193,7 @@ class ChangePhone extends React.Component {
                                 <small>Tạo tài khoản mới</small>
                             </a>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Col>
             </>
         );
