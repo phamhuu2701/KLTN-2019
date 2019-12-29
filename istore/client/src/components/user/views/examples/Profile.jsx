@@ -239,6 +239,9 @@ class Profile extends React.Component {
             this.setState({
                 user: user
             })
+            this.setState({
+                display: 'hidden'
+            })
             document.querySelector('.avatarHeader').src = path;
             alert('Đã cập nhật avatar!');
 

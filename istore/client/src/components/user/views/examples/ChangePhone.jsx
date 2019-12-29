@@ -16,7 +16,6 @@
 
 */
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 
 // reactstrap components
 import {
@@ -29,7 +28,6 @@ import {
     InputGroupAddon,
     InputGroupText,
     InputGroup,
-    Row,
     Col
 } from 'reactstrap';
 

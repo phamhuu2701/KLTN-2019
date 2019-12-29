@@ -92,7 +92,6 @@ router.route('/updateAvatar').put((req, res) => {
             const p = req.file.path;
             const index = p.indexOf('img');
             const path = '/' + p.slice(index);
-            console.log(path);
             UserDao.updateAvatar(req.session.user._id, path)
                 .then(result => {
                     req.session.user.avatars[0] = path;

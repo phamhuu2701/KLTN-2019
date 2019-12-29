@@ -193,7 +193,10 @@ class StoresProductsManage extends React.Component {
 
         console.log(product);
         // save product
+    }
 
+    addProduct() {
+        
     }
 
     render() {
@@ -353,10 +356,16 @@ class StoresProductsManage extends React.Component {
                     <div className={"store-info-input " + (this.state.isShowProductInfoInput ? "show" : "hide")}>
                         <h3>THÔNG TIN SẢN PHẨM</h3>
                         <hr />
-                        <Form>
+                        <Form onSubmit={this.addProduct}>
                             <FormGroup row>
                                 <Label for="store" sm={2}>Cửa hàng</Label>
                                 <Col sm={10}>
+                                    <Input type="text"
+                                            name="storeId"
+                                            defaultValue={this.state.storeMain && this.state.storeMain._id}
+                                            required={true}
+                                            hidden={true}
+                                            readOnly={true} />
                                     <Input type="text"
                                         name="store"
                                         id="store"
