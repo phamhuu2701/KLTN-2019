@@ -61,7 +61,6 @@ var routes = [
         layout: '/user'
     },
     {
-<<<<<<< HEAD
         path: "/stores-more",
         name: "Mua gói cửa hàng",
         icon: "ni ni-cart text-orange",
@@ -72,11 +71,6 @@ var routes = [
         path: "/change-email",
         name: "Đổi email",
         icon: "ni ni-email-83 text-info",
-=======
-        path: '/change-email',
-        name: 'Đổi email',
-        icon: 'ni ni-email-83 text-info',
->>>>>>> 3aa2400f8c3417ea1996f8b255a94b2a9d2d434c
         component: ChangeEmail,
         layout: '/user-auth'
     },
