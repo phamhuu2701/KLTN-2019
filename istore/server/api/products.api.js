@@ -93,16 +93,16 @@ router.route('/findRecentProducts').get((req, res) => {
     const ids = JSON.parse(req.query.ids);
     ProductDao.findByIds(ids)
         .then(products => {
-            addStoreIntoRecentProduct(products, async results => {
+            addStoreIntoRecentProduct(products, ids, async results => {
                 if (results.length > 0) {
-                    const productArr = await ids.map(id => {
-                        return results[
-                            results.findIndex(result => {
-                                return result._doc._id == id;
-                            })
-                        ];
-                    });
-                    return res.status(200).json(productArr);
+                    // const productArr = await ids.map(id => {
+                    //     return results[
+                    //         results.findIndex(result => {
+                    //             return result._doc._id == id;
+                    //         })
+                    //     ];
+                    // });
+                    return res.status(200).json(results);
                 } else {
                     return res.status(201).json({
                         mesage: 'Chưa có sản phẩm được xem gần đây!'
@@ -162,19 +162,45 @@ const addStoreIntoProduct = async (products, latlng, distance, cb) => {
     }
 
     results = products.map((product, index) => {
-        return { ...product, store: stores[index], distance: '' };
+        return {
+            ...product,
+            store:
+                stores[
+                    stores.findIndex(store => {
+                        return store.products.includes(product._id);
+                    })
+                ],
+            distance: ''
+        };
     });
     cb(results);
 };
 
-const addStoreIntoRecentProduct = async (products, cb) => {
+const addStoreIntoRecentProduct = async (products, ids, cb) => {
     let stores = [],
         results = [];
-    stores = await StoreDao.findByProducts(products);
-
-    results = products.map((product, index) => {
-        return { ...product, store: stores[index], distance: '' };
+    stores = await StoreDao.findByProducts(ids);
+    // Sort stores
+    results = await ids.map(id => {
+        return {
+            ...products[
+                products.findIndex(product => {
+                    return product._doc._id == id;
+                })
+            ],
+            store:
+                stores[
+                    stores.findIndex(sto => {
+                        return sto.products.includes(id);
+                    })
+                ],
+            distance: ''
+        };
     });
+    // results.forEach((result, index) => {
+    //     console.log(ids[index], result._doc._id);
+    //     console.log(result.store.name);
+    // });
     cb(results);
 };
 

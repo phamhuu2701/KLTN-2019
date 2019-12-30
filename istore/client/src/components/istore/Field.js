@@ -140,6 +140,22 @@ export class ResultArea extends Component {
             } else {
                 products.push(...nextProps.result);
             }
+
+            // Display require form
+            if (nextProps.result.length === 0) {
+                // Check logged in
+                if (nextProps.checkLoggedIn()) {
+                    const searchContent = prompt(
+                        'Sản phẩm bạn muốn không được tìm thấy! Nhập tên sản phẩm nếu bạn muốn nhận thông báo khi có?',
+                        document.querySelector('#autocomplete').value
+                    );
+                    if (searchContent) {
+                        //
+                    }
+                }
+            }
+
+            // push product into result
             this.setState({
                 result: products,
                 message: 'Không tìm thấy sản phẩm!'
@@ -291,6 +307,7 @@ export default class Fields extends Component {
                         result={this.state.result}
                         isFound={this.state.isFound}
                         onZoom={this.props.onZoom}
+                        checkLoggedIn={this.props.checkLoggedIn}
                     />
                 </div>
                 <hr className='field-hr' />
