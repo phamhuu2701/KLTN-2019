@@ -282,7 +282,7 @@ class BuyStoresMore extends React.Component {
                                         </Col>
                                         <Col lg="6">
                                             <Card className="card-custom">
-                                                <CardImg variant="top" src="../../img/top-10-cong-thanh-toan-online-cho-website.jpg" />
+                                                <CardImg variant="top" src="../../resources/img/top-10-cong-thanh-toan-online-cho-website.jpg" />
                                                 <CardHeader>
                                                     <h3>THÔNG TIN DỊCH VỤ</h3>
                                                     <div>

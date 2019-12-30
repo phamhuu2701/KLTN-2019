@@ -158,6 +158,7 @@ export function onSearchProductService(
             })
             .catch(err => console.log(err));
     } catch (error) {
+        console.log(error);
         console.log('Kết nối mạng internet yếu..');
     }
 }
