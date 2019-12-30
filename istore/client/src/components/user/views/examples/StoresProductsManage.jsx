@@ -107,7 +107,6 @@ class StoresProductsManage extends React.Component {
 
     onStoresSelectChange(e) {
         const id = e.target.value;
-        // console.log(id);
 
         getStoreById(id, (result) => {
             this.setState({

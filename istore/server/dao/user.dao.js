@@ -88,7 +88,8 @@ module.exports = {
                     address: model.address,
                     gender: model.gender,
                     birthday: model.birthday,
-                    about: model.about
+                    about: model.about,
+                    maxStoresCountCreated: model.maxStoresCountCreated
                 },
                 { new: true },
                 (err, result) => {

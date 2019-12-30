@@ -34,18 +34,162 @@ import {
 // core components
 import Header from "components/user/components/Headers/Header.jsx";
 import "./BuyStoresMore.css";
+import { formatDate2 } from "../../../../utils/dateUtils";
+import priceFormatUtil from "../../../../utils/priceFormat";
+import { getUserLogged } from "../../../../services/user.service";
+import MessageNotify from "../../../istore/MessageNotify";
+
+const counts = [1, 2, 3, 5, 10];
+let y1 = new Date(), y2 = new Date(), y3 = new Date(), y4 = new Date();
+const timeLimiteds = [
+    {
+        label: "1 năm",
+        money: 69000,
+        start: new Date(),
+        end: y1.setFullYear(y1.getFullYear() + 1)
+    },
+    {
+        label: "2 năm",
+        money: 115000,
+        start: new Date(),
+        end: y2.setFullYear(y2.getFullYear() + 2)
+    },
+    {
+        label: "3 năm",
+        money: 161000,
+        start: new Date(),
+        end: y3.setFullYear(y3.getFullYear() + 3)
+    },
+    {
+        label: "5 năm",
+        money: 230000,
+        start: new Date(),
+        end: y4.setFullYear(y4.getFullYear() + 5)
+    }
+];
 
 class BuyStoresMore extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            inputStoresCount: null,
+            inputTimeLimited: null,
+            inputMoney: null,
 
+            messageErrorInputStoresCount: "",
+            messageErrorInputTimeLimited: "",
+            messageErrorInputMoney: "",
+
+            updateResultMessage: "",
         }
+
+        this.onStoresCountChange = this.onStoresCountChange.bind(this);
+        this.onTimeLimitedChange = this.onTimeLimitedChange.bind(this);
+        this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
     }
 
     componentDidMount() {
 
+    }
+
+    onStoresCountChange(e) {
+        if (e.target.value) {
+            if (this.state.inputTimeLimited) {
+                this.setState({
+                    inputStoresCount: counts[e.target.value],
+                    messageErrorInputStoresCount: "",
+                    inputMoney: this.state.inputTimeLimited.money * counts[e.target.value]
+                })
+            }
+            else {
+                this.setState({
+                    inputStoresCount: counts[e.target.value],
+                    messageErrorInputStoresCount: "",
+                    inputMoney: null
+                })
+            }
+        }
+        else {
+            this.setState({
+                inputStoresCount: null,
+                messageErrorInputStoresCount: "Số lượng cửa hàng không được để trống",
+                inputMoney: null
+            })
+        }
+    }
+
+    onTimeLimitedChange(e) {
+        if (e.target.value) {
+            if (this.state.inputStoresCount) {
+                this.setState({
+                    inputTimeLimited: timeLimiteds[e.target.value],
+                    messageErrorInputTimeLimited: "",
+                    inputMoney: timeLimiteds[e.target.value].money * this.state.inputStoresCount
+                })
+            }
+            else {
+                this.setState({
+                    inputTimeLimited: timeLimiteds[e.target.value],
+                    messageErrorInputTimeLimited: "",
+                    inputMoney: null
+                })
+            }
+        }
+        else {
+            this.setState({
+                inputTimeLimited: null,
+                messageErrorInputTimeLimited: "Thời gian không được để trống",
+                inputMoney: null
+            })
+        }
+    }
+
+    onSubmitButtonClick() {
+        if (!this.state.inputStoresCount) {
+            this.setState({
+                messageErrorInputStoresCount: "Số lượng cửa hàng không được để trống"
+            })
+        }
+        if (!this.state.inputTimeLimited) {
+            this.setState({
+                messageErrorInputTimeLimited: "Thời gian không được để trống"
+            })
+        }
+        if (this.state.inputStoresCount && this.state.inputTimeLimited
+            && this.state.inputMoney) {
+            getUserLogged(result => {
+                result.user.maxStoresCountCreated = {
+                    count: result.user.maxStoresCountCreated.count + this.state.inputStoresCount,
+                    // timeLimited: formatDate(this.state.inputTimeLimited.end) + "T23:59:59.000Z"
+                    timeLimited: new Date(this.state.inputTimeLimited.end)
+                }
+
+                fetch("/api/users/" + result.user._id,
+                    {
+                        method: "PUT",
+                        body: JSON.stringify({
+                            maxStoresCountCreated: result.user.maxStoresCountCreated,
+                        }),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(userUpdate => {
+
+                        // console.log(userUpdate);
+
+                        this.setState({
+                            updateResultMessage: "Đăng ký gói cửa hàng thành công!"
+                        })
+
+                        setTimeout(() => {
+                            window.location = "stores-manage";
+                        }, 2000);
+                    });
+            })
+        }
     }
 
     render() {
@@ -53,7 +197,7 @@ class BuyStoresMore extends React.Component {
             <>
                 <Header />
                 {/* Page content */}
-                <Container className="buy-stores-more" fluid={true}>
+                <Container className="buy-more-stores" fluid={true}>
                     <Row className="mt-5">
                         <Col>
                             <Card className="bg-secondary shadow">
@@ -74,17 +218,19 @@ class BuyStoresMore extends React.Component {
                                                                 className="form-control-label"
                                                                 htmlFor="stores-count"
                                                             >
-                                                                Số lượng
+                                                                Số lượng cửa hàng
                                                                 </label>
-                                                            <Input type="select" name="stores-count" id="stores-count"
-                                                                onChange={this.onStoreCategoryChange}>
-                                                                <option value={null}>Số lượng</option>
-                                                                <option value={0}>1</option>
-                                                                <option value={1}>2</option>
-                                                                <option value={2}>3</option>
-                                                                <option value={3}>5</option>
-                                                                <option value={4}>10</option>
+                                                            <Input type="select" id="stores-count" onChange={this.onStoresCountChange} required={true}>
+                                                                <option value="">Số lượng</option>
+                                                                {
+                                                                    counts.map((count, key) => (
+                                                                        <option key={key} value={key}>{count}</option>
+                                                                    ))
+                                                                }
                                                             </Input>
+                                                            <label className={"message " + (this.state.messageErrorInputStoresCount ? "error" : "ok")}>
+                                                                {this.state.messageErrorInputStoresCount}
+                                                            </label>
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
@@ -97,14 +243,17 @@ class BuyStoresMore extends React.Component {
                                                             >
                                                                 Thời gian
                                                                 </label>
-                                                            <Input type="select" name="time-limited" id="time-limited"
-                                                                onChange={this.onStoreCategoryChange}>
-                                                                <option value={null}>Thời gian</option>
-                                                                <option value={0}>6 tháng</option>
-                                                                <option value={1}>1 năm</option>
-                                                                <option value={2}>2 năm</option>
-                                                                <option value={3}>5 năm</option>
+                                                            <Input type="select" id="time-limited" onChange={this.onTimeLimitedChange} required={true}>
+                                                                <option value="">Thời gian</option>
+                                                                {
+                                                                    timeLimiteds.map((timeLimited, key) => (
+                                                                        <option key={key} value={key}>{timeLimited.label}</option>
+                                                                    ))
+                                                                }
                                                             </Input>
+                                                            <label className={"message " + (this.state.messageErrorInputTimeLimited ? "error" : "ok")}>
+                                                                {this.state.messageErrorInputTimeLimited}
+                                                            </label>
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
@@ -115,7 +264,7 @@ class BuyStoresMore extends React.Component {
                                                                 className="form-control-label"
                                                                 htmlFor="money"
                                                             >
-                                                                Thành tiền
+                                                                Thành tiền (VND)
                                                             </label>
                                                             <Input
                                                                 className="form-control-alternative"
@@ -124,6 +273,7 @@ class BuyStoresMore extends React.Component {
                                                                 type="text"
                                                                 required={true}
                                                                 readOnly={true}
+                                                                defaultValue={this.state.inputMoney && priceFormatUtil(this.state.inputMoney)}
                                                             />
                                                         </FormGroup>
                                                     </Col>
@@ -131,27 +281,39 @@ class BuyStoresMore extends React.Component {
                                             </Form>
                                         </Col>
                                         <Col lg="6">
-                                            <Card style={{ "width": "100%", "border": "1px solid #cccccc"}}>
-                                                <CardImg variant="top" src="http://www.gomeetpete.com/wp-content/uploads/2019/04/top-10-cong-thanh-toan-online-cho-website.jpg" />
+                                            <Card className="card-custom">
+                                                <CardImg variant="top" src="../../img/top-10-cong-thanh-toan-online-cho-website.jpg" />
                                                 <CardHeader>
                                                     <h3>THÔNG TIN DỊCH VỤ</h3>
-                                                    <table>
-                                                        <tr>
-                                                            <td>Số lượng</td>
-                                                            <th>5</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Thời gian</td>
-                                                            <th>1 năm</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Thanh toán</td>
-                                                            <th>345.000 VND</th>
-                                                        </tr>
-                                                    </table>
+                                                    <div>
+                                                        <table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>Số lượng cửa hàng</td>
+                                                                    <th>{this.state.inputStoresCount}</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Thời gian</td>
+                                                                    <th>{this.state.inputTimeLimited && this.state.inputTimeLimited.label}</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Từ</td>
+                                                                    <th>{this.state.inputTimeLimited && formatDate2(this.state.inputTimeLimited.start)}</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Đến</td>
+                                                                    <th>{this.state.inputTimeLimited && formatDate2(this.state.inputTimeLimited.end)}</th>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Tổng thanh toán (VND)</td>
+                                                                    <th>{this.state.inputMoney && priceFormatUtil(this.state.inputMoney)}</th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </CardHeader>
-                                                <Button type="button" color="warning" 
-                                                    onClick={this.onSubmitButtonClick} 
+                                                <Button type="button" color="warning"
+                                                    onClick={this.onSubmitButtonClick}
                                                     style={{ "width": "96%", "margin": "2%" }}>THANH TOÁN NGAY</Button>
                                             </Card>
                                         </Col>
@@ -164,6 +326,7 @@ class BuyStoresMore extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    <MessageNotify message={this.state.updateResultMessage} />
                 </Container>
                 {/* Page content */}
             </>

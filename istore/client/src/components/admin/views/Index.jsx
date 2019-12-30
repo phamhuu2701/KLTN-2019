@@ -49,6 +49,8 @@ import Header from "components/admin/components/Headers/Header.jsx";
 import getSearchKeys, { getSearchCountByTime } from "../../../services/searchKey.service";
 import { getUserModel2s } from "../../../services/user.service";
 import { getStoreModels } from "../../../services/store.service";
+import { sortDescreseUserByStore, sortDescreseStoreModelsByView } from "../../../utils/sortModel";
+import { Link } from "react-router-dom";
 
 class Index extends React.Component {
     state = {
@@ -106,31 +108,33 @@ class Index extends React.Component {
         });
 
         getUserModel2s(users => {
-            // console.log(users);
-            if (users.length > 10) {
-                this.setState({
-                    top10Users: users.slice(0, 10)
-                })
-            }
-            else {
-                this.setState({
-                    top10Users: users
-                })
-            }
+            sortDescreseUserByStore(users, users2 => {
+                if (users2.length > 10) {
+                    this.setState({
+                        top10Users: users2.slice(0, 10)
+                    })
+                }
+                else {
+                    this.setState({
+                        top10Users: users2
+                    })
+                }
+            })
         });
 
         getStoreModels(stores => {
-            // console.log(stores);
-            if (stores.length > 10) {
-                this.setState({
-                    top10Stores: stores.slice(0, 10)
-                })
-            }
-            else {
-                this.setState({
-                    top10Stores: stores
-                })
-            }
+            sortDescreseStoreModelsByView(stores, stores2 => {
+                if (stores2.length > 10) {
+                    this.setState({
+                        top10Stores: stores2.slice(0, 10)
+                    })
+                }
+                else {
+                    this.setState({
+                        top10Stores: stores2
+                    })
+                }
+            })
         });
     }
     render() {
@@ -216,14 +220,14 @@ class Index extends React.Component {
                                             <h3 className="mb-0">Top người dùng</h3>
                                         </div>
                                         <div className="col text-right">
-                                            <Button
-                                                color="primary"
-                                                href="#pablo"
-                                                onClick={e => e.preventDefault()}
-                                                size="sm"
-                                            >
-                                                Xem tất cả
-                                            </Button>
+                                            <Link to="users-manage">
+                                                <Button
+                                                    color="primary"
+                                                    size="sm"
+                                                >
+                                                    Xem tất cả
+                                                </Button>
+                                            </Link>
                                         </div>
                                     </Row>
                                 </CardHeader>
@@ -233,7 +237,7 @@ class Index extends React.Component {
                                             <th>#</th>
                                             <th>Họ tên</th>
                                             <th style={{ "textAlign": "center" }}>Cửa hàng</th>
-                                            <th style={{ "textAlign": "center" }}>Sản phẩm</th>
+                                            <th style={{ "textAlign": "center" }}>Lượt xem</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -248,7 +252,7 @@ class Index extends React.Component {
                                                         </a>
                                                     </th>
                                                     <td style={{ "textAlign": "center" }}>{userModel.stores.length}</td>
-                                                    <td style={{ "textAlign": "center" }}>{userModel.products.length}</td>
+                                                    <td style={{ "textAlign": "center" }}>{userModel.views}</td>
                                                 </tr>
                                             ))
                                         }
@@ -264,14 +268,14 @@ class Index extends React.Component {
                                             <h3 className="mb-0">Top cửa hàng</h3>
                                         </div>
                                         <div className="col text-right">
-                                            <Button
-                                                color="primary"
-                                                href="#pablo"
-                                                onClick={e => e.preventDefault()}
-                                                size="sm"
-                                            >
-                                                Xem tất cả
-                                            </Button>
+                                            <Link to="stores-manage">
+                                                <Button
+                                                    color="primary"
+                                                    size="sm"
+                                                >
+                                                    Xem tất cả
+                                                </Button>
+                                            </Link>
                                         </div>
                                     </Row>
                                 </CardHeader>
@@ -293,7 +297,7 @@ class Index extends React.Component {
                                                     <th style={{ "textTransform": "uppercase" }}>
                                                         <a href={storeModel.store.website.hasWebsite ? storeModel.store.website.url : ("/store/" + storeModel.store.template + "/" + storeModel.store._id)}
                                                             target="_blank" rel="noopener noreferrer">
-                                                            {storeModel.store.name}
+                                                            {storeModel.store.name.substring(0, 20)}
                                                         </a>
                                                     </th>
                                                     <td style={{ "textAlign": "center" }}>{storeModel.store.products.length}</td>

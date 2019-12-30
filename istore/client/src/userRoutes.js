@@ -25,19 +25,26 @@ import StoresProductsManage from "./components/user/views/examples/StoresProduct
 import BuyStoresMore from "./components/user/views/examples/BuyStoresMore";
 
 var routes = [
-    // {
-    //     path: "/index",
-    //     name: "Trang chủ",
-    //     icon: "ni ni-shop text-primary",
-    //     component: Index,
-    //     layout: "/user"
-    // },
+    {
+        path: "/index",
+        name: "Trang chủ",
+        icon: "ni ni-shop text-primary",
+        component: Index,
+        layout: "/user"
+    },
     {
         path: '/profile',
         name: 'Thông tin cá nhân',
         icon: 'ni ni-single-02 text-yellow',
         component: Profile,
         layout: '/user'
+    },
+    {
+        path: "/index",
+        name: "Tin nhắn",
+        icon: "ni ni-chat-round text-primary",
+        component: Index,
+        layout: "/user"
     },
     {
         path: '/stores-manage',
@@ -61,7 +68,7 @@ var routes = [
         layout: '/user'
     },
     {
-        path: "/stores-more",
+        path: "/more-stores",
         name: "Mua gói cửa hàng",
         icon: "ni ni-cart text-orange",
         component: BuyStoresMore,

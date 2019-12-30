@@ -205,10 +205,10 @@ class Profile extends React.Component {
                 display: 'hidden'
             })
         } else {
-            var file    = document.querySelector('input[type=file]').files[0]; //sames as here
-            var reader  = new FileReader();
+            var file = document.querySelector('input[type=file]').files[0]; //sames as here
+            var reader = new FileReader();
             reader.onloadend = function () {
-            preview.src = reader.result;
+                preview.src = reader.result;
             }
             if (file) {
                 this.setState({
@@ -216,7 +216,7 @@ class Profile extends React.Component {
                 })
                 reader.readAsDataURL(file); //reads the data as a URL
             } else {
-            //preview.src = "";
+                //preview.src = "";
             }
         }
     }
@@ -230,24 +230,24 @@ class Profile extends React.Component {
             method: 'PUT',
             body: formData
         })
-        .then(result => {
-            return result.json()
-        })
-        .then(path => {
-            const user = this.state.user;
-            user.avatars[0] = path;
-            this.setState({
-                user: user
+            .then(result => {
+                return result.json()
             })
-            this.setState({
-                display: 'hidden'
-            })
-            document.querySelector('.avatarHeader').src = path;
-            alert('Đã cập nhật avatar!');
+            .then(path => {
+                const user = this.state.user;
+                user.avatars[0] = path;
+                this.setState({
+                    user: user
+                })
+                this.setState({
+                    display: 'hidden'
+                })
+                document.querySelector('.avatarHeader').src = path;
+                alert('Đã cập nhật avatar!');
 
-            // 
-        })
-        .catch(err => console.log(err))
+                // 
+            })
+            .catch(err => console.log(err))
     }
 
     render() {
@@ -268,7 +268,7 @@ class Profile extends React.Component {
                                                     className="rounded-circle preview"
                                                     src={this.state.user.avatars[0]}
                                                 />
-                                                <input className="change-avatar" type="file" onChange={this.previewFile} accept="image/*" alt="Change avatar"/>
+                                                <input className="change-avatar" type="file" onChange={this.previewFile} accept="image/*" alt="Change avatar" />
                                             </div>
                                         </Col>
                                     </Row>
@@ -276,7 +276,7 @@ class Profile extends React.Component {
                                         <div className={"d-flex justify-content-between " + this.state.display}>
                                             <Button
                                                 type="reset"
-                                                onClick={() => {this.previewFile(this, true)}}
+                                                onClick={() => { this.previewFile(this, true) }}
                                                 className="mr-4"
                                                 color="info"
                                                 size="sm"
@@ -310,7 +310,7 @@ class Profile extends React.Component {
                                                 </div>
                                                 <div>
                                                     <span className="heading">0</span>
-                                                    <span className="description">Bình luận</span>
+                                                    <span className="description">Theo dõi</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -332,7 +332,7 @@ class Profile extends React.Component {
                                             {this.state.user.address}
                                         </div>
                                         <hr className="my-4" />
-                                        <a href="#pablo">
+                                        <a href="/#">
                                             Xem thêm
                                         </a>
                                     </div>
@@ -536,6 +536,7 @@ class Profile extends React.Component {
                                                     rows="4"
                                                     type="textarea"
                                                     defaultValue={this.state.user.about}
+                                                    onChange={this.onInputChange}
                                                 />
                                             </FormGroup>
                                         </div>
