@@ -67,11 +67,25 @@ const cities = [
     { name: "Yên Bái" }
 ];
 
+// module.exports.createDefaultCollection = async () => {
+//     const citiesArray = await CityDao.find();
+//     if (citiesArray.length <= 0) {
+//         console.log("City collection is empty.");
+//         cities.map(city => {
+//             const cityNew = new City(city);
+//             CityDao.save(cityNew);
+//         });
+//         console.log("Default City collection created.");
+//     } else {
+//         console.log("City collection existed: ", citiesArray.length, "/63");
+//     }
+// };
+
 module.exports.createDefaultCollection = async () => {
     const citiesArray = await CityDao.find();
     if (citiesArray.length <= 0) {
         console.log("City collection is empty.");
-        cities.map(city => {
+        cities.map( city => {
             const cityNew = new City(city);
             CityDao.save(cityNew);
         });

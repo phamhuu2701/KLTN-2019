@@ -59,7 +59,7 @@ module.exports.createDefaultCollection = async () => {
                     }
                 });
             });
-            console.log("Default User collection created.");   
+            console.log("Default User collection created.");
         }   
     }
     else{

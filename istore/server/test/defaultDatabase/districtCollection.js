@@ -729,7 +729,7 @@ module.exports.createDefaultCollection = async () => {
         const cities = await CityDao.find();
         if (cities.length > 0) {
             cities.map(city => {
-                districts.map(district => {
+                districts.map( district => {
                     if (city.name.localeCompare(district.cityName) == 0) {
                         const newDistrict = new District({
                             name: district.districtName,

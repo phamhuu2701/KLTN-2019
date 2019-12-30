@@ -3,7 +3,7 @@ const EmployeeDao = require("../../dao/employee.dao");
 const UserDao = require("../../dao/user.dao");
 const DepartmentDao = require("../../dao/department.dao");
 
-module.exports.createDefaultCollection = async () => {
+module.exports.createDefaultCollection = async (callback) => {
     const employeesArray = await EmployeeDao.find();
     if (employeesArray.length <= 0) {
         console.log("Employee collection is empty.");
