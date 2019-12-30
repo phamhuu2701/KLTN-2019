@@ -536,6 +536,7 @@ class Profile extends React.Component {
                                                     rows="4"
                                                     type="textarea"
                                                     defaultValue={this.state.user.about}
+                                                    onChange={this.onInputChange}
                                                 />
                                             </FormGroup>
                                         </div>

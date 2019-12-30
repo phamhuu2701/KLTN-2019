@@ -1,5 +1,5 @@
 import { getNewArrayBySize } from "../utils/arrayUtils";
-import { getAvgRatesStore } from "./store.service";
+import { getAvgRatesStore, getStoreViewsCount } from "./store.service";
 
 export function LoginByLocalService(e, loginHandler) {
     e.preventDefault();
@@ -60,8 +60,8 @@ export function SignUpByLocalService(e, that) {
         fetch(`/api/users`, {
             method: "POST",
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
+                Accept: "application/json",
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(userInfo)
         })
@@ -537,12 +537,13 @@ export function getUserModel2s(callback) {
     getUserByAuthorizationUser(users => {
         if (users.length > 0) {
             for (let i = 0; i < users.length; i++) {
-                getStoresByIdUser2(users[i]._id, stores => {
+                getStoresByIdUser2(users[i]._id, stores => {                    
                     getProductsAllStoresByUser(users[i]._id, products => {
                         userModel2s.push({
                             user: users[i],
                             stores: stores,
-                            products: products
+                            products: products,
+                            views: getAllStoresViewsCount(stores)
                         });
 
                         if (userModel2s.length === users.length) {
@@ -560,11 +561,12 @@ export function getUserModel2s(callback) {
 export function checkStoresCountCreated(user) {
     const currentDate = new Date();
     return new Promise((resolve, reject) => {
-        getStoresByIdUser2(user._id, stores => {            
+        getStoresByIdUser2(user._id, stores => {
             if (
                 stores.length < user.maxStoresCountCreated.count &&
-                (!user.maxStoresCountCreated.timeLimited || 
-                    currentDate <= new Date(user.maxStoresCountCreated.timeLimited))
+                (!user.maxStoresCountCreated.timeLimited ||
+                    currentDate <=
+                        new Date(user.maxStoresCountCreated.timeLimited))
             ) {
                 return resolve(true);
             } else {
@@ -572,4 +574,22 @@ export function checkStoresCountCreated(user) {
             }
         });
     });
+}
+
+export function getAllStoresViewsCount(stores) {
+    if (stores) {
+        let storesViewsCount = 0;
+        stores.map((store, key) => {
+            getStoreViewsCount(store, result => {
+                storesViewsCount += result;
+            });
+
+            return null;
+        });
+
+        return storesViewsCount;
+    }
+    else{
+        return 0;
+    }
 }

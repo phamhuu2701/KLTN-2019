@@ -278,6 +278,7 @@ router
             user.gender = req.body.gender;
             user.birthday = req.body.birthday;
             user.address = req.body.address;
+            user.about = req.body.about;
 
             let userUpdate = await UserDao.update(user);
             req.session.user = userUpdate;

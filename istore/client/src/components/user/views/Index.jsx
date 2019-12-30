@@ -51,6 +51,8 @@ import { getStoreViewsCount2 } from "../../../services/store.service";
 import { sortDescreaseProductsByViewsCount } from "../../../utils/productUtils";
 import { getViewsCountByTime } from "../../../services/product.service";
 import priceFormatUtil from "../../../utils/priceFormat";
+import { sortDescreseStoresByView, sortDescreseProductsByView } from "../../../utils/sortModel";
+import { Link } from "react-router-dom";
 
 class Index extends React.Component {
     state = {
@@ -91,28 +93,35 @@ class Index extends React.Component {
 
             // chọn top 10
             if (products.length > 10) {
-                let top10ProductsViewsCout = [];
-                for (let i = 0; i < 10; i++) {
-                    top10ProductsViewsCout.push(products[i]);
-                }
 
-                this.setState({
-                    top10ProductsViewsCout: top10ProductsViewsCout
+                sortDescreseProductsByView(products, products2 => {
+                    if (products2.length > 10) {
+                        this.setState({
+                            top10ProductsViewsCout: products2.splice(0, 10)
+                        })
+                    }
+                    else {
+                        this.setState({
+                            top10ProductsViewsCout: products2
+                        })
+                    }
                 })
             }
         })
 
         getStoresByIdUser2(this.props.user._id, stores => {
-            if (stores.length > 10) {
-                this.setState({
-                    top10Stores: stores.splice(0, 10)
-                })
-            }
-            else {
-                this.setState({
-                    top10Stores: stores
-                })
-            }
+            sortDescreseStoresByView(stores, (stores2) => {
+                if (stores.length > 10) {
+                    this.setState({
+                        top10Stores: stores2.splice(0, 10)
+                    })
+                }
+                else {
+                    this.setState({
+                        top10Stores: stores2
+                    })
+                }
+            })
         })
 
         getProductsAllStoresByUser(this.props.user._id, products => {
@@ -148,7 +157,6 @@ class Index extends React.Component {
         })
     }
     render() {
-        // console.log(this.state.top10Stores);
         return (
             <>
                 <Header />
@@ -255,13 +263,14 @@ class Index extends React.Component {
                                             <h3 className="mb-0">Top cửa hàng</h3>
                                         </div>
                                         <div className="col text-right">
-                                            <Button
-                                                color="primary"
-                                                href="stores-manage"
-                                                size="sm"
-                                            >
-                                                Xem tất cả
-                                            </Button>
+                                            <Link to="stores-manage">
+                                                <Button
+                                                    color="primary"
+                                                    size="sm"
+                                                >
+                                                    Xem tất cả
+                                                </Button>
+                                            </Link>
                                         </div>
                                     </Row>
                                 </CardHeader>
@@ -286,7 +295,7 @@ class Index extends React.Component {
                                                                 store.website.url :
                                                                 "/store/" + store.template + "/" + store._id
                                                         } target="_blank" rel="noopener noreferrer">
-                                                            {store.name.substring(0, 25)}
+                                                            {store.name.substring(0, 20)}
                                                         </a>
                                                     </th>
                                                     <td style={{ "textAlign": "center" }}>{store.products.length}</td>
@@ -306,13 +315,14 @@ class Index extends React.Component {
                                             <h3 className="mb-0">Top sản phẩm</h3>
                                         </div>
                                         <div className="col text-right">
-                                            <Button
-                                                color="primary"
-                                                href="stores-products-manage"
-                                                size="sm"
-                                            >
-                                                Xem tất cả
-                                            </Button>
+                                            <Link to="stores-products-manage">
+                                                <Button
+                                                    color="primary"
+                                                    size="sm"
+                                                >
+                                                    Xem tất cả
+                                                </Button>
+                                            </Link>
                                         </div>
                                     </Row>
                                 </CardHeader>

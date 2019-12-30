@@ -49,6 +49,7 @@ import formatDate from "../../../../utils/dateUtils";
 import priceFormatUtil from "../../../../utils/priceFormat";
 
 import "components/admin/assets/css/custom.css";
+import MessageNotify from "../../../istore/MessageNotify";
 
 class EmployeesManage extends React.Component {
     constructor() {
@@ -56,13 +57,19 @@ class EmployeesManage extends React.Component {
 
         this.state = {
             employees: [],
-            employeeSelected: null,
             departments: [],
-            isShowEmployeeInfo: "hide"
+
+            employeeSelected: null,
+            isShowEmployeeInfo: "hide",
+
+            isShowEmployeeFormInfo: "hide",
+            messageNotify: ""
         }
 
         this.showEmployeeInfo = this.showEmployeeInfo.bind(this);
         this.onSubmitClick = this.onSubmitClick.bind(this);
+        this.onAddEmployeeClick = this.onAddEmployeeClick.bind(this);
+        this.onAddEmployeeSubmitClick = this.onAddEmployeeSubmitClick.bind(this);
     }
 
     componentDidMount() {
@@ -87,11 +94,11 @@ class EmployeesManage extends React.Component {
     }
 
     showEmployeeInfo(id) {
-        // console.log(id);
         getEmployeeById(id, employee => {
             this.setState({
                 employeeSelected: employee,
-                isShowEmployeeInfo: "open"
+                isShowEmployeeInfo: "open",
+                messageNotify: ""
             })
         })
     }
@@ -99,7 +106,22 @@ class EmployeesManage extends React.Component {
     onSubmitClick() {
         this.setState({
             employeeSelected: null,
-            isShowEmployeeInfo: "hide"
+            isShowEmployeeInfo: "hide",
+            messageNotify: "Cập nhật thông tin nhân viên thành công"
+        })
+    }
+
+    onAddEmployeeClick(){
+        this.setState({
+            isShowEmployeeFormInfo: "open",
+            messageNotify: ""
+        })
+    }
+
+    onAddEmployeeSubmitClick(){
+        this.setState({
+            isShowEmployeeFormInfo: "hide",
+            messageNotify: "Thêm nhân viên thành công"
         })
     }
 
@@ -109,8 +131,13 @@ class EmployeesManage extends React.Component {
                 <Header />
                 {/* Page content */}
                 <Container className="AdminManageEmployees" fluid={true}>
+                    <Row className="mt-3">
+                        <Col className="container-button-add-store">
+                            <Button onClick={this.onAddEmployeeClick} className="btn btn-success">Thêm nhân viên</Button>
+                        </Col>
+                    </Row>
                     {/* Table */}
-                    <Row className="mt-5">
+                    <Row className="mt-3">
                         <div className="col">
                             <Card className="shadow">
                                 <CardHeader className="border-0">
@@ -521,6 +548,261 @@ class EmployeesManage extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    {/** form create new employee */}
+                    <Row className={"mt-5 " + this.state.isShowEmployeeFormInfo}>
+                        <Col>
+                            <Card className="bg-secondary shadow">
+                                <CardHeader className="bg-white border-0">
+                                    <Row className="align-items-center">
+                                        <Col xs="8">
+                                            <h3 id="user-info" className="mb-0">THÊM NHÂN VIÊN</h3>
+                                        </Col>
+                                    </Row>
+                                </CardHeader>
+                                <CardBody>
+                                    <Form>
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Thông tin cá nhân
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-first-name"
+                                                        >
+                                                            Tên
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-first-name"
+                                                            placeholder="Tên"
+                                                            type="text"
+                                                            maxLength={30}
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-last-name"
+                                                        >
+                                                            Họ
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-last-name"
+                                                            placeholder="Họ"
+                                                            type="text"
+                                                            maxLength={30}
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-phone"
+                                                        >
+                                                            Số điện thoại
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-phone"
+                                                            placeholder="Số điện thoại"
+                                                            type="tel"
+                                                            maxLength={10}
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-email"
+                                                        >
+                                                            Email
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-email"
+                                                            placeholder="istore@gmail.com"
+                                                            type="email"
+                                                            maxLength={30}
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <label
+                                                        className="form-control-label"
+                                                    >
+                                                        Giới tính
+                                                    </label>
+                                                    <FormGroup check>
+                                                        <Label check>
+                                                            <Input type="radio" name="radio2"
+                                                                defaultValue={true}/>{' '}
+                                                            Nam
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <FormGroup check>
+                                                        <Label check>
+                                                            <Input type="radio" name="radio2"
+                                                                defaultValue={false} 
+                                                                defaultChecked={true} />{' '}
+                                                            Nữ
+                                                        </Label>
+                                                    </FormGroup>
+                                                    <br />
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-birthday"
+                                                        >
+                                                            Ngày sinh
+                                                        </label>
+                                                        <Input
+                                                            type="date"
+                                                            id="input-birthday"
+                                                            placeholder="Ngày sinh"
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Address */}
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Chức vụ công việc
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-department"
+                                                        >
+                                                            Phòng ban
+                                                        </label>
+                                                        <Input type="select" name="department" id="input-department">
+                                                            <option value="">Phòng ban</option>
+                                                            {
+                                                                this.state.departments &&
+                                                                this.state.departments.map((department, key) => (
+                                                                    <option key={key} value={department._id}>{department.name}</option>
+                                                                ))
+                                                            }
+                                                        </Input>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-salary"
+                                                        >
+                                                            Lương (VND)
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-salary"
+                                                            placeholder="Lương (VND)"
+                                                            type="number"
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col lg="6">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-timeStart"
+                                                        >
+                                                            Ngày bắt đầu
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            defaultValue={formatDate(new Date())}
+                                                            id="input-timeStart"
+                                                            placeholder="Ngày bắt đầu"
+                                                            type="date"
+                                                            required={true}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Address */}
+                                        <h6 className="heading-small text-muted mb-4">
+                                            Thông tin liên lạc
+                                        </h6>
+                                        <div className="pl-lg-4">
+                                            <Row>
+                                                <Col md="12">
+                                                    <FormGroup>
+                                                        <label
+                                                            className="form-control-label"
+                                                            htmlFor="input-address"
+                                                        >
+                                                            Địa chỉ
+                                                        </label>
+                                                        <Input
+                                                            className="form-control-alternative"
+                                                            id="input-address"
+                                                            placeholder="Địa chỉ"
+                                                            type="text"
+                                                            maxLength={100}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <hr className="my-4" />
+                                        {/* Description */}
+                                        <h6 className="heading-small text-muted mb-4">Giới thiệu</h6>
+                                        <div className="pl-lg-4">
+                                            <FormGroup>
+                                                <label>Giới thiệu</label>
+                                                <Input
+                                                    className="form-control-alternative"
+                                                    placeholder="Hãy viết gì đó về bạn"
+                                                    rows="4"
+                                                    type="textarea"
+                                                    id="input-about"
+                                                />
+                                            </FormGroup>
+                                        </div>
+                                        <div className="pl-lg-4">
+                                            <Button type="button" className="btn" style={{ float: "right" }} color="primary"
+                                                onClick={this.onAddEmployeeSubmitClick}
+                                            >
+                                                TẠO NHÂN VIÊN</Button>
+                                        </div>
+                                    </Form>
+                                </CardBody>
+                            </Card>
+                        </Col>
+                    </Row>
+                    <MessageNotify message={this.state.messageNotify} />
                 </Container>
             </>
         );

@@ -45,7 +45,7 @@ import {
 import Header from "components/user/components/Headers/Header.jsx";
 import { getStoresBySizeByIdUser, checkStoresCountCreated } from "../../../../services/user.service";
 import "./StoresManage.css";
-import AlertConfirm from "./AlertConfirm";
+import BuyMoreStoresAlert from "./BuyMoreStoresAlert";
 
 import { getFullAddress } from "../../../../utils/storeUtils";
 import getStoreCategories, { getStoreCategoryById } from "../../../../services/storeCategory.service";
@@ -110,7 +110,7 @@ class StoresManage extends React.Component {
             addStoreErrorMessage: "",
             addStoreResultMessage: "",
 
-            showAlertConfirm: false,
+            showBuyMoreStoresAlert: false,
 
             paginationClassName: {
                 pagination1: "active",
@@ -188,7 +188,6 @@ class StoresManage extends React.Component {
     }
 
     onAddStoreClick() {
-        console.log(this.props.user);
         checkStoresCountCreated(this.props.user).then(
             result => {                
                 this.setState({
@@ -197,7 +196,7 @@ class StoresManage extends React.Component {
             },
             err => {
                 this.setState({
-                    showAlertConfirm: true
+                    showBuyMoreStoresAlert: true
                 })
             }
         )
@@ -859,7 +858,7 @@ class StoresManage extends React.Component {
                         </Form>
                     </div>
                     <MessageNotify message={this.state.addStoreResultMessage} />
-                    <AlertConfirm show={this.state.showAlertConfirm} />
+                    <BuyMoreStoresAlert show={this.state.showBuyMoreStoresAlert} />
                 </Container>
             </>
         );

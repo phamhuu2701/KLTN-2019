@@ -198,7 +198,7 @@ export function getStoreViewsCount(store, callback) {
 }
 
 export function getStoreViewsCount2(store) {
-    if (store.products.length > 0) {
+    if (store.products) {
         let storeViewsCount = 0;
         store.products.map((product, key) => {
             storeViewsCount += product.viewsCount.length;
