@@ -278,7 +278,7 @@ export default class Fields extends Component {
                 <div className='field-results'>
                     <Row>
                         <Col className='field-results-title'>
-                            <span className='.field-results-number'>
+                            <span className='field-results-number'>
                                 Đã xem gần đây
                             </span>
                         </Col>
