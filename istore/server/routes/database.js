@@ -32,6 +32,7 @@ const searchKeyDao = require("../dao/searchKey.dao");
 /* GET home page. */
 router.get("/", function(req, res, next) {
     console.log("================================");
+    
     citiesCollection.createDefaultCollection();
     districtsCollection.createDefaultCollection();
     streetCollection.createDefaultCollection();

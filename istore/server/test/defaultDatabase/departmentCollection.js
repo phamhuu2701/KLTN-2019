@@ -10,7 +10,7 @@ const departments = [
     { name: "Truyền thông" }
 ];
 
-module.exports.createDefaultCollection = async () => {
+module.exports.createDefaultCollection = async (callback) => {
     const departmentsArray = await DepartmentDao.find();
     if (departmentsArray.length <= 0) {
         console.log("Department collection is empty.");

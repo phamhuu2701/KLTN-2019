@@ -61,7 +61,7 @@ module.exports.createDefaultCollection = async () => {
         if (districts.length > 0) {
             const thuDucDistrict = await DistrictDao.findOneByName("Thủ Đức");
 
-            streets.map(street => {
+            streets.map( street => {
                 const newStreet = new Street({
                     name: street,
                     district: thuDucDistrict
