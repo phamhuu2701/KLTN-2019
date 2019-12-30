@@ -278,7 +278,9 @@ export default class Fields extends Component {
                 <div className='field-results'>
                     <Row>
                         <Col className='field-results-title'>
-                            <span>Đã xem gần đây</span>
+                            <span className='.field-results-number'>
+                                Đã xem gần đây
+                            </span>
                         </Col>
                         <Col className='field-results-filter'>
                             <Form.Group>
