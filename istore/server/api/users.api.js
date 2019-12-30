@@ -84,7 +84,7 @@ router
     });
 
 router.route('/updateAvatar').put((req, res) => {
-    upload(req, res, err => {
+    upload.single('file')(req, res, err => {
         if (err) {
             console.log(err);
             res.status(200).json('ok');
