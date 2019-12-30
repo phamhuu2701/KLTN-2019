@@ -126,7 +126,8 @@ export class ResultArea extends Component {
         super(props);
         this.state = {
             result: [],
-            message: ''
+            message: '',
+            cared: false
         };
     }
 
@@ -144,13 +145,36 @@ export class ResultArea extends Component {
             // Display require form
             if (nextProps.result.length === 0) {
                 // Check logged in
-                if (nextProps.checkLoggedIn()) {
+                if (
+                    nextProps.checkLoggedIn() &&
+                    nextProps.interests < 3 &&
+                    this.state.cared === false
+                ) {
                     const searchContent = prompt(
                         'Sản phẩm bạn muốn không được tìm thấy! Nhập tên sản phẩm nếu bạn muốn nhận thông báo khi có?',
                         document.querySelector('#autocomplete').value
                     );
                     if (searchContent) {
-                        //
+                        // Add a new interest into user and update current user
+                        fetch('/api/users/updateInterest', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ searchContent })
+                        })
+                            .then(result => {
+                                if (result.status === 200) {
+                                    this.setState({
+                                        interests: +this.state.interests + 1,
+                                        cared: true
+                                    });
+                                    alert(
+                                        'OK. Bạn sẽ nhận mail nếu có sản phẩm thích hợp!'
+                                    );
+                                }
+                            })
+                            .catch(err => console.log(err));
                     }
                 }
             }
@@ -307,6 +331,7 @@ export default class Fields extends Component {
                         isFound={this.state.isFound}
                         onZoom={this.props.onZoom}
                         checkLoggedIn={this.props.checkLoggedIn}
+                        interests={this.props.interests}
                     />
                 </div>
                 <hr className='field-hr' />

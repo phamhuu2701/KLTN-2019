@@ -10,6 +10,7 @@ const StoreDao = require('../dao/store.dao');
 
 const mailer = require('../util/mailer');
 const upload = require('../util/multer');
+const slug = require('../util/slug');
 
 router
     .route('/')
@@ -201,6 +202,23 @@ router
         }
     });
 
+router.route('/updateInterest').put((req, res) => {
+    const searchContent = req.body.searchContent;
+    const searchContentRemoveAccent = slug(searchContent, ' ');
+    const search = {
+        productName: searchContent,
+        productNameRemoveAccent: searchContentRemoveAccent
+    };
+    UserDao.updateInterest(req.session.user._id, search)
+        .then(result => {
+            if (req.session.user.interests)
+                req.session.user.interests.push(search);
+            else req.session.user.interests = [search];
+            res.status(200).json('OK');
+        })
+        .catch(err => console.log(err));
+});
+
 router.route('/verify').put((req, res) => {
     const { id, mailVerifyToken } = req.query;
     UserDao.findById(id)
@@ -243,14 +261,13 @@ router
         const phone = req.body.phone;
         const email = req.body.email;
         const maxStoresCountCreated = req.body.maxStoresCountCreated;
-        if(maxStoresCountCreated){
+        if (maxStoresCountCreated) {
             user.maxStoresCountCreated = req.body.maxStoresCountCreated;
 
             let userUpdate = await UserDao.update(user);
             req.session.user = userUpdate;
             res.json(userUpdate);
-        }
-        else if (phone && phone !== req.session.user.phone) {
+        } else if (phone && phone !== req.session.user.phone) {
             // update phone
             user.phone = phone;
 

@@ -22,6 +22,7 @@ export default class HomeIndex extends Component {
         super();
         this.state = {
             isLoggedIn: false,
+            interests: 0,
             message: '',
             leftBody: '',
             rigthBody: '',
@@ -40,8 +41,8 @@ export default class HomeIndex extends Component {
         that = this;
     }
 
-    logInToggle(state) {
-        this.setState({ isLoggedIn: state });
+    logInToggle(state, interests) {
+        this.setState({ isLoggedIn: state, interests: interests });
     }
 
     UNSAFE_componentReceiveProps(nextProps) {
@@ -116,6 +117,7 @@ export default class HomeIndex extends Component {
                     <Field
                         onZoom={this.onZoom}
                         checkLoggedIn={this.checkLoggedIn}
+                        interests={this.state.interests}
                     />
                 </div>
                 <img

@@ -109,6 +109,15 @@ module.exports = {
             { useFindAndModify: false }
         );
     },
+    updateInterest: (id, search) => {
+        return Model.findByIdAndUpdate(
+            id,
+            {
+                $push: { interests: search }
+            },
+            { useFindAndModify: false }
+        );
+    },
     updateForgetPasswordToken: (email, token) => {
         return Model.findOneAndUpdate(
             { email: email },
