@@ -216,14 +216,14 @@ class SignForm extends Component {
                                 Đăng nhập
                             </Button>
                         </div>
-                        <center>
+                        <div className="dropdown-user-body-content" >
                             <span
                                 className='forgot-password'
                                 onClick={this.open}
                             >
                                 Quên mật khẩu
                             </span>
-                        </center>
+                        </div>
                         <hr className='dropdown-user-body-content-divide' />
                         <div className='dropdown-user-body-content sign-in text-center'>
                             <div className='ui buttons'>

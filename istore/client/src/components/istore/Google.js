@@ -19,22 +19,22 @@ export default class Google extends Component {
             avatars: [data.profileObj.imageUrl]
         };
 
-    	fetch('/api/login/google', {
-    		method: 'POST',
-    		headers: {
-    			'Accept': 'application/json',
-    			'Content-Type': 'application/json'
-    		},
-    		body: JSON.stringify(user)
-    	})
-    	.then(result => {
-    		return result.json();
-    	})
-    	.then(user => {
-    		this.props.loginHandler(user)
-    	})
-    	.catch(err => console.log(err));
-	}
+        fetch("/api/login/google", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+            .then(result => {
+                return result.json();
+            })
+            .then(user => {
+                this.props.loginHandler(user);
+            })
+            .catch(err => console.log(err));
+    }
 
     render() {
         return (

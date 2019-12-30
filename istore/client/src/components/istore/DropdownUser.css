@@ -16,7 +16,7 @@
 }
 
 .dropdown-user-body-main {
-    width: 270px;
+    width: 290px;
     padding: 0.5em 0;
     position: absolute;
     top: 55px;
@@ -24,13 +24,15 @@
     z-index: 104;
     background-color: #fff;
     border-radius: 4px;
-    box-shadow: 5px 5px 5px grey;    
+    box-shadow: 5px 5px 5px grey;
     text-transform: uppercase;
     font-weight: bold;
 }
 
 .dropdown-user-body-content {
-    padding: 10px 0.5em;
+    padding: 10px 1em;
+    display: flex;
+    justify-items: center;
 }
 
 .dropdown-user-body-content-logout:hover {
@@ -48,11 +50,12 @@
 }
 
 .dropdown-user-body-content-imgage {
-    width: 1.2em;
+    width: 1.5em;
 }
 
 .dropdown-user-body-content-title {
-    padding-left: 0.4em;
+    padding-left: 10px;
+    font-size: 1em;
 }
 
 .valid-feedback {
@@ -328,14 +331,16 @@ fieldset:disabled a.btn {
 .btn-gplus {
     background-color: #dd4b39 !important;
     color: #fff !important;
+    padding: 5px;
 }
 
 .forgot-password {
-    margin-left: 50%;
+    width: 100%;
+    text-align: right;
     font-style: italic;
     text-decoration: underline;
-    font-size: 0.9rem;
     color: gray;
+    font-size: 0.9em;
 }
 
 .forgot-password:hover {
