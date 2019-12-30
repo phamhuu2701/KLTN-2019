@@ -137,7 +137,7 @@ class ProductDetail extends Component {
     onStarsRateClick(e) {
         // console.log(e.target.value);
         this.setState({
-            stars: e.target.value
+            stars: e.target.value + 1
         });
     }
 

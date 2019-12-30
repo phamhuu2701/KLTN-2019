@@ -25,7 +25,7 @@ class Footer extends Component {
                                 <Row>
                                     {/* footer widget */}
                                     <Col md="3">
-                                        <div className="footer">
+                                        <div className="footer" style={{"backgroundColor": "#F6F7F8"}}>
                                             {/* footer logo */}
                                             <div className="footer-logo">
                                                 <Link className="logo" to={"/store/" + this.props.store.template + "/" + this.props.store._id}>
@@ -62,7 +62,7 @@ class Footer extends Component {
                                     {/* /footer widget */}
                                     {/* footer widget */}
                                     <Col md="3">
-                                        <div className="footer">
+                                        <div className="footer" style={{"backgroundColor": "#F6F7F8"}}>
                                             <h3 className="footer-header">
                                                 Tài khoản
                                             </h3>
@@ -92,7 +92,7 @@ class Footer extends Component {
                                     <div className="clearfix visible-sm visible-xs" />
                                     {/* footer widget */}
                                     <Col md="3">
-                                        <div className="footer">
+                                        <div className="footer" style={{"backgroundColor": "#F6F7F8"}}>
                                             <h3 className="footer-header">
                                                 Dịch vụ khách hàng
                                             </h3>
@@ -119,7 +119,7 @@ class Footer extends Component {
                                     {/* /footer widget */}
                                     {/* footer subscribe */}
                                     <Col md="3">
-                                        <div className="footer">
+                                        <div className="footer" style={{"backgroundColor": "#F6F7F8"}}>
                                             <h3 className="footer-header">
                                                 Đăng ký bản tin
                                             </h3>

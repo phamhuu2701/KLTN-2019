@@ -280,7 +280,7 @@ class Header extends Component {
                                                     </div>
                                                     <strong className="text-uppercase">Tài khoản</strong>
                                                 </div>
-                                                <Link to="#" className="text-uppercase">Nancy</Link>
+                                                <Link to="#" className="text-uppercase">Tài khoản</Link>
                                                 <ul className="custom-menu">
                                                     <li><span><i className="fa fa-user"></i> Tài khoản</span></li>
                                                     <li><span><i className="fa fa-heart"></i> Ưu thích</span></li>
