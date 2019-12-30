@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import "./HomeIndex.css";
-import Logo from "./istore/Logo";
-import Field from "./istore/Field";
-import Maps from "./istore/Maps";
-import DropdownUser from "./istore/DropdownUser";
-import ProductInformation from "./istore/ProductInformation";
-import MessageNotify from "./istore/MessageNotify";
-import Footer from "./istore/Footer";
+import './HomeIndex.css';
+import Logo from './istore/Logo';
+import Field from './istore/Field';
+import Maps from './istore/Maps';
+import DropdownUser from './istore/DropdownUser';
+import ProductInformation from './istore/ProductInformation';
+import MessageNotify from './istore/MessageNotify';
+import Footer from './istore/Footer';
 
 import { onZoomSearchFieldService } from '../services/store.service';
 
@@ -22,7 +22,7 @@ export default class HomeIndex extends Component {
         super();
         this.state = {
             isLoggedIn: false,
-            message: "",
+            message: '',
             leftBody: '',
             rigthBody: '',
             zoomIcon: '/resources/icons/zoom-in.svg',
@@ -33,6 +33,7 @@ export default class HomeIndex extends Component {
         this.successSignUpHandler = this.successSignUpHandler.bind(this);
         this.onZoom = this.onZoom.bind(this);
         this.onZoomToogle = this.onZoomToogle.bind(this);
+        this.checkLoggedIn = this.checkLoggedIn.bind(this);
     }
 
     UNSAFE_componentWillMount() {
@@ -53,16 +54,16 @@ export default class HomeIndex extends Component {
         });
         setTimeout(() => {
             this.setState({
-                message: "",
+                message: ''
             });
         }, 4000);
     }
 
     onZoomToogle() {
         if (this.state.zoom_icon.includes('left')) {
-            this.onZoom('normal')
+            this.onZoom('normal');
         } else if (this.state.zoom_icon === 'zoom-icon') {
-            this.onZoom('in')
+            this.onZoom('in');
         } else this.onZoom('normal');
     }
 
@@ -74,7 +75,7 @@ export default class HomeIndex extends Component {
                 zoomIcon: '/resources/icons/zoom-out.svg',
                 zoomTitle: 'Thu nhỏ',
                 zoom_icon: 'zoom-icon right'
-            })
+            });
         } else if (zoom === 'out') {
             this.setState({
                 leftBody: 'small',
@@ -82,7 +83,7 @@ export default class HomeIndex extends Component {
                 zoomIcon: '/resources/icons/zoom-in.svg',
                 zoomTitle: 'Phóng to',
                 zoom_icon: 'zoom-icon left'
-            })
+            });
         } else if (zoom === 'normal') {
             this.setState({
                 leftBody: '',
@@ -90,25 +91,40 @@ export default class HomeIndex extends Component {
                 zoomIcon: '/resources/icons/zoom-in.svg',
                 zoomTitle: 'Phóng to',
                 zoom_icon: 'zoom-icon'
-            })
+            });
         } else {
             // Hidden search field
             this.setState({
                 leftBody: 'hidden',
                 rigthBody: 'fullScreen'
-            })
+            });
         }
+    }
+
+    checkLoggedIn() {
+        if (this.state.isLoggedIn) {
+            return true;
+        }
+        return false;
     }
 
     render() {
         return (
-            <div className="app">
-                <div className={"app-body-left " + this.state.leftBody}>
+            <div className='app'>
+                <div className={'app-body-left ' + this.state.leftBody}>
                     <Logo />
-                    <Field onZoom={this.onZoom}/>
+                    <Field
+                        onZoom={this.onZoom}
+                        checkLoggedIn={this.checkLoggedIn}
+                    />
                 </div>
-                <img className={this.state.zoom_icon} src={this.state.zoomIcon} alt={this.state.zoomTitle} onClick={this.onZoomToogle}/>
-                <div className={"app-body-right " + this.state.rigthBody}>
+                <img
+                    className={this.state.zoom_icon}
+                    src={this.state.zoomIcon}
+                    alt={this.state.zoomTitle}
+                    onClick={this.onZoomToogle}
+                />
+                <div className={'app-body-right ' + this.state.rigthBody}>
                     <Maps />
                 </div>
                 <ProductInformation />
