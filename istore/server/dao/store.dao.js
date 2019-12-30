@@ -1,15 +1,15 @@
-const Model = require("../models/store.model");
+const Model = require('../models/store.model');
 
 module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
             Model.find({})
-                .populate("storeCategory")
-                .populate("user")
-                .populate("city")
-                .populate("district")
-                .populate("street")
-                .populate("products")
+                .populate('storeCategory')
+                .populate('user')
+                .populate('city')
+                .populate('district')
+                .populate('street')
+                .populate('products')
                 .exec((err, results) => {
                     if (err) return reject(null);
                     return resolve(results);
@@ -19,12 +19,12 @@ module.exports = {
     findByUser: user => {
         return new Promise((resolve, reject) => {
             Model.find({ user: user })
-                .populate("storeCategory")
-                .populate("user")
-                .populate("city")
-                .populate("district")
-                .populate("street")
-                .populate("products")
+                .populate('storeCategory')
+                .populate('user')
+                .populate('city')
+                .populate('district')
+                .populate('street')
+                .populate('products')
                 .exec((err, results) => {
                     if (err) return reject(null);
                     return resolve(results);
@@ -34,12 +34,12 @@ module.exports = {
     findById: id => {
         return new Promise((resolve, reject) => {
             Model.findById(id)
-                .populate("storeCategory")
-                .populate("user")
-                .populate("city")
-                .populate("district")
-                .populate("street")
-                .populate("products")
+                .populate('storeCategory')
+                .populate('user')
+                .populate('city')
+                .populate('district')
+                .populate('street')
+                .populate('products')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -49,12 +49,12 @@ module.exports = {
     findByName: name => {
         return new Promise((resolve, reject) => {
             Model.findOne({ name: name })
-                .populate("storeCategory")
-                .populate("user")
-                .populate("city")
-                .populate("district")
-                .populate("street")
-                .populate("products")
+                .populate('storeCategory')
+                .populate('user')
+                .populate('city')
+                .populate('district')
+                .populate('street')
+                .populate('products')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -65,7 +65,7 @@ module.exports = {
         //return Model.find({nameRemoveAccents: {$search: "\" }})
         //return Model.find({nameRemoveAccents: {$regex: /.bong.den./, $options: 'i'}});
         return Model.find({
-            nameRemoveAccents: { $regex: new RegExp(search, "i") }
+            nameRemoveAccents: { $regex: new RegExp(search, 'i') }
         });
     },
     save: model => {
@@ -117,19 +117,24 @@ module.exports = {
                     $near: {
                         $maxDistance: distance,
                         $geometry: {
-                            type: "Point",
+                            type: 'Point',
                             coordinates: latlng
                         }
                     }
                 }
             })
-                .populate("storeCategory")
+                .populate('storeCategory')
                 .exec((err, store) => {
                     if (err) {
                         return reject(err);
                     }
                     return resolve(store);
                 });
+        });
+    },
+    addProductIntoStore: (storeId, productId) => {
+        return Model.findByIdAndUpdate(storeId, {
+            $push: { products: productId }
         });
     }
 };

@@ -58,6 +58,14 @@ class StoresProductsManage extends React.Component {
     constructor(props) {
         super(props);
 
+        this.storeIdRef = React.createRef();
+        this.productCategoryRef = React.createRef();
+        this.productNameRef = React.createRef();
+        this.productDecriptionRef = React.createRef();
+        this.productPriceRef = React.createRef();
+        this.productSaleOffRef = React.createRef();
+        this.filesRef = React.createRef();
+
         this.state = {
             stores: [],
             storeMain: null,
@@ -86,6 +94,7 @@ class StoresProductsManage extends React.Component {
         this.onSelectProductCategoriesChange = this.onSelectProductCategoriesChange.bind(this);
         this.onInputProductInfoChange = this.onInputProductInfoChange.bind(this);
         this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
+        this.addProduct = this.addProduct.bind(this);
     }
 
     componentDidMount() {
@@ -194,8 +203,43 @@ class StoresProductsManage extends React.Component {
         // save product
     }
 
-    addProduct() {
-        
+    addProduct(e) {
+        e.preventDefault();
+        const productInfo = {
+            storeId: this.storeIdRef.current.value,
+            productCategory: this.productCategoryRef.current.value,
+            productName: this.productNameRef.current.value,
+            productDecription: this.productDecriptionRef.current.value,
+            productPrice: this.productPriceRef.current.value,
+            productSaleOff: this.productSaleOffRef.current.value,
+            files: this.filesRef.current.files
+        }
+        const formData = new FormData();
+        formData.append('storeId', productInfo.storeId);
+        formData.append('productCategory', productInfo.productCategory);
+        formData.append('productName', productInfo.productName);
+        formData.append('productDecription', productInfo.productDecription);
+        formData.append('productPrice', productInfo.productPrice);
+        formData.append('productSaleOff', productInfo.productSaleOff);
+
+        // User multiple files with FormData
+        // To check files use: formData.getAll('fieldName')
+        Array.from(productInfo.files).forEach(file => {
+            formData.append('files', file);
+        })
+
+        fetch('/api/products', {
+            method: 'POST',
+            body: formData
+        })
+        .then(result => {
+            if (result.status === 200) {
+                alert('Đã thêm 1 sản phẩm!');
+                // Reset form
+                document.querySelector('#addProductForm').reset();
+            }
+        })
+        .catch(err => console.log(err))
     }
 
     render() {
@@ -355,12 +399,13 @@ class StoresProductsManage extends React.Component {
                     <div className={"store-info-input " + (this.state.isShowProductInfoInput ? "show" : "hide")}>
                         <h3>THÔNG TIN SẢN PHẨM</h3>
                         <hr />
-                        <Form onSubmit={this.addProduct}>
+                        <Form id='addProductForm' onSubmit={this.addProduct}>
                             <FormGroup row>
                                 <Label for="store" sm={2}>Cửa hàng</Label>
                                 <Col sm={10}>
                                     <Input type="text"
                                             name="storeId"
+                                            innerRef={this.storeIdRef}
                                             defaultValue={this.state.storeMain && this.state.storeMain._id}
                                             required={true}
                                             hidden={true}
@@ -378,12 +423,14 @@ class StoresProductsManage extends React.Component {
                                 <Col sm={10}>
                                     <Input type="select" name="storeCategory" id="storeCategory"
                                         required={true}
-                                        onChange={this.onSelectProductCategoriesChange}>
+                                        innerRef={this.productCategoryRef}
+                                        onChange={this.onSelectProductCategoriesChange}
+                                        defaultValue={1}>
                                         <option value={null}>Phân loại</option>
                                         {
                                             this.state.productCategories &&
                                             this.state.productCategories.map((productCategory, key) => (
-                                                <option key={key} value={key}>{productCategory.name}</option>
+                                                <option key={key} value={productCategory._id}>{productCategory.name}</option>
                                             ))
                                         }
                                     </Input>
@@ -397,6 +444,7 @@ class StoresProductsManage extends React.Component {
                                 <Col sm={10}>
                                     <Input type="text" name="name" id="name"
                                         placeholder="Tên sản phẩm"
+                                        innerRef={this.productNameRef}
                                         onChange={this.onInputProductInfoChange}
                                         required={true} />
                                     <span className={"error-message " + (this.state.productNameErrorMessage ? "show" : "")}>
@@ -409,6 +457,7 @@ class StoresProductsManage extends React.Component {
                                 <Col sm={10}>
                                     <Input type="textarea" name="description" id="description"
                                         placeholder="Hãy giới thiệu về sản phẩm.."
+                                        innerRef={this.productDecriptionRef}
                                         onChange={this.onInputProductInfoChange} 
                                         required={true} />
                                     <span className={"error-message " + (this.state.productDescriptionErrorMessage ? "show" : "")}>
@@ -421,6 +470,7 @@ class StoresProductsManage extends React.Component {
                                 <Col sm={4}>
                                     <Input type="number" name="price"
                                         id="price" placeholder="Giá gốc"
+                                        innerRef={this.productPriceRef}
                                         onChange={this.onInputProductInfoChange}
                                         required={true} />
                                     <span className={"error-message " + (this.state.productPriceErrorMessage ? "show" : "")}>
@@ -433,7 +483,9 @@ class StoresProductsManage extends React.Component {
                                 <Col sm={4}>
                                     <Input type="number" name="saleoff"
                                         id="saleoff" placeholder="Khuyến mãi"
+                                        required={true}
                                         defaultValue={0}
+                                        innerRef={this.productSaleOffRef}
                                         onChange={this.onInputProductInfoChange}
                                         min={0}
                                         max={100} />
@@ -445,7 +497,7 @@ class StoresProductsManage extends React.Component {
                             <FormGroup row>
                                 <Label for="images" sm={2}>Hình ảnh</Label>
                                 <Col sm={10}>
-                                    <Input type="file" name="images" id="images" />
+                                    <Input innerRef={this.filesRef} type="file" name="images" id="images" accept='image/*' required={true} multiple={true}/>
                                     <FormText color="muted">
                                         Tối đa 10 ảnh.
                                     </FormText>
@@ -456,8 +508,8 @@ class StoresProductsManage extends React.Component {
                                     <span className={"error-message2 " + (this.state.addProductErrorMessage ? "show" : "")}>
                                         {this.state.addProductErrorMessage}
                                     </span>
-                                    <Button type="button" color="warning" onClick={this.onCancelButtonClick}>Hủy</Button>
-                                    <Button type="button" color="success" onClick={this.onSubmitButtonClick}>Thêm sản phẩm</Button>
+                                    <Button type="reset" color="warning">Viết lại</Button>
+                                    <Button type="submit" color="success">Thêm sản phẩm</Button>
                                 </Col>
                             </FormGroup>
                         </Form>
