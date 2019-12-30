@@ -234,12 +234,12 @@ export default class Fields extends Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col sm={4}>
+                        <Col>
                             <label className='field-filter-form-label'>
                                 Bán kính
                             </label>
                         </Col>
-                        <Col sm={8}>
+                        <Col>
                             <Form.Group>
                                 <Form.Control
                                     as='select'
@@ -262,9 +262,7 @@ export default class Fields extends Component {
                 <div className='field-results'>
                     <Row>
                         <Col className='field-results-title'>
-                            <span className='field-results-number'>
-                                Đã xem gần đây
-                            </span>
+                            <span>Đã xem gần đây</span>
                         </Col>
                         <Col className='field-results-filter'>
                             <Form.Group>
@@ -280,7 +278,6 @@ export default class Fields extends Component {
                             </Form.Group>
                         </Col>
                     </Row>
-                    <hr className='field-hr' />
                     <div className='loading'>
                         <Spinner animation='grow' variant='success' size='sm' />
                         <Spinner animation='grow' variant='success' size='sm' />
