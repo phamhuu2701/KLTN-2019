@@ -103,6 +103,24 @@ router
                             if (users.length > 0) {
                                 // send mail
                                 users.forEach(user => {
+                                    const interests = user.interests;
+                                    let interestId;
+                                    if (interests.length === 1) {
+                                        interestId = interests[0]._id;
+                                    } else {
+                                        const i = interests.findIndex(
+                                            interest => {
+                                                return (
+                                                    interest.productNameRemoveAccent.includes(
+                                                        ...nameRemoveAccents.split(
+                                                            ' '
+                                                        )
+                                                    ) === true
+                                                );
+                                            }
+                                        );
+                                        interestId = interests[i]._id;
+                                    }
                                     let mailOption = {
                                         from: config.get('domainName'),
                                         to: user.email,
@@ -120,7 +138,12 @@ router
                                             Giá: ${(newProduct.price *
                                                 (100 - newProduct.saleoff)) /
                                                 100}.<br>
-                                            Cửa hàng: ${result.name}.`
+                                            Cửa hàng: ${result.name}.<br>
+                                        Chúng tôi gợi ý đến bạn sản phẩm này do bạn muốn nhận thông tin từ chúng tôi. Nếu bạn không cần đến gợi ý này vùi lòng click vào <a href="${config.get(
+                                            'localhost'
+                                        )}/cancel-notify/${
+                                            req.session.user._id
+                                        }/${interestId}">hủy nhận thông báo</a>`
                                     };
                                     mailer
                                         .sendMail(mailOption)
@@ -204,7 +227,7 @@ const addStoreIntoProduct = async (products, latlng, distance, cb) => {
         }
     }
 
-    results = products.map((product, index) => {
+    results = products.map(product => {
         return {
             ...product,
             store:

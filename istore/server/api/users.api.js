@@ -203,7 +203,7 @@ router
     });
 
 router.route('/updateInterest').put((req, res) => {
-    const searchContent = req.body.searchContent;
+    const searchContent = req.body.searchContent.trim();
     const searchContentRemoveAccent = slug(searchContent, ' ');
     const search = {
         productName: searchContent,
@@ -243,6 +243,32 @@ router.route('/verify').put((req, res) => {
             }
         })
         .catch(err => console.log(err));
+});
+
+router.route('/cancelNotify').put((req, res) => {
+    const { id, interestId } = req.query;
+    UserDao.removeInterest(id, interestId)
+        .then(result => {
+            if (result) {
+                if (
+                    result.interests.findIndex(interest => {
+                        return interest._id == interestId;
+                    }) !== -1
+                ) {
+                    return res
+                        .status(200)
+                        .json('Yêu cầu hủy nhận thông báo thành công!');
+                } else {
+                    return res
+                        .status(202)
+                        .json('OH. Có thể bạn đã hủy yêu cầu này rồi!');
+                }
+            } else {
+                return res.status(201).json('Không tìm thấy tài khoản!');
+            }
+            return res.json(result);
+        })
+        .catch(err => res.json(201).json(err));
 });
 
 router

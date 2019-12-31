@@ -1,19 +1,19 @@
-import React, { Component } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React, { Component } from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 // import "bootstrap/dist/css/bootstrap.min.css";
 
 // import "./e-shop-template/e-shop/css/bootstrap.min.css"
-import "./e-shop-template/e-shop/css/font-awesome.min.css";
-import "./e-shop-template/e-shop/css/nouislider.min.css";
-import "./e-shop-template/e-shop/css/slick-theme.css";
-import "./e-shop-template/e-shop/css/slick.css";
-import "./e-shop-template/e-shop/css/style.css";
+import './e-shop-template/e-shop/css/font-awesome.min.css';
+import './e-shop-template/e-shop/css/nouislider.min.css';
+import './e-shop-template/e-shop/css/slick-theme.css';
+import './e-shop-template/e-shop/css/slick.css';
+import './e-shop-template/e-shop/css/style.css';
 
-import Header from "./e-shop-template/Header";
-import Footer from "./e-shop-template/Footer";
-import Home from "./e-shop-template/Home";
-import Products from "./e-shop-template/Products";
-import ProductDetail from "./e-shop-template/ProductDetail";
+import Header from './e-shop-template/Header';
+import Footer from './e-shop-template/Footer';
+import Home from './e-shop-template/Home';
+import Products from './e-shop-template/Products';
+import ProductDetail from './e-shop-template/ProductDetail';
 
 class StoreIndex extends Component {
     constructor(props) {
@@ -37,16 +37,15 @@ class StoreIndex extends Component {
 
     componentDidMount() {
         if (!this.state.store) {
-            fetch("/api/stores/" + this.props.match.params.id, {
+            fetch('/api/stores/' + this.props.match.params.id, {
                 headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json'
                 }
             })
                 .then(res => res.json())
                 .then(store => {
                     if (store) {
-                        console.log(store);
                         this.setState({
                             store: store
                         });
@@ -65,7 +64,7 @@ class StoreIndex extends Component {
         // console.log(this.props.match.params.id);
         // console.log(this.state.store);
 
-        if (this.props.match.params.template !== "null") {
+        if (this.props.match.params.template !== 'null') {
             if (this.state.store) {
                 return (
                     <div>
@@ -76,7 +75,7 @@ class StoreIndex extends Component {
                             </Route>
                             <Route
                                 exact
-                                path={this.props.match.path + "/products"}
+                                path={this.props.match.path + '/products'}
                             >
                                 <Products store={this.state.store} />
                             </Route>
@@ -84,7 +83,7 @@ class StoreIndex extends Component {
                                 exact
                                 path={
                                     this.props.match.path +
-                                    "/products/:idProduct"
+                                    '/products/:idProduct'
                                 }
                             >
                                 <ProductDetail />
@@ -96,7 +95,7 @@ class StoreIndex extends Component {
             } else if (!this.state.store && this.state.isNotFounded === false) {
                 return <div></div>;
             } else {
-                return <Redirect to="/" />;
+                return <Redirect to='/' />;
             }
         } else {
             if (this.state.store) {
@@ -104,7 +103,7 @@ class StoreIndex extends Component {
             } else if (!this.state.store && this.state.isNotFounded === false) {
                 return <div></div>;
             } else {
-                return <Redirect to="/" />;
+                return <Redirect to='/' />;
             }
         }
     }

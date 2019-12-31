@@ -125,6 +125,19 @@ module.exports = {
             }
         });
     },
+    removeInterest: (id, interestId) => {
+        return Model.findByIdAndUpdate(
+            id,
+            {
+                $pull: {
+                    interests: {
+                        _id: interestId
+                    }
+                }
+            },
+            { useFindAndModify: false }
+        );
+    },
     updateForgetPasswordToken: (email, token) => {
         return Model.findOneAndUpdate(
             { email: email },
