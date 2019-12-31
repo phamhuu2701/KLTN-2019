@@ -138,4 +138,16 @@ img.zoom-icon.right {
         top: 3.2em;
         right: 1em;
     }
+    .app-body-left.small {
+        width: 100%;
+    }
+    .app-body-left.big {
+        width: 100%;
+    }
+    .app-body-right.small {
+        width: 100%;
+    }
+    .app-body-right.big {
+        width: 100%;
+    }
 }

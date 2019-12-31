@@ -244,16 +244,13 @@ class ProductDetail extends Component {
                                     trong 999 sản phẩm có sẵn
                                 </div>
                                 <div className="product-detail-product-body-button-buy">
-                                    <a
+                                    <Button variant="success"
                                         href={
-                                            "tel:" +
-                                            this.state.product.store.phone
+                                            "tel:" + this.state.product.store.phone
                                         }
                                     >
-                                        <Button variant="success">
-                                            GỌI NGAY
-                                        </Button>
-                                    </a>
+                                        GỌI NGAY
+                                    </Button>
                                 </div>
                                 <hr />
                                 <div className="product-detail-product-body-footer">
@@ -332,7 +329,7 @@ class ProductDetail extends Component {
                 <hr />
                 <div className="product-detail-product-description">
                     <div className="product-detail-product-description-title">
-                        <h5>CHI TIẾT SẢN PHẨM</h5>
+                        <h3>CHI TIẾT SẢN PHẨM</h3>
                     </div>
                     <Row>
                         <Col sm={2}>
