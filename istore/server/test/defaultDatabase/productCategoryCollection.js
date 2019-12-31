@@ -13,7 +13,9 @@ const productCategories = [
     "Thiết bị làm sạch", 
     "Thiết bị nhà bếp", 
     "Thiết bị tỏa nhiệt", 
-    "Thiết bị văn phòng"
+    "Thiết bị văn phòng",
+    "Sách",
+    "Tiểu thuyết"
 ];
 
 module.exports.createDefaultCollection = async () => {
@@ -28,6 +30,6 @@ module.exports.createDefaultCollection = async () => {
         });
         console.log("Default ProductCategory collection created.");
     } else {
-        console.log("ProductCategory collection existed: ", productCategoriesArray.length, "/12");
+        console.log("ProductCategory collection existed: ", productCategoriesArray.length, "/14");
     }
 };

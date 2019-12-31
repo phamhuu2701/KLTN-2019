@@ -52,7 +52,9 @@ export function sortIncreaseProductsByTimestamp(products) {
 // sắp xếp products thời gian mới nhất lên trước
 export function sortDescreaseProductsByTimestamp(products) {
     products.sort((first, second) => {
-        return second.timestampe - first.timestampe;
+        const a = new Date(first.timestampe);
+        const b = new Date(second.timestampe);
+        return b - a;
     });
     return products;
 }
