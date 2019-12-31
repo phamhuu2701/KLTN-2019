@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const config = require('config');
 
 const ProductDao = require('../dao/product.dao');
 const StoreDao = require('../dao/store.dao');
+const UserDao = require('../dao/user.dao');
 
 const ProductModel = require('../models/product.model');
 
+const mailer = require('../util/mailer');
 const slug = require('../util/slug');
 const upload = require('../util/multer');
 
@@ -71,7 +74,7 @@ router
                 productCategory: req.body.productCategory,
                 description: req.body.productDecription,
                 price: req.body.productPrice,
-                saleoff: req.body.productseleOff,
+                saleoff: req.body.productSaleOff,
                 images: images,
                 rateAvg: 0,
                 timestamp: Date.now(),
@@ -83,6 +86,53 @@ router
             // Push product id into store
             StoreDao.addProductIntoStore(storeId, newProduct._id)
                 .then(result => {
+                    // Check store is VIP?
+                    // if (
+                    //     req.session.user.maxStoresCountCreated.count > 1 &&
+                    //     req.session.user.maxStoresCountCreated.timeLimited -
+                    //         Date.now() >
+                    //         0
+                    // ) {
+                    // Check interest from user
+                    const productNameRemoveAccent = slug(
+                        req.body.productName,
+                        '.*'
+                    );
+                    UserDao.findInterest(productNameRemoveAccent)
+                        .then(users => {
+                            if (users.length > 0) {
+                                // send mail
+                                users.forEach(user => {
+                                    let mailOption = {
+                                        from: config.get('domainName'),
+                                        to: user.email,
+                                        subject: `${config.get(
+                                            'domainName'
+                                        )} - Gợi ý sản phẩm`,
+                                        html: `Chúng tôi tìm thấy sản phẩm phù hợp cho bạn.<br>
+                                            Sẩn phẩm: <a href="${config.get(
+                                                'localhost'
+                                            )}/store/${result.template}/${
+                                            result._id
+                                        }/products/${newProduct._id}">${
+                                            newProduct.name
+                                        }</a>.<br>
+                                            Giá: ${(newProduct.price *
+                                                (100 - newProduct.saleoff)) /
+                                                100}.<br>
+                                            Cửa hàng: ${result.name}.`
+                                    };
+                                    mailer
+                                        .sendMail(mailOption)
+                                        .then(result => {
+                                            //console.log(result);
+                                        })
+                                        .catch(err => console.log(err));
+                                });
+                            }
+                        })
+                        .catch(err => console.log(err));
+                    // }
                     res.status(200).json(result);
                 })
                 .catch(err => console.log(err));
@@ -111,13 +161,6 @@ router.route('/findRecentProducts').get((req, res) => {
             });
         })
         .catch(err => console.log(err));
-});
-
-router.route('/addProduct').post((req, res) => {
-    multer.array('files', (req, res, next) => {
-        // Add new product
-        // Push product id into store
-    });
 });
 
 router

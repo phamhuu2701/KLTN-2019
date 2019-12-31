@@ -216,7 +216,7 @@ class SignForm extends Component {
                                 Đăng nhập
                             </Button>
                         </div>
-                        <div className="dropdown-user-body-content" >
+                        <div className='dropdown-user-body-content'>
                             <span
                                 className='forgot-password'
                                 onClick={this.open}
@@ -458,7 +458,10 @@ export default class DropdownUser extends Component {
                     user: result.user,
                     sign: ''
                 });
-                this.props.logInToggle(result.isLogged);
+                this.props.logInToggle(
+                    result.isLogged,
+                    result.isLogged ? result.user.interests.length : 0
+                );
             })
             .catch(err => console.log(err));
     }
@@ -482,7 +485,7 @@ export default class DropdownUser extends Component {
             sign: ''
         });
         document.getElementById('dropdown-user-body').style.display = 'none';
-        this.props.logInToggle(true);
+        this.props.logInToggle(true, user.interests.length);
     }
 
     logoutHandler() {
@@ -523,7 +526,9 @@ export default class DropdownUser extends Component {
                                         src='./resources/icons/user.svg'
                                     ></img>
                                     <span className='dropdown-user-body-content-title'>
-                                        {this.state.user.fullname.firstname + ' ' + this.state.user.fullname.lastname}
+                                        {this.state.user.fullname.firstname +
+                                            ' ' +
+                                            this.state.user.fullname.lastname}
                                     </span>
                                 </div>
                             </a>
