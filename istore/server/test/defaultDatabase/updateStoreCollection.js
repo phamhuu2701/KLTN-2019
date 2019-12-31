@@ -11,7 +11,7 @@ module.exports.updateCollection = async () => {
             const products = await ProductDao.find();
             if (products.length > 0) {
                 stores.map(async (store, i) => {
-                    for (let j = i; j < products.length; j += 5) {
+                    for (let j = i*4; j < (i+1)*4; j++) {
                         store.products.push(products[j]);
                         StoreDao.update(store);
                     }

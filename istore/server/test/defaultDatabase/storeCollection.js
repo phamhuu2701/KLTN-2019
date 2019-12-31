@@ -166,20 +166,20 @@ const stores = [
         },
         template: 1
     },    
-    {
-        houseNumber: "12",
-        location: { type: "Point", coordinates: [106.76123200000006, 10.853104] },
-        phone: "01696696981",
-        email: "shopee@gmail.com",
-        name: "SHOPEE",
-        description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
-        website: {
-            hasWebsite: true,
-            url: "https://shopee.vn/"
-        },
-        template: 1
-    }
+    // {
+    //     houseNumber: "12",
+    //     location: { type: "Point", coordinates: [106.76123200000006, 10.853104] },
+    //     phone: "01696696981",
+    //     email: "shopee@gmail.com",
+    //     name: "SHOPEE",
+    //     description:
+    //         "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+    //     website: {
+    //         hasWebsite: true,
+    //         url: "https://shopee.vn/"
+    //     },
+    //     template: 1
+    // }
 ];
 
 module.exports.createDefaultCollection = async () => {
@@ -256,6 +256,6 @@ module.exports.createDefaultCollection = async () => {
         }
 
     } else {
-        console.log("Store collection existed: ", storeArrays.length, "/13");
+        console.log("Store collection existed: ", storeArrays.length, "/12");
     }
 };

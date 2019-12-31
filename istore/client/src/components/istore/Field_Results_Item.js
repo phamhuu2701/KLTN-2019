@@ -33,19 +33,25 @@ export default class Fields_Result_Item extends Component {
     }
 
     render() {
-        // console.log(this.props);
+        console.log(this.props);
         // console.log(this.props.info._doc.rates);
         return (
             <div className="field-results-item" onClick={() => {effectStoreInformationWindow(this.props.code, this.props.info)}}>
                 <div className="field-results-item-content">
                     <div className="field-results-item-img">
                         <img src={this.props.imageAvatar} alt="" />
+                        {
+                            this.props.code < 3 && (
+                                <div className="icons">HOT</div>
+                            )
+                        }
                     </div>
                     <div className="field-results-item-desc">
                         <div className="field-results-item-desc-title">
-                            <b>{this.props.storeName.substring(0, 15)}</b>
+                            {this.props.productName}
+                            {/* <b>{this.props.storeName.substring(0, 15)}</b> */}
                         </div>
-                        <div>
+                        <div className="field-results-item-desc-area-price">
                             <span className="field-results-item-desc-price">
                                 Giá: {(((this.props.price)*((100-this.props.saleoff)/100))/1000).toFixed(3).replace(/\d(?=(\d{3})+\.)/g, '$&.')}đ
                             </span>
@@ -54,7 +60,10 @@ export default class Fields_Result_Item extends Component {
                             </span>
                         </div>
                         <div className="field-results-item-desc-sub-desc">
-                            {this.props.productName.substring(0, 60)}..
+                            {/* {this.props.productName} */}
+                            <b>{this.props.storeName}</b>
+                            {" - "}
+                            <span className="field-results-item-desc-product-description">{this.props.info._doc.description}</span>
                         </div>
                         <div className="field-results-item-desc-rate-contact">
                             <span className="field-results-item-desc-rate">

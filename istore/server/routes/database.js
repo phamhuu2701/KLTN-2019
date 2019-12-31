@@ -29,46 +29,62 @@ const departmentDao = require("../dao/department.dao");
 const employeeDao = require("../dao/employee.dao");
 const searchKeyDao = require("../dao/searchKey.dao");
 
-/* GET home page. */
-router.get("/", function(req, res, next) {
-    console.log("================================");
-    
-    citiesCollection.createDefaultCollection();
-    districtsCollection.createDefaultCollection();
-    streetCollection.createDefaultCollection();
-    authorizationCollection.createDefaultCollection();
-    userCollection.createDefaultCollection();
-    productCategoryCollection.createDefaultCollection();
-    productCollection.createDefaultCollection();
-    storeCategoryCollection.createDefaultCollection();
-    storeCollection.createDefaultCollection();
-    updateStoreCollection.updateCollection();
-    updateProductsView.updateProductsView();
-    departmentCollection.createDefaultCollection();
-    employeeCollection.createDefaultCollection();
-    searchKeyCollection.createDefaultCollection();
+createDatebase = async callback => {
+    let cities = await cityDao.find();
+    let districts = await districtDao.find();
+    let streets = await streetDao.find();
+    let authorizations = await authorizationDao.find();
+    let users = await userDao.find();
+    let storeCategories = await storeCategoryDao.find();
+    let stores = await storeDao.find();
+    let productCategories = await productCategotyDao.find();
+    let products = await productDao.find();
+    let departments = await departmentDao.find();
+    let employees = await employeeDao.find();
+    let searchKeys = await searchKeyDao.find();
 
-    var myVar = setInterval(() => {
-        console.log("Database is creating..");
+    console.log("================================");
+
+    citiesCollection.createDefaultCollection();
+    setTimeout(() => {
+        districtsCollection.createDefaultCollection();
+    }, 1000);
+    setTimeout(() => {
+        streetCollection.createDefaultCollection();
+    }, 2000);
+
+    authorizationCollection.createDefaultCollection();
+    setTimeout(() => {
+        userCollection.createDefaultCollection();
     }, 1000);
 
-    setTimeout(async () => {
-        
-        clearInterval(myVar);
-        
-        let cities = await cityDao.find();
-        let districts = await districtDao.find();
-        let streets = await streetDao.find();
-        let authorizations = await authorizationDao.find();
-        let users = await userDao.find();
-        let storeCategories = await storeCategoryDao.find();
-        let stores = await storeDao.find();
-        let productCategories = await productCategotyDao.find();
-        let products = await productDao.find();
-        let departments = await departmentDao.find();
-        let employees = await employeeDao.find();
-        let searchKeys = await searchKeyDao.find();
+    productCategoryCollection.createDefaultCollection();
+    setTimeout(() => {
+        productCollection.createDefaultCollection();
+    }, 1000);
 
+    storeCategoryCollection.createDefaultCollection();
+    if (
+        storeCategories.length > 0 &&
+        cities.length > 0 &&
+        districts.length > 0 &&
+        streets.length > 0 &&
+        users.length > 0
+    ) {
+        storeCollection.createDefaultCollection();
+        setTimeout(() => {
+            updateStoreCollection.updateCollection();
+        }, 3000);
+    }
+
+    departmentCollection.createDefaultCollection();
+    if (departments.length > 0 && users.length > 0) {
+        employeeCollection.createDefaultCollection();
+    }
+
+    searchKeyCollection.createDefaultCollection();
+        
+    setTimeout(() => {
         if (
             cities.length > 0 &&
             districts.length > 0 &&
@@ -83,17 +99,37 @@ router.get("/", function(req, res, next) {
             employees.length > 0 &&
             searchKeys.length > 0
         ) {
+            
             console.log("================================");
             console.log("Database created!");
+    
+            callback(true);
         } else {
+            
             console.log("================================");
             console.log(
-                "Creating database not success. Try again: to refresh page 'http://localhost:5000/create-database'"
+                "Creating database not success. Try again: refresh page 'http://localhost:5000/create-database'"
+            );
+    
+            callback(false);
+        }
+        
+    }, 5000);
+
+    
+};
+
+/* GET home page. */
+router.get("/", function(req, res, next) {
+    createDatebase(result => {
+        if (result) {
+            res.send("Database created!");
+        } else {
+            res.send(
+                "Creating database not success. Try again: refresh page 'http://localhost:5000/create-database'"
             );
         }
-    }, 10000);
-
-    res.send("Check server console.log");
+    });
 });
 
 module.exports = router;

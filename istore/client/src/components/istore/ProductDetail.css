@@ -31,17 +31,19 @@
 .product-detail-product-images-more {
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
-    overflow-x: scroll;
+    margin: 5px;
+    max-width: 340px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
 }
 
 .product-detail-product-images-more div {
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
     overflow: hidden;
     margin: 5px;
-    min-width: 60px;
 }
 
 .product-detail-product-images-more img {

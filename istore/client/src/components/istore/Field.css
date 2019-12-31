@@ -64,7 +64,8 @@
 }
 
 .field-results-list {
-    padding: 1em 0;
+    padding-bottom: 1em;
+    padding-right: 1em;
 }
 
 .loading {

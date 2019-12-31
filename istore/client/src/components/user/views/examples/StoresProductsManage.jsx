@@ -53,6 +53,7 @@ import { sortDescreaseProductsByTimestamp } from "../../../../utils/productUtils
 import { getProductCategories } from "../../../../services/productCategory.service";
 import removeAccents from "../../../../utils/stringUtils";
 import priceFormatUtil from "../../../../utils/priceFormat";
+import { Link } from "react-router-dom";
 
 class StoresProductsManage extends React.Component {
     constructor(props) {
@@ -234,9 +235,17 @@ class StoresProductsManage extends React.Component {
         })
         .then(result => {
             if (result.status === 200) {
+
                 alert('Đã thêm 1 sản phẩm!');
                 // Reset form
                 document.querySelector('#addProductForm').reset();
+
+                getStoreById(this.state.storeMain._id, (result) => {
+                    this.setState({
+                        storeMain: result,
+                        products: (result ? sortDescreaseProductsByTimestamp(result.products) : null)
+                    })
+                })
             }
         })
         .catch(err => console.log(err))
@@ -298,9 +307,18 @@ class StoresProductsManage extends React.Component {
                                                 <tr key={key}>
                                                     <td>{key + 1}</td>
                                                     <th scope="row" style={{ "textTransform": "uppercase" }}>
-                                                        <a href="#pablo">
-                                                            {product.name.substring(0, 25)}..
-                                                        </a>
+                                                        <Link to={
+                                                                "/store/" +
+                                                                this.state.storeMain.template +
+                                                                "/" +
+                                                                this.state.storeMain._id +
+                                                                "/products/" +
+                                                                product._id
+                                                            }
+                                                            target="_blank"
+                                                        >
+                                                            {product.name.substring(0, 25)}
+                                                        </Link>
                                                     </th>
                                                     <td>{priceFormatUtil(product.price)}</td>
                                                     <td>{product.saleoff}%</td>
