@@ -118,6 +118,13 @@ module.exports = {
             { useFindAndModify: false }
         );
     },
+    findInterest: search => {
+        return Model.find({
+            'interests.productNameRemoveAccent': {
+                $regex: new RegExp(search, 'i')
+            }
+        });
+    },
     updateForgetPasswordToken: (email, token) => {
         return Model.findOneAndUpdate(
             { email: email },

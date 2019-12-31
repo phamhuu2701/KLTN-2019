@@ -133,8 +133,12 @@ module.exports = {
         });
     },
     addProductIntoStore: (storeId, productId) => {
-        return Model.findByIdAndUpdate(storeId, {
-            $push: { products: productId }
-        });
+        return Model.findByIdAndUpdate(
+            storeId,
+            {
+                $push: { products: productId }
+            },
+            { useFindAndModify: false }
+        );
     }
 };
