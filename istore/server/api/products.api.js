@@ -1,24 +1,29 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const config = require('config');
+const config = require("config");
 
-const ProductDao = require('../dao/product.dao');
-const StoreDao = require('../dao/store.dao');
-const UserDao = require('../dao/user.dao');
+const ProductDao = require("../dao/product.dao");
+const StoreDao = require("../dao/store.dao");
+const UserDao = require("../dao/user.dao");
 
-const ProductModel = require('../models/product.model');
+const ProductModel = require("../models/product.model");
 
-const mailer = require('../util/mailer');
-const slug = require('../util/slug');
-const upload = require('../util/multer');
+const mailer = require("../util/mailer");
+const slug = require("../util/slug");
+const upload = require("../util/multer");
+
+var pathModule = require("path");
+var cloudinary = require("../../config/coudinaryConfig");
+var multiparty = require("../../config/multipartyConfig");
+var fs = require("../../config/fsConfig");
 
 router
-    .route('/')
+    .route("/")
     .get(async (req, res, next) => {
         if (req.query.search) {
             const { lat, lng, distance } = req.query;
 
-            const search = slug(req.query.search, '.*');
+            const search = slug(req.query.search, ".*");
 
             // Find product by product name
             ProductDao.searchByName(search)
@@ -38,14 +43,14 @@ router
                                 } else {
                                     return res.status(201).json({
                                         mesage:
-                                            'Không tìm thấy sản phẩm mong muốn!'
+                                            "Không tìm thấy sản phẩm mong muốn!"
                                     });
                                 }
                             }
                         );
                     } else {
                         return res.status(201).json({
-                            mesage: 'Không tìm thấy sản phẩm mong muốn!'
+                            mesage: "Không tìm thấy sản phẩm mong muốn!"
                         });
                     }
                 })
@@ -59,18 +64,56 @@ router
         }
     })
     .post((req, res) => {
-        upload.array('files', 10)(req, res, async err => {
+        upload.array("files", 10)(req, res, async err => {
             // Add new product
             const storeId = req.body.storeId;
-            const images = await req.files.map(file => {
-                const p = file.path;
-                const index = p.indexOf('img');
-                const path = '/' + p.slice(index);
-                return path;
-            });
+            let images = [];
+            for (let i = 0; i < req.files.length; i++) {
+                let file = req.files[i];
+                // check file type image
+                let ext = pathModule.extname(file.path);
+                if (
+                    ext !== ".png" &&
+                    ext !== ".jpg" &&
+                    ext !== ".gif" &&
+                    ext !== ".jpeg"
+                ) {
+                    console.log("error: only image are allowed");
+                } else {
+                    // save file into cloudinary
+                    await cloudinary.uploadFile("image", file).then(
+                        result => {
+                            console.log("image saved into cloudinary");
+
+                            // set avatar link into user
+                            console.log(result.url);
+
+                            images.push(result.url);
+                        },
+                        error => {
+                            console.log(
+                                "error: save image into cloudinary fail"
+                            );
+                        }
+                    );
+                }
+            }
+            console.log(images);
+
+            for (let i = 0; i < req.files.length; i++) {
+                let file = req.files[i];
+                // delete file in server
+                let b = fs.deleteFileInServer(file.path);
+                if (!b) {
+                    console.log("error: delete file in server fail");
+                } else {
+                    console.log("file in server deleted");
+                }
+            }
+
             const product = {
                 name: req.body.productName,
-                nameRemoveAccents: slug(req.body.productName, ' '),
+                nameRemoveAccents: slug(req.body.productName, " "),
                 productCategory: req.body.productCategory,
                 description: req.body.productDecription,
                 price: req.body.productPrice,
@@ -96,7 +139,7 @@ router
                     // Check interest from user
                     const productNameRemoveAccent = slug(
                         req.body.productName,
-                        '.*'
+                        ".*"
                     );
                     UserDao.findInterest(productNameRemoveAccent)
                         .then(users => {
@@ -113,7 +156,7 @@ router
                                                 return (
                                                     interest.productNameRemoveAccent.includes(
                                                         ...nameRemoveAccents.split(
-                                                            ' '
+                                                            " "
                                                         )
                                                     ) === true
                                                 );
@@ -122,14 +165,14 @@ router
                                         interestId = interests[i]._id;
                                     }
                                     let mailOption = {
-                                        from: config.get('domainName'),
+                                        from: config.get("domainName"),
                                         to: user.email,
                                         subject: `${config.get(
-                                            'domainName'
+                                            "domainName"
                                         )} - Gợi ý sản phẩm`,
                                         html: `Chúng tôi tìm thấy sản phẩm phù hợp cho bạn.<br>
                                             Sẩn phẩm: <a href="${config.get(
-                                                'localhost'
+                                                "localhost"
                                             )}/store/${result.template}/${
                                             result._id
                                         }/products/${newProduct._id}">${
@@ -140,7 +183,7 @@ router
                                                 100}.<br>
                                             Cửa hàng: ${result.name}.<br>
                                         Chúng tôi gợi ý đến bạn sản phẩm này do bạn muốn nhận thông tin từ chúng tôi. Nếu bạn không cần đến gợi ý này vùi lòng click vào <a href="${config.get(
-                                            'localhost'
+                                            "localhost"
                                         )}/cancel-notify/${
                                             req.session.user._id
                                         }/${interestId}">hủy nhận thông báo</a>`
@@ -162,7 +205,7 @@ router
         });
     });
 
-router.route('/findRecentProducts').get((req, res) => {
+router.route("/findRecentProducts").get((req, res) => {
     const ids = JSON.parse(req.query.ids);
     ProductDao.findByIds(ids)
         .then(products => {
@@ -178,7 +221,7 @@ router.route('/findRecentProducts').get((req, res) => {
                     return res.status(200).json(results);
                 } else {
                     return res.status(201).json({
-                        mesage: 'Chưa có sản phẩm được xem gần đây!'
+                        mesage: "Chưa có sản phẩm được xem gần đây!"
                     });
                 }
             });
@@ -187,7 +230,7 @@ router.route('/findRecentProducts').get((req, res) => {
 });
 
 router
-    .route('/:id')
+    .route("/:id")
     .get(async (req, res, next) => {
         let id = req.params.id;
         let product = await ProductDao.findById(id);
@@ -236,7 +279,7 @@ const addStoreIntoProduct = async (products, latlng, distance, cb) => {
                         return store.products.includes(product._id);
                     })
                 ],
-            distance: ''
+            distance: ""
         };
     });
     cb(results);
@@ -260,7 +303,7 @@ const addStoreIntoRecentProduct = async (products, ids, cb) => {
                         return sto.products.includes(id);
                     })
                 ],
-            distance: ''
+            distance: ""
         };
     });
     // results.forEach((result, index) => {
