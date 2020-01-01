@@ -48,20 +48,20 @@ createDatebase = async callback => {
     citiesCollection.createDefaultCollection();
     setTimeout(() => {
         districtsCollection.createDefaultCollection();
-    }, 1000);
+    }, 2000);
     setTimeout(() => {
         streetCollection.createDefaultCollection();
-    }, 2000);
+    }, 4000);
 
     authorizationCollection.createDefaultCollection();
     setTimeout(() => {
         userCollection.createDefaultCollection();
-    }, 1000);
+    }, 2000);
 
     productCategoryCollection.createDefaultCollection();
     setTimeout(() => {
         productCollection.createDefaultCollection();
-    }, 1000);
+    }, 2000);
 
     storeCategoryCollection.createDefaultCollection();
     if (
@@ -74,7 +74,7 @@ createDatebase = async callback => {
         storeCollection.createDefaultCollection();
         setTimeout(() => {
             updateStoreCollection.updateCollection();
-        }, 3000);
+        }, 4000);
     }
 
     departmentCollection.createDefaultCollection();
@@ -114,7 +114,7 @@ createDatebase = async callback => {
             callback(false);
         }
         
-    }, 5000);
+    }, 10000);
 
     
 };

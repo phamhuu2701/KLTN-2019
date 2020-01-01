@@ -2,9 +2,9 @@ var cloudinary = require("cloudinary").v2;
 
 // set your env variable CLOUDINARY_URL or set the following configuration
 cloudinary.config({
-    cloud_name: "dxgbnd5t6",
-    api_key: "884164624984327",
-    api_secret: "nrVdSjEwswEi0rhpFkOVneHuCnE"
+    cloud_name: "dkt8fzhrr",
+    api_key: "997565866414374",
+    api_secret: "r5Duk8gcv-npilu4AWyrLtc8k-M"
 });
 
 // save image into cloudinary

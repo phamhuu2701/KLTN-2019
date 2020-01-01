@@ -53,7 +53,7 @@ app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")));
 
 // Connect to MongoDB
-mongoose.connect(config.get('localMongoDBUri'), {
+mongoose.connect(config.get('mongoDBUri'), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
