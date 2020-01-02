@@ -237,6 +237,9 @@ router
         if (!product) {
             res.json(null);
         } else {
+            // update views count
+            ProductDao.updateViewCount(product);
+            
             res.json(product);
         }
     })

@@ -108,7 +108,7 @@ export function getStarsArrayClassName(product) {
 export function getStarsArrayClassNameOfRate(rate) {
     let starsArray = [];
     for (let i = 1; i <= 5; i++) {
-        if (i < rate.stars) {
+        if (i <= rate.stars) {
             starsArray.push("fa fa-star");
         } else {
             starsArray.push("fa fa-star empty");

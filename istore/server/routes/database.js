@@ -62,6 +62,9 @@ createDatebase = async callback => {
     setTimeout(() => {
         productCollection.createDefaultCollection();
     }, 2000);
+    if(products.length > 0){
+        updateProductsView.updateProductsView();
+    }
 
     storeCategoryCollection.createDefaultCollection();
     if (
@@ -84,37 +87,34 @@ createDatebase = async callback => {
 
     searchKeyCollection.createDefaultCollection();
         
-    setTimeout(() => {
-        if (
-            cities.length > 0 &&
-            districts.length > 0 &&
-            streets.length > 0 &&
-            authorizations.length > 0 &&
-            users.length > 0 &&
-            storeCategories.length > 0 &&
-            stores.length > 0 &&
-            productCategories.length > 0 &&
-            products.length > 0 &&
-            departments.length > 0 &&
-            employees.length > 0 &&
-            searchKeys.length > 0
-        ) {
-            
-            console.log("================================");
-            console.log("Database created!");
-    
-            callback(true);
-        } else {
-            
-            console.log("================================");
-            console.log(
-                "Creating database not success. Try again: refresh page 'http://localhost:5000/create-database'"
-            );
-    
-            callback(false);
-        }
+    if (
+        cities.length > 0 &&
+        districts.length > 0 &&
+        streets.length > 0 &&
+        authorizations.length > 0 &&
+        users.length > 0 &&
+        storeCategories.length > 0 &&
+        stores.length > 0 &&
+        productCategories.length > 0 &&
+        products.length > 0 &&
+        departments.length > 0 &&
+        employees.length > 0 &&
+        searchKeys.length > 0
+    ) {
         
-    }, 10000);
+        console.log("================================");
+        console.log("Database created!");
+
+        callback(true);
+    } else {
+        
+        console.log("================================");
+        console.log(
+            "Creating database not success. Try again: refresh page 'http://localhost:5000/create-database'"
+        );
+
+        callback(false);
+    }
 
     
 };

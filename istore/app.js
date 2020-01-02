@@ -54,6 +54,7 @@ app.use(cookieParser());
 
 // Connect to MongoDB
 mongoose.connect(config.get('mongoDBUri'), {
+// mongoose.connect(config.get('localMongoDBUri'), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

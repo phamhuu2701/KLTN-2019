@@ -20,12 +20,12 @@ module.exports.createDefaultCollection = async () => {
         console.log("SearchKey collection is empty.");
 
         searchKeys.map(searchKey => {
-            const num = Math.floor(Math.random() * 100);
+            const num = Math.floor(Math.random() * 1000);
             let count = [];
 
             const currentDateMain = new Date();
             for (let i = 0; i < num; i++) {
-                const y = 2016 + Math.floor(Math.random() * 5);
+                const y = 2017 + Math.floor(Math.random() * 4);
                 let m = 0;
                 let d = 0;
                 if(y < currentDateMain.getFullYear()){

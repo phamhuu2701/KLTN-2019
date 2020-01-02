@@ -90,23 +90,18 @@ class Index extends React.Component {
 
             // sắp xếp giảm dần lượt xem
             sortDescreaseProductsByViewsCount(products);
-
-            // chọn top 10
-            if (products.length > 10) {
-
-                sortDescreseProductsByView(products, products2 => {
-                    if (products2.length > 10) {
-                        this.setState({
-                            top10ProductsViewsCout: products2.splice(0, 10)
-                        })
-                    }
-                    else {
-                        this.setState({
-                            top10ProductsViewsCout: products2
-                        })
-                    }
-                })
-            }
+            sortDescreseProductsByView(products, products2 => {
+                if (products2.length > 10) {
+                    this.setState({
+                        top10ProductsViewsCout: products2.splice(0, 10)
+                    })
+                }
+                else {
+                    this.setState({
+                        top10ProductsViewsCout: products2
+                    })
+                }
+            })
         })
 
         getStoresByIdUser2(this.props.user._id, stores => {
@@ -157,6 +152,7 @@ class Index extends React.Component {
         })
     }
     render() {
+        // console.log(this.state.top10ProductsViewsCout);
         return (
             <>
                 <Header />
@@ -342,11 +338,20 @@ class Index extends React.Component {
                                                 <tr key={key}>
                                                     <td style={{ "textAlign": "center" }}>{key + 1}</td>
                                                     <th style={{ "paddingLeft": "0", "paddingRight": "0", "textTransform": "uppercase" }}>
-                                                        <a href="#pablo">
-                                                            {product.name.substring(0, 20)}..
-                                                        </a>
+                                                        <Link to={
+                                                                "/store/" +
+                                                                product.store.template +
+                                                                "/" +
+                                                                product.store._id +
+                                                                "/products/" +
+                                                                product._id
+                                                            }
+                                                            target="_blank"
+                                                        >
+                                                            {product.name.substring(0, 20)}
+                                                        </Link>
                                                     </th>
-                                                    <td style={{ "textAlign": "right" }}>{priceFormatUtil(product.price * (100 - product.saleoff))}</td>
+                                                    <td style={{ "textAlign": "right" }}>{priceFormatUtil(product.price * (100 - product.saleoff) / 100)}</td>
                                                     <td style={{ "textAlign": "center" }}>{product.viewsCount.length}</td>
                                                 </tr>
                                             ))
