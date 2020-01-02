@@ -68,24 +68,24 @@ export function onSearchProductService(
                     return [];
                 }
             })
-            .then(async result => {
+            .then(async res => {
                 // Display result on result area
                 document.querySelector('.field-results-list').style.display =
                     'block';
                 document.querySelector(
                     '.field-results-number'
                 ).textContent = `Kết quả (${
-                    result.length > 10 ? 10 : result.length
+                    res.length > 10 ? 10 : res.length
                 })`;
 
                 // Show nearby store existing product
                 thisMap.cleanMaps();
-                if (result.length > 0) {
+                if (res.length > 0) {
                     // Add distance into result
                     // Client's location --- origin
                     const latLng = thisMap.props.google.maps.LatLng;
                     // Stores's location --- destinations
-                    const allStoreLocation = result.map(product => {
+                    const allStoreLocation = res.map(product => {
                         return [
                             product.store.location.coordinates[1],
                             product.store.location.coordinates[0]
@@ -103,7 +103,7 @@ export function onSearchProductService(
                             const elements = await response.rows[0].elements;
                             elements.forEach((e, index) => {
                                 lastResult.push({
-                                    ...result[index],
+                                    ...res[index],
                                     distance: e.distance.text
                                 });
                             });
@@ -153,10 +153,13 @@ export function onSearchProductService(
                         'select[class="form-control"]'
                     )[1].disabled = false;
                     // Show result in result area
-                    cb(result);
+                    cb(res);
                 }
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log('Lỗi tìm kiếm. Còn lỗi gì thì không biết!');
+                cb([]);
+            });
     } catch (error) {
         console.log(error);
         console.log('Kết nối mạng internet yếu..');

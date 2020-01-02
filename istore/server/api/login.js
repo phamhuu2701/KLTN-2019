@@ -1,13 +1,17 @@
-const express = require("express");
+const express = require('express');
 const app = express.Router();
-const md5 = require("md5");
+const md5 = require('md5');
 
-const userDAO = require("../dao/user.dao");
+const userDAO = require('../dao/user.dao');
 
-app.route("/")
+app.route('/')
     .get((req, res) => {
         //res.cookie('csrfToken', req.csrfToken ? req.csrfToken() : null, { sameSite: true, httpOnly: false });
-        if (req.session.isLogged === true) {
+        if (
+            req.session &&
+            req.session.isLogged &&
+            req.session.isLogged === true
+        ) {
             return res
                 .status(200)
                 .json({ isLogged: true, user: req.session.user });
@@ -36,11 +40,11 @@ app.route("/")
             });
     });
 
-app.route("/facebook").post((req, res) => {
+app.route('/facebook').post((req, res) => {
     LoginViaSocialAccount(req, res);
 });
 
-app.route("/google").post((req, res) => {
+app.route('/google').post((req, res) => {
     LoginViaSocialAccount(req, res);
 });
 

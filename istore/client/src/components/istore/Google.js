@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import GoogleLogin from "react-google-login";
+import React, { Component } from 'react';
+import GoogleLogin from 'react-google-login';
 
 export default class Google extends Component {
     constructor(props) {
@@ -15,15 +15,15 @@ export default class Google extends Component {
             },
             email: data.profileObj.email,
             isEmailActivated: true,
-            password: "google" + data.profileObj.googleId,
+            password: 'google' + data.profileObj.googleId,
             avatars: [data.profileObj.imageUrl]
         };
 
-        fetch("/api/login/google", {
-            method: "POST",
+        fetch('/api/login/google', {
+            method: 'POST',
             headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         })
@@ -39,9 +39,9 @@ export default class Google extends Component {
     render() {
         return (
             <GoogleLogin
-                clientId="167843177082-13lcr3s5m9vmlbjagl8ko1qh1jekg8j0.apps.googleusercontent.com"
-                buttonText="Google"
-                className="btn btn-gplus"
+                clientId='167843177082-13lcr3s5m9vmlbjagl8ko1qh1jekg8j0.apps.googleusercontent.com'
+                buttonText='Google'
+                className='btn btn-gplus'
                 onSuccess={this.responseGoogle}
                 onFailure={this.responseGoogle}
             />

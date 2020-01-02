@@ -52,8 +52,10 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")));
 
+let mongoDBUri =
+    process.env.NODE_ENV === 'production' ? 'mongoDBUri' : 'localMongoDBUri';
 // Connect to MongoDB
-mongoose.connect(config.get('localMongoDBUri'), {
+mongoose.connect(config.get(mongoDBUri), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
@@ -73,6 +75,33 @@ app.use(
     })
 );
 
+//app.use('/', indexRouter);
+app.use('/create-database', databaseRouter);
+app.use('/api/login', loginRouter);
+app.use('/api/logout', logoutRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/cities', citiesRouter);
+app.use('/api/districts', districtsRouter);
+app.use('/api/streets', streetsRouter);
+app.use('/api/authorizations', authorizationsRouter);
+app.use('/api/products', productsRouter);
+app.use('/api/product-categories', productCategoriesRouter);
+app.use('/api/stores', storesRouter);
+app.use('/api/store-categories', storeCategoriesRouter);
+app.use('/api/view', viewRouter);
+app.use('/api/departments', departmentsRouter);
+app.use('/api/employees', employeesRouter);
+app.use('/api/search-keys', searchKeysRouter);
+
+if (process.env.NODE_ENV === 'production') {
+    app.set('trust proxy', 1);
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+
 //app.use(cors());
 //app.use(csrf({cookie: false}));
 
@@ -90,33 +119,6 @@ app.use(
     res.setHeader('Access-Control-Allow-Headers', 'Accept, Content-Type, X-Access-Token, X-Requested-With');
     next();
 })*/
-
-if (process.env.NODE_ENV === 'production') {
-    app.set('trust proxy', 1);
-    app.use(express.static(path.join(__dirname, 'client', 'build')));
-
-    app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
-    });
-}
-
-app.use('/', indexRouter);
-app.use('/create-database', databaseRouter);
-app.use('/api/login', loginRouter);
-app.use('/api/logout', logoutRouter);
-app.use('/api/cities', citiesRouter);
-app.use('/api/districts', districtsRouter);
-app.use('/api/streets', streetsRouter);
-app.use('/api/authorizations', authorizationsRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/product-categories', productCategoriesRouter);
-app.use('/api/products', productsRouter);
-app.use('/api/store-categories', storeCategoriesRouter);
-app.use('/api/stores', storesRouter);
-app.use('/api/view', viewRouter);
-app.use('/api/departments', departmentsRouter);
-app.use('/api/employees', employeesRouter);
-app.use('/api/search-keys', searchKeysRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

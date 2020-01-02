@@ -463,7 +463,9 @@ export default class DropdownUser extends Component {
                     result.isLogged ? result.user.interests.length : 0
                 );
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                console.log('Lỗi rồi! Lỗi gì thì không biết!');
+            });
     }
 
     componentDidMount() {
