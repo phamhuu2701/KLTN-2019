@@ -55,7 +55,7 @@ app.use(cookieParser());
 let mongoDBUri =
     process.env.NODE_ENV === 'production' ? 'mongoDBUri' : 'localMongoDBUri';
 // Connect to MongoDB
-mongoose.connect(config.get(mongoDBUri), {
+mongoose.connect(config.get('mongoDBUri'), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true

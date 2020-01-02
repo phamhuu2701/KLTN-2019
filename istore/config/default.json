@@ -3,9 +3,18 @@
     "domainFree": "https://istores.herokuapp.com",
     "domainName": "iStore",
     "localMongoDBUri": "mongodb://localhost:27017/istore",
-    "mongoDBUri": "mongodb://canhtoan88:eunJ&.5RcqGKH*j@istore-shard-00-00-lthvn.mongodb.net:27017,istore-shard-00-01-lthvn.mongodb.net:27017,istore-shard-00-02-lthvn.mongodb.net:27017/istore?ssl=true&replicaSet=IStore-shard-0&authSource=admin&retryWrites=true&w=majority",
+    "mongoDBUri": "mongodb+srv://mongdbatlatadmin:@mongdbatlatadmin@cluster0-g2e3x.mongodb.net/dbistore?retryWrites=true&w=majority",
     "mail": {
         "user": "istore.vn2019@gmail.com",
         "pass": "@Istore.vn2019"
+    },
+    "cloudinary": {
+        "user": "istore.vn2019@gmail.com",
+        "pass": "@Istore.vn2019"
+    },
+    "mongodbAtlat": {
+        "user": "istore.vn2019@gmail.com",
+        "pass": "@Mongodbatlat",
+        "phone": "0906393657"
     }
 }
