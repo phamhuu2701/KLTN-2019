@@ -365,7 +365,7 @@ let chartExample1 = {
     },
     data3: canvas => {
         return {
-            labels: ["2016", "2017", "2018", "2019"],
+            labels: ["2017", "2018", "2019", "2020"],
             datasets: [
                 {
                     label: "search count",

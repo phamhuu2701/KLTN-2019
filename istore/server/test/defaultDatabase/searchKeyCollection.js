@@ -22,10 +22,25 @@ module.exports.createDefaultCollection = async () => {
         searchKeys.map(searchKey => {
             const num = Math.floor(Math.random() * 100);
             let count = [];
+
+            const currentDateMain = new Date();
             for (let i = 0; i < num; i++) {
-                const y = 2014 + Math.floor(Math.random() * 6);
-                const m = Math.floor(Math.random() * 11);
-                const d = Math.floor(Math.random() * 28);
+                const y = 2016 + Math.floor(Math.random() * 5);
+                let m = 0;
+                let d = 0;
+                if(y < currentDateMain.getFullYear()){
+                    m = Math.floor(Math.random() * 11);
+                    d = Math.floor(Math.random() * 28);
+                }
+                else{
+                    m = Math.floor(Math.random() * currentDateMain.getMonth());
+                    if(m === currentDateMain.getMonth()){
+                        d = Math.floor(Math.random() * currentDateMain.getDate());
+                    }
+                    else{
+                        d = Math.floor(Math.random() * 28);
+                    }
+                }
                 let currDate = new Date();
                 currDate.setFullYear(y);
                 currDate.setMonth(m);
