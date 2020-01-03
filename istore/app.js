@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');
 const config = require('config');
+require('events').EventEmitter.defaultMaxListeners = 15;
 
 const indexRouter = require('./server/routes/index');
 const databaseRouter = require('./server/routes/database');
@@ -68,12 +69,17 @@ app.use(
         resave: true,
         saveUninitialized: false,
         cookie: {
-            maxAge : 30000,
+            maxAge: 30000,
             sameSite: true,
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production'
         },
         store: new MongoStore({ mongooseConnection: mongoose.connection })
+        // store: new MongoStore({
+        //     url: mongoDBUri,
+        //     autoRemove: 'interval',
+        //     autoRemoveInterval: 0.005 * 3600
+        // })
     })
 );
 
