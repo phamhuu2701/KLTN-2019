@@ -124,10 +124,7 @@ router
                 price: req.body.productPrice,
                 saleoff: req.body.productSaleOff,
                 producerCode: req.body.productProducerCode,
-                images: images,
-                rateAvg: 0,
-                timestamp: Date.now(),
-                viewsCount: []
+                images: images
             };
             const productModel = new ProductModel(product);
             const newProduct = await ProductDao.save(productModel);
