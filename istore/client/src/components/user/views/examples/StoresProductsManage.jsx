@@ -64,6 +64,7 @@ class StoresProductsManage extends React.Component {
         this.productNameRef = React.createRef();
         this.productDecriptionRef = React.createRef();
         this.productPriceRef = React.createRef();
+        this.productProducerCodeRef = React.createRef();
         this.productSaleOffRef = React.createRef();
         this.filesRef = React.createRef();
 
@@ -212,6 +213,7 @@ class StoresProductsManage extends React.Component {
             productName: this.productNameRef.current.value,
             productDecription: this.productDecriptionRef.current.value,
             productPrice: this.productPriceRef.current.value,
+            productProducerCode: this.productProducerCodeRef.current.value,
             productSaleOff: this.productSaleOffRef.current.value,
             files: this.filesRef.current.files
         }
@@ -221,6 +223,7 @@ class StoresProductsManage extends React.Component {
         formData.append('productName', productInfo.productName);
         formData.append('productDecription', productInfo.productDecription);
         formData.append('productPrice', productInfo.productPrice);
+        formData.append('productProducerCode', productInfo.productProducerCode);
         formData.append('productSaleOff', productInfo.productSaleOff);
 
         // User multiple files with FormData
@@ -468,6 +471,16 @@ class StoresProductsManage extends React.Component {
                                     <span className={"error-message " + (this.state.productNameErrorMessage ? "show" : "")}>
                                         {this.state.productNameErrorMessage}
                                     </span>
+                                </Col>
+                            </FormGroup>
+                            <FormGroup row>
+                                <Label for="name" sm={2}>Mã sản phẩm</Label>
+                                <Col sm={10}>
+                                    <Input type="text" name="producerCode" id="producerCode"
+                                        placeholder="Mã sản phẩm của nhà sản xuất"
+                                        innerRef={this.productProducerCodeRef}
+                                        onChange={this.onInputProductInfoChange}
+                                        required={true} />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
