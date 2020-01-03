@@ -28,7 +28,7 @@ export default class Fields_Result_Item extends Component {
         }
         this.setState({
             rateStarsUrl: rateStarsUrl,
-            isHot: starsArray[4] > 0.8
+            isHot: starsArray[4] > 0.5
         });
     }
 
