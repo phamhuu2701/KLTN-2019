@@ -53,6 +53,7 @@ class UsersManage extends React.Component {
         this.deleteUser = this.deleteUser.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
+        this.changePage = this.changePage.bind(this);
     }
 
     deleteUser(e, key) {
@@ -112,7 +113,18 @@ class UsersManage extends React.Component {
         });
     }
 
-    changePage() {}
+    changePage(page) {
+        this.setState({
+            userModels:
+                this.state.fullUser.length > page * 10 - 10
+                    ? this.state.fullUser.slice(page * 10 - 10, page * 10)
+                    : this.state.fullUser.slice(
+                          page * 10 - 10,
+                          page * 10 - 10 + (this.state.fullUser % 10)
+                      ),
+            currentPage: page
+        });
+    }
 
     componentDidMount() {
         getUserModels(userModels => {
@@ -329,39 +341,6 @@ class UsersManage extends React.Component {
                                                     </PaginationItem>
                                                 );
                                             })}
-                                            <PaginationItem className='active'>
-                                                <PaginationLink
-                                                    href='#pablo'
-                                                    onClick={e =>
-                                                        e.preventDefault()
-                                                    }
-                                                >
-                                                    1
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href='#pablo'
-                                                    onClick={e =>
-                                                        e.preventDefault()
-                                                    }
-                                                >
-                                                    2{' '}
-                                                    <span className='sr-only'>
-                                                        (current)
-                                                    </span>
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href='#pablo'
-                                                    onClick={e =>
-                                                        e.preventDefault()
-                                                    }
-                                                >
-                                                    3
-                                                </PaginationLink>
-                                            </PaginationItem>
                                             <PaginationItem
                                                 className={
                                                     this.state.fullUser.length -
