@@ -11,6 +11,11 @@ const productSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'ProductCategory'
         },
+        producerCode: {
+            type: String,
+            require: true,
+            trim: true
+        },
         name: { type: String, required: true, maxlength: 100, trim: true },
         nameRemoveAccents: {
             type: String,

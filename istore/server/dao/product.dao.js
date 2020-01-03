@@ -1,14 +1,14 @@
-const Model = require("../models/product.model");
-const SearchKey = require("../models/searchKey.model");
-const slug = require("../util/slug");
-const stringFormat = require("../util/stringFormatUtils");
-const SearchKeyDao = require("../dao/searchKey.dao");
+const Model = require('../models/product.model');
+const SearchKey = require('../models/searchKey.model');
+const slug = require('../util/slug');
+const stringFormat = require('../util/stringFormatUtils');
+const SearchKeyDao = require('../dao/searchKey.dao');
 
 module.exports = {
     find: () => {
         return new Promise((resolve, reject) => {
             Model.find({})
-                .populate("productCategory")
+                .populate('productCategory')
                 .exec((err, results) => {
                     if (err) return reject(null);
                     return resolve(results);
@@ -18,7 +18,7 @@ module.exports = {
     findById: id => {
         return new Promise((resolve, reject) => {
             Model.findById(id)
-                .populate("productCategory")
+                .populate('productCategory')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -28,7 +28,7 @@ module.exports = {
     findByIds: ids => {
         return new Promise((resolve, reject) => {
             Model.find({ _id: { $in: ids } })
-                .populate("productCategory")
+                .populate('productCategory')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -38,7 +38,7 @@ module.exports = {
     findByName: name => {
         return new Promise((resolve, reject) => {
             Model.find({ name: name })
-                .populate("productCategory")
+                .populate('productCategory')
                 .exec((err, result) => {
                     if (err) return reject(null);
                     return resolve(result);
@@ -50,29 +50,35 @@ module.exports = {
         let value = slug(stringFormat(search)).replace(/-/g, ' ');
         SearchKeyDao.findByValue(value).then(
             result => {
-                if(result){
+                if (result) {
                     SearchKeyDao.update(result);
-                }
-                else{                    
-                    const newSearchKey = new SearchKey({ 
+                } else {
+                    const newSearchKey = new SearchKey({
                         value: value,
-                        count: [new Date()] 
-                    })
+                        count: [new Date()]
+                    });
                     SearchKeyDao.save(newSearchKey);
                 }
             },
             err => {
-                const newSearchKey = new SearchKey({ 
+                const newSearchKey = new SearchKey({
                     value: value,
-                    count: [new Date()] 
-                })
+                    count: [new Date()]
+                });
                 SearchKeyDao.save(newSearchKey);
             }
-        )
+        );
         //return Model.find({nameRemoveAccents: {$search: "\" }})
         //return Model.find({nameRemoveAccents: {$regex: /.bong.den./, $options: 'i'}});
         return Model.find({
-            nameRemoveAccents: { $regex: new RegExp(search, "i") }
+            $or: [
+                { nameRemoveAccents: { $regex: new RegExp(search, 'i') } },
+                {
+                    producerCode: {
+                        $regex: new RegExp(search.toUpperCase(), 'i')
+                    }
+                }
+            ]
         });
     },
     save: model => {

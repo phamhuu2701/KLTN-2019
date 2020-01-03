@@ -57,6 +57,10 @@ class EmployeesManage extends React.Component {
 
         this.state = {
             employees: [],
+            allEmployees: [],
+            pages: [],
+            currentPage: 1,
+
             departments: [],
 
             employeeSelected: null,
@@ -70,10 +74,61 @@ class EmployeesManage extends React.Component {
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.onAddEmployeeClick = this.onAddEmployeeClick.bind(this);
         this.onAddEmployeeSubmitClick = this.onAddEmployeeSubmitClick.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.previousPage = this.previousPage.bind(this);
+        this.changePage = this.changePage.bind(this);
+    }
+
+    previousPage() {
+        this.setState({
+            employees: this.state.allEmployees.slice(
+                this.state.currentPage * 10 - 20,
+                this.state.currentPage * 10 - 10
+            ),
+            currentPage: this.state.currentPage - 1
+        });
+    }
+
+    nextPage() {
+        this.setState({
+            employees:
+                this.state.allEmployees.length > this.state.currentPage * 10 - 10
+                    ? this.state.allEmployees.slice(
+                          this.state.currentPage * 10,
+                          this.state.currentPage * 10 + 10
+                      )
+                    : this.state.allEmployees.slice(
+                          this.state.currentPage * 10,
+                          this.state.allEmployees % 10
+                      ),
+            currentPage: this.state.currentPage + 1
+        });
+    }
+
+    changePage(page) {
+        this.setState({
+            employees:
+                this.state.allEmployees.length > page * 10 - 10
+                    ? this.state.allEmployees.slice(page * 10 - 10, page * 10)
+                    : this.state.allEmployees.slice(
+                          page * 10 - 10,
+                          page * 10 - 10 + (this.state.allEmployees % 10)
+                      ),
+            currentPage: page
+        });
     }
 
     componentDidMount() {
         getEmployees(employees => {
+            let pagenum = Math.ceil(employees.length / 10);
+            let pages = [];
+            while (pagenum > 0) {
+                pages.unshift(--pagenum);
+            }
+            this.setState({
+                allEmployees: employees,
+                pages: pages
+            });
             if (employees.length > 10) {
                 this.setState({
                     employees: employees.slice(0, 10)
@@ -207,44 +262,55 @@ class EmployeesManage extends React.Component {
                                             className="pagination justify-content-end mb-0"
                                             listClassName="justify-content-end mb-0"
                                         >
-                                            <PaginationItem className="disabled">
+                                            <PaginationItem className={
+                                                    this.state.currentPage === 1
+                                                        ? 'disabled'
+                                                        : ''
+                                                }>
                                                 <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
+                                                    onClick={this.previousPage}
                                                     tabIndex="-1"
                                                 >
                                                     <i className="fas fa-angle-left" />
                                                     <span className="sr-only">Previous</span>
                                                 </PaginationLink>
                                             </PaginationItem>
-                                            <PaginationItem className="active">
+                                            {this.state.pages.map(v => {
+                                                return (
+                                                    <PaginationItem
+                                                        className={
+                                                            this.state
+                                                                .currentPage -
+                                                                1 ===
+                                                            v
+                                                                ? 'active'
+                                                                : ''
+                                                        }
+                                                        key={v}
+                                                    >
+                                                        <PaginationLink
+                                                            onClick={() =>
+                                                                this.changePage(
+                                                                    v + 1
+                                                                )
+                                                            }
+                                                        >
+                                                            {v + 1}
+                                                        </PaginationLink>
+                                                    </PaginationItem>
+                                                );
+                                            })}
+                                            <PaginationItem className={
+                                                    this.state.allEmployees
+                                                        .length -
+                                                        this.state.currentPage *
+                                                            10 >
+                                                    0
+                                                        ? ''
+                                                        : 'disabled'
+                                                }>
                                                 <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    1
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    2 <span className="sr-only">(current)</span>
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
-                                                >
-                                                    3
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                            <PaginationItem>
-                                                <PaginationLink
-                                                    href="#pablo"
-                                                    onClick={e => e.preventDefault()}
+                                                    onClick={this.nextPage}
                                                 >
                                                     <i className="fas fa-angle-right" />
                                                     <span className="sr-only">Next</span>
