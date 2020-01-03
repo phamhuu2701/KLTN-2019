@@ -154,6 +154,9 @@ export class ResultArea extends Component {
                         'Sản phẩm bạn muốn không được tìm thấy! Nhập tên sản phẩm nếu bạn muốn nhận thông báo khi có?',
                         document.querySelector('#autocomplete').value
                     );
+                    this.setState({
+                        cared: true
+                    });
                     if (searchContent) {
                         // Add a new interest into user and update current user
                         fetch('/api/users/updateInterest', {
@@ -166,8 +169,7 @@ export class ResultArea extends Component {
                             .then(result => {
                                 if (result.status === 200) {
                                     this.setState({
-                                        interests: +this.state.interests + 1,
-                                        cared: true
+                                        interests: +this.state.interests + 1
                                     });
                                     alert(
                                         'OK. Bạn sẽ nhận mail nếu có sản phẩm thích hợp!'

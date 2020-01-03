@@ -45,10 +45,14 @@ class UsersManage extends React.Component {
 
         this.state = {
             userModels: [],
-            fullUser: []
+            fullUser: [],
+            currentPage: 1,
+            pages: []
         };
 
         this.deleteUser = this.deleteUser.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+        this.previousPage = this.previousPage.bind(this);
     }
 
     deleteUser(e, key) {
@@ -82,10 +86,44 @@ class UsersManage extends React.Component {
             .catch(err => console.log(err));
     }
 
+    previousPage() {
+        this.setState({
+            userModels: this.state.fullUser.slice(
+                this.state.currentPage * 10 - 20,
+                this.state.currentPage * 10 - 10
+            ),
+            currentPage: this.state.currentPage - 1
+        });
+    }
+
+    nextPage() {
+        this.setState({
+            userModels:
+                this.state.fullUser.length > this.state.currentPage * 10 - 10
+                    ? this.state.fullUser.slice(
+                          this.state.currentPage * 10,
+                          this.state.currentPage * 10 + 10
+                      )
+                    : this.state.fullUser.slice(
+                          this.state.currentPage * 10,
+                          this.state.fullUser % 10
+                      ),
+            currentPage: this.state.currentPage + 1
+        });
+    }
+
+    changePage() {}
+
     componentDidMount() {
         getUserModels(userModels => {
+            let pagenum = Math.ceil(userModels.length / 10);
+            let pages = [];
+            while (pagenum > 0) {
+                pages.unshift(--pagenum);
+            }
             this.setState({
-                fullUser: userModels
+                fullUser: userModels,
+                pages: pages
             });
             if (userModels.length > 10) {
                 this.setState({
@@ -249,12 +287,15 @@ class UsersManage extends React.Component {
                                             className='pagination justify-content-end mb-0'
                                             listClassName='justify-content-end mb-0'
                                         >
-                                            <PaginationItem className='disabled'>
+                                            <PaginationItem
+                                                className={
+                                                    this.state.currentPage === 1
+                                                        ? 'disabled'
+                                                        : ''
+                                                }
+                                            >
                                                 <PaginationLink
-                                                    href='#pablo'
-                                                    onClick={e =>
-                                                        e.preventDefault()
-                                                    }
+                                                    onClick={this.previousPage}
                                                     tabIndex='-1'
                                                 >
                                                     <i className='fas fa-angle-left' />
@@ -263,6 +304,31 @@ class UsersManage extends React.Component {
                                                     </span>
                                                 </PaginationLink>
                                             </PaginationItem>
+                                            {this.state.pages.map(v => {
+                                                return (
+                                                    <PaginationItem
+                                                        className={
+                                                            this.state
+                                                                .currentPage -
+                                                                1 ===
+                                                            v
+                                                                ? 'active'
+                                                                : ''
+                                                        }
+                                                        key={v}
+                                                    >
+                                                        <PaginationLink
+                                                            onClick={() =>
+                                                                this.changePage(
+                                                                    v + 1
+                                                                )
+                                                            }
+                                                        >
+                                                            {v + 1}
+                                                        </PaginationLink>
+                                                    </PaginationItem>
+                                                );
+                                            })}
                                             <PaginationItem className='active'>
                                                 <PaginationLink
                                                     href='#pablo'
@@ -296,12 +362,18 @@ class UsersManage extends React.Component {
                                                     3
                                                 </PaginationLink>
                                             </PaginationItem>
-                                            <PaginationItem>
+                                            <PaginationItem
+                                                className={
+                                                    this.state.fullUser.length -
+                                                        this.state.currentPage *
+                                                            10 >
+                                                    0
+                                                        ? ''
+                                                        : 'disabled'
+                                                }
+                                            >
                                                 <PaginationLink
-                                                    href='#pablo'
-                                                    onClick={e =>
-                                                        e.preventDefault()
-                                                    }
+                                                    onClick={this.nextPage}
                                                 >
                                                     <i className='fas fa-angle-right' />
                                                     <span className='sr-only'>
