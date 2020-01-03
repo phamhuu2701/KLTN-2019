@@ -93,6 +93,7 @@ router
                             console.log('image saved into cloudinary');
 
                             // set avatar link into user
+                            // console.log(result);
                             console.log(result.url);
 
                             images.push(result.url);
