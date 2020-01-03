@@ -58,13 +58,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -87,13 +87,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -116,13 +116,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -147,13 +147,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -177,13 +177,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -203,13 +203,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -233,13 +233,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -257,13 +257,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -290,13 +290,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -321,13 +321,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -355,13 +355,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -391,13 +391,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -421,13 +421,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -444,13 +444,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -481,13 +481,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -523,13 +523,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -558,13 +558,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -598,13 +598,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -637,13 +637,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -668,13 +668,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -701,13 +701,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -727,13 +727,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -757,13 +757,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -784,13 +784,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -825,13 +825,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -850,13 +850,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -876,13 +876,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -900,13 +900,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -933,13 +933,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -973,13 +973,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -999,13 +999,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1029,13 +1029,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1065,13 +1065,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1095,13 +1095,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1118,13 +1118,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1140,13 +1140,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1162,13 +1162,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1197,13 +1197,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1222,13 +1222,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1245,13 +1245,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1269,13 +1269,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1299,13 +1299,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1339,13 +1339,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1379,13 +1379,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Trần Quân",
                 email: "quantran@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ]
     },
@@ -1464,13 +1464,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ],
         url:
@@ -1492,13 +1492,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ],
         url:
@@ -1520,13 +1520,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ],
         url:
@@ -1552,13 +1552,13 @@ const products = [
                 fullname: "Hồng Hưng",
                 email: "honghung@gmail.com",
                 content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 4
+                stars: 1 + Math.floor(Math.random() * 5)
             },
             {
                 fullname: "Huỳnh Trung",
                 email: "trunghuynh@gmail.com",
-                content: "Cho 5 sao!",
-                stars: 5
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 1 + Math.floor(Math.random() * 5)
             }
         ],
         url:

@@ -183,14 +183,6 @@ class ProductDetail extends Component {
                                             Đánh giá
                                         </span>
                                     </div>
-                                    <div className="product-detail-product-body-sell">
-                                        <span className="product-detail-product-body-count">
-                                            <b>69k</b>
-                                        </span>
-                                        <span className="product-detail-product-body-sell-title">
-                                            Đã bán
-                                        </span>
-                                    </div>
                                 </div>
                                 <div className="product-detail-product-body-price">
                                     <Row>

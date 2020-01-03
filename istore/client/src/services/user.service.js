@@ -449,6 +449,7 @@ export function getProductsAllStoresByUser(idUser, callback) {
                 stores.map((store, key) => {
                     if (store.products.length > 0) {
                         store.products.map((product, key) => {
+                            product.store = store;
                             products.push(product);
 
                             return null;

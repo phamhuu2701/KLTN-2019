@@ -17,6 +17,14 @@ module.exports = {
             });
         }).catch(() => null);
     },
+    findByValue: value => {
+        return new Promise((resolve, reject) => {
+            Model.findOne({ value: value }).exec((err, result) => {
+                if (err) return reject(null);
+                return resolve(result);
+            });
+        }).catch(() => null);
+    },
     save: model => {
         return new Promise((resolve, reject) => {
             model.save((err, result) => {
@@ -26,11 +34,13 @@ module.exports = {
         }).catch(() => null);
     },
     update: model => {
+        let count = model.count;
+        count.push(new Date());
         return new Promise((resolve, reject) => {
             Model.findByIdAndUpdate(
                 model._id,
                 {
-                    
+                    count: count
                 },
                 { new: true },
                 (err, result) => {
