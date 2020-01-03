@@ -102,6 +102,9 @@ module.exports = {
             );
         });
     },
+    deleteUser: id => {
+        return Model.findByIdAndDelete(id);
+    },
     updateAvatar: (id, path) => {
         return Model.findByIdAndUpdate(
             id,

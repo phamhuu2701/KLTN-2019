@@ -93,7 +93,7 @@ class StoreIndex extends Component {
                     </div>
                 );
             } else if (!this.state.store && this.state.isNotFounded === false) {
-                return <div></div>;
+                return <div>Đang tải dữ liệu</div>;
             } else {
                 return <Redirect to='/' />;
             }
