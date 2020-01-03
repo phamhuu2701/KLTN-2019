@@ -129,7 +129,8 @@ class SignForm extends Component {
             emailValue: '',
             forgotPasswordNotify: 'Vui lòng nhập Email để lấy lại mật khẩu!!',
             confirmForgotPasswordValue: 'Xác nhận',
-            errorForgotPassword: ''
+            errorForgotPassword: '',
+            errorLogin: ''
         };
         this.forgotPassword_EmailRef = React.createRef();
         this.forgotPassword_TokenRef = React.createRef();
@@ -156,7 +157,7 @@ class SignForm extends Component {
     }
 
     signInSubmit(e) {
-        LoginByLocalService(e, this.props.loginHandler);
+        LoginByLocalService(e, this.props.loginHandler, this);
     }
 
     signUpSubmit(e) {
@@ -192,6 +193,11 @@ class SignForm extends Component {
         if (this.state.sign === 'in') {
             return (
                 <div>
+                    <center className='text-danger'>
+                        <span className='login-error'>
+                            {this.state.errorLogin}
+                        </span>
+                    </center>
                     <Form id='signInForm' onSubmit={this.signInSubmit}>
                         <div className='dropdown-user-body-content sign-in'>
                             <Form.Control

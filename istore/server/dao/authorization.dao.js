@@ -1,4 +1,4 @@
-const Model = require("../models/authorization.model");
+const Model = require('../models/authorization.model');
 
 module.exports = {
     find: () => {
@@ -7,7 +7,7 @@ module.exports = {
                 if (err) return reject(null);
                 return resolve(results);
             });
-        }).catch((err) => null);
+        }).catch(err => null);
     },
     findById: id => {
         return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ module.exports = {
                 if (err) return reject(null);
                 return resolve(result);
             });
-        }).catch((err) => null);
+        }).catch(err => null);
     },
     findOneByName: name => {
         return new Promise((resolve, reject) => {
@@ -23,7 +23,10 @@ module.exports = {
                 if (err) return reject(null);
                 return resolve(result);
             });
-        }).catch((err) => null);
+        }).catch(err => null);
+    },
+    findUserAuthId: () => {
+        return Model.findOne({ name: 'User' });
     },
     save: model => {
         return new Promise((resolve, reject) => {
@@ -46,7 +49,7 @@ module.exports = {
                     return resolve(result);
                 }
             );
-        }).catch((err) => null);
+        }).catch(err => null);
     },
     delete: model => {
         return new Promise((resolve, reject) => {
@@ -54,6 +57,6 @@ module.exports = {
                 if (err) return reject(false);
                 return resolve(true);
             });
-        }).catch((err) => false);
+        }).catch(err => false);
     }
 };

@@ -15,23 +15,23 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Index from "components/user/views/Index.jsx";
-import Profile from "components/user/views/examples/Profile.jsx";
-import StoresManage from "components/user/views/examples/StoresManage.jsx";
-import ChangeEmail from "./components/user/views/examples/ChangeEmail";
-import ChangePhone from "./components/user/views/examples/ChangePhone";
-import ChangePassword from "./components/user/views/examples/ChangePassword";
-import StoresProductsManage from "./components/user/views/examples/StoresProductsManage";
-import BuyStoresMore from "./components/user/views/examples/BuyStoresMore";
+import Index from 'components/user/views/Index.jsx';
+import Profile from 'components/user/views/examples/Profile.jsx';
+import StoresManage from 'components/user/views/examples/StoresManage.jsx';
+import ChangeEmail from './components/user/views/examples/ChangeEmail';
+import ChangePhone from './components/user/views/examples/ChangePhone';
+import ChangePassword from './components/user/views/examples/ChangePassword';
+import StoresProductsManage from './components/user/views/examples/StoresProductsManage';
+import BuyStoresMore from './components/user/views/examples/BuyStoresMore';
 
 var routes = [
-    {
-        path: "/index",
-        name: "Trang chủ",
-        icon: "ni ni-shop text-primary",
-        component: Index,
-        layout: "/user"
-    },
+    // {
+    //     path: "/index",
+    //     name: "Trang chủ",
+    //     icon: "ni ni-shop text-primary",
+    //     component: Index,
+    //     layout: "/user"
+    // },
     {
         path: '/profile',
         name: 'Thông tin cá nhân',
@@ -40,11 +40,11 @@ var routes = [
         layout: '/user'
     },
     {
-        path: "/index",
-        name: "Tin nhắn",
-        icon: "ni ni-chat-round text-primary",
+        path: '/index',
+        name: 'Tin nhắn',
+        icon: 'ni ni-chat-round text-primary',
         component: Index,
-        layout: "/user"
+        layout: '/user'
     },
     {
         path: '/stores-manage',
@@ -68,16 +68,16 @@ var routes = [
         layout: '/user'
     },
     {
-        path: "/more-stores",
-        name: "Mua gói cửa hàng",
-        icon: "ni ni-cart text-orange",
+        path: '/more-stores',
+        name: 'Mua gói cửa hàng',
+        icon: 'ni ni-cart text-orange',
         component: BuyStoresMore,
-        layout: "/user"
+        layout: '/user'
     },
     {
-        path: "/change-email",
-        name: "Đổi email",
-        icon: "ni ni-email-83 text-info",
+        path: '/change-email',
+        name: 'Đổi email',
+        icon: 'ni ni-email-83 text-info',
         component: ChangeEmail,
         layout: '/user-auth'
     },

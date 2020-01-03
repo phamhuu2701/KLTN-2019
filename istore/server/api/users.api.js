@@ -7,6 +7,7 @@ const config = require('config');
 const User = require('../models/user.model');
 const UserDao = require('../dao/user.dao');
 const StoreDao = require('../dao/store.dao');
+const AuthorizationDao = require('../dao/authorization.dao');
 
 const mailer = require('../util/mailer');
 const upload = require('../util/multer');
@@ -47,41 +48,46 @@ router
         let user = req.body;
         user.password = md5(user.password);
         user.mailVerifyToken = uid(10);
-        user = new User(user);
+        AuthorizationDao.findUserAuthId().then(async auth => {
+            user.authorization = auth._id;
+            user = new User(user);
 
-        let userSave = await UserDao.save(user);
-        if (userSave) {
-            userSave.password = null;
+            let userSave = await UserDao.save(user);
+            if (userSave) {
+                userSave.password = null;
 
-            // Send verify mail to user
-            const mailOption = {
-                from: config.get('domainName'),
-                to: userSave.email,
-                subject: `Xác thực tài khoản trên ${config.get('domainName')}`,
-                html: `Bạn vừa tạo thành công tài khoản trên ${config.get(
-                    'domainName'
-                )}. Vui lòng click vào <a href="${config.get(
-                    'localhost'
-                )}/verify?id=${userSave._id}&mailVerifyToken=${
-                    userSave.mailVerifyToken
-                }">đây</a> để xác thực tài khoản và sử dụng trên ${config.get(
-                    'domainName'
-                )}!`
-            };
-            mailer
-                .sendMail(mailOption)
-                .then(result => {
-                    // Return result for user
-                    return res.status(200).json({
-                        message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com" target="_blank">${result.accepted[0]}</a>!`
-                    });
-                })
-                .catch(err => console.log(err));
-        } else {
-            return res
-                .status(201)
-                .json({ err: 'Email hoặc số điện thoại đã tồn tại!' });
-        }
+                // Send verify mail to user
+                const mailOption = {
+                    from: config.get('domainName'),
+                    to: userSave.email,
+                    subject: `Xác thực tài khoản trên ${config.get(
+                        'domainName'
+                    )}`,
+                    html: `Bạn vừa tạo thành công tài khoản trên ${config.get(
+                        'domainName'
+                    )}. Vui lòng click vào <a href="${config.get(
+                        'localhost'
+                    )}/verify?id=${userSave._id}&mailVerifyToken=${
+                        userSave.mailVerifyToken
+                    }">đây</a> để xác thực tài khoản và sử dụng trên ${config.get(
+                        'domainName'
+                    )}!`
+                };
+                mailer
+                    .sendMail(mailOption)
+                    .then(result => {
+                        // Return result for user
+                        return res.status(200).json({
+                            message: `Tài khoản đã được tạo thành công! Một thư xác thực đã gửi tới <a href="https://mail.google.com" target="_blank">${result.accepted[0]}</a>!`
+                        });
+                    })
+                    .catch(err => console.log(err));
+            } else {
+                return res
+                    .status(201)
+                    .json({ err: 'Email hoặc số điện thoại đã tồn tại!' });
+            }
+        });
     });
 
 router.route('/updateAvatar').put((req, res) => {
@@ -243,6 +249,15 @@ router.route('/verify').put((req, res) => {
             }
         })
         .catch(err => console.log(err));
+});
+
+router.route('/deleteUser').delete((req, res) => {
+    const id = req.query.id;
+    UserDao.deleteUser(id)
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(err => res.status(202).json(err));
 });
 
 router.route('/cancelNotify').put((req, res) => {
