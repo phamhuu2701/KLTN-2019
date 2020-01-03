@@ -11,7 +11,7 @@ const productSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'ProductCategory'
         },
-        roducerCode: {
+        producerCode: {
             type: String,
             require: true,
             trim: true

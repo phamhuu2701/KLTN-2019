@@ -217,6 +217,7 @@ class StoresProductsManage extends React.Component {
             productSaleOff: this.productSaleOffRef.current.value,
             files: this.filesRef.current.files
         }
+
         const formData = new FormData();
         formData.append('storeId', productInfo.storeId);
         formData.append('productCategory', productInfo.productCategory);
@@ -479,7 +480,6 @@ class StoresProductsManage extends React.Component {
                                     <Input type="text" name="producerCode" id="producerCode"
                                         placeholder="Mã sản phẩm của nhà sản xuất"
                                         innerRef={this.productProducerCodeRef}
-                                        onChange={this.onInputProductInfoChange}
                                         required={true} />
                                 </Col>
                             </FormGroup>

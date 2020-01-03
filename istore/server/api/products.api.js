@@ -68,6 +68,13 @@ router
             // Add new product
             const storeId = req.body.storeId;
             let images = [];
+            // Local - Just comment, Don't Delete !important
+            // req.files.forEach(file => {
+            //     const p = file.path;
+            //     const index = p.indexOf('img');
+            //     const path = '/' + p.slice(index);
+            //     images.push(path);
+            // });
             for (let i = 0; i < req.files.length; i++) {
                 let file = req.files[i];
                 // check file type image
@@ -98,8 +105,6 @@ router
                     );
                 }
             }
-            console.log(images);
-
             for (let i = 0; i < req.files.length; i++) {
                 let file = req.files[i];
                 // delete file in server
