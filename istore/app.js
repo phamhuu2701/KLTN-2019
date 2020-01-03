@@ -53,8 +53,8 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")));
 
-let mongoDBUri =
-    process.env.NODE_ENV === 'production' ? 'mongoDBUri' : 'localMongoDBUri';
+let mongoDBUri = process.env.NODE_ENV === 'production' ? 'mongoDBUri' : 'localMongoDBUri';
+// let mongoDBUri = 'mongoDBUri';
 // Connect to MongoDB
 mongoose.connect(config.get(mongoDBUri), {
     // mongoose.connect(config.get('localMongoDBUri'), {
