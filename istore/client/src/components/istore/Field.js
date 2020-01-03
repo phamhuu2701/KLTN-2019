@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Row, Col, Spinner } from 'react-bootstrap';
+import { Form, Row, Col, Spinner, Pagination } from 'react-bootstrap';
 
 import Cookies from 'js-cookie';
 
@@ -126,16 +126,69 @@ export class ResultArea extends Component {
         super(props);
         this.state = {
             result: [],
+            allProducts: [],
+            pages: [],
+            currentPage: 1,
             message: '',
             cared: false
         };
+        this.previousPage = this.previousPage.bind(this);
+        this.nextPage = this.nextPage.bind(this);
+    }
+
+    previousPage() {
+        this.setState({
+            result: this.state.allProducts.slice(
+                this.state.currentPage * 5 - 10,
+                this.state.currentPage * 5 - 5
+            ),
+            currentPage: this.state.currentPage - 1
+        });
+    }
+
+    nextPage() {
+        this.setState({
+            result:
+                this.state.allProducts.length > this.state.currentPage * 5 - 5
+                    ? this.state.allProducts.slice(
+                          this.state.currentPage * 5,
+                          this.state.currentPage * 5 + 5
+                      )
+                    : this.state.allProducts.slice(
+                          this.state.currentPage * 5,
+                          this.state.allProducts % 5
+                      ),
+            currentPage: this.state.currentPage + 1
+        });
+    }
+
+    goToPage(page) {
+        this.setState({
+            result:
+                this.state.allProducts.length > page * 5 - 5
+                    ? this.state.allProducts.slice(page * 5 - 5, page * 5)
+                    : this.state.allProducts.slice(
+                          page * 5 - 5,
+                          page * 5 - 5 + (this.state.allProducts % 5)
+                      ),
+            currentPage: page
+        });
     }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.isFound === true) {
+            let pagenum = Math.ceil(nextProps.result.length / 5);
+            let pages = [];
+            while (pagenum > 0) {
+                pages.unshift(--pagenum);
+            }
+            this.setState({
+                allProducts: nextProps.result,
+                pages: pages
+            });
             const products = [];
-            if (nextProps.result.length > 10) {
-                for (let i = 0; i < 10; i++) {
+            if (nextProps.result.length > 5) {
+                for (let i = 0; i < 5; i++) {
                     products.push(nextProps.result[i]);
                 }
             } else {
@@ -214,6 +267,32 @@ export class ResultArea extends Component {
                             />
                         );
                     })}
+                    <Pagination>
+                        <Pagination.Prev
+                            disabled={this.state.currentPage === 1}
+                            onClick={this.previousPage}
+                        />
+                        {this.state.pages.map(v => {
+                            return (
+                                <Pagination.Item
+                                    key={v}
+                                    active={this.state.currentPage === v + 1}
+                                    onClick={() => {
+                                        this.goToPage(v + 1);
+                                    }}
+                                >
+                                    {v + 1}
+                                </Pagination.Item>
+                            );
+                        })}
+                        <Pagination.Next
+                            disabled={
+                                this.state.currentPage >=
+                                this.state.pages.length
+                            }
+                            onClick={this.nextPage}
+                        />
+                    </Pagination>
                 </div>
             );
         } else {

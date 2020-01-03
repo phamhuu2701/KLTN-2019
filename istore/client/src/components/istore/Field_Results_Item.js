@@ -27,7 +27,8 @@ export default class Fields_Result_Item extends Component {
             }
         }
         this.setState({
-            rateStarsUrl: rateStarsUrl
+            rateStarsUrl: rateStarsUrl,
+            isHot: starsArray[4] > 0.8
         });
     }
 
@@ -45,8 +46,10 @@ export default class Fields_Result_Item extends Component {
                 <div className='field-results-item-content'>
                     <div className='field-results-item-img'>
                         <img src={this.props.imageAvatar} alt='' />
-                        {this.props.code < 3 && (
+                        {this.state.isHot ? (
                             <div className='icons'>HOT</div>
+                        ) : (
+                            <div></div>
                         )}
                     </div>
                     <div className='field-results-item-desc'>
@@ -76,6 +79,11 @@ export default class Fields_Result_Item extends Component {
                             {' - '}
                             <span className='field-results-item-desc-product-description'>
                                 {this.props.info._doc.description}
+                            </span>
+                        </div>
+                        <div className='field-results-item-producer-code'>
+                            <span className='field-results-item-producer-code-content'>
+                                SKU: {this.props.info._doc.producerCode}
                             </span>
                         </div>
                         <div className='field-results-item-desc-rate-contact'>
