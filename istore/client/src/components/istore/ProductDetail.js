@@ -50,7 +50,7 @@ class ProductDetail extends Component {
             }
         };
 
-        this.getProductCategory = this.getProductCategory.bind(this);
+        // this.getProductCategory = this.getProductCategory.bind(this);
         this.changeImageAvatar = this.changeImageAvatar.bind(this);
     }
 
@@ -59,18 +59,18 @@ class ProductDetail extends Component {
         //showProductDetail = showProductDetail.bind(this);
     }
 
-    getProductCategory(idProductCategory) {
-        if (idProductCategory != null) {
-            fetch('/api/product-categories/' + idProductCategory)
-                .then(res => res.json())
-                .then(productCategory => {
-                    this.setState({
-                        productCategoryName:
-                            productCategory && productCategory.name
-                    });
-                });
-        }
-    }
+    // getProductCategory(idProductCategory) {
+    //     if (idProductCategory != null) {
+    //         fetch('/api/product-categories/' + idProductCategory)
+    //             .then(res => res.json())
+    //             .then(productCategory => {
+    //                 this.setState({
+    //                     productCategoryName:
+    //                         productCategory && productCategory.name
+    //                 });
+    //             });
+    //     }
+    // }
 
     changeImageAvatar(image) {
         this.setState({
@@ -94,7 +94,7 @@ class ProductDetail extends Component {
     }
 
     render() {
-        // console.log(this.state.product);
+        console.log(this.state.product);
         // console.log(this.state.product.store.phone);
         return (
             <div className='ProductDetail'>
@@ -341,10 +341,7 @@ class ProductDetail extends Component {
                         </Col>
                         <Col sm={10}>
                             <span className='product-detail-product-description-table-content'>
-                                {this.state.productCategoryName ||
-                                    this.getProductCategory(
-                                        this.state.product._doc.productCategory
-                                    )}
+                                {this.state.product._doc.productCategory.name}
                             </span>
                         </Col>
                     </Row>
@@ -355,7 +352,9 @@ class ProductDetail extends Component {
                             </span>
                         </Col>
                         <Col sm={10}>
-                            <span className='product-detail-product-description-table-content'></span>
+                            <span className='product-detail-product-description-table-content'>
+                                {this.state.product._doc._id}
+                            </span>
                         </Col>
                     </Row>
                     <Row>
@@ -371,24 +370,24 @@ class ProductDetail extends Component {
                     <Row>
                         <Col sm={2}>
                             <span className='product-detail-product-description-table-header'>
-                                Mô tả
+                                Mã nhà sản xuất
                             </span>
                         </Col>
                         <Col sm={10}>
                             <span className='product-detail-product-description-table-content'>
-                                {this.state.product._doc.description}
+                                {this.state.product._doc.producerCode}
                             </span>
                         </Col>
                     </Row>
                     <Row>
                         <Col sm={2}>
                             <span className='product-detail-product-description-table-header'>
-                                SKU
+                                Mô tả
                             </span>
                         </Col>
                         <Col sm={10}>
                             <span className='product-detail-product-description-table-content'>
-                                {this.state.product._doc.producerCode}
+                                {this.state.product._doc.description}
                             </span>
                         </Col>
                     </Row>

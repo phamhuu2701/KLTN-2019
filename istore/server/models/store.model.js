@@ -22,7 +22,6 @@ const storeSchema = new Schema(
             type: {
                 type: String,
                 required: true,
-                trim: true,
                 default: "Point"
             },
             coordinates: [{ type: Number, required: true, index: "2dsphere" }] //[lng, lat]
