@@ -59,7 +59,7 @@
 }
 
 .field-results-item-desc-area-price {
-    margin-bottom: 5px;
+    
 }
 
 .field-results-item-desc-price {
@@ -80,7 +80,7 @@
 
 .field-results-item-desc-sub-desc {
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 3px;
     overflow: hidden;
     text-overflow: clip;
     height: 1.5em;
@@ -89,6 +89,10 @@
 .field-results-item-desc-product-description {
     font-size: 0.8em;
     color: #777777;
+}
+
+.field-results-item-producer-code-content {
+    font-size: 0.9em;
 }
 
 .field-results-item-desc-rate-contact {

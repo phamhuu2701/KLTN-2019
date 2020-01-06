@@ -14,8 +14,7 @@ const productSchema = new Schema(
         producerCode: {
             type: String,
             require: true,
-            trim: true,
-            default: Math.random().toString(36).substr(2, Math.floor(Math.random() * 2) + 4).toUpperCase()
+            trim: true
         },
         name: { type: String, required: true, maxlength: 100, trim: true },
         nameRemoveAccents: {
