@@ -74,7 +74,9 @@ export function onSearchProductService(
                     'block';
                 document.querySelector(
                     '.field-results-number'
-                ).textContent = `Kết quả (${res.length})`;
+                ).textContent = `Kết quả (${
+                    res.length > 25 ? 25 : res.length
+                })`;
 
                 // Show nearby store existing product
                 thisMap.cleanMaps();

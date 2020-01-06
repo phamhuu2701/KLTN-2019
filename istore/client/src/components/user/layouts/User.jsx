@@ -19,6 +19,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 // reactstrap components
 import { Container } from 'reactstrap';
+import { FacebookProvider, CustomChat } from 'react-facebook';
 // core components
 import UserNavbar from 'components/user/components/Navbars/UserNavbar.jsx';
 import UserFooter from 'components/user/components/Footers/UserFooter.jsx';
@@ -81,6 +82,12 @@ class User extends React.Component {
                             )}
                         />
                         <Index user={this.props.user} />
+                        <FacebookProvider appId='984029191952495' chatSupport>
+                            <CustomChat
+                                pageId='326054444409287'
+                                minimized={true}
+                            />
+                        </FacebookProvider>
                         <Container fluid={true}>
                             <UserFooter />
                         </Container>
@@ -107,6 +114,12 @@ class User extends React.Component {
                             )}
                         />
                         <Switch>{this.getRoutes(routes)}</Switch>
+                        <FacebookProvider appId='984029191952495' chatSupport>
+                            <CustomChat
+                                pageId='326054444409287'
+                                minimized={true}
+                            />
+                        </FacebookProvider>
                         <Container fluid={true}>
                             <UserFooter />
                         </Container>
