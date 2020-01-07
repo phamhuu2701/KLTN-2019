@@ -207,9 +207,7 @@ export class ResultArea extends Component {
                         'Sản phẩm bạn muốn không được tìm thấy! Nhập tên sản phẩm nếu bạn muốn nhận thông báo khi có?',
                         document.querySelector('#autocomplete').value
                     );
-                    this.setState({
-                        cared: true
-                    });
+
                     if (searchContent) {
                         // Add a new interest into user and update current user
                         fetch('/api/users/updateInterest', {
@@ -231,6 +229,9 @@ export class ResultArea extends Component {
                             })
                             .catch(err => console.log(err));
                     }
+                    this.setState({
+                        cared: true
+                    });
                 }
             }
 
@@ -319,12 +320,14 @@ export default class Fields extends Component {
     onDistanceSelectChange(e) {
         const search = document.querySelector('#autocomplete').value;
         const distance = e.target.value;
-        effectOnSearchProduct(search, distance, result => {
-            if (result.length > 0) {
-                this.props.onZoom('in');
-            } else this.props.onZoom('normal');
-            this.findProductHandler(result);
-        });
+        if (search) {
+            effectOnSearchProduct(search, distance, result => {
+                if (result.length > 0) {
+                    this.props.onZoom('in');
+                } else this.props.onZoom('normal');
+                this.findProductHandler(result);
+            });
+        }
     }
 
     onPrioritySelectChange(e) {
