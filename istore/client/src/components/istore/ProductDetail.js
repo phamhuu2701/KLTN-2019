@@ -94,7 +94,7 @@ class ProductDetail extends Component {
     }
 
     render() {
-        console.log(this.state.product);
+        // console.log(this.state.product);
         // console.log(this.state.product.store.phone);
         return (
             <div className='ProductDetail'>
