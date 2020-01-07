@@ -142,6 +142,9 @@ class StoresManage extends React.Component {
     }
 
     getStoresBySize(value) {
+        const stores = getStoresBySizeByIdUser(this, this.props.user._id, (value - 1) * 10, value * 10);
+        console.log(stores);
+
         this.setState({
             stores: getStoresBySizeByIdUser(this, this.props.user._id, (value - 1) * 10, value * 10)
         })
@@ -156,7 +159,7 @@ class StoresManage extends React.Component {
                     }
                 })
                 break;
-            case 2:                
+            case 2:
                 this.setState({
                     paginationClassName: {
                         pagination1: "",
@@ -174,7 +177,7 @@ class StoresManage extends React.Component {
                     }
                 })
                 break;
-        
+
             default:
                 this.setState({
                     paginationClassName: {
@@ -189,7 +192,7 @@ class StoresManage extends React.Component {
 
     onAddStoreClick() {
         checkStoresCountCreated(this.props.user).then(
-            result => {                
+            result => {
                 this.setState({
                     isShowTemplateSelect: true
                 })
@@ -450,7 +453,7 @@ class StoresManage extends React.Component {
                             isShowStoreInfoInput: false,
                             addStoreErrorMessage: "",
                             addStoreResultMessage: messageResult
-                        })
+                        });
                     });
                 });
 
@@ -465,6 +468,8 @@ class StoresManage extends React.Component {
     }
 
     render() {
+        // console.log(this.props.user);
+        console.log();
         return (
             <>
                 <Header />
@@ -472,6 +477,10 @@ class StoresManage extends React.Component {
                 <Container className="stores-manage" fluid={true}>
                     {/* Button Add Store */}
                     <Row className="mt-5">
+                        <Col>
+                            <span style={{"paddingLeft" : "10px"}}>- Số cửa hàng có thể tạo thêm: </span>
+                            <b>{this.state.stores && this.props.user.maxStoresCountCreated.count - this.state.stores.length}</b>
+                        </Col>
                         <Col className="container-button-add-store">
                             <Button onClick={this.onAddStoreClick} className="btn btn-success">Thêm cửa hàng</Button>
                         </Col>

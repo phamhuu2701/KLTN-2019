@@ -50,27 +50,12 @@ class ProductDetail extends Component {
             }
         };
 
-        // this.getProductCategory = this.getProductCategory.bind(this);
         this.changeImageAvatar = this.changeImageAvatar.bind(this);
     }
 
     UNSAFE_componentWillMount() {
         that = this;
-        //showProductDetail = showProductDetail.bind(this);
     }
-
-    // getProductCategory(idProductCategory) {
-    //     if (idProductCategory != null) {
-    //         fetch('/api/product-categories/' + idProductCategory)
-    //             .then(res => res.json())
-    //             .then(productCategory => {
-    //                 this.setState({
-    //                     productCategoryName:
-    //                         productCategory && productCategory.name
-    //                 });
-    //             });
-    //     }
-    // }
 
     changeImageAvatar(image) {
         this.setState({
@@ -95,6 +80,7 @@ class ProductDetail extends Component {
 
     render() {
         // console.log(this.state.product);
+        // console.log(this.state.product._doc);
         // console.log(this.state.product.store.phone);
         return (
             <div className='ProductDetail'>

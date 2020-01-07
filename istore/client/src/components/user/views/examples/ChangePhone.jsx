@@ -61,8 +61,8 @@ class ChangePhone extends React.Component {
                     social: !++res.user.mailVerifyToken
                 });
                 if (res.user.phone) {
-                    alert('Bạn không có quyền thực hiện chức năng này!');
-                    document.location.href = '/user/profile';
+                    // alert('Bạn không có quyền thực hiện chức năng này!');
+                    // document.location.href = '/user/profile';
                 } else {
                     // Render enter the new number phone
                 }
