@@ -221,7 +221,8 @@ class ProductDetail extends Component {
                         productRatesReview: getStarsReviewNewest(
                             productUpdate,
                             5
-                        )
+                        ),
+
                     });
                 });
         }

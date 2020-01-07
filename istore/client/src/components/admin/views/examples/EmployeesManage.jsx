@@ -72,8 +72,10 @@ class EmployeesManage extends React.Component {
 
         this.showEmployeeInfo = this.showEmployeeInfo.bind(this);
         this.onSubmitClick = this.onSubmitClick.bind(this);
+        this.onCancelClick = this.onCancelClick.bind(this);
         this.onAddEmployeeClick = this.onAddEmployeeClick.bind(this);
         this.onAddEmployeeSubmitClick = this.onAddEmployeeSubmitClick.bind(this);
+        this.onAddEmployeeCancelClick = this.onAddEmployeeCancelClick.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
         this.changePage = this.changePage.bind(this);
@@ -166,6 +168,14 @@ class EmployeesManage extends React.Component {
         })
     }
 
+    onCancelClick() {
+        this.setState({
+            employeeSelected: null,
+            isShowEmployeeInfo: "hide",
+            messageNotify: ""
+        })
+    }
+
     onAddEmployeeClick(){
         this.setState({
             isShowEmployeeFormInfo: "open",
@@ -177,6 +187,13 @@ class EmployeesManage extends React.Component {
         this.setState({
             isShowEmployeeFormInfo: "hide",
             messageNotify: "Thêm nhân viên thành công"
+        })
+    }
+
+    onAddEmployeeCancelClick(){
+        this.setState({
+            isShowEmployeeFormInfo: "hide",
+            messageNotify: ""
         })
     }
 
@@ -603,8 +620,12 @@ class EmployeesManage extends React.Component {
                                                 />
                                             </FormGroup>
                                         </div>
-                                        <div className="pl-lg-4">
-                                            <Button type="button" className="btn" style={{ float: "right" }} color="primary"
+                                        <div className="pl-lg-4" style={{ "textAlign": "right" }}>
+                                            <Button type="button" className="btn" color="warning"
+                                                onClick={this.onCancelClick}
+                                            >
+                                                HỦY</Button>
+                                            <Button type="button" className="btn" color="primary"
                                                 onClick={this.onSubmitClick}
                                             >
                                                 CẬP NHẬT</Button>
@@ -857,8 +878,12 @@ class EmployeesManage extends React.Component {
                                                 />
                                             </FormGroup>
                                         </div>
-                                        <div className="pl-lg-4">
-                                            <Button type="button" className="btn" style={{ float: "right" }} color="primary"
+                                        <div className="pl-lg-4" style={{"textAlign" : "right"}}>
+                                            <Button type="button" className="btn" color="warning"
+                                                onClick={this.onAddEmployeeCancelClick}
+                                            >
+                                                HỦY</Button>
+                                            <Button type="button" className="btn" color="primary"
                                                 onClick={this.onAddEmployeeSubmitClick}
                                             >
                                                 TẠO NHÂN VIÊN</Button>

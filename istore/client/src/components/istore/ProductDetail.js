@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './ProductDetail.css';
 
 import priceFormatUtil from '../../utils/priceFormat';
-import { getStarsArray, getRatesAvg } from '../../utils/productUtils';
+import { getStarsArray } from '../../utils/productUtils';
 
 let that;
 
@@ -141,13 +141,13 @@ class ProductDetail extends Component {
                                 </div>
                                 <div className='product-detail-product-body-title-sub'>
                                     <div className='product-detail-product-body-rate'>
-                                        <span className='product-detail-product-body-rate-count'>
+                                        {/* <span className='product-detail-product-body-rate-count'>
                                             <b>
                                                 {getRatesAvg(
                                                     this.state.product._doc
                                                 )}
                                             </b>
-                                        </span>
+                                        </span> */}
                                         <span className='product-detail-product-body-rate-title'>
                                             {this.getRateStarsUrl(
                                                 this.state.product._doc

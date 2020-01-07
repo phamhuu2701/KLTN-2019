@@ -32,18 +32,18 @@ var routes = [
     //     component: Index,
     //     layout: "/admin"
     // },
-    // {
-    //     path: "/index",
-    //     name: "Tin nhắn",
-    //     icon: "ni ni-chat-round text-primary",
-    //     component: Index,
-    //     layout: "/admin"
-    // },
     {
         path: "/profile",
         name: "Thông tin cá nhân",
         icon: "ni ni-single-02 text-yellow",
         component: Profile,
+        layout: "/admin"
+    },
+    {
+        path: "/index",
+        name: "Tin nhắn",
+        icon: "ni ni-chat-round text-primary",
+        component: Index,
         layout: "/admin"
     },
     {
