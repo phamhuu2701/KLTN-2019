@@ -15,23 +15,6 @@ export function showProductDetail(product) {
     });
 }
 
-// export class ImageList extends Component {
-//   render() {
-//     if (this.props.images.length > 1) {
-//       this.props.images.unshift();
-//       return this.props.images.map((image, index) => {
-//         return (
-//           <div key={index}>
-//             <Image src={image} />
-//           </div>
-//         );
-//       });
-//     } else {
-//       return <div></div>;
-//     }
-//   }
-// }
-
 class ProductDetail extends Component {
     constructor(props) {
         super(props);
@@ -80,8 +63,6 @@ class ProductDetail extends Component {
 
     render() {
         // console.log(this.state.product);
-        // console.log(this.state.product._doc);
-        // console.log(this.state.product.store.phone);
         return (
             <div className='ProductDetail'>
                 <div className='product-detail-header'>
@@ -334,7 +315,7 @@ class ProductDetail extends Component {
                     <Row>
                         <Col sm={2}>
                             <span className='product-detail-product-description-table-header'>
-                                Mã sản phẩm
+                                ID
                             </span>
                         </Col>
                         <Col sm={10}>
@@ -346,22 +327,12 @@ class ProductDetail extends Component {
                     <Row>
                         <Col sm={2}>
                             <span className='product-detail-product-description-table-header'>
-                                Thương hiệu
-                            </span>
-                        </Col>
-                        <Col sm={10}>
-                            <span className='product-detail-product-description-table-content'></span>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col sm={2}>
-                            <span className='product-detail-product-description-table-header'>
                                 Mã nhà sản xuất
                             </span>
                         </Col>
                         <Col sm={10}>
                             <span className='product-detail-product-description-table-content'>
-                                {this.state.product._doc.producerCode}
+                                SKU: {this.state.product._doc.producerCode}
                             </span>
                         </Col>
                     </Row>

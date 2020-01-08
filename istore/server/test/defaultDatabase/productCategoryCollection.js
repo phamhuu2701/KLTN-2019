@@ -2,17 +2,9 @@ const ProductCategory = require("../../models/productCategory.model");
 const ProductCategoryDao = require("../../dao/productCategory.dao");
 
 const productCategories = [ 
-    "Thiết bị Làm mát và làm đông lạnh", 
-    "Thiết bị chăm sóc cá nhân", 
-    "Thiết bị chiếu sáng", 
-    "Thiết bị điện nhỏ", 
-    "Thiết bị đo lường", 
-    "Thiết bị giải trí (thiết bị điện tử tiêu dùng)", 
-    "Thiết bị giặt ủi", 
-    "Thiết bị khéo tay", 
-    "Thiết bị làm sạch", 
-    "Thiết bị nhà bếp", 
-    "Thiết bị tỏa nhiệt", 
+    "Điện thoại", 
+    "Thiết bị điện tử", 
+    "Thiết bị điện dân dụng",
     "Thiết bị văn phòng",
     "Sách",
     "Khác"
@@ -30,6 +22,6 @@ module.exports.createDefaultCollection = async () => {
         });
         console.log("Default ProductCategory collection created.");
     } else {
-        console.log("ProductCategory collection existed: ", productCategoriesArray.length, "/14");
+        console.log("ProductCategory collection existed: ", productCategoriesArray.length, "/6");
     }
 };

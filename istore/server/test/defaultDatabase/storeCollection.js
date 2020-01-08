@@ -15,7 +15,7 @@ const stores = [
         email: "eshop@gmail.com",
         name: "E-Shop",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -28,7 +28,7 @@ const stores = [
         email: "yanshop@gmail.com",
         name: "Yan-Shop",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -41,7 +41,7 @@ const stores = [
         email: "hangquan@gmail.com",
         name: "HOÀNG QUÂN",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -54,7 +54,7 @@ const stores = [
         email: "hoanganh@gmail.com",
         name: "CỬA HÀNG HOANG ANH",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -67,7 +67,7 @@ const stores = [
         email: "thientrang@gmail.com",
         name: "THIÊN TRANG",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -78,9 +78,9 @@ const stores = [
         location: { type: "Point", coordinates: [106.74999130000003, 10.8777725] },
         phone: "01696696974",
         email: "tuanlinh@gmail.com",
-        name: "CỬA HÀNG THIẾT BỊ ĐIỆN DÂN DỤNG TUẤN LINH",
+        name: "CỬA HÀNG ĐIỆN - ĐIỆN TỬ TUẤN LINH",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -93,7 +93,7 @@ const stores = [
         email: "lannhu@gmail.com",
         name: "Lan Như",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -106,7 +106,7 @@ const stores = [
         email: "lamtuan@gmail.com",
         name: "Cửa hàng Lâm Tuấn",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
@@ -117,26 +117,26 @@ const stores = [
         location: { type: "Point", coordinates: [106.80380809999997, 10.8699184] },
         phone: "01696696977",
         email: "hongnhung@gmail.com",
-        name: "Hồng Nhung",
+        name: "Hồng Nhung Store",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
-        template: 2
+        template: 1
     },    
     {
         houseNumber: "12",
         location: { type: "Point", coordinates: [106.698801, 10.7787659] },
         phone: "01696696978",
         email: "canhtoanshop@gmail.com",
-        name: "Cảnh Toàn Shop",
+        name: "Cảnh Toàn Super Shop",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: false
         },
-        template: 2
+        template: 1
     },    
     {
         houseNumber: "12",
@@ -145,7 +145,7 @@ const stores = [
         email: "lazada@gmail.com",
         name: "LAZADA",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: true,
             url: "https://www.lazada.vn/"
@@ -159,27 +159,13 @@ const stores = [
         email: "tiki@gmail.com",
         name: "TIKI",
         description:
-            "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
+            "Chuyên cung cấp các thiết bị điện, điện tử, thiết bị thông minh chất lượng chính hãng, giá cả hợp lý.",
         website: {
             hasWebsite: true,
             url: "https://tiki.vn/"
         },
         template: 1
-    },    
-    // {
-    //     houseNumber: "12",
-    //     location: { type: "Point", coordinates: [106.76123200000006, 10.853104] },
-    //     phone: "01696696981",
-    //     email: "shopee@gmail.com",
-    //     name: "SHOPEE",
-    //     description:
-    //         "Chuyên cung cấp các mặt hàng điện dân dụng chất lượng, uy tín, giá rẻ.",
-    //     website: {
-    //         hasWebsite: true,
-    //         url: "https://shopee.vn/"
-    //     },
-    //     template: 1
-    // }
+    }
 ];
 
 module.exports.createDefaultCollection = async () => {
@@ -188,7 +174,7 @@ module.exports.createDefaultCollection = async () => {
         console.log("Store collection is empty.");
 
         const storeCategory = await StoreCategoryDao.findOneByName(
-            "Cửa hàng thiết bị dân dụng"
+            "Siêu thị điện máy thông minh"
         );
         // console.log(storeCategory);
 

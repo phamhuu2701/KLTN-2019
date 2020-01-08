@@ -2,12 +2,12 @@ const SearchKey = require("../../models/searchKey.model");
 const SearchKeyDao = require("../../dao/searchKey.dao");
 
 const searchKeys = [
-    { value: "bong" },
-    { value: "den" },
-    { value: "led" },
-    { value: "bong den" },
-    { value: "bong den led" },
-    { value: "den led" },
+    { value: "dien thoai" },
+    { value: "iphone" },
+    { value: "samsung" },
+    { value: "nokia" },
+    { value: "xiaomi" },
+    { value: "nokia" },
     { value: "cafe" },
     { value: "tra" },
     { value: "sua" },

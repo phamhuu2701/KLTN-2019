@@ -76,7 +76,7 @@ class SearchBar extends Component {
 
     componentDidMount() {
         /*setTimeout(()=>{
-            onSearchProduct("bóng đèn", 10000, result => {
+            onSearchProduct("điện thoại", 10000, result => {
                 this.props.findProductHandler(result);
             });
         }, 2000);*/

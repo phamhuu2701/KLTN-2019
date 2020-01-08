@@ -4,53 +4,62 @@ const ProductCategoryDao = require("../../dao/productCategory.dao");
 const StoreDao = require("./../../dao/store.dao");
 
 const imageUrls = [
-    "https://nvc-lighting.com.vn/wp-content/uploads/2017/09/bong-den-led-bulb-a60g-350x350.png",
-    "https://chunoidep.com/wp-content/uploads/2018/08/chu-noi-nguoc-led-bong-tron-800x551.jpg",
-    "https://banbuonsieure.com/wp-content/uploads/2018/11/Day-den-led-trang-tri-bong-tron-12-bong-1.jpg",
-    "https://imgaz.staticbg.com/thumb/large/2014/chenyongfu/09/SKU128358/SKU122314180(23).jpg",
-    "https://nvc-lighting.com.vn/wp-content/uploads/2017/04/bong-den-led-nvc-a60f-d-min.jpg",
-    "https://ae01.alicdn.com/kf/HTB18uS5tRyWBuNkSmFPq6xguVXaM/3-c-i-E14-nhi-t-cao-b-ng-n-500-25-w-t-Halogen-bong.jpg_640x640.jpg",
-    "https://7aothuat.com/wp-content/uploads/2015/07/bong-den-tu-sang-3-mau-4.jpg",
-    "https://givasolar.com/wp-content/uploads/2018/10/bong-den-led-quang-hop-6w-1.jpg",
-    "https://photo-2-baomoi.zadn.vn/w1000_r1/2017_07_31_83_22890892/0458d6c9f5881cd64599.jpg",
-    "https://ledoto.vn/wp-content/uploads/2018/08/bong-led-c6.jpg",
+    "https://cdn.tgdd.vn/Files/2018/08/27/1112860/66_800x450.jpg",
+    "https://cdn.tgdd.vn/Files/2018/04/30/1085368/apple-iphone-x-2_800x450.jpg",
+    "https://didongviet.vn/blog/wp-content/uploads/2019/06/banner-top-6-didongviet.jpg",
+    "https://cdn.tgdd.vn/Files/2019/04/17/1161273/smartphone_1280x720-800-resize.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGcsnuzcRPVRiNrsBaG3MjoFk7RD0X5ki2mX32GqhoDy6VcWal&s",
+    "https://cdn.mediamart.vn/Upload/images/Untitled-2.jpg",
+    "https://vvm.com.vn/pic/News/images/636270273016462709.jpg",
+    "https://didongviet.vn/blog/wp-content/uploads/2019/06/banner-mate-20x-5g-didongviet.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTs82uq3of1GoyflUFGE6vN2Yk9QvrzM0qLxdMlj7Gj_hZRnDK8&s",
+    "https://vnn-imgs-f.vgcloud.vn/2019/08/07/16/dien-thoai-thong-minh-vsmart-the-he-2-chuan-bi-len-ke.jpg",
 
-    "https://vusonsolar.vn/wp-content/uploads/2016/05/image023.png",
-    "https://cf.shopee.vn/file/b8500d269f80610807a63d4697a62d09",
-    "https://png.pngtree.com/png_detail/18/09/10/pngtree-light-bulb-png-clipart_905118.jpg",
-    "https://cf.shopee.vn/file/f5eb76d3581f1e277d8b26eddce798d6",
-    "https://cf.shopee.vn/file/f9356aff78b3a041be85b91d477f982f",
-    "https://thuytinhmiso.com/wp-content/uploads/2017/07/Chai-nhua-PET-bong-den-330ml-2.jpg",
-    "https://chuyensuachuadiennuoc.com/wp-content/uploads/2019/04/bong-den-compact.jpg",
-    "https://salt.tikicdn.com/ts/tmp/bd/47/53/3da9fae59afd82f8f831a0090c556d80.jpg",
-    "https://product.hstatic.net/1000126467/product/4.u2769.d20170610.t125056.172076_grande.jpg",
-    "https://tuviphuongdong.net/wp-content/uploads/2019/04/mo-thay-bong-den.png",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7lQkJdR-5IcXd4jcXlfrhhaWUrNkPPou-JvUPEydXtFE60DxIaw&s",
+    "https://cellphones.com.vn/sforum/wp-content/uploads/2019/11/smartphone-ODM-Samsung-1.jpg",
+    "https://vnreview.vn/image/19/90/51/1990510.jpg?t=1569661849011",
+    "https://i-sohoa.vnecdn.net/2019/11/15/10-smartphone-android-tot-nhat-1573807612_660x0.png",
+    "https://cdn.tgdd.vn/Products/Images/42/205773/TimerThumb/samsung-galaxy-a10s-green-thumb.jpg",
+    "https://znews-photo.zadn.vn/w660/Uploaded/OFH_oazszstq/2018_03_16/asuszenfone5z16.jpg",
+    "https://hoanghamobile.com/tin-tuc/wp-content/uploads/2020/01/airpod2-5-8.jpg",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR494brenitaYjD3qEOcVUjh__YnFVNAedDK-RrfTawhak42Gha&s",
+    "https://cdn.cellphones.com.vn/media/catalog/product/cache/7/small_image/450x/9df78eab33525d08d6e5fb8d27136e95/6/3/637060410960077373_xiaomi-redmi-note-8-xanh-1.png",
+    "https://didongviet.vn/pub/media/catalog/product//s/a/samsung-galaxy-fold-silver-didongviet_2_2.jpg",
 
-    "https://moitruongnhaty.com/wp-content/uploads/2018/02/Tai-sao-bong-den-sang-mo-khi-da-tat.jpg",
-    "https://img.my-best.vn/press_component_images/2018_08_q.jpg?ixlib=rails-3.0.2&auto=compress&q=70&lossless=0&w=690&fit=max&s=9dee4038fa64ce37f3afd3d473ca83f3",
-    "https://thichdiy.com/wp-content/uploads/2017/09/ac37c7703093d0ddf1990ad09c406296.jpg",
-    "https://standavietnam.net/wp-content/uploads/2017/11/bong-den.jpg",
-    "https://thuytinhmiso.com/wp-content/uploads/2017/07/Chai-nhua-PET-bong-den-330ml-3.jpg",
-    "https://mycart.vn/upload/img/1497009262bong-dien-thong%20minh-Colorful-LED-Bluetooth-3-0-nghe-nhac.jpg",
-    "https://image.anninhthudo.vn/w500/Uploaded/hasumo/2012_05_28/bong%20den%20chong%20am.jpg",
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQz2fcW8N8M0DAQbNkXx-UuHfMIwSLRGOrS5oT0jx_NbCV6yDuA&s",
-    "https://camerayoosee.com.vn/uploads/shops/files/ipvr006s/ipvr006-2.jpg",
-    "https://chonoithatoto.vn/wp-content/uploads/2018/03/do-bong-den-xenon-o-to-kia-carens.jpg",
+    "https://www.fedexvietnam.net/wp-content/uploads/2019/11/chuyen-phat-nhanh-smartphone-trung-quoc-ve-bac-giang-chi-phi-thap.jpg",
+    "https://www.fedexvietnam.net/wp-content/uploads/2019/11/chuyen-phat-nhanh-smartphone-trung-quoc-ve-bac-ninh-chi-phi-thap.jpg",
+    "https://tintuc.viettelstore.vn/wp-content/uploads/2019/07/dien-thoai-5G-1.jpg",
+    "https://didongviet.vn/pub/media/catalog/product//s/a/samsung-galaxy-s8-64gb-han-quoc-didongviet.jpg",
+    "https://genknews.genkcdn.vn/zoom/480_300/2020/1/6/microsoft-surface-duo-tablet-100812772-large-1578310264866943226381-crop-15783102727261943104332.jpg",
+    "https://i-sohoa.vnecdn.net/2019/10/30/HHHH3037-1548671184-680x0-3019-1572445760.jpg",
+    "https://cdn.24h.com.vn/upload/4-2018/images/2018-11-25/1543155923-699-diem-danh-smartphone-co-man-hinh-lon-nhat-thi-truong-mate20x-1542947964-width660height495.jpg",
+    "https://cdn.tgdd.vn/Files/2019/04/07/1159313/4_800x450.jpg",
+    "https://image.thanhnien.vn/768/uploaded/ngocthanh/2019_12_13/anh-1_bai_man-hinh-gap_rily.jpg",
+    "https://image.businessinsider.com/5dcd78b93afd3740613de824?width=1100&format=jpeg&auto=webp"
 ];
 
 const products = [
     {
-        name: `Bóng LED nến tháp đuôi E14`,
-        description: `Bóng LED nến tháp đuôi E14 thông dụng nhất, công suất đa dạng, dùng chiếu sáng trong nhà, ngoài trời thay bóng đèn compact cũ...
-            Đèn Comet là thương hiệu đèn nổi tiếng về uy tín và chất lượng trên thị trường đèn chiếu sáng hiện nay. 
-            Sản phẩm này ứng dụng công nghệ chiếu sáng chip LED tiên tiến nhất với tính năng ưu việt, vô cùng tiết kiệm điện, không chứa chất độc hại và giá cả phải chăng.
-            Bóng đèn được sản xuất bởi thương hiệu uy tín, đủ công suất, độ sáng luôn bảo đảm sau nhiều năm sữ dụng, an toàn điện chống cháy nổ theo tiêu chuẩn cao nhất
-            * Công suất: 7W - 9W - 15W - 18W - 28W:
-                    * 7W ánh sáng vàng ấm áp: phù hợp làm đèn cầu thang, thay bóng đèn bàn học, bóng đèn âm trần.
-                    * 9W - 15W: là loại bóng đèn thông dụng nhất trong nhà, phù hợp thay thế bóng đèn compact đang dùng trong bếp nấu, phòng khách, hành lang, phòng ngủ, nhà vệ sinh,...vv
-                    * 18W - 28W: bóng đèn siêu sáng dùng cho buôn bán ngoài trời, quán ăn lề đường, chiếu sáng vĩa hè, nhà xưởng sản xuất`,
-        price: 85000,
-        saleoff: 15,
+        name: `Điện Thoại Samsung Galaxy M10 (16GB/2GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Thiết kế: Nguyên khối, mặt kính cong 2.5D
+        
+        Màn hình: LCD 6.2" HD+, Infinity V Display
+        
+        Camera Sau: 13 MP và 5 MP (2 camera)
+        
+        Camera Trước: 5 MP
+        
+        CPU: Samsung Exynos 7870, 8 nhân Cortex A53 @1.6 GHz
+        
+        Bộ Nhớ: 16GB
+        
+        RAM: 2GB
+        
+        Tính năng: Mở khóa bằng vân tay, Đèn pin, Chặn cuộc gọi, Chặn tin nhắn`,
+        price: 2390000,
+        saleoff: 32,
         images: [],
         videos: [],
         rates: [
@@ -69,17 +78,26 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn cảm biến âm thanh E27 5W`,
-        description: `Bóng đèn cảm biến âm thanh E27 5W
-            Bóng đèn Led trụ siêu sáng tiết kiệm điện, sáng gấp 2 lần bóng U và gấp 3 lần bóng sợi đốt cùng công suất.
-            Loại giao diện: Đuôi E27
-            Điện áp đầu vào: 220V
-            Công suất: 5W
-            Chùm tia góc: 360 độ
-            Lumens (lm): 1100-1210LM
-            Bảo hành: 12 Tháng`,
-        price: 79000,
-        saleoff: 47,
+        name: `Điện Thoại OPPO F11 Pro (6GB/64GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Miễn phí giao hàng toàn quốc
+        
+        Màn hình: LTPS LCD, 6.53", Full HD+ (1080 x 2340 Pixels)
+        
+        Camera Trước/Sau: 16MP/48MP + 5MP (2 camera)
+        
+        CPU: MediaTek Helio P70 8 nhân
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 6GB
+        
+        SIM tương thích: 2 Nano SIM
+        
+        Tính năng: Mở khóa bằng vân tay, Mở khóa bằng khuôn mặt`,
+        price: 5995000,
+        saleoff: 29,
         images: [],
         videos: [],
         rates: [
@@ -98,77 +116,27 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn Philips LED Ecobright 5W 6500K E27 A60 - Ánh Sáng Trắng - Hàng Chính Hãng`,
-        description: `█ Tại sao bạn nên chọn Bóng Đèn Philips LED Ecobright 5W 6500K E27 A60 - Ánh Sáng Trắng - Hàng Chính Hãng :
-            ✔ Có tới 16 triệu màu và độ sáng tự động thay đổi
-            ✔ Đèn được trang bị công nghệ đèn LED thông minh với khả năng tiêu thụ điện năng thấp, chuyển đổi hàng triệu màu sắc phù hợp với môi trường và tâm trạng người dùng
-            ✔ Công suất chỉ 10W nhưng lại cho quang thông lên đến 800 lumens tăng độ sáng lên hơn 33% so với các loại bóng đèn LED thông thường khác
-            ✔ Đèn có khả năng điều chỉnh được nhiệt độ màu từ 1700K-6500K từ tone màu ấm sang tone màu lạnh tùy theo nhu cầu người dùng và nhiệt độ môi trường xung quanh
-            ✔ Độ bền lên tới 11 năm (25.000 tiếng)
-            ✔ Điều khiển tắt mở, thay đổi độ sáng, màu sắc từ xa trên smartphone và tương thích với đầu đui E27 khá phổ biến
-            ✔ Đặc biệt có thể làm việc với Amazon Alexa, Google Assistant (Google Home) qua điều khiển giọng nói của bạn đặt hàng.`,
-        price: 329900,
-        saleoff: 28,
-        images: [],
-        videos: [],
-        rates: [
-            {
-                fullname: "Hồng Hưng",
-                email: "honghung@gmail.com",
-                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 3 + Math.floor(Math.random() * 2)
-            },
-            {
-                fullname: "Huỳnh Trung",
-                email: "trunghuynh@gmail.com",
-                content: "Sản phẩm giá cả phù hợp túi tiền",
-                stars: 3 + Math.floor(Math.random() * 2)
-            }
-        ]
-    },
-    {
-        name: `Đèn Led 3w tiết kiệm điện siêu sáng chống nước cao cấp`,
-        description: `Đèn Led 3w  tiết kiệm điện siêu sáng chống nước cao cấp
-            #Công dụng:
-            +Bóng đèn Led 3-5w sử dụng làm đèn trang trí, đèn tường, đèn góc, đèn gương, đèn ở khu vực nhỏ cần sáng ít.
-            +Công nghệ chip Led Heli.os siêu sáng, cho ánh sáng mạnh
-            +Thiết kế chống nước, cho khả năng sử dụng ngoài trời
-            #Tiết kiệm điện:
-            +Đèn LED POSSON là giải pháp tiết kiệm điện tuyệt vời cho mọi gia đình. Tiết kiệm đến 80% so với bóng đèn thông thường
-            #Tuổi thọ, độ bền:
-            +Led có tuổi thọ cao từ 15000 đến 25000 giờ, sử dụng đến vài năm sau mới có thể hỏng. 
-            +Chất liệu bóng đèn bằng nhựa kỹ thuật giúp cho bóng đèn không sợ va chạm hay rơi vỡ.`,
-        price: 10000,
-        saleoff: 50,
-        images: [],
-        videos: [],
-        rates: [
-            {
-                fullname: "Hồng Hưng",
-                email: "honghung@gmail.com",
-                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 3 + Math.floor(Math.random() * 2)
-            },
-            {
-                fullname: "Huỳnh Trung",
-                email: "trunghuynh@gmail.com",
-                content: "Sản phẩm giá cả phù hợp túi tiền",
-                stars: 3 + Math.floor(Math.random() * 2)
-            }
-        ]
-    },
-    {
-        name: `Bóng đèn cảm ứng hồng ngoại chuyển động thông minh 9w`,
-        description: `Nguyên tắc hoạt động: Có người di chuyển trong vùng cảm ứng thì đèn sẽ sáng (dưới 10 lux – 7:30 tối trở đi )
-            Đây là thiết bị cảm biến nhận diện sự chuyển động của con người. Tự động mở đèn khi có người di chuyển và thiếu ánh sáng (dưới 10 lux – 6:30 tối).
-            Tự động mở đèn khi thiếu ánh sáng (dưới 10 lux – 6:30 tối) có người di chuyển trong vùng cảm ứng.
-            Chất liệu cao cấp
-                Độ bền cao
-                An toàn cho người sử dụng
-                Tiết kiệm điện năng tiêu thụ
-                Bảo hành 6 tháng
-                Lỗi 1 đổi 1 trong 1 tháng`,
-        price: 59000,
+        name: `Điện Thoại OPPO F7 (64GB/4GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, nguyên seal, mới 100%, chưa active
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế nguyên khối kim loại
+        
+        Màn hình: 6.23 inch
+        
+        Camera Trước/Sau: 16MP/25MP
+        
+        CPU: MediaTek P60
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        SIM: 2 Nano SIM
+        
+        Tính năng: Mở khóa bằng khuôn mặt, mở khóa bằng vân tay`,
+        price: 3690000,
         saleoff: 54,
         images: [],
         videos: [],
@@ -188,14 +156,26 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn LED SIÊU SÁNG - SIÊU TIẾT KIỆM ĐIỆN 5-65W`,
-        description: `#bongden #bongled #LED 
-            🍀 Bóng LED bầu kín sản xuất theo công nghệ Nhật, độ sáng cao (gấp 2-3lần bóng compact).
-            🍀 Bóng LED đặc biệt tiết kiệm điện năng, có độ bền cao.
-            🍀 Loại: đui xoáy; ánh sáng: trắng.
-            🍀 Bảo hành: 12 tháng.`,
-        price: 72000,
-        saleoff: 0,
+        name: `Điện thoại Vsmart Live (64GB/6GB) - Hàng chính hãng`,
+        description: `Chính hãng, nguyên seal, mới 100%, chưa Active
+
+        Màn hình: AMOLED, 6.2", Full HD+
+        
+        Camera trước: 20 MP
+        
+        Camera sau: Chính 48 MP & Phụ 8 MP, 5 MP
+        
+        Bộ vi xử lý: Qualcomm Snapdragon 675 8 nhân 64-bit
+        
+        Bộ nhớ ROM: 64GB
+        
+        RAM: 6GB
+        
+        Sim tương thích: 2 Nano SIM, Hỗ trợ 4G
+        
+        Tính năng: Mở khoá vân tay dưới màn hình`,
+        price: 3299000,
+        saleoff: 58,
         images: [],
         videos: [],
         rates: [
@@ -214,18 +194,26 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn trụ LED 50W siêu sáng tiết kiệm điện bảo hành 1 năm`,
-        description: `Ngày nay xu hướng sử dụng đèn Led càng ngày càng phổ biến trong đời sống khi giá của công nghệ này càng ngày càng rẻ đi và chúng đã được người dùng kiểm nghiệm thực tế là có công dụng tuyệt vời, có nhiều ưu điểm vượt trội so với các loại đèn cũ như: 
-            - Tiết kiệm điện đến 90% so với bóng đèn sợi đốt.
-            - Không tạo tia bức xạ, tia hồng ngoại, tia cực tím. Nhiệt độ của bóng thấp, cho ánh sáng dễ chịu, không chói mắt và hiệu suất chiếu sáng cao 
-            - Bóng bầu kín chống nước có thể thắp sáng ngoài trời. 
-            - Sản phẩm sử dụng chíp cao cấp SMD. Đèn led có tuổi thọ bền bỉ, lên đến 40 nghìn giờ thắp sáng. Đèn Led khi bật công tắc không có thời gian trễ, bật là sáng luôn không nhấp nháy. 
-            Thuộc Tính Sản Phẩm :
-            + Ánh sáng: trắng 
-            + Chất liệu:  nhôm nhựa 
-            + Điện áp : 220V/5`,
-        price: 49500,
-        saleoff: 10,
+        name: `Điện Thoại Samsung Galaxy M30s (64GB/4GB) - Hàng Chính Hãng`,
+        description: `Hàng chính hãng Samsung Việt Nam, Nguyên seal, Mới 100%, Chưa Active
+
+        Màn hình: Super AMOLED, 6.4", Full HD+ (1080 x 2280 Pixels)
+        
+        Camera Sau : 48 MP, 8 MP và 5 MP (3 camera)
+        
+        Camera Trước: 16 MP
+        
+        CPU: Exynos 9611 8 nhân
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        Dung lượng pin 6000 mAh
+        
+        Tính năng: Mở khóa bằng vân tay, Dolby Audio, Đèn pin, Sạc pin nhanh, Chặn cuộc gọi, Chặn tin nhắn`,
+        price: 4900000,
+        saleoff: 29,
         images: [],
         videos: [],
         rates: [
@@ -244,12 +232,28 @@ const products = [
         ]
     },
     {
-        name: `Bóng led trụ 5W/8W/20W/30W/40W/50W đuôi E27`,
-        description: `Bóng led trụ công suất từ 5W tới 50W với ánh sáng trắng và vàng. Bóng led tiết kiện điện,thân thiện môi trường với ánh sáng gấp đôi bóng huỳnh quang.
-            Sử dụng thắp sáng trong nhà, ngoài sân ...
-            #bongden #bongled #ledtru #5W #8W #20W #30W #40W #50W #E27`,
-        price: 70000,
-        saleoff: 15,
+        name: `Điện Thoại Vsmart Joy 2+ (Hàng Chính Hãng)`,
+        description: `Màn hình: IPS LCD, 6.2", HD+
+
+        Hệ điều hành: Android 9.0 (Pie)
+        
+        Camera sau: Chính 13 MP & Phụ 5 MP
+        
+        Camera trước: 8 MP
+        
+        CPU: Qualcomm Snapdragon 450 8 nhân 64-bit
+        
+        RAM: 2 GB
+        
+        Bộ nhớ trong: 32 GB
+        
+        Thẻ nhớ: MicroSD, hỗ trợ tối đa 128 GB
+        
+        Thẻ SIM: 2 Nano SIM, Hỗ trợ 4G
+        
+        Dung lượng pin: 4500 mAh, có sạc nhanh`,
+        price: 1890000,
+        saleoff: 37,
         images: [],
         videos: [],
         rates: [
@@ -268,21 +272,34 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn Compact Rạng Đông Ánh Sáng Trắng`,
-        description: `Sản phẩm: BÓNG ĐÈN COMPACT
-            💡💡Thương hiệu: Rạng Đông - Sản xuất tại Việt Nam
-            💡Công suất: 7W - 11W - 14W - 15W - 20W - 25W - 30W
-            💡Ánh sáng: trắng (khách order ánh sáng vàng xin inbox)
-            >>>>>Cam kết hàng chuẩn công ty Rạng Đông 100% (có tem bảo hành chống giả dán trên thân mỗi bóng)<<<<<
-            💡Bảo hành ĐỔI MỚI trong vòng 6 tháng kể từ ngày mua đối với lỗi kỹ thuật (như bóng không sáng, ánh sáng yếu khi mới dùng...)
-            💡Đặc điểm sản phẩm:
-            - Bóng đèn tiết kiệm điện năng 80% so với đèn sợi đốt
-            - Độ sáng:
-            Công suất 7W tương đương bóng 40W sợi đốt
-            Công suất 11W tương đương bóng 60W sợi đốt
-            Công suất 14W tương đương bóng 75W sợi đốt`,
-        price: 45000,
-        saleoff: 0,
+        name: `Điện Thoại Xiaomi Mi 9 Lite (Mi CC9 Global Version) (6GB / 64GB) - Hàng Chính Hãng`,
+        description: `Xiaomi Mi 9 Lite là phiên bản quốc tế của chiếc Mi CC9 ra mắt trong tháng 7/2019
+
+        Mới, Chính hãng, Nguyên seal, Chưa active
+        
+        Miễn phí giao hàng toàn quốc
+        
+        Màn hình: Super AMOLED, 6.39", Full HD+
+        
+        Hệ điều hành: Android 9.0 (Pie)
+        
+        Camera sau: Chính 48 MP & Phụ 8 MP, 2 MP
+        
+        Camera trước: 32 MP
+        
+        CPU: Snapdragon 710 8 nhân 64-bit
+        
+        RAM: 6 GB
+        
+        Bộ nhớ trong: 64GB
+        
+        Thẻ nhớ: MicroSD, hỗ trợ tối đa 256 GB
+        
+        Thẻ SIM: 2 SIM Nano (SIM 2 chung khe thẻ nhớ)
+        
+        Dung lượng pin: 4030 mAh`,
+        price: 4989000,
+        saleoff: 33,
         images: [],
         videos: [],
         rates: [
@@ -301,19 +318,26 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn năng lượng mặt trời 5 chế độ sáng chất lượng cao`,
-        description: `Thời gian giao hàng dự kiến cho sản phẩm này là từ 7-9 ngày
-            Thông tin chi tiết:
-            Model: BLS-60-20D
-            Chất liệu nhựa ABS + PC
-            Kích thước bóng đèn: 60 * 125mm / 2.36 * 4.92, Khối lượng tịnh: 100g, công suất: 7W
-            Kích thước bóng đèn: 70 * 145mm / 2,76 * 5,71, Khối lượng tịnh: 110g, công suất: 9W
-            Tổng Khối lượng tịnh: 190g
-            Nguồn sáng:
-            20 Bóng 2835 LED 7W
-            25 Bóng 2835 LED 9W`,
-        price: 140000,
-        saleoff: 12,
+        name: `Điện Thoại Samsung Galaxy A50 (64GB/4GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Thiết kế: Nguyên khối, màn hình vô cực
+        
+        Màn hình: 6.4” FHD+ Super AMOLED (1080x2340)
+        
+        Camera Sau : 5MP (F2.2) + 25MP (F1.7) + 8MP (F2.2) ultra wide
+        
+        Camera Trước: 25MP (F2.0)
+        
+        CPU: Exynos 9610 Octa Core 2.3GHz
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        Tính năng: Cảm biến vân tay dưới màn hình, nhận diện khuôn mặt...`,
+        price: 6550000,
+        saleoff: 6,
         images: [],
         videos: [],
         rates: [
@@ -332,22 +356,30 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn Edison Vintage ST64 40W E27`,
-        description: `Thiết kế: Bóng Đèn Edison Vintage SGB35ST64 40W E27
-            Đuôi đèn: E27
-            Quy cách: W62 x H140
-            Công suất: 40W 
-            Có thể tăng giàm độ sáng tùy thích (dùng với dimmer).
-            Bảo hành: 6 tháng
-            Loại bóng đèn  Bóng đèn sợi đốt
-            Công suất(W)  40
-            Kiểu bóng đèn  Hình trụ
-            Kiểu đuôi đèn  Đuôi E27
-            Nguồn điện sử dụng  220V
-            Màu sáng  Màu ấm
-            Chiều dài bóng đèn (mm)  62`,
-        price: 31000,
-        saleoff: 10,
+        name: `Điện Thoại Xiaomi Redmi Note 7 (3GB/32GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Phiên bản quốc tế có tiếng Việt
+        
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế: Nguyên khối, Khung kim loại, Mặt lưng kính
+        
+        Màn hình: 6.3" Full HD+ (1080 x 2340 Pixels)
+        
+        Camera Sau: 48 MP và 5 MP (2 camera)
+        
+        Camera Trước: 13MP
+        
+        CPU: Qualcomm SDM660 Snapdragon 660 8 nhân
+        
+        Bộ Nhớ: 32GB
+        
+        RAM: 3GB
+        
+        Tính năng: Mở khóa bằng vân tay, Mở khóa bằng khuôn mặt`,
+        price: 3269000,
+        saleoff: 18,
         images: [],
         videos: [],
         rates: [
@@ -366,24 +398,36 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn bắt muỗi Mosquito killer Lamp AC175-260V (Trắng)`,
-        description: `❌  SHOP CAM KẾT
-            - Hàng đúng như mô tả, ảnh
-            - 1 đổi 1 trong 07 ngày nếu SP có lỗi từ NSX
-            - Giao hàng toàn quốc, #Freeship cho đơn hàng >99.000đ
-            - #Bansi toàn quốc, cam kết #giare nhất
-            - Mua sỉ: :Liên hệ trực tiếp hoặc inbox
-            THÔNG TIN CHI TIẾT:
-            Sản phẩm 2 tác dụng trong 1: đèn và máy bắt muỗi
-            Số lượng đèn led: 6 Led
-            Điện áp: 2000-3000 V
-            Bảo vệ diện tích:30-40 mét vuông 
-            Điện áp đầu vào: 110 V- 240 V
-            Tần số: 50Hz
-            Công suất:  12W (Ánh sáng 10W + diệt muỗi 2W) 
-            Đèn LED bắt muỗi hiệu quả cao VegaVN thích hợp sử dụng cho hộ gia đình. Đèn bắt muỗi UV thế hệ mới cũng được sử dụng được cả ngoài sân vườn để bắt muỗi cả đêm hạn chế muỗi cho khu vực xung quanh nhà bạn. Đèn LED bắt muỗi hiệu quả cao VegaVN có thiết kế nhỏ gọn thuận tiện cho bạn đặt vào những vị trí góc khuất.`,
-        price: 42000,
-        saleoff: 19,
+        name: `Điện Thoại iPhone 11 64GB - Hàng Chính Hãng`,
+        description: `Nguyên seal, Mới 100%, Chưa Active
+
+        Công nghệ màn hình: IPS LCD
+        
+        Độ phân giải: 828 x 1792 pixels
+        
+        Màn hình rộng: 6.1 inches
+        
+        Camera sau: 12 MP + 12 MP
+        
+        Quay phim: 2160p@24/30/60fps, 1080p@30/60/120/240fps, HDR, stereo sound rec.
+        
+        Camera trước: 12 MP, f/2.2
+        
+        Hệ điều hành: iOS 13
+        
+        Chipset (CPU): Apple A13 Bionic 6 nhân
+        
+        RAM: 4 GB
+        
+        Bộ nhớ trong: 64GB
+        
+        Dung lượng pin: 3110 mAh
+        
+        SIM: 1 Nano SIM , 1 esim
+        
+        Mã Part: VN/A`,
+        price: 20990000,
+        saleoff: 5,
         images: [],
         videos: [],
         rates: [
@@ -402,18 +446,32 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn Led Hồ Lô Loại Đẹp Siêu Sáng 5w`,
-        description: `Bóng Đèn Led Hồ Lô Loại Đẹp Siêu Sáng 5w
-            Siêu Sáng - siêu Tiết Kiệm Điện
-            Chất liệu vỏ: nhựa pe cao cấp tản nhiệt,chống nước ,chống côn trùng
-            Ánh sáng đèn LED không có tia UV an toàn cho mắt
-            Đui bóng đèn: E27
-            khích thước : cao 11cm, rỗng 6cm
-            Ánh sáng trắng
-            Hiệu suất chiếu sáng tốt lên đến 40000h
-            Thích hợp dùng ngoài trời`,
-        price: 41000,
-        saleoff: 49,
+        name: `Điện Thoại Samsung Galaxy Note 10 Plus (256GB/12GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Mới 100%, Đã kích hoạt bảo hành điện tử
+
+        Công nghệ màn hình: Dynamic AMOLED
+        
+        Độ phân giải: 3040 x 1440 (Quad HD+)
+        
+        Màn hình rộng: 6.8 inch
+        
+        Mặt kính cảm ứng: Corning Gorilla Glass 6
+        
+        Camera Sau: 12.0 MP + 16.0 MP + 12.0 MP + VGA
+        
+        Camera Trước: 10.0 MP
+        
+        CPU: Exynos 9825 8 nhân 64-bit
+        
+        Bộ Nhớ: 256GB
+        
+        RAM: 12GB
+        
+        Hỗ trợ thẻ nhớ: MicroSD, hỗ trợ tối đa 512 GB
+        
+        Bảo mật nâng cao Mở khóa bằng khuôn mặt, Quét mống mắt, Mở khoá vân tay dưới màn hình`,
+        price: 18480000,
+        saleoff: 32,
         images: [],
         videos: [],
         rates: [
@@ -432,10 +490,109 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn bắp ngô tiết kiệm năng lượng 3000k 12w`,
-        description: `Bóng đèn bắp ngô tiết kiệm năng lượng 3000k 12w
-            12W LED light bulb, high energy conversion. Corn shape bulb with mini size, creative and stylish. Flick-free, durable with long service life. Item Name: LED Light Bulb Power: 12W Lamp Body Material: Plastic/Aluminum Light Color: White Light/Warm Light/Tree Color Changing Light Lamp Head: E14 Features: Corn Shape, Easy to Use, Portable, Energy Saving, Decorative Lamp 12W Size: 3cm x 9.8cm/1.18 x 3.86  Notes: Due to the light and screen setting difference, the item's color may be slightly different from the pictures. Please allow slight dimension difference due to different manual measurement. Package Includes: 1 x LED Light Bulb `,
-        price: 24000,
+        name: `Điện thoại Nokia 6.1 Plus - Hàng Chính Hãng`,
+        description: `Mới 100%
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế nguyên khối trẻ trung, hiện đại
+        
+        Màn hình: tai thỏ 5.8"
+        
+        Camera Trước/Sau: 16 MP và 5 MP (2 camera)
+        
+        CPU: Qualcomm Snapdragon 636 8 nhân
+        
+        Bộ nhớ trong: 64GB
+        
+        RAM: 4GB
+        
+        SIM tương thích: 2 Nano SIM
+        
+        Tính năng: Đèn pin, chặn tin nhắn, chặn cuộc gọi`,
+        price: 3490000,
+        saleoff: 47,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 3 + Math.floor(Math.random() * 2)
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 3 + Math.floor(Math.random() * 2)
+            }
+        ]
+    },
+    {
+        name: `Điện Thoại Xiaomi Mi 8 Lite (4GB / 64GB) - Hàng Chính Hãng`,
+        description: `Sản phẩm Chính hãng, Mới 100%, Nguyên seal, Chưa Active
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: 6.26 inch IPS LCD
+        
+        Camera Trước: 24MP
+        
+        Camera Sau: 16 MP và 5 MP (2 camera)
+        
+        CPU: Qualcomm SDM660 Snapdragon 660
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        SIM tương thích: 2 Nano SIM`,
+        price: 3790000,
+        saleoff: 43,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 3 + Math.floor(Math.random() * 2)
+            },
+            {
+                fullname: "Huỳnh Trung",
+                email: "trunghuynh@gmail.com",
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 3 + Math.floor(Math.random() * 2)
+            }
+        ]
+    },
+    {
+        name: `Điện Thoại Meizu C9 - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%, Chưa active
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế: Nguyên khối, Mặt lưng nhựa
+        
+        Màn hình: 5.45 inch HD (1440 x 720 Pixels)
+        
+        Camera Trước: 8MP
+        
+        Camera Sau: 13MP
+        
+        CPU: 4 nhân 2.0GHz
+        
+        Bộ Nhớ: 16GB
+        
+        RAM: 2GB
+        
+        SIM tương thích: 2 Nano SIM
+        
+        Tính năng: Mở khóa bằng khuôn mặt`,
+        price: 1190000,
         saleoff: 48,
         images: [],
         videos: [],
@@ -455,25 +612,38 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn: Bóng LED Edison T64 4W đui E27 Mã T64`,
-        description: `Bóng đèn: Bóng LED Edison T64 4W đui E27 Mã T64
-            Đèn Toàn Lợi giới thiêu bạn mẫu Bóng LED Edison T64 4W loại bóng E27 thường sử dụng để trang trí trong các quán cafe, quán ăn, shop thời trang. Bạn xem qua thông số sản phẩm nhé!
+        name: `Điện Thoại Samsung Galaxy A50s (64GB/4GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Mới 100%, Đã kích hoạt bảo hành điện tử
 
-            Bóng đèn: Bóng LED Edison T64 4W đui E27 - Đèn Toàn Lợi
-            Bóng đèn: Bóng LED Edison T64 4W đui E27 – Đèn Toàn Lợi
-            Thông tin sản phẩm Bóng Led Edison T64 phong cách Vintage
-            Kiểm LED Bulbs, ánh sáng vàng
-            Bóng đèn sợi LED công suất 4W
-            Sử dụng đui tiếp điện phổ biếnE27
-            Chip LED Nationstar Đài Loan hiệu suất chiếu sáng cao 80 Lm/W
-            Kích thước: 6.4Cm x 14Cm
-            Ánh sáng đẹp, độ hoàn màu cao Ra > 80
-            Góc tỏa của chùm sáng là 360o
-            Tuổi thọ đèn lên đến 15.000h
-            Warm White (2700-3500K)
-            Bảo hành: 12 tháng`,
-        price: 25000,
-        saleoff: 49,
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế mặt cắt kim cương
+        
+        Màn hình: 6.4” Super AMOLED, chuẩn điện ảnh 19.5:9 Infinity-U FHD+
+        
+        Camera Sau : 48MP (F2.0) + 5MP (F2.2) + 8MP (F2.2)
+        
+        Camera Trước: 32MP (F2.0)
+        
+        CPU: Exynos 9610 Octa Core 2.3GHz
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        Thẻ nhớ tối đa tới: 512GB
+        
+        Pin: 4000 mAh
+        
+        Sạc nhanh siêu tốc 15W
+        
+        Tính năng: Nhận Diện Khuôn Mặt, Quà tặng Galaxy
+        
+        Smart Switch, Dual Messenger, Thư Mục Bảo
+        
+        Mật, Bảo mật vân tay dưới màn hình`,
+        price: 4790000,
+        saleoff: 39,
         images: [],
         videos: [],
         rates: [
@@ -492,30 +662,28 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn E27 220V 150W 5500k chụp ảnh ban ngày cho studio`,
-        description: `🎉Hi~Click hashtag #MSSTORE📷 to Explore More Nice Items🎉
-            E27 220V 150W 5500K Photo Studio Bulb Video Light Photography Daylight Lamp            
-            Features: 
-            Provide bright environment for taking product photo. 
-            Compact and easy set up. 
-            E27 Socket fit most standard photo fixtures. 
-            Life Span up to 8,000 Hours. 
-            Low operating temperature. 
-            Perfect for digital camera photography. 
-            Specification: 
-            Type: Photo Studio Bulb 
-            Power: 150W 
-            Voltage: 110V 
-            Temperature: 5500K 
-            Light color: White 
-            Item size: Approx. 23 * 8cm / 9.1 * 3.1in (L * D) 
-            Item weight: 164g / 5.78oz 
-            Package size: 24 * 8.5 * 8.5cm / 9.4 * 3.3 * 3.3in 
-            Package weight: 237g / 8.37oz 
-            Note: 
-            The rated power of this energy-saving bulb is 50W,  which is equal to the incandescent bulb with 150W power. `,
-        price: 132000,
-        saleoff: 42,
+        name: `Điện Thoại Xiaomi Redmi 7 (2GB/16GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%
+
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: 6.26" HD+ (720 x 1520 Pixels)
+        
+        Camera Sau: Chính 12 MP & Phụ 5 MP
+        
+        Camera Trước: 8 MP
+        
+        CPU: Qualcomm Snapdragon 632 8 nhân 64-bit
+        
+        Bộ Nhớ: 16GB
+        
+        RAM: 2GB
+        
+        Tính năng: Mở khóa bằng vân tay, Mở khóa bằng khuôn mặt`,
+        price: 2190000,
+        saleoff: 27,
         images: [],
         videos: [],
         rates: [
@@ -534,23 +702,28 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn UV tiết kiệm năng lượng để sưởi ấm cho các loài rùa rắn bò sát`,
-        description: `Desert Rainforest Lamp 5.0 10.0 13W
-            This 10.0 UVB lamp is ideal for all desert dwelling reptiles. 
-            Helps to prevent or reverse Metabolic Bone Disease commonly seen in captive reptiles at 6-12 months of age. 
-            Provides UVB for vitamin D production and calcium metabolism.
-            About the Product
-            Helps simulate environment of a natural desert
-            Ideal for all desert dwelling reptiles
-            Provides necessary UVB rays for optimal calcium metabolism
-            Stimulates breeding behaviour in reptiles and amphibians
-            Specification:
-            UVB Output:5.0 UVB Output for Rainforest type,10.0 UVB Output for Desert type.
-            Wattage:  13w
-            Base: ES-E27 (standard screw fitting)
-            Package included: 1 * 5.0 UVB Output Lamp OR 1 * 10.0 UVB Output Lamp`,
-        price: 136000,
-        saleoff: 31,
+        name: `Điện Thoại Nokia 3.1 Plus (32GB/3GB) - Hàng Chính Hãng`,
+        description: `Sản phẩm Chính hãng, Mới 100%, Nguyên seal, Chưa Active
+
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Màn hình: 6.2 inch IPS LCD, HD+ (720 x 1440 Pixels)
+        
+        Camera Trước: 8 MP
+        
+        Camera Sau: 13 MP + 2 MP (Camera kép)
+        
+        CPU: MediaTek MT6762 8 nhân 64-bit (Helio P22)
+        
+        Bộ Nhớ: 32GB
+        
+        RAM: 3GB
+        
+        SIM: 2 Nano SIM
+        
+        Tính năng: Chụp ảnh làm đẹp bằng trí tuệ nhân tạo, Chụp ảnh xóa phông, Mở khóa nhận diện khuôn mặt`,
+        price: 2390000,
+        saleoff: 40,
         images: [],
         videos: [],
         rates: [
@@ -569,28 +742,28 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn Halogen siêu sáng 50W 220V-240V`,
-        description: `Decription: 
-            Features:
-            GU 10+C halogen bulb Suitable for showcases lighting, accent lighting, restaurants,shop windows,display,, product retail illumination, artwork accents and track lighting,etc.
-            Superior lumen performance throughout the life of the lamp.
-            Fitted with UV- stop protects against harmful UV radiation
-            Strengthened Clear front Class Cover
-            Fitted with Aluminium reflector
-            Base type:GU10
-            Voltage:AC 220V-240V,steady voltage:AC 230V
-            Watt:50W
-            Color temperature:2700K
-            Luminous flux:900 Lum
-            Beam angle:38 degrees
-            Average life:2000 hours
-            Light color:Warm yellow
-            Dimensions:about 55mm x 50mm(Length x Diameter)
-            The lamp is ideal for most indoor general lighting applications and display accent lighting.
-            Included: 
-            1 x Halogen Bulb`,
-        price: 28500,
-        saleoff: 50,
+        name: `Điện Thoại Xiaomi Redmi Note 7 (4GB/64GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế: Nguyên khối, Khung kim loại, Mặt lưng kính
+        
+        Màn hình: 6.3" Full HD+ (1080 x 2340 Pixels)
+        
+        Camera Sau: 48 MP và 5 MP (2 camera)
+        
+        Camera Trước: 13MP
+        
+        CPU: Qualcomm SDM660 Snapdragon 660 8 nhân
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        Tính năng: Mở khóa bằng vân tay, Mở khóa bằng khuôn mặt`,
+        price: 4450000,
+        saleoff: 11,
         images: [],
         videos: [],
         rates: [
@@ -609,27 +782,28 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn cảm biến chuyển động E27 5W tiện lợi kích thước 10*6*6cm ánh sáng trắng`,
-        description: `Features:
-            Easy installation, fit for E27 lamp holders.
-            Environmentally friendly, low energy consumption.
-            Extremly long life to about 30,000 hours, with high luminescence efficiency.
-            Combining the light source and lamp holder together to achieve the integration of sound-control base and light source.
-            
-            Description:
-            Color: White
-            Light color: Cold white
-            Material: ABS+metal+electronic component
-            Application scope: General
-            Suitable lamp holder: E27
-            Lamp bead pattern: SMD2835
-            Input voltage: AC220V，50/60Hz
-            Power: 5W
-            Luminous flux: ＜500lm
-            Special function: Sound sensor, auto PIR motion detection
-            Product size: 10*6*6cm`,
-        price: 27000,
-        saleoff: 10,
+        name: `Điện Thoại iPhone 11 Pro Max 256GB - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%, Chưa active
+
+        Mã part: VN/A
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: OLED (Super Retina XDR), 6.5 inch, 2688 x 1242 pixels
+        
+        Camera Trước/Sau: 12MP / 12MP + 12MP + 12MP
+        
+        CPU: Apple A13 Bionic (7 nm+)
+        
+        Bộ Nhớ: 256 GB
+        
+        RAM: 4GB
+        
+        SIM: 1 Nano SIM + 1 esim
+        
+        Tính năng: Chống nước, chống bụi, Face ID, Sạc pin nhanh`,
+        price: 35490000,
+        saleoff: 7,
         images: [],
         videos: [],
         rates: [
@@ -648,19 +822,38 @@ const products = [
         ]
     },
     {
-        name: `Dây đèn led tròn pha lê trong suốt dài 6m gồm 50 bóng chạy bằng pin`,
-        description: `THẾ GIỚI BÓNG BAY  giới thiệu sản phẩm mới: đèn led trang trí bóng tròn pha lê trong suốt
-            TÍNH NĂNG NỔI BẬT.
-            + Đèn có nhiều chế độ sáng: sáng bình thường và nhiều thể loại nhấp nháy. Có thể chuyển chế độ sáng một cách dễ dàng. Đáng yêu cực kì.
-            + Giúp trang trí nổi bật..
-            + Sản phẩm dùng pin thông thường, dễ dàng sử dụng, chống nước, va đập, có thể gắn ở khắp các nơi.
-            Sản phẩm được phân phối bởi: luckydecor
-            Chất liệu: Nhựa dẻo bọc dây 
-            Màu sắc: Màu pha lê trong suốt giống y như hình
-            🍀 Kích thước: 6m 50 bóng, mỗi bóng 2,4cm
-            LƯU Ý: SẢN PHẨM CHẠY PIN VÀ CHƯA BẢO GỒM PIN, SHOP MÌNH CÓ BÁN PIN NHÉ`,
-        price: 55000,
-        saleoff: 20,
+        name: `Điện Thoại Samsung Galaxy A50s (64GB/4GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế mặt cắt kim cương
+        
+        Màn hình: 6.4” Super AMOLED, chuẩn điện ảnh 19.5:9 Infinity-U FHD+
+        
+        Camera Sau: 48MP (F2.0) + 5MP (F2.2) + 8MP (F2.2)
+        
+        Camera Trước: 32MP (F2.0)
+        
+        CPU: Exynos 9610 Octa Core 2.3GHz
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        Thẻ nhớ tối đa tới: 512GB
+        
+        Pin: 4000 mAh
+        
+        Sạc nhanh siêu tốc 15W
+        
+        Tính năng: Nhận Diện Khuôn Mặt, Quà tặng Galaxy
+        
+        Smart Switch, Dual Messenger, Thư Mục Bảo
+        
+        Mật, Bảo mật vân tay dưới màn hình`,
+        price: 4890000,
+        saleoff: 30,
         images: [],
         videos: [],
         rates: [
@@ -679,20 +872,23 @@ const products = [
         ]
     },
     {
-        name: `Bóng Bulb Led Osram công suất 10W`,
-        description: `Bộ 4 bóng Bulb Led Osram công suất 10W
-        OSRAM là một trong những nhà sản xuất thiết bị chiếu sáng hàng đầu thế giới có bề dày lịch sử hơn 100 năm phát triển thành công.
-        Được thành lập và đăng ký nhãn hiệu OSRAM tại cơ quan Sáng chế Hoàng gia ở Berlin (CHLB Đức) vào năm 1906. Kể từ đó, OSRAM đã không ngừng phát triển và đã sáng tạo ra những sản phẩm đèn led OSRAM với công nghệ chiếu sáng hiện đại, thông minh, đồng bộ trong từng sản phẩm.
-        Tập đoàn KTG được chọn là nhà phân phối chính hãng toàn bộ sản phẩm đèn LEDVANCE OSRAM tại Việt Nam với chính sách bảo hành đổi mới 1 đổi 1, và đầy đủ các chứng từ, giấy chứng nhận chất lượng (CQ), xuất xứ hàng hóa (CO), Hóa đơn VAT.
-        Lợi ích khi sử dụng đèn led Osram:
-        Osram cho ra đời công nghệ OLED mới thay thế công nghệ LED vốn hiển thị màu sắc thiếu trung thực và hao tốn nhiều điện năng. Led osram có ánh sáng đẹp, ấm áp mang lại cảm giác thoải mái và dễ chịu khi bước vào không gian phòng.
-        Đèn led Osram cho chất lượng chiếu sáng hoàn hảo phù hợp với mọi không gian nhà bếp, phòng ngủ, phòng khách, siêu thị, văn phòng làm việc. Đèn không nhấp nháy, chập chờn , độ hoàn màu cao giúp mắt cảm giác dễ chịu và thoải mái hơn.
-        THÔNG SỐ KỸ THUẬT:
-        Công suất: 10W
-        Điện áp: 220V – 240V
-        Tần số: 50-60Hz
-        Tuổi thọ: 10.000 giờ`,
-        price: 113000,
+        name: `Điện Thoại iPhone 7 Plus - Hàng Chính Hãng VN/A`,
+        description: `Chính hãng, nguyên seal, mới 100%
+
+        Thiết kế: Nguyên khối, mặt kính cong 2.5D
+        
+        Màn hình: 5.5 inch, Full HD (1080 x 1920 pixels)
+        
+        Camera Trước/Sau: 7MP/ 2 x 12MP
+        
+        CPU: Apple A10 Fusion 4 nhân 64-bit
+        
+        Bộ Nhớ: Tùy chọn 32GB / 128GB
+        
+        RAM: 3GB
+        
+        Chống nước, chống bụi tiêu chuẩn IP67`,
+        price: 11290000,
         saleoff: 22,
         images: [],
         videos: [],
@@ -712,13 +908,25 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn Compact V-Light PL 13W`,
-        description: `Bóng Đèn Compact V-Light PL 13W là loại bóng đèn compact khi thắp sáng đèn không bị nhấp nháy như những chiếc bóng đèn bình thường khác, cho ánh sáng dịu không làm ảnh hưởng tới mắt.
-        Bóng đèn với 03 phổ màu Tricolor Phosphor , bóng đèn này kết hợp với ballast điện tử của đèn biến tần FGL 13W/S tạo ra chỉ số truyền màu CRI trên 82% giúp phân biệt màu sắc rõ và chuẩn xác hơn.
-        Bóng đèn có tuổi thọ cao, tuy nhiên bạn nên cẩn thận tránh va đập làm vỡ bóng hoặc kiểm tra nguồn điện trước khi sử dụng, tránh làm cháy, đứt bóng đèn. 
-        Khi bóng đèn bị vỡ nên được thay mới, để mang lại hiệu quả sử dụng tốt nhất.
-        Tiết kiệm điện năng 80%.`,
-        price: 45000,
+        name: `Điện Thoại Xiaomi Redmi 7A (2GB/16GB) - Hàng Chính Hãng`,
+        description: `Hàng chính hãng, Nguyên seal, Mới 100%,
+
+        Màn hình: IPS LCD, 5.45"", HD+
+        
+        Camera Sau: 13 MP
+        
+        Camera Trước: 5 MP
+        
+        CPU: Qualcomm Snapdragon 439 8 nhân 64-bit
+        
+        Bộ Nhớ: 16GB
+        
+        RAM: 2GB
+        
+        Hỗ trợ thẻ nhớ: microSD, lên đến 512 GB
+        
+        Tính năng: Mở khóa bằng khuôn mặt`,
+        price: 1789999,
         saleoff: 8,
         images: [],
         videos: [],
@@ -738,17 +946,23 @@ const products = [
         ]
     },
     {
-        name: `Bóng Led Ớt Trang Trí Bàn Thờ (Led Trái Ớt)`,
-        description: `Bộ 10 Bóng Led Ớt Trang Trí Bàn Thờ (Led Trái Ớt)
-        Ánh sáng đỏ
-        Đuôi vặn E12 (12mm)
-        Số Led: 4 led chíp dán
-        Điện áp: 200-240 VAC
-        Công suất: 0.3W
-        Điện Thế: 220V 
-        Trước đây; chúng ta thường dùng bóng đèn cà na (bóng trái ớt) cho việc trang trí bàn thờ. Tuy nhiên loại bóng này hay hư hỏng và rất hao điện (từ 11->18W/bóng) và phát sinh nhiệt độ cao gây nguy hiểm.
-        Hiện nay bóng Led thay thế với ưu điểm là bền hơn; không nóng; và giảm lượng điện tiêu thụ xuống nhiều lần.`,
-        price: 55000,
+        name: `Điện Thoại Nokia 3.1 (16GB/2GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: IPS LCD, 5.2 inch, HD+ (720 x 1440 Pixels)
+        
+        Camera Trước/Sau: 8MP / 13MP
+        
+        CPU: MediaTek MT6750N 8 nhân
+        
+        ROM: 16GB
+        
+        RAM: 2GB`,
+        price: 1690000,
         saleoff: 48,
         images: [],
         videos: [],
@@ -768,56 +982,28 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn Philips LED Ecobright 8W 3000K E27 A60 - Ánh Sáng Vàng - Hàng Chính Hãng`,
-        description: `Bóng Đèn Ecobright LED Bulb Đui E27 8W 3000K A60 Philips 929001260107 - Ánh Sáng Vàng tỏa nhiệt ít, ánh sáng không gây chói, thích hợp với nhiều không gian.
-        Sản phẩm hoạt động với công suất 8W, nhiệt độ màu 3000K, giải điện áp thấp ≥ 48V, tạo ánh sáng ấm áp, êm dịu.
-        Thân đèn tản quang, loại bóng A60, đui đèn xoắn E27, dễ dàng thay mới.
-        Bóng đèn LED của Philips cung cấp toàn bộ ánh sáng ngay khi bật, không nhấp nháy, vô cùng nhanh nhạy.
-        Tiêu thụ điện ít hơn  so với bóng đèn huỳnh quang,  tiết kiệm 86% điện năng tiêu thụ nhưng vẫn giữ nguyên chất lượng và độ sáng.
-        Độ bền cao, tuổi thọ của đèn LED Philips kéo dài đến 10000h, giúp người dùng trải nghiệm sản phẩm tốt hơn.`,
-        price: 61000,
-        saleoff: 68,
-        images: [],
-        videos: [],
-        rates: [
-            {
-                fullname: "Hồng Hưng",
-                email: "honghung@gmail.com",
-                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 3 + Math.floor(Math.random() * 2)
-            },
-            {
-                fullname: "Trần Quân",
-                email: "quantran@gmail.com",
-                content: "Sản phẩm giá cả phù hợp túi tiền",
-                stars: 3 + Math.floor(Math.random() * 2)
-            }
-        ]
-    },
-    {
-        name: `Bóng đèn tuyp Led 1m2 bán nguyệt 36w sáng trắng Posson LTC-36-120`,
-        description: `#Giới thiệu sản phẩm:
-        *Đèn LED POSSON là giải pháp tiết kiệm điện tuyệt vời cho mọi gia đình. Tiết kiệm đến 80% so với bóng đèn thông thường
-        *Đèn này để thay thế đèn Neon đời cũ. Và sáng hơn đèn đôi Nêon 1m2 40w+40w
-        *Tích hợp tất cả trong 1 bộ đèn Led gọn gàng, lắp đặt và thay thế dễ dàng.
-        *Độ bền cao đến 25000 giờ, sử dụng đến vài năm sau mới có thể hỏng
-        *Chất liệu nhựa kỹ thuật và nhôm giúp cho bóng đèn không sợ va chạm hay rơi vỡ.
-        *Ánh sáng giống như ánh sáng tự nhiên, không hại mắt, không tỏa nhiệt nóng
-        *Kiểu thanh gọn, lắp ốp lên tường nhà, trần nhà rất đẹp
+        name: `Điện Thoại Nokia 2.2 (16GB/2GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%
+
+        Miễn phí giao hàng toàn quốc
         
-        #Thông tin kỹ thuật:
-        *Điện áp: 220V (180-260V)
-        *Công suất: 36w
-        *Chip Led: 192 Led 2835
-        *Driver: IC
-        *Ánh sáng: Trắng mát 6500K
-        *Flux: 3240lm
-        *Góc chiếu sáng: 160 độ
-        *Chống nước: Không
-        *Đuôi đèn: Đấu điện trực tiếp
-        *Kích thước SP: 120x7,5x2,5cm`,
-        price: 156000,
-        saleoff: 45,
+        Thiết kế: Nguyên khối
+        
+        Màn hình: IPS LCD, 5.71", HD+
+        
+        Camera Trước/Sau: 8MP/ 13MP
+        
+        CPU: Mediatek MT6761 4 nhân
+        
+        Bộ Nhớ: 16GB
+        
+        RAM: 2GB
+        
+        SIM tương thích: 2 Nano SIM, Hỗ trợ 4G
+        
+        Tính năng: Màn hình luôn hiển thị AOD, Đèn pin, Chặn cuộc gọi, Chặn tin nhắn`,
+        price: 1690000,
+        saleoff: 44,
         images: [],
         videos: [],
         rates: [
@@ -836,38 +1022,33 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn LED Trụ 30W (Ánh Sáng Trắng)`,
-        description: `Bộ 10 Bóng Đèn LED Trụ 30W (Ánh Sáng Trắng) - Chống nước có thể để ngoài trời
-        Tiết kiệm năng lượng, tiêu thụ điện năng thấp, tuổi thọ cao Không có chì và thủy ngân, không có tia cực tím và tia hồng ngoại
-        Chiếu sáng và hiệu quả hơn so với đèn sợi đốt và hầu hết Halogen
-        Đèn Thích hợp cho khách sạn, phòng ăn, phòng khách, phòng họp, phòng khách, phòng trưng bày, cửa hàng, hành lang, gian hàng điện thoại, phòng thu và triển lãm, hộ gia đình vv`,
-        price: 344600,
-        saleoff: 51,
-        images: [],
-        videos: [],
-        rates: [
-            {
-                fullname: "Hồng Hưng",
-                email: "honghung@gmail.com",
-                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 3 + Math.floor(Math.random() * 2)
-            },
-            {
-                fullname: "Trần Quân",
-                email: "quantran@gmail.com",
-                content: "Sản phẩm giá cả phù hợp túi tiền",
-                stars: 3 + Math.floor(Math.random() * 2)
-            }
-        ]
-    },
-    {
-        name: `Bóng Đèn Compact V-Light PL 9W`,
-        description: `Bóng Đèn Compact V-Light PL 9W là loại bóng đèn compact khi thắp sáng đèn không bị nhấp nháy như những chiếc bóng đèn bình thường khác, cho ánh sáng dịu không làm ảnh hưởng tới mắt.
-        Bóng đèn với 03 phổ màu Tricolor Phosphor , bóng đèn này kết hợp với ballast điện tử của đèn biến tần FGL 9W tạo ra chỉ số truyền màu CRI trên 82% giúp phân biệt màu sắc rõ và chuẩn xác hơn.
-        Bóng đèn có tuổi thọ cao, tuy nhiên bạn nên cẩn thận tránh va đập làm vỡ bóng hoặc kiểm tra nguồn điện trước khi sử dụng, tránh làm cháy, đứt bóng đèn. 
-        Khi bóng đèn bị vỡ nên được thay mới, để mang lại hiệu quả sử dụng tốt nhất.
-        Tiết kiệm điện năng 80%.`,
-        price: 45000,
+        name: `Điện Thoại iPhone 11 Pro 64GB - Hàng Chính Hãng`,
+        description: `Nguyên seal, mới 100%, chưa active, Hàng chính hãng
+
+        Mã Part: VN/A
+        
+        Màn hình: 5.8 inchs, 1125 x 2436 Pixels
+        
+        Camera trước: 12 MP
+        
+        Camera sau: Bộ 3 camera 12MP
+        
+        RAM: 4GB
+        
+        Bộ nhớ trong: 64 GB
+        
+        CPU: Apple A13 Bionic (7 nm+)
+        
+        GPU: Apple GPU 4 nhân
+        
+        Dung lượng pin: 3190 mAh
+        
+        Hệ điều hành: iOS 13
+        
+        SIM: 1 Nano SIM, 1 eSIM
+        
+        Chống nước: IP68`,
+        price: 28940000,
         saleoff: 8,
         images: [],
         videos: [],
@@ -887,84 +1068,191 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn Hồng Ngoại Sưởi ấm`,
-        description: `Sử dụng ánh sáng hồng ngoại từ lâu đã được biết đến như một phương pháp chữa bệnh và hỗ trợ điều trị các bệnh nan y như viêm khớp, ung thư, thần rất hiệu quả và được áp dụng rộng rãi tại các bệnh viện, phòng khám, trung tâm thẩm mỹ.
+        name: `Điện Thoại Samsung Galaxy Note 10 Plus (256GB/12GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%
 
-        Đèn sử dụng ánh sáng hồng ngoại rất tốt cho sức khỏe và chữa được nhiều bệnh nan y như: giảm đau nhức xương khớp, đau cơ, đau dây thần kinh, phục hồi vết thương, hỗ trợ điều trị ung thư, viêm xoang, điều trị các vấn đề tai mũi họng, tăng cường tuần hoàn máu, trẻ hóa da, kích hoạt tế bào, cân bằng hệ bài tiết, thư giãn thần kinh, giảm viêm và phù nề, tăng cường trao đổi chất, chăm sóc sắc đẹp, sưởi ấm, là món quà tuyệt vời dành cho cha mẹ và những người lớn tuổi.`,
-        price: 55000,
-        saleoff: 73,
-        images: [],
-        videos: [],
-        rates: [
-            {
-                fullname: "Hồng Hưng",
-                email: "honghung@gmail.com",
-                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 3 + Math.floor(Math.random() * 2)
-            },
-            {
-                fullname: "Trần Quân",
-                email: "quantran@gmail.com",
-                content: "Sản phẩm giá cả phù hợp túi tiền",
-                stars: 3 + Math.floor(Math.random() * 2)
-            }
-        ]
-    },
-    {
-        name: `Đèn led năng lượng mặt trời MIN-30 (30 led), MIN-20 (20 led), Pin li-ion, cảm biến`,
-        description: `Nhà sản xuất: Nhập khẩu Trung Quốc
-        Khối lượng: 0.2 kg
-        Màu sắc: Như hình đại diện
-        Chiều Dài: 13 cm
-        Chiều rộng: 10 cm
-        Chiều Cao: 5.5 cm
-        Kiểu hoạt động: Tự động
-        Công suất: 20 Led :  4W. 30 Led :  6W
-        Nguồn điện: Pin li-ion 1200mAh, 3.7V. Xạc đầy thời gian sử dụng đèn ~4~5h
-        Nguồn điện: Năng lượng mặt trời, pin Li-ion
-        Độ bền: 5 năm
-        Bảo hành: 1 đổi 1 trong 1 tháng`,
-        price: 74900,
-        saleoff: 57,
-        images: [],
-        videos: [],
-        rates: [
-            {
-                fullname: "Hồng Hưng",
-                email: "honghung@gmail.com",
-                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
-                stars: 3 + Math.floor(Math.random() * 2)
-            },
-            {
-                fullname: "Trần Quân",
-                email: "quantran@gmail.com",
-                content: "Sản phẩm giá cả phù hợp túi tiền",
-                stars: 3 + Math.floor(Math.random() * 2)
-            }
-        ]
-    },
-    {
-        name: `Bóng đèn Led hình nến 5w đuôi E14 sáng vàng ấm Posson Lca-5E14G`,
-        description: `#Giới thiệu sản phẩm:
-        * Đèn LED nhãn hiệu POSSON là giải pháp tiết kiệm điện tuyệt vời cho mọi gia đình. Tiết kiệm đến 80% so với bóng đèn thông thường
-        * Độ bền cao đến 25000 giờ, sử dụng đến vài năm sau mới có thể hỏng
-        * Chất liệu nhựa kỹ thuật giúp cho bóng đèn không sợ va chạm hay rơi vỡ.
-        * Ánh sáng giống như ánh sáng tự nhiên, không hại mắt, không tỏa nhiệt nóng
-        * Bóng đèn hình nến dùng để lắp vào các loại đèn trang trí, đèn chùm, đèn có đui E14....
-        * Thiết kế chống nước, cho khả năng sử dụng ngoài trời
+        Công nghệ màn hình: Super AMOLED
         
-        #Thông tin kỹ thuật:
-        *Điện áp: 220V
-        *Công suất: 5W
-        *Chip Led: 25 Led 2835
-        *Driver: RC
-        *Ánh sáng: Vàng ấm 3500K
-        *Flux: 450lm
-        *Góc chiếu sáng: 360 độ
-        *Chống nước: Có
-        *Đuôi đèn: E14: đui xoáy 14mm
-        *Kích thước SP: 3,5x3,5x10,5cm`,
-        price: 133000,
+        Độ phân giải: 2K+ (1440 x 3040 Pixels)
+        
+        Màn hình rộng: 6.8 inch
+        
+        Mặt kính cảm ứng: Corning Gorilla Glass 6
+        
+        Camera Sau: 12.0 MP + 16.0 MP + 12.0 MP + VGA
+        
+        Camera Trước: 10MP
+        
+        CPU: Exynos 9825 8 nhân 64-bit
+        
+        Bộ Nhớ: 256 GB
+        
+        RAM: 12 GB
+        
+        Hỗ trợ thẻ nhớ: MicroSD, hỗ trợ tối đa 1TB
+        
+        Bảo mật nâng cao: Mở khóa bằng khuôn mặt, Quét mống mắt, Mở khoá vân tay dưới màn hình`,
+        price: 20150000,
+        saleoff: 25,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 3 + Math.floor(Math.random() * 2)
+            },
+            {
+                fullname: "Trần Quân",
+                email: "quantran@gmail.com",
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 3 + Math.floor(Math.random() * 2)
+            }
+        ]
+    },
+    {
+        name: `Điện Thoại iPhone 11 Pro Max 64GB - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%, Chưa active
+
+        Mã part: VN/A
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: OLED (Super Retina XDR), 6.5 inch, 2688 x 1242 pixels
+        
+        Camera Trước/Sau: 12MP / 12MP + 12MP + 12MP
+        
+        CPU: Apple A13 Bionic (7 nm+)
+        
+        Bộ Nhớ: 64 GB
+        
+        RAM: 4GB
+        
+        SIM: 1 Nano SIM + 1 esim
+        
+        Tính năng: Chống nước, chống bụi, Face ID, Sạc pin nhanh`,
+        price: 30940000,
+        saleoff: 8,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 3 + Math.floor(Math.random() * 2)
+            },
+            {
+                fullname: "Trần Quân",
+                email: "quantran@gmail.com",
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 3 + Math.floor(Math.random() * 2)
+            }
+        ]
+    },
+    {
+        name: `Điện Thoại OPPO A5s - Hàng Chính Hãng`,
+        description: `Chính hãng, nguyên seal, mới 100%
+
+        Màn hình 6.2 inches, HD+
+        
+        Camera trước: 8MP
+        
+        Camera sau: Chính 13 MP & Phụ 2 MP
+        
+        CPU: MediaTek Helio P35 8 nhân 64-bit
+        
+        RAM: 3GB
+        
+        Bộ nhớ trong: 32GB
+        
+        Thẻ nhớ ngoài MicroSD hỗ trợ lên tới 256 GB
+        
+        Dung lượng Pin: 4230 mAh
+        
+        Thẻ SIM: 2 Nano SIM
+        
+        Tính năng: Bảo mật vân tay, nhận diện khuôn mặt
+        
+        Sản phẩm có hỗ trợ Tiếng Việt`,
+        price: 2990000,
+        saleoff: 25,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 3 + Math.floor(Math.random() * 2)
+            },
+            {
+                fullname: "Trần Quân",
+                email: "quantran@gmail.com",
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 3 + Math.floor(Math.random() * 2)
+            }
+        ]
+    },
+    {
+        name: `Điện Thoại Nokia 3.1 (16GB/2GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: IPS LCD, 5.2 inch, HD+ (720 x 1440 Pixels)
+        
+        Camera Trước/Sau: 8MP / 13MP
+        
+        CPU: MediaTek MT6750N 8 nhân
+        
+        ROM: 16GB
+        
+        RAM: 2GB`,
+        price: 1690000,
+        saleoff: 14,
+        images: [],
+        videos: [],
+        rates: [
+            {
+                fullname: "Hồng Hưng",
+                email: "honghung@gmail.com",
+                content: "Sản phẩm chất lượng, dùng tốt. Thank shop!",
+                stars: 3 + Math.floor(Math.random() * 2)
+            },
+            {
+                fullname: "Trần Quân",
+                email: "quantran@gmail.com",
+                content: "Sản phẩm giá cả phù hợp túi tiền",
+                stars: 3 + Math.floor(Math.random() * 2)
+            }
+        ]
+    },
+    {
+        name: `Điện Thoại Nokia 2.2 (16GB/2GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%
+
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế: Nguyên khối
+        
+        Màn hình: IPS LCD, 5.71", HD+
+        
+        Camera Trước/Sau: 8MP/ 13MP
+        
+        CPU: Mediatek MT6761 4 nhân
+        
+        Bộ Nhớ: 16GB
+        
+        RAM: 2GB
+        
+        SIM tương thích: 2 Nano SIM, Hỗ trợ 4G
+        
+        Tính năng: Màn hình luôn hiển thị AOD, Đèn pin, Chặn cuộc gọi, Chặn tin nhắn`,
+        price: 196000,
         saleoff: 11,
         images: [],
         videos: [],
@@ -984,14 +1272,34 @@ const products = [
         ]
     },
     {
-        name: `Đèn LED Máy Chiếu Bầu Trời Đêm Hình Trăng Sao`,
-        description: `Đèn LED Máy Chiếu Bầu Trời Đêm Hình Trăng Sao - Bạn có bao giờ nghĩ sẽ mang cả bầu trời trăng sao vào căn phòng bé nhỏ của mình?.Thật đơn giản khi bạn sỡ hữu chiếc máy chiếu tạo trăng sao chúng tôi sẽ giúp bạn thực hiện được điều đó tưởng chừng như là không thể.
-        Cả một bầu trời trăng sao nhỏ bé sẽ tràn ngập căn phòng của bạn làm cho không gian của bạn trở nên lãng mạn, thơ mộng và ấm áp hơn.
-        Thiết kế nhỏ họn tạo không gian rộng rãi khi sử dụng đèn. Xoay 360 độ cung cấp một di chuyển trên bầu trời đầy trăng sao. Điều kiển dễ dàng nhiều chế độ mầu bằng công tắc Tạo ra những hiệu ứng vô cùng đẹp với nhiều mầu trắc khác nhau trên bầu trời đầy trăng sao trong ngôi nhà của bạn hoặc bất cứ đâu bạn thích. Sáng cho một hiệu ứng đèn ngủ âm dịu và lãng mạn. Lý tưởng cho những người yêu lãng mạn và những gia đình cho trẻ nhỏ
-        Nguồn: Sử dụng PIN AAA (4 viên). Cắm trực tiếp vào máy tính qua dây cáp USB. DC 5V. Sử dụng 4 đèn LED (nhiều mầu). Trục xoay tròn 360 độ.
-        Chất liệu: Nhựa + linh kiện điện tử.`,
-        price: 139000,
-        saleoff: 50,
+        name: `Điện Thoại iPhone 11 Pro 64GB - Hàng Chính Hãng`,
+        description: `Nguyên seal, mới 100%, chưa active, Hàng chính hãng
+
+        Mã Part: VN/A
+        
+        Màn hình: 5.8 inchs, 1125 x 2436 Pixels
+        
+        Camera trước: 12 MP
+        
+        Camera sau: Bộ 3 camera 12MP
+        
+        RAM: 4GB
+        
+        Bộ nhớ trong: 64 GB
+        
+        CPU: Apple A13 Bionic (7 nm+)
+        
+        GPU: Apple GPU 4 nhân
+        
+        Dung lượng pin: 3190 mAh
+        
+        Hệ điều hành: iOS 13
+        
+        SIM: 1 Nano SIM, 1 eSIM
+        
+        Chống nước: IP68`,
+        price: 28490000,
+        saleoff: 8,
         images: [],
         videos: [],
         rates: [
@@ -1010,17 +1318,31 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn Philips LED Ecobright 5W 3000K E27 A60 - Ánh Sáng Vàng - Hàng Chính Hãng`,
-        description: `Thương hiệu: Philips
-        Xuất xứ thương hiệu: Hà Lan
-        Nơi sản xuất: Trung Quốc
-        SKU: 8895709585048
-        Model: 3C-929001259707
-        Công suất: 5W
-        Tuổi thọ tối đa: 10000h
-        Chất liệu: Nhựa cao cấp
-        Kích thước: Dài x Rộng x Cao: 13 x 7 x 13 cm`,
-        price: 146000,
+        name: `Điện Thoại Samsung Galaxy Note 10 Plus (256GB/12GB) - Hàng Chính Hãng`,
+        description: `Chính hãng, Nguyên seal, Mới 100%
+
+        Công nghệ màn hình: Super AMOLED
+        
+        Độ phân giải: 2K+ (1440 x 3040 Pixels)
+        
+        Màn hình rộng: 6.8 inch
+        
+        Mặt kính cảm ứng: Corning Gorilla Glass 6
+        
+        Camera Sau: 12.0 MP + 16.0 MP + 12.0 MP + VGA
+        
+        Camera Trước: 10MP
+        
+        CPU: Exynos 9825 8 nhân 64-bit
+        
+        Bộ Nhớ: 256 GB
+        
+        RAM: 12 GB
+        
+        Hỗ trợ thẻ nhớ: MicroSD, hỗ trợ tối đa 1TB
+        
+        Bảo mật nâng cao: Mở khóa bằng khuôn mặt, Quét mống mắt, Mở khoá vân tay dưới màn hình`,
+        price: 20150000,
         saleoff: 2,
         images: [],
         videos: [],
@@ -1040,23 +1362,27 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn Led trụ 18w 20w tiết kiệm điện sáng trắng-vàng nắng Posson LC-N18-18G`,
-        description: `#Công dụng:
-        +Bóng đèn Led 18-20w sử dụng chiếu sáng trong nhà nhỏ, nhà bếp, hành lang, ban công, khu vực nhỏ và vừa cần sáng rõ ràng.
-        +Thiết kế chống nước, cho khả năng sử dụng ngoài trời
-        #Tiết kiệm điện:
-        +Đèn LED POSSON là giải pháp tiết kiệm điện tuyệt vời cho mọi gia đình. Tiết kiệm đến 80% so với bóng đèn thông thường
-        #Tuổi thọ, độ bền:
-        +Led có tuổi thọ cao từ 15000 đến 25000 giờ, sử dụng đến vài năm sau mới có thể hỏng.
-        +Chất liệu bóng đèn bằng nhựa kỹ thuật giúp cho bóng đèn không sợ va chạm hay rơi vỡ.
-        #Êm dịu mắt:
-        +Ánh sáng giống như ánh sáng tự nhiên nên không hại mắt, không tỏa nhiệt nóng
-        #Hướng dẫn chọn công suất bóng đèn phù hợp:
-        +3-5W: Sử dụng làm đèn trang trí, đèn tường, đèn góc, đèn gương, đèn ở khu vực nhỏ cần sáng ít.
-        +7-12W: Sử dụng làm đèn trang trí, đèn cầu thang, đèn nhà tắm, vệ sinh, khu vực nhỏ cần sáng vừa.
-        +15-24W: Sử dụng chiếu sáng trong nhà nhỏ, nhà bếp, hành lang, ban công, khu vực nhỏ và vừa cần sáng rõ ràng.
-        +25-50W: Sử dụng chiếu sáng khu vực nhà rộng, sân vườn, khu vực rộng cần ánh sáng tốt.`,
-        price: 215000,
+        name: `Điện Thoại iPhone 6s 32GB - Nhập Khẩu Chính Hãng`,
+        description: `Mã Quốc Tế: LL,ZP, J/A,...
+
+        Nguyên seal, mới 100%, chưa Active
+        
+        Miễn phí giao hàng toàn quốc
+        
+        Thiết kế: Nguyên khối, mặt kính cong 2.5D
+        
+        Màn hình: 4.7 inch, HD (1334 x 750 Pixels)
+        
+        Camera Trước/Sau: 5MP/ 12MP
+        
+        CPU: Apple A9 2 nhân 64-bit
+        
+        Bộ nhớ: 32GB
+        
+        RAM: 2GB
+        
+        Tính năng: Mở khóa bằng vân tay`,
+        price: 6490000,
         saleoff: 19,
         images: [],
         videos: [],
@@ -1076,18 +1402,32 @@ const products = [
         ]
     },
     {
-        name: `Bóng Đèn Halogen Cho Đèn Xông Tinh Dầu`,
-        description: `CHIA SẺ KINH NGHIỆM
-        -------------------------------------        
-        Kiểm tra phích cắm đảm bảo không chập chờn điện         
-        Không nên mở đèn sáng tối đa nhiều giờ liên tục, tầm 7-8 tiếng nên tắt đèn.         
-        Trước khi rút đèn khỏi ổ cắm, nên vặn công tắc đèn về nút OFF, tránh tình trạng khi cắm điện trở lại, điện áp tăng đột ngột dễ làm đứt bóng đèn.        
+        name: `Điện Thoại Vsmart Star - Hàng chính hãng`,
+        description: `Chính hãng, nguyên seal, mới 100%
+
+        Miễn phí giao hàng toàn quốc
         
-        CÁCH THAY BÓNG ĐÈN        
-        -------------------------------------        
-        Rút điện, dùng tay nhẹ nhàng rút bóng ra (chỉ cần rút thẳng, không cần xoáy hoặc lắc) kiểm tra bóng đèn (nếu bóng cháy có màu đen hoặc đứt sợi tóc) thì thay bóng mới lấy bóng mới, nhẹ nhàng cắm vào 2 đầu của chân đế..`,
-        price: 120000,
-        saleoff: 40,
+        Màn hình: IPS LCD, 5.7", HD+
+        
+        Hệ điều hành: Android 9.0 (Pie)
+        
+        Camera sau: Chính 8 MP & Phụ 2 MP
+        
+        Camera trước: 5 MP
+        
+        CPU: Qualcomm Snapdragon 215 4 nhân
+        
+        RAM: 2 GB
+        
+        Bộ nhớ trong: 16 GB
+        
+        Thẻ nhớ: MicroSD, hỗ trợ tối đa 256 GB
+        
+        Thẻ SIM: 2 Nano SIM, Hỗ trợ 4G
+        
+        Dung lượng pin: 3000 mAh`,
+        price: 1480000,
+        saleoff: 16,
         images: [],
         videos: [],
         rates: [
@@ -1106,10 +1446,25 @@ const products = [
         ]
     },
     {
-        name: `Bóng thay thế cho đèn muỗi Đại sinh D6 6W`,
-        description: `Bóng đèn 6W - Đèn diệt côn trùng DS-D6 có khả năng dẫn dụ côn trùng rất tốt. 
-        Đối với đèn diệt côn trùng thì bóng đèn đóng vai trò quan trọng nhất bởi đó là dụng cụ chính thu hút sự chú ý của muỗi, các côn trùng xâm nhập. Khi phát hiện bị cháy bóng cần gấp rút thay nhanh để không ảnh hưởng đến hoạt động của đèn. Bóng đèn 6W Đại Sinh thích hợp sử dụng cho đèn diệt côn trùng DS-D6 là 1 trong những loại bóng đèn UV, có bước sóng dài, có khả năng dẫn dụ côn trùng rất tốt, nhờ vào nguồn sáng đặc biệt.`,
-        price: 175000,
+        name: `Điện Thoại Xiaomi Redmi 7A (2GB/32GB) - Hàng Chính Hãng`,
+        description: `Hàng chính hãng, Nguyên seal, Mới 100%,
+
+        Màn hình: IPS LCD, 5.45"", HD+
+        
+        Camera Sau: 13 MP
+        
+        Camera Trước: 5 MP
+        
+        CPU: Qualcomm Snapdragon 439 8 nhân 64-bit
+        
+        Bộ Nhớ: 32GB
+        
+        RAM: 2GB
+        
+        Hỗ trợ thẻ nhớ: microSD, lên đến 512 GB
+        
+        Tính năng: Mở khóa bằng khuôn mặt`,
+        price: 1990000,
         saleoff: 49,
         images: [],
         videos: [],
@@ -1129,9 +1484,31 @@ const products = [
         ]
     },
     {
-        name: `BÓNG ĐÈN LED TÍCH ĐIỆN CÓ MÓC TREO TIỆN LỢI 50w`,
-        description: `GIẢI QUYẾT VẤN ĐỀ CỦA BẠN CHỈ VỚI 1 SẢN PHẨM TIỆN  LỢI THÔNG MINH`,
-        price: 119900,
+        name: `Điện Thoại Samsung Galaxy A70 (128GB/6GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%
+
+        Sản phẩm đã được kích hoạt bảo hành điện tử qua tổng đài 6060 của Samsung
+        
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế: Nguyên khối, Màn hình Infinity-U
+        
+        Màn hình: Super AMOLED 6.7 inch Full HD+ (1080 x 2220 Pixels)
+        
+        Camera Sau : 32 MP + 8 MP + 5 MP.
+        
+        Camera Trước: 32MP
+        
+        CPU: Snapdragon 675 8 nhân 64-bit
+        
+        Bộ Nhớ: 128GB
+        
+        RAM: 6GB
+        
+        Thẻ nhớ tối đa tới: 512GB
+        
+        Tính năng: Cảm biến vân tay dưới màn hình, Nhận Diện Khuôn Mặt, Thư Mục Bảo Mật, Trợ lý ảo Bixby`,
+        price: 6890000,
         saleoff: 40,
         images: [],
         videos: [],
@@ -1173,22 +1550,25 @@ const products = [
         ]
     },
     {
-        name: `Đèn Led Siêu Mỏng Âm Trần Fighter Comet 12W CD01F012`,
-        description: `Đèn Led Siêu Mỏng Âm Trần Fighter Comet 12W CD01F012 có thiết kế siêu mỏng với chất liệu nhôm sơn tĩnh điện, giúp chống rỉ sét và tản nhiệt hiệu quả; tính năng tản sáng cao cấp, quang thông cao giúp mang lại hiệu suất chiếu sáng tốt mà vẫn tiết kiệm đến 80% công suất điệ
-        Thiết kế mặt tán xạ tròn, phẳng mỏng thuận tiện cho việc vệ sinh và bảo trì sản phẩm
-        Thông số kỹ thuật:
+        name: `Điện Thoại iPhone X VN/A - Hàng Chính Hãng VN/A`,
+        description: `Chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Thiết kế: Nguyên khối
         
-        Công suất: 12W
-        Điện áp rộng, sử dụng phù hợp với ngay cả những khu vực có điện thế yếu: AC100 240V/50Hz
-        Chip led cao cấp: SMD2835
-        CRI > 80
-        Tuổi thọ cao: 25.000 giờ
-        Isolated driver: IC Driver
-        IP Rating: IP20
-        Quang thông cao: 840 Lm
-        Lỗ khoét trần (Cut Out): 150 mm
-        Kích thước sản phẩm: D170 x H20 mm (đường kính 170mm, cao 20mm)`,
-        price: 110000,
+        Màn hình: Super AMOLED capacitive touchscreen, 5.8 inch HD
+        
+        Camera Trước/Sau: 7MP/ 2 camera 12MP
+        
+        CPU: Apple A11 Bionic 6 nhân
+        
+        Bộ Nhớ: Tùy chọn 64GB / 256GB
+        
+        RAM: 3GB
+        
+        SIM: 1 Nano SIM
+        
+        Tính năng: Chống nước, chống bụi, Face ID`,
+        price: 1990000,
         saleoff: 23,
         images: [],
         videos: [],
@@ -1208,12 +1588,27 @@ const products = [
         ]
     },
     {
-        name: `Bóng đèn led vũ trường xoay 7 màu`,
-        description: `Bóng đèn led vũ trường xoay 7 màu 
-        Thiết kế nhỏ gọn với bóng led thông minh, chiếu sáng xa, giúp tiết kiệm diện cho người dùng.
-        Tạo hiệu ứng ánh sáng cực sinh động với đủ màu sắc khắp phòng
-        Đèn led cảm ứng với chế độ tự động xoay chớp theo nhạc hiện đại, led siêu tiết kiệm điện.`,
-        price: 38000,
+        name: `Điện Thoại OPPO F9 (A11) (64GB/4GB) - Hàng Chính Hãng`,
+        description: `Thông tin dự kiến của sản phẩm:
+
+        Sản phẩm Chính hãng, Mới 100%, Nguyên seal, Chưa Active
+        
+        Miễn phí giao hàng toàn quốc
+        
+        Màn hình: 6.3 inch (Màn hình giọt nước), FHD+ 2340 x 1080 pixels
+        
+        Camera Trước: 25 MP (Hỗ trợ công nghệ A.I) F2.0
+        
+        Camera Sau: 16 MP + 2 MP (Camera kép) F1.85
+        
+        CPU: Helio P60 8 nhân + 2 nhân AI, 2.0GHz
+        
+        Bộ Nhớ: 64GB
+        
+        RAM: 4GB
+        
+        Tính năng: Sạc nhanh siêu tốc với VOOC`,
+        price: 4490000,
         saleoff: 37,
         images: [],
         videos: [],
@@ -1233,10 +1628,29 @@ const products = [
         ]
     },
     {
-        name: `Đèn LED Năng Lượng Mặt Trời Suntek JD-8810`,
-        description: `Sử dụng chiếu sáng như đèn sân vườn cho biệt thự, đèn đường, đèn chiếu, đèn cho các khu đất rộng, khu vườn, khu ao, vuông tô
-        Đèn tích hợp bộ cảm biến ánh sáng, tự động sáng đèn khi trời tối và tắt đèn khi trời sáng. Chế độ sáng thông minh khi ít điện hoặc mưa liên tục sẽ giảm điện tiêu thụ về đêm khuya để tiết kiệm điện.`,
-        price: 505000,
+        name: `Điện Thoại Samsung Galaxy S10 Plus (128GB/8GB) - Hàng Chính Hãng`,
+        description: `Sản phẩm Chính hãng, Mới 100%, Nguyên seal
+
+        Sản phẩm đã được kích hoạt bảo hành điện tử qua tổng đài 6060 của Samsung
+        
+        Miễn phí giao hàng tiêu chuẩn toàn quốc
+        
+        Thiết kế: Nguyên khối, màn hình vô cực
+        
+        Màn hình: Super AMOLED, 6.44"", Quad HD+ (2K+)
+        
+        Camera Sau: 3 camera (Tele 12MP (2PD) f2.4 + góc rộng 12MP f1.5/2.4 + siêu rộng 16MP f2.2 123 độ)
+        
+        Camera Trước: Camera kép (10MP (2PD) f1.9, Depth Camera 8MP f2.2)
+        
+        CPU: Lõi 8, Exynos 9820
+        
+        Bộ Nhớ: 128GB
+        
+        RAM: 8GB
+        
+        Tính năng: Chống nước, chống bụi, Mở khóa bằng khuôn mặt, Quét mống mắt, Mở khoá vân tay dưới màn hình, Quét vân tay siêu âm, Powershare`,
+        price: 15480000,
         saleoff: 43,
         images: [],
         videos: [],
@@ -1256,11 +1670,35 @@ const products = [
         ]
     },
     {
-        name: `DÈN SƯỞI ĐUÔI CÁ LOẠI 2 BÓNG [ GIẢM GIÁ ]`,
-        description: `Tỏa nhiệt bằng 2 bóng đèn halogen chóng vánh. Quạt sưởi halogen có 2 bóng đèn tùy chỉnh theo nút chỉnh. phải chăng cho sức khỏe, an toàn lúc dùng có chế độ ngắt nguồn điện
-        shop CHUYÊN SỈ HÀNG TOÀN QUỐC
-        Rất vui được phục vụ mọi người`,
-        price: 180000,
+        name: `Điện Thoại iPhone XS Max 64GB - Hàng Chính Hãng`,
+        description: `Chính hãng, nguyên seal, mới 100%, chưa Active
+
+        Miễn phí giao hàng toàn quốc
+        
+        Màn hình OLED 6.5 inch
+        
+        Camera kép 12MP, camera trước 7MP xóa phông
+        
+        Chip xử lý: A12 Bionic 64-bit 7nm
+        
+        RAM: 4GB
+        
+        ROM: 64GB
+        
+        Cảm biến nhận diện khuôn mặt Face ID
+        
+        Bảo vệ bằng AI ngay trên máy
+        
+        Màn hình viền siêu mỏng, khung thép không rỉ
+        
+        Chống nước IP68
+        
+        1 Nano SIM + 1 eSIM
+        
+        Hệ điều hành: iOS 12 chính thức
+        
+        Sạc không dây Qi`,
+        price: 24900000,
         saleoff: 12,
         images: [],
         videos: [],
@@ -1280,18 +1718,30 @@ const products = [
         ]
     },
     {
-        name: `Bóng dèn UV cho thú cưng - bò sát (25w 50w 75w)`,
-        description: `Đèn UVA UVB 3.0 cho bò sát cũng giống như các loại đèn chuyên dụng khác. Đây là một loại bóng tích hợp được cả UVA và UVB. Chúng khá tiện lợi cho người mới bắt đầu, bởi các đặc tính ở bài viết bên dưới.
+        name: `Điện Thoại Samsung Galaxy Note 10 (256GB/8GB) - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Mới 100%, Đã kích hoạt bảo hành điện tử
 
-        Thông tin chi tiết về đèn UVA UVB 3.0 cho Bò Sát
-        đèn uva uvb 
+        Công nghệ màn hình: Dynamic AMOLED
         
-        Bóng Đèn UVA UVB 3.0 sử dụng chính cho Rùa Nước, Trăn cảnh – Rắn cảnh và một số loài Tắc Kè. Bóng này không sử dụng cho rùa cạn hay các loại rồng.
-        Bóng Đèn UVA UVB 3.0 sử dụng thời vụ cho các loại rùa cạn hoặc rồng. Nếu đan xen với phơi nắng 2 tiếng có thể nuôi được nhiều loại. Như là Rồng úc, Rồng nam mỹ, Rùa Cạn, Kỳ Đà v.v….
-        Bóng Đèn UVA UVB 3.0 giá thành rẻ nhất trong các hệ số.
-        Bóng Đèn UVA UVB 3.0 độ bền thấp. Sẽ bị hỏng nếu như dính 4 vấn đề sau: bị va đập, dùng chụp đèn kém chất lượng, bị xung điện hoặc bị nước bắn vào bóng là đứt dây tóc ngay lập tức. Lưu ý shop chỉ bảo hành kiểm tra bóng tại chỗ. Khi về nhà quý khách cần để ý kỹ hơn để tránh bị hỏng bóng.`,
-        price: 45000,
-        saleoff: 3,
+        Màn hình rộng: 6.3 inch
+        
+        Độ phân giải: Full HD+ (1080 x 2280 Pixels)
+        
+        Mặt kính cảm ứng: Corning Gorilla Glass 6
+        
+        Camera Sau: 12.0 MP + 16.0 MP + 12.0 MP
+        
+        Camera Trước: 10.0 MP
+        
+        CPU: Exynos 9825 8 nhân 64-bit
+        
+        Bộ Nhớ: 256GB
+        
+        RAM: 8GB
+        
+        Bảo mật nâng cao Mở khóa bằng khuôn mặt, Quét mống mắt, Mở khoá vân tay dưới màn hình`,
+        price: 15900000,
+        saleoff: 31,
         images: [],
         videos: [],
         rates: [
@@ -1310,28 +1760,26 @@ const products = [
         ]
     },
     {
-        name: `Dèn led tiện dụng có đầu cắm USB dùng được cho máy tính`,
-        description: `★Product Description：
-        100% brand-new and high quality.
-        No need drive, plug and play.
-        High brightness, durable life.
-        Flexible body, easy to bend.
-        Mini size, convenient to carry and store.
-        Suitable for USB interface type.
+        name: `Điện Thoại Samsung Galaxy S10 Plus - Hàng Chính Hãng`,
+        description: `Điện thoại chính hãng, Nguyên seal, Mới 100%, Chưa Active
+
+        Thiết kế: Nguyên khối, màn hình vô cực
         
-        Specifications:
-        Material: PVC
-        Rated voltage: 5V
-        Rated power: 1.2W
+        Màn hình: Super AMOLED, 6.44"", Quad HD+ (2K+)
         
-        Specifications:
-        No need drive, plug and play.
-        High brightness, durable life.
-        Flexible body, easy to bend.
-        Mini size, convenient to carry and store.
-        Suitable for USB interface type.`,
-        price: 67766,
-        saleoff: 9,
+        Camera Sau: 3 camera (Tele 12MP (2PD) f2.4 + góc rộng 12MP f1.5/2.4 + siêu rộng 16MP f2.2 123 độ)
+        
+        Camera Trước: Camera kép (10MP (2PD) f1.9, Depth Camera 8MP f2.2)
+        
+        CPU: Exynos 9820
+        
+        Bộ Nhớ: 128GB / 512GB
+        
+        RAM: 8GB
+        
+        Tính năng: Chống nước, chống bụi, Mở khóa bằng khuôn mặt, Quét mống mắt, Mở khoá vân tay dưới màn hình, Quét vân tay siêu âm, Powershare`,
+        price: 16750000,
+        saleoff: 19,
         images: [],
         videos: [],
         rates: [
@@ -1350,28 +1798,30 @@ const products = [
         ]
     },
     {
-        name: `Dèn NOCTIGON K1 - sử dụng bóng LED siêu nhỏ Osram chiếu xa`,
-        description: `NOCTIGON K1 là một cây đèn chiếu siêu xa mới của NOCTIGON, sử dụng bóng LED siêu nhỏ Osram, với nhân LED chỉ nhỏ cỡ 1mm2, cho khả năng chiếu xa đáng kinh ngạc, lên đến 1.6km
+        name: `Điện thoại Vivo Y11 - Hàng chính hãng`,
+        description: `Hàng chính hãng, nguyên seal, mới 100%
 
-        Tính năng , đặc điểm : 
-        • Gia công CNC bằng hợp kim nhôm hàng không
-        • Chóa trơn, làm từ hợp kim nhôm
-        • Thấu phủ AR chống lóa
-        • Cấu trúc Unihead
-        • Độ sáng cao nhất là 1400lm và thấp nhất sáng như mặt trăng
-        • Chỉnh sáng vô cấp
-        • Sạc USB type C trên thân
-        • Nút bấm mềm ALPS siêu bền, tích hợp đèn báo pin RGB
-        •  Lò xo Beryllium-Copper với khả năng dẫn điện cao hơn 45% so với lò xo thép không gỉ sử dụng cho lò xo chỉ  2% IACS.
-        • Dòng điện ko đổi, hạ độ sáng theo nhiệt độ
-        • Chống nước, chống bụi IP67 
-        • Kích thước: 173mm(Dài) * 72mm(Đầu) * 26.5mm(thân)
+        Màn hình: IPS LCD, 6.35", HD+
         
-        Lumens và lux của từng loại bóng:
-        W1 (bóng led Osram CSLNM1.TG): 900lm, Lux : 650Kcd(650,000cd) chiếu xa 1612m
-        W2 (bóng led Osram CSLPM1.TG): 1400lm, Lux: 550Kcd(550,000cd) chiếu xa 1483m`,
-        price: 1850000,
-        saleoff: 5,
+        Hệ điều hành: Android 9.0 (Pie)
+        
+        Camera sau: Chính 13 MP & Phụ 2 MP
+        
+        Camera trước: 8 MP
+        
+        CPU: Qualcomm Snapdragon 439 8 nhân 64-bit
+        
+        RAM: 3 GB
+        
+        Bộ nhớ trong: 32 GB
+        
+        Thẻ nhớ: MicroSD, hỗ trợ tối đa 256 GB
+        
+        Thẻ SIM: 2 Nano SIM, Hỗ trợ 4G
+        
+        Dung lượng pin: 5000 mAh`,
+        price: 2519000,
+        saleoff: 15,
         images: [],
         videos: [],
         rates: [
@@ -1396,67 +1846,20 @@ const products = [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     {
-        name: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W - bong den led`,
-        description: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W(Sáng Vàng)
-        Đèn Compact Điện Quang 09727AW sẽ giúp bạn tăng thêm sự lựa chọn với bóng đèn công suất lớn tiết kiệm điện, phù hợp khi chiếu sáng ngõ xóm, nhà xưởng, khuôn viên, gian hàng thương mại,...
-        Sử dụng bột huỳnh quang 3 màu và ballast điện tử
-        Là sản phẩm lý tưởng trong việc thay thế cho bóng đèn dây tóc
-        Hiệu suất phát quang cao hơn và tiết kiệm điện năng hữu hiệu`,
-        price: 70000,
-        saleoff: 0,
+        name: `Điện Thoại Realme 3 (4GB/64GB)`,
+        description: `Màn hình: IPS LCD HD+ 6.22"
+        Camera sau kép: Chính 13 MP & Phụ 2 MP
+        Camera trước: 13 MP
+        Hệ điều hành Android 9.0 (Pie)
+        Chipset (hãng SX CPU) MediaTek Helio P60 8 nhân
+        RAM 4 GB - ROM 64 GB
+        SIM 2 Nano SIM
+        Jack tai nghe 3.5 mm
+        Dung lượng pin 4230 mAh
+        Bảo mật nâng cao Mở khóa bằng vân tay, Mở khoá khuôn mặt`,
+        price: 3550000,
+        saleoff: 33,
         images: [],
         videos: [],
         rates: [
@@ -1474,17 +1877,22 @@ const products = [
             }
         ],
         url:
-            "https://www.lazada.vn/products/den-led-compact-dien-quang-dq-ledcp01-09727aw-sang-vang-9w-bong-den-led-i223532629-s281719031.html?spm=a2o4n.searchlist.list.1.29704015A63EDK&search=1"
+            "https://www.lazada.vn/products/bao-hanh-12-thang-dien-thoai-realme-3-4gb64gb-camera-sau-kep-13mp2mp-camera-truoc-13mp-pin-4230mah-2-sim-nano-hang-chinh-hang-i396298503-s679254168.html?spm=a2o4n.searchlist.list.1.32934ac3sgkuQR&search=1"
     },
     {
-        name: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W - bong den led`,
-        description: `Đèn Led Compact Điện Quang ĐQ LEDCP01 09727AW Sáng vàng 9W(Sáng Vàng)
-        Đèn Compact Điện Quang 09727AW sẽ giúp bạn tăng thêm sự lựa chọn với bóng đèn công suất lớn tiết kiệm điện, phù hợp khi chiếu sáng ngõ xóm, nhà xưởng, khuôn viên, gian hàng thương mại,...
-        Sử dụng bột huỳnh quang 3 màu và ballast điện tử
-        Là sản phẩm lý tưởng trong việc thay thế cho bóng đèn dây tóc
-        Hiệu suất phát quang cao hơn và tiết kiệm điện năng hữu hiệu`,
-        price: 70000,
-        saleoff: 0,
+        name: `Điện Thoại Samsung Galaxy M30 64GB (4GB) `,
+        description: `Điện thoại Samsung Galaxy M30 bán độc quyền tại Lazada
+        Màn hình tràn viền Infinity U 6.4 Inch Full HD sAmoled chiếm đến 92% thân máy
+        Giao diện One UI thông minh mang đến trải nghiệm hoàn hảo hơn bao giờ hết
+        Bộ 3 camera sau 13Mp - 5MP và 5MP góc chụp Siêu Rộng với tính năng Tự Động Nhận Diện và Lấy Nét bắt trọn mọi sắc nét
+        Pin 5.000 mAh cùng tính năng Sạc nhanh mang đến trải nghiệm liền mạch không gián đoạn
+        Vi Vi xử lý 8 nhân (2 x 1.8 GHz & 6 x 1.6 GHz) mang đến tốc độ xử lý vượt trội, thách thức mọi thể loại game
+        Ram đến 4GB không còn phải chờ đợi, mọi ứng dụng sẽ được xử lý nhanh chóng hơn
+        Bộ nhớ trong 64GB tha hồ lưu trữ nhạc, hình, video, cài đặt ứng dụng mà không lo hết dung lượng
+        Xem đánh giá chi tiết từ Vinh Vật Vờ:https://www.youtube.com/watch?v=i3uYukCMZ_4
+        Xem đánh giá chi tiết từ Tony Phùng:https://www.youtube.com/watch?v=Prep66lZbfA`,
+        price: 3290000,
+        saleoff: 4,
         images: [],
         videos: [],
         rates: [
@@ -1502,17 +1910,31 @@ const products = [
             }
         ],
         url:
-            "https://www.lazada.vn/products/den-led-compact-dien-quang-dq-ledcp01-09727aw-sang-vang-9w-bong-den-led-i223532629-s281719031.html?spm=a2o4n.searchlist.list.1.29704015A63EDK&search=1"
+            "https://www.lazada.vn/products/dien-thoai-samsung-galaxy-m30-64gb-4gb-man-hinh-tran-vien-vo-cuc-64-super-amoled-full-hd-cum-3-camera-sau-sieu-pin-5000-mah-2-nano-sim-hang-phan-phoi-chinh-hang-i296824193-s474280615.html?spm=a2o4n.searchlist.list.5.32934ac3sgkuQR&search=1"
     },
     {
-        name: `Bóng đèn led Hồng Ngoại Sưởi ấm`,
-        description: `Đèn Led Hồng Ngoại Sưởi ấm LEDCP01 09727AW Sáng vàng 9W(Sáng Vàng)
-        Đèn Led Hồng Ngoại Sưởi ấm 09727AW sẽ giúp bạn tăng thêm sự lựa chọn với bóng đèn công suất lớn tiết kiệm điện, phù hợp khi chiếu sáng ngõ xóm, nhà xưởng, khuôn viên, gian hàng thương mại,...
-        Sử dụng bột huỳnh quang 3 màu và ballast điện tử
-        Là sản phẩm lý tưởng trong việc thay thế cho bóng đèn dây tóc
-        Hiệu suất phát quang cao hơn và tiết kiệm điện năng hữu hiệu`,
-        price: 145000,
-        saleoff: 73,
+        name: `Điện thoại Wiko Jerry 4 - Hàng Chính Hãng`,
+        description: `Màn hình : 5.9 inches, 720 x 1440 Pixels
+
+        Camera trước : 5 MP
+        
+        Camera sau : 8.0 MP, f2.0
+        
+        RAM : 1 GB
+        
+        Bộ nhớ trong : 16 GB
+        
+        CPU : MediaTek MT6580, Quad-Core, Quad-core 1.3 GHz, Cortex-A7
+        
+        GPU : Mali T820 MP1
+        
+        Dung lượng pin : 3730 mAh
+        
+        Hệ điều hành : Android 9.0 (Pie)
+        
+        Thẻ SIM : Micro Sim, 2 Sim`,
+        price: 1490000,
+        saleoff: 17,
         images: [],
         videos: [],
         rates: [
@@ -1530,20 +1952,22 @@ const products = [
             }
         ],
         url:
-            "https://tiki.vn/bong-den-hong-ngoai-suoi-am-p15089394.html?_v=new_disable_fbt&src=search&2hi=1&keyword=bong+den&utm_expid=.VuO9Tv3VTQyjx6MLutmThw.3&utm_referrer=https%3A%2F%2Ftiki.vn%2Fsearch%3Fq%3Dbong%2520den"
+            "https://tiki.vn/dien-thoai-realme-c2-2gb-32gb-hang-chinh-hang-p40335864.html?src=search&2hi=0&keyword=%C4%91i%E1%BB%87n+tho%E1%BA%A1i"
     },
     {
-        name: `Bóng đèn trụ LED 50W siêu sáng tiết kiệm điện bảo hành 1 năm`,
-        description: `Ngày nay xu hướng sử dụng đèn Led càng ngày càng phổ biến trong đời sống khi giá của công nghệ này càng ngày càng rẻ đi và chúng đã được người dùng kiểm nghiệm thực tế là có công dụng tuyệt vời, có nhiều ưu điểm vượt trội so với các loại đèn cũ như: 
-        - Tiết kiệm điện đến 90% so với bóng đèn sợi đốt.
-        - Không tạo tia bức xạ, tia hồng ngoại, tia cực tím. Nhiệt độ của bóng thấp, cho ánh sáng dễ chịu, không chói mắt và hiệu suất chiếu sáng cao 
-        - Bóng bầu kín chống nước có thể thắp sáng ngoài trời. 
-        - Sản phẩm sử dụng chíp cao cấp SMD. Đèn led có tuổi thọ bền bỉ, lên đến 40 nghìn giờ thắp sáng. Đèn Led khi bật công tắc không có thời gian trễ, bật là sáng luôn không nhấp nháy. 
-        Thuộc Tính Sản Phẩm :
-        + Ánh sáng: trắng 
-        + Chất liệu:  nhôm nhựa 
-        + Điện áp : 220V/5`,
-        price: 55000,
+        name: `Điện Thoại Oppo A1K 2GB/32GB - Hàng Chính Hãng`,
+        description: `Thông số kĩ thuật:
+        Hàng chính hãng nguyên seal, mới 100%
+        Màn hình IPS, 6.1", HD+
+        CPU: MediaTek MT6762R 8 nhân
+        RAM: 2GB
+        ROM: 32GB
+        Camera sau: 8MP
+        Camera trước: 5MP
+        Dung lượng pin: 4000mAh, công nghệ sạc nhanh
+        Thẻ SIM: 2 Nano SIM
+        Mở khóa bằng nhận diện khuôn mặt`,
+        price: 3190000,
         saleoff: 7,
         images: [],
         videos: [],
@@ -1562,7 +1986,7 @@ const products = [
             }
         ],
         url:
-            "https://shopee.vn/B%C3%B3ng-%C4%91%C3%A8n-tr%E1%BB%A5-LED-50W-si%C3%AAu-s%C3%A1ng-ti%E1%BA%BFt-ki%E1%BB%87m-%C4%91i%E1%BB%87n-b%E1%BA%A3o-h%C3%A0nh-1-n%C4%83m-i.116832373.2446585129"
+            "https://shopee.vn/%C4%90i%E1%BB%87n-Tho%E1%BA%A1i-Oppo-A1K-2GB-32GB-H%C3%A0ng-Ch%C3%ADnh-H%C3%A3ng-i.25452983.2327017097"
     }
 ];
 
@@ -1597,7 +2021,7 @@ module.exports.createDefaultCollection = async () => {
         console.log("Product collection is empty.");
 
         const productCategory = await ProductCategoryDao.findOneByName(
-            "Thiết bị chiếu sáng"
+            "Điện thoại"
         );
         // console.log(productCategory);
 
@@ -1617,7 +2041,7 @@ module.exports.createDefaultCollection = async () => {
                     saleoff: products[key].saleoff,
                     rates: products[key].rates,
                     url: products[key].url ? products[key].url : "",
-                    producerCode: Math.random().toString(36).substr(2, Math.floor(Math.random() * 2) + 4).toUpperCase()
+                    producerCode: Math.random().toString(36).substr(2, Math.floor(Math.random() * 4) + 4).toUpperCase()
                 });
 
                 productNew.images.push(imageUrls[i % 30]);
