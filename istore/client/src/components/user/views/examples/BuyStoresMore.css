@@ -39,3 +39,8 @@ td {
     border: 1px solid #dddddd;
     padding: 10px;
 }
+
+.buy-more-stores .card-custom .card-header h3,
+.buy-more-stores .card-custom .card-header table {
+    color: #777777 !important;
+}

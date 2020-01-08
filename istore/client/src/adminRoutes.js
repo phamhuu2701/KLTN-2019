@@ -25,11 +25,18 @@ import ChangePhone from "./components/admin/views/examples/ChangePhone";
 import ChangePassword from "./components/admin/views/examples/ChangePassword";
 
 var routes = [
+    // {
+    //     path: "/index",
+    //     name: "Trang chủ",
+    //     icon: "ni ni-shop text-primary",
+    //     component: Index,
+    //     layout: "/admin"
+    // },
     {
-        path: "/index",
-        name: "Trang chủ",
-        icon: "ni ni-shop text-primary",
-        component: Index,
+        path: "/profile",
+        name: "Thông tin cá nhân",
+        icon: "ni ni-single-02 text-yellow",
+        component: Profile,
         layout: "/admin"
     },
     {
@@ -37,13 +44,6 @@ var routes = [
         name: "Tin nhắn",
         icon: "ni ni-chat-round text-primary",
         component: Index,
-        layout: "/admin"
-    },
-    {
-        path: "/profile",
-        name: "Thông tin cá nhân",
-        icon: "ni ni-single-02 text-yellow",
-        component: Profile,
         layout: "/admin"
     },
     {
@@ -74,13 +74,13 @@ var routes = [
         component: Index,
         layout: "/admin"
     },
-    {
-        path: "/index",
-        name: "Sao kê",
-        icon: "ni ni-single-copy-04 text-primary",
-        component: Index,
-        layout: "/admin"
-    },
+    // {
+    //     path: "/index",
+    //     name: "Sao kê",
+    //     icon: "ni ni-single-copy-04 text-primary",
+    //     component: Index,
+    //     layout: "/admin"
+    // },
     {
         path: "/change-email",
         name: "Đổi email",

@@ -88,7 +88,9 @@ class StoresProductsManage extends React.Component {
             productNameErrorMessage: "",
             productDescriptionErrorMessage: "",
             productPriceErrorMessage: "",
-            productSaleoffErrorMessage: ""
+            productSaleoffErrorMessage: "",
+
+            addProductResultMessage: ""
         }
 
         this.onStoresSelectChange = this.onStoresSelectChange.bind(this);
@@ -111,6 +113,10 @@ class StoresProductsManage extends React.Component {
         const id = e.target.value;
 
         getStoreById(id, (result) => {
+            if(result.products.length < 1){
+                alert("Cửa hàng chưa có sản phẩm nào. Hãy thêm ít nhất một sản phẩm vào cửa hàng!")
+            }
+
             this.setState({
                 storeMain: result,
                 products: (result ? sortDescreaseProductsByTimestamp(result.products) : null)
@@ -240,7 +246,12 @@ class StoresProductsManage extends React.Component {
         .then(result => {
             if (result.status === 200) {
 
-                alert('Đã thêm 1 sản phẩm!');
+                this.setState({
+                    addProductResultMessage: "Thêm sản phẩm thành công!",
+                    isShowProductInfoInput: false
+                })
+
+                // alert('Đã thêm 1 sản phẩm!');
                 // Reset form
                 document.querySelector('#addProductForm').reset();
 
@@ -422,6 +433,17 @@ class StoresProductsManage extends React.Component {
                         <h3>THÔNG TIN SẢN PHẨM</h3>
                         <hr />
                         <Form id='addProductForm' onSubmit={this.addProduct}>
+                            <FormGroup row>
+                                <Label for="" sm={2}>Loại cửa hàng</Label>
+                                <Col sm={10}>
+                                    <Input type="text"
+                                        name=""
+                                        id=""
+                                        defaultValue={this.state.storeMain && this.state.storeMain.storeCategory.name}
+                                        required={true}
+                                        readOnly={true} />
+                                </Col>
+                            </FormGroup>
                             <FormGroup row>
                                 <Label for="store" sm={2}>Cửa hàng</Label>
                                 <Col sm={10}>

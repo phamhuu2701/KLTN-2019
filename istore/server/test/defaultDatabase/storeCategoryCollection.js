@@ -14,7 +14,7 @@ const storeCategogys = [
     "Quán cơm",
     "Quán trà",
     "Quán trà sữa",
-    "Siêu thị"
+    "Khác"
 ];
 
 module.exports.createDefaultCollection = async () => {

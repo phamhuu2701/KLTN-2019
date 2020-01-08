@@ -15,7 +15,7 @@ const productCategories = [
     "Thiết bị tỏa nhiệt", 
     "Thiết bị văn phòng",
     "Sách",
-    "Tiểu thuyết"
+    "Khác"
 ];
 
 module.exports.createDefaultCollection = async () => {

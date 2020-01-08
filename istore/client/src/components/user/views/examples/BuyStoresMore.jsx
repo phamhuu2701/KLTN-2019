@@ -269,7 +269,8 @@ class BuyStoresMore extends React.Component {
                                                             <Input
                                                                 className="form-control-alternative"
                                                                 id="money"
-                                                                placeholder="Thành tiền"
+                                                                placeholder={"Thành tiền: " + priceFormatUtil(timeLimiteds[0].money)
+                                                                    + " VND (1 cửa hàng/năm)"}
                                                                 type="text"
                                                                 required={true}
                                                                 readOnly={true}
