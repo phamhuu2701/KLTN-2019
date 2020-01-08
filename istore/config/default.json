@@ -5,7 +5,7 @@
     "localMongoDBUri": "mongodb://localhost:27017/istore",
     "mongoDBUri": "mongodb+srv://mongdbatlatadmin:@mongdbatlatadmin@cluster0-g2e3x.mongodb.net/dbistore?retryWrites=true&w=majority",
     "mail": {
-        "user": "istore.vn2019@gmail.com",
+        "user": "istore.vn2020@gmail.com",
         "pass": "@Istore.vn2019"
     },
     "cloudinary": {
