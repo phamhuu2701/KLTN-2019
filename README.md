@@ -7,12 +7,10 @@ NHÓM SINH VIÊN THỰC HIỆN:
 1. PHẠM THẾ HỮU
 2. NGUYỄN CẢNH TOÀN
 # 
-Link google drive đề tài:
+Link [Google Drive](https://drive.google.com/drive/folders/1aGBOPUXyolCYEHEFTb9HGi3tV12fknw9?usp=sharing) đề tài.
 
-https://drive.google.com/drive/folders/1aGBOPUXyolCYEHEFTb9HGi3tV12fknw9?usp=sharing
 # 
-Link ứng dụng đã deploy lên host:
+Link [Ứng dụng](https://istores.herokuapp.com) đã deploy lên host.
 
-https://istores.herokuapp.com/
 #
 HCMUTE - 09/2019
